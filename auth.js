@@ -1,488 +1,142 @@
-/* =========================
-   NØX AUTH
-========================= */
+<!DOCTYPE html>
+<html lang="es">
 
-const SUPABASE_URL =
-"https://asgowauvzfnsszstvzqi.supabase.co";
+<head>
 
-const SUPABASE_KEY =
-"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+<meta charset="UTF-8">
 
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-/* =========================
-   SUPABASE
-========================= */
+<title>NØX — Login</title>
 
-const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+<link
+    rel="stylesheet"
+    href="style.css"
+>
 
+</head>
 
-/* =========================
-   ELEMENTS
-========================= */
 
-const form =
-document.getElementById(
-    "loginForm"
-);
+<body>
 
-const emailInput =
-document.getElementById(
-    "email"
-);
 
-const passwordInput =
-document.getElementById(
-    "password"
-);
+<main class="auth">
 
-const message =
-document.getElementById(
-    "message"
-);
+    <a
+        href="index.html"
+        class="logo"
+    >
+        NØX
+    </a>
 
-const discordLogin =
-document.getElementById(
-    "discordLogin"
-);
 
+    <div class="auth-box">
 
-/* =========================
-   CHECK FORM
-========================= */
+        <h1>
+            Welcome back.
+        </h1>
 
-if(!form){
 
-    console.error(
-        "❌ No se encontró #loginForm"
-    );
+        <p>
+            Sign in to your NØX profile.
+        </p>
 
-    if(message){
 
-        message.textContent =
-        "❌ No se encontró el formulario.";
+        <form
+            id="loginForm"
+            novalidate
+        >
 
-    }
+            <label for="email">
+                Email
+            </label>
 
-}
 
+            <input
+                id="email"
+                type="email"
+                placeholder="you@email.com"
+                autocomplete="email"
+                required
+            >
 
-/* =========================
-   LOGIN
-========================= */
 
-if(form){
+            <label for="password">
+                Password
+            </label>
 
-    form.addEventListener(
-    "submit",
-    async function(event){
 
-        event.preventDefault();
+            <input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+            >
 
 
-        const email =
-        emailInput.value.trim();
+            <button
+                id="loginButton"
+                type="submit"
+            >
+                Sign in
+            </button>
 
+        </form>
 
-        const password =
-        passwordInput.value;
 
+        <div class="divider">
 
-        /* VALIDATION */
+            <span>
+                OR
+            </span>
 
-        if(!email){
+        </div>
 
-            showMessage(
-                "❌ Escribe tu email.",
-                "error"
-            );
 
-            return;
+        <button
+            id="discordLogin"
+            class="discord"
+            type="button"
+        >
+            Continue with Discord
+        </button>
 
-        }
 
+        <p class="register">
 
-        if(!password){
+            Don't have an account?
 
-            showMessage(
-                "❌ Escribe tu contraseña.",
-                "error"
-            );
+            <a href="register.html">
+                Create one
+            </a>
 
-            return;
+        </p>
 
-        }
 
+        <p
+            id="message"
+            aria-live="polite"
+        ></p>
 
-        /* BUTTON */
+    </div>
 
-        const button =
-        form.querySelector(
-            'button[type="submit"]'
-        );
+</main>
 
 
-        if(button){
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
 
-            button.disabled =
-            true;
 
-            button.textContent =
-            "Signing in...";
+<script
+    src="auth.js?v=10"
+></script>
 
-        }
 
+</body>
 
-        showMessage(
-            "Iniciando sesión...",
-            ""
-        );
-
-
-        try{
-
-            const result =
-            await supabase.auth.signInWithPassword({
-
-                email:
-                email,
-
-                password:
-                password
-
-            });
-
-
-            console.log(
-                "LOGIN RESULT:",
-                result
-            );
-
-
-            if(result.error){
-
-                showMessage(
-                    getAuthError(
-                        result.error
-                    ),
-                    "error"
-                );
-
-
-                resetButton(
-                    button
-                );
-
-
-                return;
-
-            }
-
-
-            if(!result.data.user){
-
-                showMessage(
-                    "❌ No se pudo obtener el usuario.",
-                    "error"
-                );
-
-
-                resetButton(
-                    button
-                );
-
-
-                return;
-
-            }
-
-
-            showMessage(
-                "✓ Login correcto. Entrando...",
-                "success"
-            );
-
-
-            /*
-               Esperamos un momento para que
-               la sesión quede guardada.
-            */
-
-            await new Promise(
-                function(resolve){
-
-                    setTimeout(
-                        resolve,
-                        500
-                    );
-
-                }
-            );
-
-
-            /*
-               Comprobamos que realmente
-               exista la sesión.
-            */
-
-            const sessionResult =
-            await supabase.auth.getSession();
-
-
-            if(
-                sessionResult.error ||
-                !sessionResult.data.session
-            ){
-
-                showMessage(
-                    "❌ La sesión no pudo guardarse.",
-                    "error"
-                );
-
-
-                resetButton(
-                    button
-                );
-
-
-                return;
-
-            }
-
-
-            /*
-               REDIRECCIÓN
-            */
-
-            window.location.href =
-            "profile.html";
-
-
-        }catch(error){
-
-            console.error(
-                "LOGIN ERROR:",
-                error
-            );
-
-
-            showMessage(
-                "❌ " +
-                error.message,
-                "error"
-            );
-
-
-            resetButton(
-                button
-            );
-
-        }
-
-    });
-
-}
-
-
-/* =========================
-   DISCORD LOGIN
-========================= */
-
-if(discordLogin){
-
-    discordLogin.addEventListener(
-    "click",
-    async function(){
-
-        discordLogin.disabled =
-        true;
-
-
-        discordLogin.textContent =
-        "Connecting...";
-
-
-        try{
-
-            const result =
-            await supabase.auth.signInWithOAuth({
-
-                provider:
-                "discord",
-
-                options:{
-
-                    redirectTo:
-                    window.location.origin +
-                    "/N-X/profile.html"
-
-                }
-
-            });
-
-
-            if(result.error){
-
-                console.error(
-                    result.error
-                );
-
-
-                showMessage(
-                    "❌ " +
-                    result.error.message,
-                    "error"
-                );
-
-
-                discordLogin.disabled =
-                false;
-
-
-                discordLogin.textContent =
-                "Continue with Discord";
-
-            }
-
-        }catch(error){
-
-            console.error(
-                error
-            );
-
-
-            showMessage(
-                "❌ " +
-                error.message,
-                "error"
-            );
-
-
-            discordLogin.disabled =
-            false;
-
-
-            discordLogin.textContent =
-            "Continue with Discord";
-
-        }
-
-    });
-
-}
-
-
-/* =========================
-   AUTH ERRORS
-========================= */
-
-function getAuthError(
-    error
-){
-
-    const text =
-    String(
-        error.message ||
-        ""
-    ).toLowerCase();
-
-
-    if(
-        text.includes(
-            "invalid login credentials"
-        )
-    ){
-
-        return (
-            "❌ Email o contraseña incorrectos."
-        );
-
-    }
-
-
-    if(
-        text.includes(
-            "email not confirmed"
-        )
-    ){
-
-        return (
-            "❌ Primero debes confirmar tu email."
-        );
-
-    }
-
-
-    if(
-        text.includes(
-            "rate limit"
-        )
-    ){
-
-        return (
-            "❌ Demasiados intentos. Espera un momento y vuelve a intentar."
-        );
-
-    }
-
-
-    return (
-        "❌ " +
-        error.message
-    );
-
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-function showMessage(
-    text,
-    type
-){
-
-    if(!message){
-
-        return;
-
-    }
-
-
-    message.textContent =
-    text;
-
-
-    message.className =
-    type || "";
-
-}
-
-
-/* =========================
-   RESET BUTTON
-========================= */
-
-function resetButton(
-    button
-){
-
-    if(!button){
-
-        return;
-
-    }
-
-
-    button.disabled =
-    false;
-
-
-    button.textContent =
-    "Sign in";
-
-}
+</html>
