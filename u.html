@@ -1,239 +1,352 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NØX</title>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>NØX — Perfil</title>
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
+
     margin:0;
+
     min-height:100vh;
+
     display:flex;
-    align-items:center;
+
     justify-content:center;
+
+    align-items:center;
+
     background:#050505;
+
     color:white;
+
     font-family:Arial,sans-serif;
+
 }
 
 #app{
-    width:min(450px,90%);
+
+    width:90%;
+
+    max-width:450px;
+
     padding:30px;
+
     text-align:center;
-    border:1px solid #292929;
-    border-radius:20px;
+
     background:#111;
+
+    border:1px solid #292929;
+
+    border-radius:20px;
+
 }
 
-#status{
+#loading{
+
+    color:#aaa;
+
+}
+
+#error{
+
+    display:none;
+
+    color:#ff6b6b;
+
     white-space:pre-wrap;
-    line-height:1.6;
+
 }
 
 #profile{
+
     display:none;
+
 }
 
-.avatar{
+#avatar{
+
     width:100px;
+
     height:100px;
+
     margin:auto;
-    border-radius:50%;
-    overflow:hidden;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
+    overflow:hidden;
+
+    border-radius:50%;
+
     background:#222;
+
+    border:3px solid white;
+
     font-size:35px;
+
     font-weight:bold;
+
 }
 
-.avatar img{
+#avatar img{
+
     width:100%;
+
     height:100%;
+
     object-fit:cover;
+
 }
 
-.name{
+#name{
+
     margin-top:18px;
-    font-size:26px;
+
+    font-size:27px;
+
     font-weight:bold;
+
 }
 
-.username{
+#username{
+
     margin-top:5px;
+
     color:#888;
+
 }
 
-.bio{
-    margin-top:15px;
+#bio{
+
+    margin-top:18px;
+
     color:#aaa;
+
 }
 
-.views{
+#views{
+
     margin-top:15px;
+
     color:#777;
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div id="app">
 
-    <div id="status">
-        NØX — iniciando...
+    <div id="loading">
+
+        NØX — cargando...
+
     </div>
+
+
+    <div id="error"></div>
+
 
     <div id="profile">
 
-        <div
-            id="avatar"
-            class="avatar"
-        >
+        <div id="avatar">
+
             N
+
         </div>
 
-        <div
-            id="name"
-            class="name"
-        ></div>
 
-        <div
-            id="username"
-            class="username"
-        ></div>
+        <div id="name">
 
-        <div
-            id="bio"
-            class="bio"
-        ></div>
+        </div>
 
-        <div
-            id="views"
-            class="views"
-        ></div>
+
+        <div id="username">
+
+        </div>
+
+
+        <div id="bio">
+
+        </div>
+
+
+        <div id="views">
+
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- SUPABASE PRIMERO -->
+<!-- SUPABASE -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
 
 
 <script>
 
-/* ======================================
-   CONFIGURACIÓN
-====================================== */
+/* ====================================
+   NØX
+==================================== */
+
+
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
+
 
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-/* ======================================
-   ELEMENTOS
-====================================== */
+/* ELEMENTOS */
 
-const status =
-document.getElementById("status");
+const loading =
+document.getElementById(
+    "loading"
+);
+
+const errorBox =
+document.getElementById(
+    "error"
+);
 
 const profile =
-document.getElementById("profile");
+document.getElementById(
+    "profile"
+);
 
 const avatar =
-document.getElementById("avatar");
+document.getElementById(
+    "avatar"
+);
 
 const nameElement =
-document.getElementById("name");
+document.getElementById(
+    "name"
+);
 
 const usernameElement =
-document.getElementById("username");
+document.getElementById(
+    "username"
+);
 
-const bioElement =
-document.getElementById("bio");
+const bio =
+document.getElementById(
+    "bio"
+);
 
-const viewsElement =
-document.getElementById("views");
+const views =
+document.getElementById(
+    "views"
+);
 
 
-/* ======================================
-   SUPABASE CARGADO?
-====================================== */
+/* ====================================
+   SUPABASE
+==================================== */
 
 if(!window.supabase){
 
-    status.textContent =
-        "❌ ERROR\n\n" +
-        "Supabase JS no cargó.";
+    loading.style.display =
+        "none";
 
-    throw new Error(
-        "Supabase JS no disponible"
-    );
+    errorBox.style.display =
+        "block";
+
+    errorBox.textContent =
+        "❌ Supabase JS no cargó.";
+
+}else{
+
+    start();
+
 }
 
 
-/* ======================================
-   CLIENTE
-====================================== */
+/* ====================================
+   START
+==================================== */
 
-const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+async function start(){
 
-
-/* ======================================
-   USERNAME
-====================================== */
-
-const params =
-new URLSearchParams(
-    window.location.search
-);
-
-const username =
-params.get("username");
+    const supabase =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 
 
-status.textContent =
-"NØX — comprobando URL...\n\n" +
-"Username: " +
-(username || "NULL");
+    /* URL */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
 
-/* ======================================
-   CARGAR
-====================================== */
+    const username =
+        params
+            .get("username");
 
-async function loadProfile(){
+
+    console.log(
+        "Username:",
+        username
+    );
+
+
+    /* SIN USERNAME */
+
+    if(!username){
+
+        showError(
+            "❌ Falta el username.\n\n" +
+
+            "Usa:\n" +
+
+            "u.html?username=pan"
+        );
+
+        return;
+    }
+
+
+    loading.textContent =
+        "NØX — buscando @" +
+        username +
+        "...";
+
 
     try{
-
-        if(!username){
-
-            status.textContent =
-                "❌ ERROR\n\n" +
-                "La URL no tiene ?username=...\n\n" +
-                "Ejemplo:\n" +
-                "u.html?username=pan";
-
-            return;
-        }
-
-
-        status.textContent =
-            "NØX — conectando con Supabase...\n\n" +
-            "Username: @" +
-            username;
 
 
         /* =================================
@@ -242,63 +355,69 @@ async function loadProfile(){
 
         const result =
             await supabase
+
                 .from("profiles")
+
                 .select("*")
+
                 .eq(
                     "username",
                     username
                         .trim()
                         .toLowerCase()
                 )
+
                 .maybeSingle();
 
 
         console.log(
-            "SUPABASE RESULT:",
+            "Resultado:",
             result
         );
+
+
+        if(result.error){
+
+            showError(
+                "❌ ERROR SUPABASE\n\n" +
+
+                result.error.message
+            );
+
+            return;
+        }
+
+
+        if(!result.data){
+
+            showError(
+                "❌ PERFIL NO ENCONTRADO\n\n" +
+
+                "@" +
+                username
+            );
+
+            return;
+        }
 
 
         const data =
             result.data;
 
-        const error =
-            result.error;
-
-
-        if(error){
-
-            status.textContent =
-                "❌ ERROR SUPABASE\n\n" +
-                error.message;
-
-            console.error(error);
-
-            return;
-        }
-
-
-        if(!data){
-
-            status.textContent =
-                "❌ PERFIL NO ENCONTRADO\n\n" +
-                "Username: @" +
-                username;
-
-            return;
-        }
-
 
         /* =================================
-           PERFIL ENCONTRADO
+           MOSTRAR
         ================================= */
 
-        status.style.display =
+        loading.style.display =
             "none";
+
 
         profile.style.display =
             "block";
 
+
+        /* APODO */
 
         nameElement.textContent =
             data.display_name ||
@@ -306,27 +425,33 @@ async function loadProfile(){
             "NØX User";
 
 
+        /* USERNAME */
+
         usernameElement.textContent =
             "@" +
             data.username;
 
 
-        bioElement.textContent =
+        /* BIO */
+
+        bio.textContent =
             data.bio ||
             "Welcome to my NØX profile.";
 
 
-        const currentViews =
+        /* VISTAS */
+
+        const oldViews =
             Number(
                 data.profile_views || 0
             );
 
 
-        viewsElement.textContent =
+        views.textContent =
             "👁️ " +
-            currentViews +
+            oldViews +
             (
-                currentViews === 1
+                oldViews === 1
                 ? " vista"
                 : " vistas"
             );
@@ -343,25 +468,22 @@ async function loadProfile(){
                     "img"
                 );
 
+
             img.src =
                 data.avatar_url;
 
-            img.onerror =
-                function(){
 
-                    avatar.textContent =
-                        (
-                            data.username ||
-                            "N"
-                        )
-                        .charAt(0)
-                        .toUpperCase();
+            img.alt =
+                "Avatar";
 
-                };
 
-            avatar.innerHTML = "";
+            avatar.innerHTML =
+                "";
 
-            avatar.appendChild(img);
+
+            avatar.appendChild(
+                img
+            );
 
         }else{
 
@@ -372,6 +494,7 @@ async function loadProfile(){
                 )
                 .charAt(0)
                 .toUpperCase();
+
         }
 
 
@@ -384,80 +507,87 @@ async function loadProfile(){
         );
 
 
-        const viewResult =
+        const view =
             await supabase.rpc(
+
                 "increment_profile_views",
+
                 {
                     profile_uuid:
                         data.id
                 }
+
             );
 
 
         console.log(
-            "VIEW RESULT:",
-            viewResult
+            "Vista:",
+            view
         );
 
 
-        if(viewResult.error){
+        if(!view.error){
 
-            console.error(
-                "Error de vistas:",
-                viewResult.error
-            );
+            const newViews =
+                oldViews + 1;
 
-            /*
-               El perfil igualmente se muestra.
-            */
 
-            return;
+            views.textContent =
+                "👁️ " +
+                newViews +
+                (
+                    newViews === 1
+                    ? " vista"
+                    : " vistas"
+                );
+
         }
 
 
-        const newViews =
-            currentViews + 1;
+    }catch(err){
+
+        console.error(
+            err
+        );
 
 
-        viewsElement.textContent =
-            "👁️ " +
-            newViews +
-            (
-                newViews === 1
-                ? " vista"
-                : " vistas"
-            );
-
-
-    }catch(error){
-
-        console.error(error);
-
-
-        status.style.display =
-            "block";
-
-
-        profile.style.display =
-            "none";
-
-
-        status.textContent =
-            "❌ ERROR JAVASCRIPT\n\n" +
-            error.message;
+        showError(
+            "❌ ERROR\n\n" +
+            err.message
+        );
 
     }
 
 }
 
 
-/* ======================================
-   INICIAR
-====================================== */
+/* ====================================
+   ERROR
+==================================== */
 
-loadProfile();
+function showError(
+    message
+){
+
+    loading.style.display =
+        "none";
+
+
+    profile.style.display =
+        "none";
+
+
+    errorBox.style.display =
+        "block";
+
+
+    errorBox.textContent =
+        message;
+
+}
 
 </script>
 
 </body>
+
 </html>
