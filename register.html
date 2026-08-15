@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NØX — Create account</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="auth">
+
+        <a href="index.html" class="logo">
+            NØX
+        </a>
+
+        <div class="auth-box">
+
+            <h1>Create your profile.</h1>
+
+            <p>
+                Choose your NØX username.
+            </p>
+
+            <form id="registerForm">
+
+                <label>Username</label>
+
+                <input
+                    id="username"
+                    type="text"
+                    placeholder="maxiii"
+                    minlength="3"
+                    maxlength="20"
+                    required
+                >
+
+                <label>Email</label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="you@email.com"
+                    required
+                >
+
+                <label>Password</label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    minlength="6"
+                    required
+                >
+
+                <button type="submit">
+                    Create account
+                </button>
+
+            </form>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <button
+                id="discordRegister"
+                class="discord"
+            >
+                Continue with Discord
+            </button>
+
+            <p class="register">
+                Already have an account?
+
+                <a href="login.html">
+                    Sign in
+                </a>
+            </p>
+
+            <p id="message"></p>
+
+        </div>
+
+    </main>
+
+    <script
+        type="module"
+        src="auth.js"
+    ></script>
+
+</body>
+
+  </html>
