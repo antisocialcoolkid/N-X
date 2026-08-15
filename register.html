@@ -3,115 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#030303">
 
-<title>NØX — Create</title>
+<title>NØX — Create Profile</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
 }
 
 body{
     min-height:100vh;
     overflow-x:hidden;
     background:#020202;
-    color:#fff;
-    font-family:Inter,Arial,sans-serif;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-/* ================= BACKGROUND ================= */
+/* BACKGROUND */
 
-.scene{
+.bg{
     position:fixed;
     inset:0;
-    z-index:-5;
+    z-index:-10;
     overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            #171717 0%,
-            #080808 30%,
-            #020202 75%
-        );
-}
 
-.noise{
-    position:absolute;
-    inset:0;
-    opacity:.035;
-    pointer-events:none;
-    background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+    background:
+    radial-gradient(
+        circle at 50% 20%,
+        #181818 0%,
+        #080808 35%,
+        #020202 75%
+    );
 }
 
 .grid{
     position:absolute;
     inset:0;
-    opacity:.16;
+    opacity:.17;
 
     background-image:
-        linear-gradient(
-            rgba(255,255,255,.04) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.04) 1px,
-            transparent 1px
-        );
+        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
 
     background-size:50px 50px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent
-        );
 }
 
-.light{
+.glow{
     position:absolute;
-
-    width:520px;
-    height:520px;
-
+    width:500px;
+    height:500px;
     border-radius:50%;
-
-    background:#fff;
-
-    filter:blur(160px);
-
-    opacity:.09;
-
-    animation:moveLight 12s ease-in-out infinite;
+    background:white;
+    filter:blur(170px);
+    opacity:.08;
+    animation:move 12s ease-in-out infinite;
 }
 
-.light.a{
-    top:-300px;
-    left:-200px;
+.glow.one{
+    left:-250px;
+    top:-250px;
 }
 
-.light.b{
-    right:-300px;
+.glow.two{
+    right:-250px;
     bottom:-250px;
     animation-delay:-6s;
 }
 
-@keyframes moveLight{
+@keyframes move{
     0%,100%{
         transform:translate(0,0) scale(1);
     }
 
     50%{
-        transform:translate(70px,50px) scale(1.15);
+        transform:translate(60px,40px) scale(1.15);
     }
 }
 
@@ -123,17 +93,16 @@ body{
     width:2px;
     height:2px;
 
-    background:white;
     border-radius:50%;
+    background:white;
 
     opacity:0;
 
-    animation:particle 12s linear infinite;
+    animation:rise linear infinite;
 }
 
-@keyframes particle{
-
-    0%{
+@keyframes rise{
+    from{
         transform:translateY(110vh);
         opacity:0;
     }
@@ -146,24 +115,22 @@ body{
         opacity:.2;
     }
 
-    100%{
+    to{
         transform:translateY(-10vh);
         opacity:0;
     }
 }
 
-/* ================= NAV ================= */
+/* NAV */
 
 nav{
     position:absolute;
-
     top:0;
     left:0;
     right:0;
 
+    width:min(1150px,92%);
     height:78px;
-
-    width:min(1180px,92%);
 
     margin:auto;
 
@@ -171,16 +138,15 @@ nav{
     align-items:center;
     justify-content:space-between;
 
-    border-bottom:1px solid #151515;
+    border-bottom:1px solid #171717;
 }
 
 .logo{
-    color:#fff;
+    color:white;
     text-decoration:none;
 
-    font-size:23px;
+    font-size:24px;
     font-weight:950;
-
     letter-spacing:-1px;
 }
 
@@ -197,42 +163,31 @@ nav{
     color:white;
 }
 
-/* ================= MAIN ================= */
+/* MAIN */
 
 main{
-    width:min(1180px,92%);
-
+    width:min(1150px,92%);
     min-height:100vh;
 
     margin:auto;
 
-    padding:
-        130px 0
-        70px;
+    padding:125px 0 60px;
 
     display:grid;
+    grid-template-columns:1fr 430px;
 
-    grid-template-columns:
-        1fr
-        430px;
-
-    gap:90px;
+    gap:80px;
 
     align-items:center;
 }
 
-/* ================= LEFT ================= */
+/* HERO */
 
 .hero{
-    animation:
-        enterLeft
-        .9s
-        cubic-bezier(.2,.8,.2,1)
-        both;
+    animation:heroIn .8s ease both;
 }
 
-@keyframes enterLeft{
-
+@keyframes heroIn{
     from{
         opacity:0;
         transform:translateX(-30px);
@@ -244,60 +199,53 @@ main{
     }
 }
 
-.status{
+.badge{
     display:inline-flex;
     align-items:center;
     gap:8px;
 
     padding:8px 12px;
 
-    border:1px solid #242424;
+    border:1px solid #282828;
+    border-radius:50px;
 
-    border-radius:100px;
+    background:#080808;
 
     color:#777;
 
-    background:#090909;
-
     font-size:9px;
     font-weight:bold;
-
     letter-spacing:2px;
 }
 
-.status i{
+.badge-dot{
     width:6px;
     height:6px;
 
     border-radius:50%;
+    background:white;
 
-    background:#fff;
+    box-shadow:0 0 14px white;
 
-    box-shadow:0 0 14px #fff;
-
-    animation:blink 2s infinite;
+    animation:pulse 2s infinite;
 }
 
-@keyframes blink{
-
+@keyframes pulse{
     0%,100%{
-        opacity:.35;
+        opacity:.4;
+        transform:scale(.8);
     }
 
     50%{
         opacity:1;
+        transform:scale(1.2);
     }
 }
 
 .hero h1{
     margin-top:28px;
 
-    font-size:
-        clamp(
-            65px,
-            8vw,
-            110px
-        );
+    font-size:clamp(60px,8vw,105px);
 
     line-height:.82;
 
@@ -307,70 +255,56 @@ main{
 }
 
 .hero h1 span{
-    color:#414141;
+    color:#404040;
 }
 
 .hero p{
-    max-width:500px;
+    max-width:490px;
 
     margin-top:30px;
 
     color:#686868;
 
     font-size:14px;
-
     line-height:1.8;
 }
 
-/* ================= PROFILE CARD ================= */
+/* PREVIEW */
 
-.profile{
-    position:relative;
-
+.preview{
     width:350px;
 
     margin-top:45px;
 
     padding:24px;
 
-    border:1px solid #222;
-
+    border:1px solid #232323;
     border-radius:20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(25,25,25,.82),
-            rgba(5,5,5,.92)
+            rgba(28,28,28,.85),
+            rgba(5,5,5,.94)
         );
 
     box-shadow:
-        0 35px 100px
-        rgba(0,0,0,.6);
+        0 35px 100px rgba(0,0,0,.65);
 
     backdrop-filter:blur(20px);
 
     transform:rotate(-3deg);
 
-    animation:
-        profileFloat
-        5s
-        ease-in-out
-        infinite;
+    animation:float 5s ease-in-out infinite;
 }
 
-@keyframes profileFloat{
-
+@keyframes float{
     0%,100%{
-        transform:
-            translateY(0)
-            rotate(-3deg);
+        transform:translateY(0) rotate(-3deg);
     }
 
     50%{
-        transform:
-            translateY(-13px)
-            rotate(1deg);
+        transform:translateY(-12px) rotate(1deg);
     }
 }
 
@@ -384,58 +318,48 @@ main{
 
     border-radius:50%;
 
-    background:
-        linear-gradient(
-            145deg,
-            #292929,
-            #090909
-        );
+    border:1px solid #3a3a3a;
 
-    border:1px solid #3b3b3b;
+    background:
+        linear-gradient(145deg,#292929,#080808);
 
     font-size:20px;
     font-weight:900;
-
-    transition:.3s;
 }
 
-.profile h2{
-    margin-top:18px;
+.preview-name{
+    margin-top:17px;
 
     font-size:20px;
+    font-weight:800;
 }
 
-.username-preview{
+.preview-user{
     margin-top:5px;
 
     color:#555;
-
     font-size:11px;
 }
 
-.bio{
-    margin-top:16px;
+.preview-bio{
+    margin-top:15px;
 
     color:#777;
-
     font-size:11px;
-
     line-height:1.6;
 }
 
-.links{
+.preview-links{
     display:grid;
-
     gap:7px;
 
     margin-top:20px;
 }
 
-.link{
+.preview-link{
     padding:10px;
 
-    border:1px solid #1c1c1c;
-
+    border:1px solid #1d1d1d;
     border-radius:8px;
 
     background:#090909;
@@ -445,19 +369,13 @@ main{
     font-size:10px;
 }
 
-/* ================= FORM ================= */
+/* FORM */
 
 .form-area{
-    animation:
-        enterRight
-        .9s
-        .1s
-        cubic-bezier(.2,.8,.2,1)
-        both;
+    animation:formIn .8s .1s ease both;
 }
 
-@keyframes enterRight{
-
+@keyframes formIn{
     from{
         opacity:0;
         transform:translateX(30px);
@@ -473,27 +391,24 @@ main{
     padding:34px;
 
     border:1px solid #222;
-
     border-radius:20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(17,17,17,.96),
-            rgba(6,6,6,.96)
+            rgba(17,17,17,.97),
+            rgba(5,5,5,.97)
         );
 
     box-shadow:
-        0 35px 100px
-        rgba(0,0,0,.65);
+        0 35px 100px rgba(0,0,0,.65);
 
     backdrop-filter:blur(20px);
 }
 
 .form-card h2{
-    font-size:27px;
-
-    letter-spacing:-1px;
+    font-size:28px;
+    letter-spacing:-1.5px;
 }
 
 .subtitle{
@@ -504,7 +419,7 @@ main{
     font-size:12px;
 }
 
-/* ================= INPUTS ================= */
+/* INPUT */
 
 form{
     margin-top:27px;
@@ -522,73 +437,57 @@ label{
     color:#777;
 
     font-size:9px;
-
     font-weight:bold;
 
     letter-spacing:1.5px;
-
     text-transform:uppercase;
 }
 
 input{
     width:100%;
-
-    height:49px;
+    height:50px;
 
     padding:0 14px;
 
     outline:none;
 
-    border:1px solid #242424;
-
+    border:1px solid #252525;
     border-radius:9px;
 
     background:#050505;
 
-    color:#fff;
+    color:white;
 
     font-size:13px;
 
-    transition:.25s;
-}
-
-input:hover{
-    border-color:#303030;
+    transition:.2s;
 }
 
 input:focus{
     border-color:#555;
 
     box-shadow:
-        0 0 0 3px
-        rgba(255,255,255,.025),
-        0 0 30px
-        rgba(255,255,255,.025);
+        0 0 0 3px rgba(255,255,255,.025),
+        0 0 30px rgba(255,255,255,.025);
 }
 
 input::placeholder{
-    color:#3e3e3e;
+    color:#3f3f3f;
 }
 
-/* ================= CREATE ================= */
+/* BUTTON */
 
 #createButton{
     width:100%;
-
-    height:50px;
-
-    margin-top:4px;
+    height:51px;
 
     border:0;
-
     border-radius:9px;
 
-    background:#fff;
-
-    color:#000;
+    background:white;
+    color:black;
 
     font-size:12px;
-
     font-weight:900;
 
     cursor:pointer;
@@ -600,21 +499,20 @@ input::placeholder{
     transform:translateY(-3px);
 
     box-shadow:
-        0 15px 40px
-        rgba(255,255,255,.13);
+        0 15px 40px rgba(255,255,255,.13);
 }
 
-#createButton:active{
-    transform:scale(.98);
+#createButton:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
 }
 
-/* ================= DIVIDER ================= */
+/* DIVIDER */
 
 .divider{
     display:flex;
-
     align-items:center;
-
     gap:12px;
 
     margin:22px 0;
@@ -629,29 +527,25 @@ input::placeholder{
     content:"";
 
     height:1px;
-
     flex:1;
 
     background:#1d1d1d;
 }
 
-/* ================= DISCORD ================= */
+/* DISCORD */
 
 #discordButton{
     width:100%;
-
     height:49px;
 
     border:1px solid #292929;
-
     border-radius:9px;
 
     background:#101010;
 
-    color:#fff;
+    color:white;
 
     font-size:12px;
-
     font-weight:800;
 
     cursor:pointer;
@@ -660,12 +554,13 @@ input::placeholder{
 }
 
 #discordButton:hover{
-    background:#161616;
-
+    background:#171717;
     border-color:#444;
 
     transform:translateY(-2px);
 }
+
+/* SIGN IN */
 
 .signin{
     margin-top:20px;
@@ -678,26 +573,39 @@ input::placeholder{
 }
 
 .signin a{
-    color:#fff;
-
+    color:white;
     text-decoration:none;
-
     font-weight:bold;
 }
 
-#message{
-    min-height:16px;
+/* MESSAGE */
 
-    margin-top:12px;
+#message{
+    min-height:18px;
+
+    margin-top:14px;
 
     text-align:center;
 
-    color:#777;
+    color:#aaa;
 
     font-size:11px;
 }
 
-/* ================= MOBILE ================= */
+/* SUCCESS */
+
+.success{
+    padding:12px;
+
+    border:1px solid #303030;
+    border-radius:8px;
+
+    background:#0c0c0c;
+
+    color:#ddd !important;
+}
+
+/* MOBILE */
 
 @media(max-width:900px){
 
@@ -711,8 +619,6 @@ input::placeholder{
         grid-template-columns:1fr;
 
         gap:45px;
-
-        align-items:start;
     }
 
     .hero{
@@ -724,14 +630,13 @@ input::placeholder{
         margin-right:auto;
     }
 
-    .profile{
+    .preview{
         display:none;
     }
 
     .form-area{
         width:100%;
         max-width:500px;
-
         margin:auto;
     }
 }
@@ -740,18 +645,11 @@ input::placeholder{
 
     main{
         width:92%;
-
-        padding-top:100px;
+        padding-top:95px;
     }
 
     .hero h1{
-        font-size:
-            clamp(
-                58px,
-                17vw,
-                80px
-            );
-
+        font-size:17vw;
         letter-spacing:-5px;
     }
 
@@ -761,7 +659,6 @@ input::placeholder{
 
     .form-card{
         padding:23px;
-
         border-radius:15px;
     }
 
@@ -783,137 +680,93 @@ input::placeholder{
 
 <body>
 
-<!-- BACKGROUND -->
-
-<div class="scene">
+<div class="bg">
 
     <div class="grid"></div>
 
-    <div class="noise"></div>
-
-    <div class="light a"></div>
-    <div class="light b"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
 
     <div class="particles">
 
         <span style="left:5%;animation-duration:14s"></span>
-        <span style="left:14%;animation-duration:18s"></span>
-        <span style="left:27%;animation-duration:12s"></span>
-        <span style="left:39%;animation-duration:17s"></span>
-        <span style="left:52%;animation-duration:20s"></span>
-        <span style="left:65%;animation-duration:15s"></span>
-        <span style="left:78%;animation-duration:19s"></span>
-        <span style="left:91%;animation-duration:13s"></span>
+        <span style="left:15%;animation-duration:18s"></span>
+        <span style="left:28%;animation-duration:12s"></span>
+        <span style="left:41%;animation-duration:17s"></span>
+        <span style="left:55%;animation-duration:20s"></span>
+        <span style="left:68%;animation-duration:15s"></span>
+        <span style="left:81%;animation-duration:19s"></span>
+        <span style="left:94%;animation-duration:13s"></span>
 
     </div>
 
 </div>
 
-
-<!-- NAV -->
-
 <nav>
 
-    <a
-        href="index.html"
-        class="logo">
+    <a href="index.html" class="logo">
         NØX
     </a>
 
-    <a
-        href="index.html"
-        class="back">
+    <a href="index.html" class="back">
         ← Back
     </a>
 
 </nav>
 
-
-<!-- CONTENT -->
-
 <main>
-
-<!-- HERO -->
 
 <section class="hero">
 
-    <div class="status">
+    <div class="badge">
 
-        <i></i>
+        <span class="badge-dot"></span>
 
         NØX PROFILES
 
     </div>
 
-
     <h1>
-
         Claim<br>
-
         <span>your identity.</span>
-
     </h1>
 
-
     <p>
-
         Your username is more than a name.
         It's your NØX identity.
-
-        Create your profile and make
-        your corner of the internet yours.
-
+        Create your profile and make your
+        corner of the internet yours.
     </p>
 
+    <div class="preview">
 
-    <!-- LIVE PROFILE -->
-
-    <div class="profile">
-
-        <div
-            class="avatar"
-            id="avatar">
-
+        <div class="avatar" id="avatar">
             N
-
         </div>
 
-
-        <h2
-            id="previewName">
-
+        <div class="preview-name" id="previewName">
             NØX User
+        </div>
 
-        </h2>
-
-
-        <div
-            class="username-preview"
-            id="previewUsername">
-
+        <div class="preview-user" id="previewUsername">
             @username
-
         </div>
 
-
-        <div class="bio">
-
+        <div class="preview-bio">
             Building my identity on NØX.
-
         </div>
 
+        <div class="preview-links">
 
-        <div class="links">
-
-            <div class="link">
+            <div class="preview-link">
                 Discord
             </div>
 
-            <div class="link">
+            <div class="preview-link">
                 YouTube
             </div>
 
-            <div class="link">
+            <div class="preview-link">
                 GitHub
             </div>
 
@@ -922,9 +775,6 @@ input::placeholder{
     </div>
 
 </section>
-
-
-<!-- FORM -->
 
 <section class="form-area">
 
@@ -938,7 +788,6 @@ input::placeholder{
         Choose your unique NØX username.
     </p>
 
-
     <form id="registerForm">
 
         <div class="field">
@@ -949,7 +798,6 @@ input::placeholder{
 
             <input
                 id="username"
-                name="username"
                 type="text"
                 placeholder="maxiii"
                 maxlength="24"
@@ -957,7 +805,6 @@ input::placeholder{
                 required>
 
         </div>
-
 
         <div class="field">
 
@@ -967,14 +814,12 @@ input::placeholder{
 
             <input
                 id="email"
-                name="email"
                 type="email"
                 placeholder="you@email.com"
                 autocomplete="email"
                 required>
 
         </div>
-
 
         <div class="field">
 
@@ -984,7 +829,6 @@ input::placeholder{
 
             <input
                 id="password"
-                name="password"
                 type="password"
                 placeholder="••••••••"
                 minlength="6"
@@ -992,7 +836,6 @@ input::placeholder{
                 required>
 
         </div>
-
 
         <button
             id="createButton"
@@ -1004,11 +847,9 @@ input::placeholder{
 
     </form>
 
-
     <div class="divider">
         OR
     </div>
-
 
     <button
         id="discordButton"
@@ -1017,7 +858,6 @@ input::placeholder{
         Continue with Discord
 
     </button>
-
 
     <div class="signin">
 
@@ -1029,7 +869,6 @@ input::placeholder{
 
     </div>
 
-
     <div id="message"></div>
 
 </div>
@@ -1038,13 +877,56 @@ input::placeholder{
 
 </main>
 
-
 <script>
 
-/* LIVE PROFILE PREVIEW */
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+    "https://asgowauvzfnsszstvzqi.supabase.co";
+
+/*
+ IMPORTANT:
+ Put your Supabase PUBLISHABLE KEY here.
+ It starts with:
+ sb_publishable_
+*/
+
+const SUPABASE_KEY =
+    "PEGA_AQUI_TU_SB_PUBLISHABLE_KEY";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const form =
+    document.getElementById("registerForm");
 
 const usernameInput =
     document.getElementById("username");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const createButton =
+    document.getElementById("createButton");
+
+const discordButton =
+    document.getElementById("discordButton");
+
+const message =
+    document.getElementById("message");
 
 const previewName =
     document.getElementById("previewName");
@@ -1056,12 +938,17 @@ const avatar =
     document.getElementById("avatar");
 
 
+/* =========================
+   LIVE PREVIEW
+========================= */
+
 usernameInput.addEventListener(
     "input",
     () => {
 
         const value =
-            usernameInput.value.trim();
+            usernameInput.value
+            .trim();
 
         if(value){
 
@@ -1072,7 +959,9 @@ usernameInput.addEventListener(
                 "@" + value;
 
             avatar.textContent =
-                value.charAt(0).toUpperCase();
+                value
+                .charAt(0)
+                .toUpperCase();
 
         }else{
 
@@ -1084,6 +973,227 @@ usernameInput.addEventListener(
 
             avatar.textContent =
                 "N";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   REGISTER
+========================= */
+
+form.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+        message.className = "";
+        message.textContent = "";
+
+        const username =
+            usernameInput.value
+            .trim()
+            .toLowerCase();
+
+        const email =
+            emailInput.value
+            .trim();
+
+        const password =
+            passwordInput.value;
+
+
+        /* VALIDATION */
+
+        if(username.length < 3){
+
+            message.textContent =
+                "Username must be at least 3 characters.";
+
+            return;
+        }
+
+        if(!/^[a-z0-9_]+$/.test(username)){
+
+            message.textContent =
+                "Use only letters, numbers and underscores.";
+
+            return;
+        }
+
+        if(password.length < 6){
+
+            message.textContent =
+                "Password must be at least 6 characters.";
+
+            return;
+        }
+
+
+        /* BUTTON */
+
+        createButton.disabled = true;
+
+        createButton.textContent =
+            "Creating your NØX...";
+
+
+        try{
+
+            /*
+             CREATE AUTH USER
+            */
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options:{
+                        data:{
+                            username: username
+                        }
+                    }
+
+                });
+
+
+            if(error){
+                throw error;
+            }
+
+
+            /*
+             CREATE PROFILE
+            */
+
+            if(data.user){
+
+                const {
+                    error:
+                    profileError
+                } =
+                    await supabaseClient
+                    .from("profiles")
+                    .insert({
+
+                        id: data.user.id,
+
+                        username: username
+
+                    });
+
+
+                /*
+                 If the profile already exists,
+                 don't break the registration.
+                */
+
+                if(
+                    profileError &&
+                    profileError.code !== "23505"
+                ){
+
+                    console.warn(
+                        profileError
+                    );
+
+                }
+
+            }
+
+
+            /*
+             SUCCESS
+            */
+
+            message.className =
+                "success";
+
+            message.textContent =
+                "✓ Your NØX identity has been created.";
+
+
+            createButton.textContent =
+                "NØX identity created";
+
+
+            /*
+             Redirect after a moment.
+            */
+
+            setTimeout(
+                () => {
+
+                    window.location.href =
+                        "profile.html";
+
+                },
+                1200
+            );
+
+
+        }catch(error){
+
+            console.error(error);
+
+            message.textContent =
+                error.message ||
+                "Something went wrong.";
+
+            createButton.disabled =
+                false;
+
+            createButton.textContent =
+                "Create account";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   DISCORD
+========================= */
+
+discordButton.addEventListener(
+    "click",
+    async () => {
+
+        message.className = "";
+
+        message.textContent =
+            "Connecting to Discord...";
+
+        const {
+            error
+        } =
+            await supabaseClient.auth
+            .signInWithOAuth({
+
+                provider:"discord",
+
+                options:{
+                    redirectTo:
+                        window.location.origin +
+                        window.location.pathname
+                }
+
+            });
+
+        if(error){
+
+            message.textContent =
+                error.message;
 
         }
 
