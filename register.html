@@ -16,34 +16,25 @@
         body {
             min-height: 100vh;
             background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    #252525 0%,
-                    #0b0b0b 40%,
-                    #020202 100%
-                );
-
-            color: white;
+                radial-gradient(circle at 50% 0%, #252525 0%, #090909 42%, #020202 100%);
+            color: #fff;
             font-family: Arial, Helvetica, sans-serif;
         }
 
         nav {
             width: 92%;
             max-width: 1100px;
-            height: 75px;
+            height: 72px;
             margin: auto;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             border-bottom: 1px solid #222;
         }
 
         .logo {
-            color: white;
+            color: #fff;
             text-decoration: none;
-
             font-size: 25px;
             font-weight: 900;
         }
@@ -57,13 +48,10 @@
         main {
             width: 92%;
             max-width: 1100px;
-            min-height: calc(100vh - 75px);
-
+            min-height: calc(100vh - 72px);
             margin: auto;
-
             display: grid;
             grid-template-columns: 1fr 420px;
-
             gap: 70px;
             align-items: center;
         }
@@ -81,7 +69,6 @@
         .hero p {
             max-width: 500px;
             margin-top: 30px;
-
             color: #777;
             font-size: 14px;
             line-height: 1.8;
@@ -89,14 +76,10 @@
 
         .card {
             padding: 32px;
-
             background: #0b0b0b;
-
             border: 1px solid #292929;
             border-radius: 18px;
-
-            box-shadow:
-                0 30px 80px rgba(0,0,0,.6);
+            box-shadow: 0 30px 80px rgba(0,0,0,.6);
         }
 
         .card h2 {
@@ -119,11 +102,8 @@
 
         label {
             display: block;
-
             margin-bottom: 8px;
-
             color: #777;
-
             font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
@@ -133,17 +113,12 @@
         input {
             width: 100%;
             height: 52px;
-
             padding: 0 15px;
-
             background: #050505;
-            color: white;
-
+            color: #fff;
             border: 1px solid #292929;
             border-radius: 9px;
-
             outline: none;
-
             font-size: 13px;
         }
 
@@ -151,36 +126,22 @@
             border-color: #777;
         }
 
-        input::placeholder {
-            color: #444;
-        }
-
         button {
             width: 100%;
             height: 52px;
-
-            border: none;
+            border: 0;
             border-radius: 9px;
-
-            background: white;
-            color: black;
-
+            background: #fff;
+            color: #000;
             font-weight: 900;
-
             cursor: pointer;
-        }
-
-        button:active {
-            transform: scale(.98);
         }
 
         .divider {
             display: flex;
             align-items: center;
             gap: 10px;
-
             margin: 22px 0;
-
             color: #444;
             font-size: 10px;
         }
@@ -194,43 +155,35 @@
         }
 
         .discord {
-            border: 1px solid #292929;
             background: #111;
-            color: white;
+            color: #fff;
+            border: 1px solid #292929;
         }
 
         .login {
             margin-top: 20px;
-
             text-align: center;
-
             color: #555;
             font-size: 11px;
         }
 
         .login a {
-            color: white;
+            color: #fff;
             text-decoration: none;
         }
 
         #message {
             min-height: 20px;
-
             margin-top: 15px;
-
             text-align: center;
-
             color: #aaa;
-
             font-size: 11px;
         }
 
         @media (max-width: 800px) {
-
             main {
                 grid-template-columns: 1fr;
                 gap: 40px;
-
                 padding: 60px 0;
             }
 
@@ -246,13 +199,11 @@
             .card {
                 width: 100%;
                 max-width: 480px;
-
                 margin: auto;
             }
         }
 
         @media (max-width: 500px) {
-
             nav {
                 height: 65px;
             }
@@ -276,15 +227,11 @@
 <body>
 
     <nav>
-
-        <a class="logo" href="index.html">
-            NØX
-        </a>
+        <a class="logo" href="index.html">NØX</a>
 
         <a class="back" href="index.html">
             ← Back
         </a>
-
     </nav>
 
 
@@ -319,7 +266,10 @@
                 </p>
 
 
-                <form id="registerForm">
+                <form
+                    id="registerForm"
+                    onsubmit="return probarFormulario(event)"
+                >
 
                     <div class="field">
 
@@ -331,7 +281,8 @@
                             id="username"
                             type="text"
                             placeholder="maxiii"
-                            required>
+                            required
+                        >
 
                     </div>
 
@@ -346,7 +297,8 @@
                             id="email"
                             type="email"
                             placeholder="you@email.com"
-                            required>
+                            required
+                        >
 
                     </div>
 
@@ -362,7 +314,8 @@
                             type="password"
                             placeholder="••••••••"
                             minlength="6"
-                            required>
+                            required
+                        >
 
                     </div>
 
@@ -381,10 +334,10 @@
 
                 <button
                     class="discord"
-                    type="button">
-
+                    type="button"
+                    onclick="alert('Discord lo conectamos después.')"
+                >
                     Continue with Discord
-
                 </button>
 
 
@@ -410,30 +363,17 @@
 
     <script>
 
-        const form =
-            document.getElementById(
-                "registerForm"
-            );
+        function probarFormulario(event) {
 
-        const message =
-            document.getElementById(
-                "message"
-            );
+            event.preventDefault();
 
+            alert("¡FUNCIONA! El formulario está conectado.");
 
-        form.addEventListener(
-            "submit",
-            function(event) {
+            document.getElementById("message").textContent =
+                "✓ El botón funciona correctamente.";
 
-                event.preventDefault();
-
-
-                message.textContent =
-                    "✓ BOTÓN FUNCIONA — NØX está conectado al formulario.";
-
-
-            }
-        );
+            return false;
+        }
 
     </script>
 
