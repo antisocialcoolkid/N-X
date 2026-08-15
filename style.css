@@ -1,240 +1,309 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* =========================
+   NØX AUTH
+========================= */
 
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background: #050505;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #202020 0%,
-            #090909 40%,
-            #050505 75%
-        );
-}
-
-.home {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-    padding: 0 25px;
-}
-
-nav {
-    height: 80px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-bottom: 1px solid #171717;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: -1px;
-}
-
-.login-button {
-    padding: 9px 15px;
-
-    background: #fff;
-    color: #000;
-
-    text-decoration: none;
-
-    border-radius: 7px;
-
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.hero {
-    min-height: 650px;
+.auth {
+    min-height: 100vh;
 
     display: flex;
     flex-direction: column;
+
+    align-items: center;
     justify-content: center;
+
+    padding: 25px;
 }
 
-.badge {
-    width: fit-content;
+.auth .logo {
+    margin-bottom: 25px;
 
-    padding: 8px 12px;
-
-    border: 1px solid #222;
-    border-radius: 100px;
-
-    color: #777;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
-}
-
-h1 {
-    margin-top: 25px;
-
-    font-size: clamp(55px, 9vw, 105px);
-
-    line-height: .9;
-
-    letter-spacing: -6px;
-}
-
-h1 span {
-    color: #555;
-}
-
-.hero p {
-    max-width: 500px;
-
-    margin-top: 30px;
-
-    color: #777;
-
-    font-size: 16px;
-
-    line-height: 1.6;
-}
-
-.buttons {
-    display: flex;
-
-    gap: 10px;
-
-    margin-top: 30px;
-}
-
-.button {
-    padding: 13px 18px;
-
-    border-radius: 7px;
+    color: white;
 
     text-decoration: none;
 
-    font-size: 13px;
-
-    font-weight: 800;
-
-    transition: .2s;
+    font-size: 24px;
+    font-weight: 900;
 }
 
-.button:hover {
-    transform: translateY(-2px);
-}
+.auth-box {
+    width: 100%;
+    max-width: 420px;
 
-.primary {
-    background: #fff;
-    color: #000;
-}
-
-.secondary {
-    background: #101010;
-    color: #fff;
-
-    border: 1px solid #222;
-}
-
-.features {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 12px;
-
-    padding: 100px 0;
-}
-
-.feature {
-    padding: 25px;
-
-    min-height: 220px;
+    padding: 30px;
 
     background: #090909;
 
-    border: 1px solid #191919;
+    border: 1px solid #1d1d1d;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
-    transition: .2s;
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.4);
 }
 
-.feature:hover {
-    transform: translateY(-4px);
+.auth-box h1 {
+    margin: 0;
 
-    border-color: #333;
+    font-size: 32px;
+
+    letter-spacing: -2px;
 }
 
-.feature span {
-    color: #444;
-
-    font-size: 11px;
-}
-
-.feature h2 {
-    margin-top: 35px;
-
-    font-size: 22px;
-}
-
-.feature p {
+.auth-box > p {
     margin-top: 10px;
 
     color: #666;
 
     font-size: 13px;
-
-    line-height: 1.6;
 }
 
-footer {
-    padding: 30px 0;
+.auth-box form {
+    margin-top: 25px;
+}
 
+.auth-box label {
+    display: block;
+
+    margin: 15px 0 7px;
+
+    color: #777;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.auth-box input {
+    width: 100%;
+
+    padding: 14px;
+
+    background: #050505;
+
+    border: 1px solid #222;
+
+    border-radius: 8px;
+
+    color: white;
+
+    outline: none;
+}
+
+.auth-box input:focus {
+    border-color: #555;
+}
+
+.auth-box form button {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    background: white;
+
+    color: black;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.divider {
     display: flex;
 
-    justify-content: space-between;
+    align-items: center;
 
-    border-top: 1px solid #171717;
+    gap: 10px;
+
+    margin: 25px 0;
 
     color: #444;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
-@media (max-width: 700px) {
+.divider::before,
+.divider::after {
+    content: "";
 
-    .home {
-        padding: 0 18px;
-    }
+    height: 1px;
 
-    h1 {
-        letter-spacing: -4px;
-    }
+    flex: 1;
 
-    .features {
-        grid-template-columns: 1fr;
-    }
-
-    .hero {
-        min-height: 600px;
-    }
-
+    background: #1d1d1d;
 }
+
+.discord {
+    width: 100%;
+
+    padding: 14px;
+
+    background: #111;
+
+    border: 1px solid #252525;
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.discord:hover {
+    background: #181818;
+
+    border-color: #333;
+}
+
+.register {
+    text-align: center;
+
+    margin-top: 20px !important;
+
+    color: #555 !important;
+}
+
+.register a {
+    color: white;
+
+    text-decoration: none;
+}
+
+#message {
+    margin-top: 15px;
+
+    color: #888;
+
+    text-align: center;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-page {
+    width: 100%;
+    max-width: 800px;
+
+    margin: auto;
+
+    padding: 0 20px;
+}
+
+.profile-page nav {
+    border-bottom: 1px solid #171717;
+}
+
+.profile-page nav button {
+    padding: 9px 14px;
+
+    background: #111;
+
+    border: 1px solid #222;
+
+    border-radius: 7px;
+
+    color: #888;
+
+    cursor: pointer;
+}
+
+.profile-card {
+    margin: 80px auto;
+
+    max-width: 550px;
+
+    padding: 40px 25px;
+
+    text-align: center;
+
+    background: #090909;
+
+    border: 1px solid #1d1d1d;
+
+    border-radius: 15px;
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #111;
+
+    border: 1px solid #333;
+
+    color: white;
+
+    font-size: 32px;
+
+    font-weight: 900;
+}
+
+.profile-card h1 {
+    margin-top: 20px;
+
+    font-size: 30px;
+
+    letter-spacing: -2px;
+}
+
+.profile-card > p {
+    margin-top: 10px;
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+.profile-links {
+    margin-top: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.profile-links a {
+    padding: 15px;
+
+    background: #0d0d0d;
+
+    border: 1px solid #1d1d1d;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: .2s;
+}
+
+.profile-links a:hover {
+    background: #151515;
+
+    transform: translateY(-2px);
+    }
