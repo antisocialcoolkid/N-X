@@ -24,14 +24,6 @@ body{
 
     min-height:100vh;
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:20px;
-
     background:
         radial-gradient(
             circle at 50% 0%,
@@ -46,6 +38,14 @@ body{
         Arial,
         Helvetica,
         sans-serif;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
 
 }
 
@@ -79,7 +79,9 @@ body{
 
     background:#0d0d0d;
 
-    border:1px solid #252525;
+    border:
+        1px solid
+        #252525;
 
     border-radius:22px;
 
@@ -99,14 +101,14 @@ h1{
 
 .subtitle{
 
+    color:#777;
+
+    font-size:13px;
+
     margin:
         8px
         0
         28px;
-
-    color:#777;
-
-    font-size:13px;
 
 }
 
@@ -123,7 +125,7 @@ label{
 
     font-size:11px;
 
-    font-weight:800;
+    font-weight:bold;
 
 }
 
@@ -139,11 +141,13 @@ input{
 
     background:#151515;
 
-    color:white;
-
-    border:1px solid #292929;
+    border:
+        1px solid
+        #292929;
 
     border-radius:9px;
+
+    color:white;
 
     outline:none;
 
@@ -195,7 +199,7 @@ button:disabled{
 
     text-align:center;
 
-    color:#777;
+    color:#888;
 
     font-size:12px;
 
@@ -298,17 +302,17 @@ button:disabled{
 
 
 <p id="message">
-    Preparando NØX...
+    Cargando NØX...
 </p>
 
 
 <p class="register">
 
-    Don't have an account?
+Don't have an account?
 
-    <a href="register.html">
-        Create one
-    </a>
+<a href="register.html">
+Create one
+</a>
 
 </p>
 
@@ -327,48 +331,11 @@ src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
-
 const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
 
-
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
-
-
-const supabase =
-window.supabase.createClient(
-
-    SUPABASE_URL,
-
-    SUPABASE_KEY
-
-);
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const email =
-document.getElementById(
-    "email"
-);
-
-
-const password =
-document.getElementById(
-    "password"
-);
-
-
-const button =
-document.getElementById(
-    "loginButton"
-);
 
 
 const message =
@@ -376,13 +343,70 @@ document.getElementById(
     "message"
 );
 
+const email =
+document.getElementById(
+    "email"
+);
+
+const password =
+document.getElementById(
+    "password"
+);
+
+const button =
+document.getElementById(
+    "loginButton"
+);
+
 
 /* =========================
-   READY
+   CHECK SUPABASE
 ========================= */
 
-message.textContent =
-"JAVASCRIPT FUNCIONA ✓";
+if(
+    typeof window.supabase ===
+    "undefined"
+){
+
+    message.className =
+    "error";
+
+    message.textContent =
+    "❌ No se pudo cargar Supabase.";
+
+}else{
+
+    message.textContent =
+    "Supabase cargado ✓";
+
+}
+
+
+/* =========================
+   CREATE CLIENT
+========================= */
+
+let client = null;
+
+
+try{
+
+    client =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+}catch(error){
+
+    message.className =
+    "error";
+
+    message.textContent =
+    "❌ " +
+    error.message;
+
+}
 
 
 /* =========================
@@ -399,7 +423,6 @@ async function login(){
 
     const emailValue =
     email.value.trim();
-
 
     const passwordValue =
     password.value;
@@ -427,16 +450,25 @@ async function login(){
     }
 
 
+    if(!client){
+
+        showError(
+            "Supabase no está disponible."
+        );
+
+        return;
+
+    }
+
+
     button.disabled =
     true;
-
 
     button.textContent =
     "Signing in...";
 
 
     message.className = "";
-
 
     message.textContent =
     "Iniciando sesión...";
@@ -445,7 +477,7 @@ async function login(){
     try{
 
         const result =
-        await supabase.auth
+        await client.auth
         .signInWithPassword({
 
             email:
@@ -458,7 +490,7 @@ async function login(){
 
 
         console.log(
-            "LOGIN RESULT:",
+            "NØX LOGIN",
             result
         );
 
@@ -466,11 +498,8 @@ async function login(){
         if(result.error){
 
             showError(
-                getErrorMessage(
-                    result.error
-                )
+                result.error.message
             );
-
 
             resetButton();
 
@@ -488,7 +517,6 @@ async function login(){
                 "No se creó la sesión."
             );
 
-
             resetButton();
 
             return;
@@ -498,7 +526,6 @@ async function login(){
 
         message.className =
         "success";
-
 
         message.textContent =
         "✓ Login correcto. Entrando...";
@@ -520,11 +547,9 @@ async function login(){
 
     }
 
-
     catch(error){
 
         console.error(
-            "LOGIN ERROR:",
             error
         );
 
@@ -587,62 +612,12 @@ password.addEventListener(
    ERROR
 ========================= */
 
-function getErrorMessage(
-    error
-){
-
-    const text =
-    String(
-        error.message ||
-        ""
-    ).toLowerCase();
-
-
-    if(
-        text.includes(
-            "invalid login credentials"
-        )
-    ){
-
-        return (
-            "Email o contraseña incorrectos."
-        );
-
-    }
-
-
-    if(
-        text.includes(
-            "email not confirmed"
-        )
-    ){
-
-        return (
-            "Debes confirmar tu email antes de iniciar sesión."
-        );
-
-    }
-
-
-    return (
-        error.message ||
-        "Error al iniciar sesión."
-    );
-
-}
-
-
-/* =========================
-   SHOW ERROR
-========================= */
-
 function showError(
     text
 ){
 
     message.className =
     "error";
-
 
     message.textContent =
     "❌ " +
@@ -659,7 +634,6 @@ function resetButton(){
 
     button.disabled =
     false;
-
 
     button.textContent =
     "Sign in";
