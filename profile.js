@@ -12,7 +12,9 @@ window.supabase.createClient(
 );
 
 
-/* ELEMENTS */
+/* =========================
+   ELEMENTS
+========================= */
 
 const form =
 document.getElementById("profileForm");
@@ -89,84 +91,137 @@ async function loadProfile(){
         data: {
             user
         },
-        error: sessionError
+        error
     } =
     await supabase.auth.getUser();
 
 
-    if(
-        sessionError ||
-        !user
-    ){
+    if(error || !user){
 
         window.location.href =
         "login.html";
 
         return;
-
     }
 
 
-    currentUser = user;
+    currentUser =
+    user;
 
 
-    const {
-        data,
-        error
-    } =
+    const result =
     await supabase
+
     .from("profiles")
-    .select("*")
-    .eq("id", user.id)
+
+    .select(`
+        id,
+        username,
+        avatar_url,
+        bio,
+        github,
+        youtube,
+        theme,
+        discord_id,
+        discord_username,
+        created_at,
+        discord
+    `)
+
+    .eq(
+        "id",
+        user.id
+    )
+
     .maybeSingle();
 
 
-    if(error){
+    if(result.error){
 
-        console.error(error);
+        console.error(
+            result.error
+        );
 
         message.className =
         "error";
 
         message.textContent =
         "❌ " +
-        error.message;
+        result.error.message;
 
         return;
-
     }
 
 
-    if(!data){
+    /*
+       Si todavía no existe el perfil,
+       dejamos el formulario listo para
+       crearlo.
+    */
+
+    if(!result.data){
+
+        usernameInput.value = "";
+        bioInput.value = "";
+        avatarInput.value = "";
+        discordInput.value = "";
+        youtubeInput.value = "";
+        githubInput.value = "";
+
+        updatePreview();
 
         message.textContent =
-        "No profile found.";
+        "Create your NØX profile.";
 
         return;
-
     }
+
+
+    const data =
+    result.data;
 
 
     usernameInput.value =
     data.username || "";
 
-    displayNameInput.value =
-    data.display_name || "";
 
     bioInput.value =
     data.bio || "";
 
+
     avatarInput.value =
     data.avatar_url || "";
 
+
     discordInput.value =
-    data.discord || "";
+    data.discord ||
+    data.discord_username ||
+    "";
+
 
     youtubeInput.value =
     data.youtube || "";
 
+
     githubInput.value =
     data.github || "";
+
+
+    /*
+       display_name NO EXISTE
+       en tu tabla.
+
+       Si el input existe,
+       usamos username como
+       nombre visual.
+    */
+
+    if(displayNameInput){
+
+        displayNameInput.value =
+        data.username || "";
+
+    }
 
 
     updatePreview();
@@ -186,7 +241,11 @@ function updatePreview(){
     usernameInput.value.trim();
 
     const displayName =
-    displayNameInput.value.trim();
+    displayNameInput
+    ?
+    displayNameInput.value.trim()
+    :
+    "";
 
     const bio =
     bioInput.value.trim();
@@ -204,121 +263,212 @@ function updatePreview(){
     githubInput.value.trim();
 
 
-    previewName.textContent =
-    displayName ||
-    username ||
-    "NØX User";
+    if(previewName){
 
-
-    previewUsername.textContent =
-    "@" +
-    (
+        previewName.textContent =
+        displayName ||
         username ||
-        "username"
-    );
+        "NØX User";
+
+    }
 
 
-    previewBio.textContent =
-    bio ||
-    "Welcome to my NØX profile.";
+    if(previewUsername){
+
+        previewUsername.textContent =
+        "@" +
+        (
+            username ||
+            "username"
+        );
+
+    }
+
+
+    if(previewBio){
+
+        previewBio.textContent =
+        bio ||
+        "Welcome to my NØX profile.";
+
+    }
 
 
     /* AVATAR */
 
-    previewAvatar.innerHTML = "";
+    if(previewAvatar){
 
-    if(avatar){
+        previewAvatar.innerHTML = "";
 
-        const img =
-        document.createElement("img");
 
-        img.src = avatar;
+        if(avatar){
 
-        img.alt = "Avatar";
+            const img =
+            document.createElement("img");
 
-        img.onerror =
-        function(){
+            img.src =
+            avatar;
 
-            previewAvatar.innerHTML =
-            "N";
+            img.alt =
+            "Avatar";
 
-        };
 
-        previewAvatar.appendChild(img);
+            img.onerror =
+            function(){
 
-    }else{
+                previewAvatar.innerHTML =
+                getInitial(
+                    displayName ||
+                    username
+                );
 
-        const firstLetter =
-        (
-            displayName ||
-            username ||
-            "N"
-        )
-        .charAt(0)
-        .toUpperCase();
+            };
 
-        previewAvatar.textContent =
-        firstLetter;
+
+            previewAvatar.appendChild(
+                img
+            );
+
+        }else{
+
+            previewAvatar.textContent =
+            getInitial(
+                displayName ||
+                username
+            );
+
+        }
 
     }
 
 
     /* LINKS */
 
-    previewLinks.innerHTML = "";
+    if(previewLinks){
+
+        previewLinks.innerHTML = "";
 
 
-    addPreviewLink(
-        discord,
-        "Discord ↗"
-    );
-
-    addPreviewLink(
-        youtube,
-        "YouTube ↗"
-    );
-
-    addPreviewLink(
-        github,
-        "GitHub ↗"
-    );
+        addPreviewLink(
+            discord,
+            "Discord ↗"
+        );
 
 
-    /* URL */
+        addPreviewLink(
+            youtube,
+            "YouTube ↗"
+        );
 
-    if(username){
+
+        addPreviewLink(
+            github,
+            "GitHub ↗"
+        );
+
+    }
+
+
+    /* PROFILE URL */
+
+    if(
+        username &&
+        profileUrl &&
+        viewProfile
+    ){
 
         const url =
-        window.location.origin +
-        "/u.html?username=" +
-        encodeURIComponent(username);
+        getProfileURL(
+            username
+        );
+
 
         profileUrl.textContent =
         url;
 
-        viewProfile.href =
-        "u.html?username=" +
-        encodeURIComponent(username);
 
-    }else{
+        viewProfile.href =
+        getProfilePath(
+            username
+        );
+
+    }
+
+    else if(profileUrl){
 
         profileUrl.textContent =
         "Choose a username";
-
-        viewProfile.href =
-        "#";
 
     }
 
 }
 
 
+/* =========================
+   INITIAL
+========================= */
+
+function getInitial(
+    value
+){
+
+    return (
+        String(value || "N")
+        .charAt(0)
+        .toUpperCase()
+    );
+
+}
+
+
+/* =========================
+   PROFILE URL
+========================= */
+
+function getProfilePath(
+    username
+){
+
+    return (
+        "u.html?username=" +
+        encodeURIComponent(
+            username
+        )
+    );
+
+}
+
+
+function getProfileURL(
+    username
+){
+
+    return (
+        window.location.origin +
+        window.location.pathname
+            .replace(
+                /[^/]+$/,
+                ""
+            ) +
+        getProfilePath(
+            username
+        )
+    );
+
+}
+
+
+/* =========================
+   PREVIEW LINK
+========================= */
+
 function addPreviewLink(
     url,
     text
 ){
 
-    if(!url){
+    if(!url || !previewLinks){
+
         return;
     }
 
@@ -326,22 +476,30 @@ function addPreviewLink(
     const a =
     document.createElement("a");
 
+
     a.className =
     "preview-link";
+
 
     a.href =
     normalizeUrl(url);
 
+
     a.target =
     "_blank";
+
 
     a.rel =
     "noopener noreferrer";
 
+
     a.textContent =
     text;
 
-    previewLinks.appendChild(a);
+
+    previewLinks.appendChild(
+        a
+    );
 
 }
 
@@ -350,18 +508,31 @@ function addPreviewLink(
    NORMALIZE URL
 ========================= */
 
-function normalizeUrl(url){
+function normalizeUrl(
+    url
+){
+
+    const value =
+    String(url).trim();
+
 
     if(
-        url.startsWith("http://") ||
-        url.startsWith("https://")
+        value.startsWith(
+            "http://"
+        ) ||
+        value.startsWith(
+            "https://"
+        )
     ){
 
-        return url;
-
+        return value;
     }
 
-    return "https://" + url;
+
+    return (
+        "https://" +
+        value
+    );
 
 }
 
@@ -379,7 +550,9 @@ function normalizeUrl(url){
     youtubeInput,
     githubInput
 ]
-.forEach(function(input){
+.filter(Boolean)
+.forEach(
+function(input){
 
     input.addEventListener(
         "input",
@@ -390,7 +563,7 @@ function normalizeUrl(url){
 
 
 /* =========================
-   SAVE
+   SAVE PROFILE
 ========================= */
 
 form.addEventListener(
@@ -402,8 +575,13 @@ async function(event){
 
     if(!currentUser){
 
-        return;
+        message.className =
+        "error";
 
+        message.textContent =
+        "❌ You are not logged in.";
+
+        return;
     }
 
 
@@ -412,6 +590,30 @@ async function(event){
     .trim()
     .toLowerCase();
 
+
+    const bio =
+    bioInput.value.trim();
+
+
+    const avatar =
+    avatarInput.value.trim();
+
+
+    const discord =
+    discordInput.value.trim();
+
+
+    const youtube =
+    youtubeInput.value.trim();
+
+
+    const github =
+    githubInput.value.trim();
+
+
+    /* =========================
+       VALIDATE USERNAME
+    ========================= */
 
     if(!username){
 
@@ -422,14 +624,13 @@ async function(event){
         "❌ Choose a username.";
 
         return;
-
     }
 
 
-    /* USERNAME VALIDATION */
-
     if(
-        !/^[a-z0-9_]+$/.test(username)
+        !/^[a-z0-9_]+$/.test(
+            username
+        )
     ){
 
         message.className =
@@ -439,9 +640,12 @@ async function(event){
         "❌ Username can only use letters, numbers and _.";
 
         return;
-
     }
 
+
+    /* =========================
+       BUTTON
+    ========================= */
 
     saveButton.disabled =
     true;
@@ -449,131 +653,164 @@ async function(event){
     saveButton.textContent =
     "Saving...";
 
+
     message.className = "";
 
     message.textContent =
-    "Updating your NØX profile...";
+    "Saving your NØX profile...";
 
 
-    /* CHECK USERNAME */
+    /* =========================
+       CHECK USERNAME
+    ========================= */
 
-    const {
-        data: existing,
-        error: checkError
-    } =
+    const check =
     await supabase
+
     .from("profiles")
+
     .select("id")
-    .eq("username", username)
-    .neq("id", currentUser.id)
+
+    .eq(
+        "username",
+        username
+    )
+
+    .neq(
+        "id",
+        currentUser.id
+    )
+
     .maybeSingle();
 
 
-    if(checkError){
+    if(check.error){
 
-        console.error(checkError);
+        console.error(
+            check.error
+        );
+
 
         message.className =
         "error";
+
 
         message.textContent =
         "❌ " +
-        checkError.message;
+        check.error.message;
 
-        saveButton.disabled =
-        false;
 
-        saveButton.textContent =
-        "Save changes";
+        resetSaveButton();
+
 
         return;
-
     }
 
 
-    if(existing){
+    if(check.data){
 
         message.className =
         "error";
+
 
         message.textContent =
         "❌ That username is already taken.";
 
-        saveButton.disabled =
-        false;
 
-        saveButton.textContent =
-        "Save changes";
+        resetSaveButton();
+
 
         return;
-
     }
 
 
-    /* UPDATE */
+    /* =========================
+       SAVE
+    ========================= */
 
-    const {
-        error
-    } =
-    await supabase
-    .from("profiles")
-    .update({
+    const profileData = {
+
+        id:
+        currentUser.id,
 
         username:
         username,
 
-        display_name:
-        displayNameInput.value.trim(),
+        avatar_url:
+        avatar,
 
         bio:
-        bioInput.value.trim(),
-
-        avatar_url:
-        avatarInput.value.trim(),
-
-        discord:
-        discordInput.value.trim(),
-
-        youtube:
-        youtubeInput.value.trim(),
+        bio,
 
         github:
-        githubInput.value.trim()
+        github,
 
-    })
-    .eq(
-        "id",
-        currentUser.id
+        youtube:
+        youtube,
+
+        discord:
+        discord,
+
+        discord_username:
+        discord,
+
+        discord_id:
+        null,
+
+        theme:
+        null
+
+    };
+
+
+    const save =
+    await supabase
+
+    .from("profiles")
+
+    .upsert(
+        profileData,
+        {
+            onConflict:
+            "id"
+        }
     );
 
 
-    if(error){
+    if(save.error){
 
-        console.error(error);
+        console.error(
+            save.error
+        );
+
 
         message.className =
         "error";
 
+
         message.textContent =
         "❌ " +
-        error.message;
+        save.error.message;
 
-        saveButton.disabled =
-        false;
 
-        saveButton.textContent =
-        "Save changes";
+        resetSaveButton();
+
 
         return;
-
     }
 
+
+    /* =========================
+       SUCCESS
+    ========================= */
 
     message.className =
     "success";
 
+
     message.textContent =
     "✓ Profile saved successfully.";
+
 
     saveButton.textContent =
     "Saved ✓";
@@ -585,88 +822,117 @@ async function(event){
     setTimeout(
     function(){
 
-        saveButton.disabled =
-        false;
-
-        saveButton.textContent =
-        "Save changes";
+        resetSaveButton();
 
     },
-    1200
+    1500
     );
 
 });
 
 
 /* =========================
-   COPY LINK
+   RESET BUTTON
 ========================= */
 
-copyButton.addEventListener(
-"click",
-async function(){
+function resetSaveButton(){
 
-    const username =
-    usernameInput.value.trim();
+    saveButton.disabled =
+    false;
 
+    saveButton.textContent =
+    "Save changes";
 
-    if(!username){
-
-        return;
-
-    }
+}
 
 
-    const url =
-    window.location.origin +
-    "/u.html?username=" +
-    encodeURIComponent(username);
+/* =========================
+   COPY PROFILE LINK
+========================= */
+
+if(copyButton){
+
+    copyButton.addEventListener(
+    "click",
+    async function(){
+
+        const username =
+        usernameInput.value.trim();
 
 
-    try{
+        if(!username){
 
-        await navigator.clipboard.writeText(
-            url
+            return;
+        }
+
+
+        const url =
+        getProfileURL(
+            username
         );
 
-        copyButton.textContent =
-        "Copied ✓";
 
+        try{
 
-        setTimeout(
-        function(){
+            await navigator
+            .clipboard
+            .writeText(
+                url
+            );
+
 
             copyButton.textContent =
-            "Copy profile link";
+            "Copied ✓";
 
-        },
-        1500
-        );
 
-    }catch(error){
+            setTimeout(
+            function(){
 
-        profileUrl.textContent =
-        url;
+                copyButton.textContent =
+                "Copy profile link";
 
-    }
+            },
+            1500
+            );
 
-});
+
+        }catch(error){
+
+            if(profileUrl){
+
+                profileUrl.textContent =
+                url;
+
+            }
+
+        }
+
+    });
+
+}
 
 
 /* =========================
    LOGOUT
 ========================= */
 
-logout.addEventListener(
-"click",
-async function(){
+if(logout){
 
-    await supabase.auth.signOut();
+    logout.addEventListener(
+    "click",
+    async function(){
 
-    window.location.href =
-    "login.html";
+        await supabase
+        .auth
+        .signOut();
 
-});
+
+        window.location.href =
+        "login.html";
+
+    });
+
+}
 
 
 /* =========================
