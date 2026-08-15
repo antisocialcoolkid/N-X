@@ -18,107 +18,78 @@
     box-sizing:border-box;
 }
 
-html,
 body{
     margin:0;
-    min-height:100%;
-}
-
-body{
-
     min-height:100vh;
 
     background:
         radial-gradient(
             circle at 50% 0%,
-            #252525,
-            #090909 45%,
+            #292929,
+            #080808 45%,
             #020202
         );
 
-    color:#fff;
+    color:white;
 
     font-family:
         Arial,
-        Helvetica,
         sans-serif;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     padding:20px;
-
 }
 
 .auth{
-
     width:100%;
-
     max-width:430px;
-
 }
 
 .logo{
-
-    display:inline-block;
-
+    display:block;
     margin-bottom:22px;
 
-    color:#fff;
-
+    color:white;
     text-decoration:none;
 
-    font-size:26px;
-
+    font-size:27px;
     font-weight:900;
-
 }
 
 .card{
-
     padding:35px 30px;
 
-    background:
-        rgba(10,10,10,.95);
+    background:#0d0d0d;
 
     border:
         1px solid
-        rgba(255,255,255,.1);
+        #252525;
 
     border-radius:22px;
 
     box-shadow:
-        0 35px 100px
+        0 30px 90px
         rgba(0,0,0,.7);
-
 }
 
 h1{
-
     margin:0;
-
     font-size:31px;
-
 }
 
 .subtitle{
-
+    color:#777;
+    font-size:13px;
     margin:
         8px
         0
         28px;
-
-    color:#777;
-
-    font-size:13px;
-
 }
 
 label{
-
     display:block;
 
     margin:
@@ -129,18 +100,16 @@ label{
     color:#aaa;
 
     font-size:11px;
-
-    font-weight:800;
-
+    font-weight:bold;
 }
 
 input{
-
     width:100%;
-
     height:50px;
 
-    padding:0 14px;
+    padding:
+        0
+        14px;
 
     background:#151515;
 
@@ -150,24 +119,13 @@ input{
 
     border-radius:9px;
 
-    color:#fff;
+    color:white;
 
     outline:none;
-
-    font-size:14px;
-
-}
-
-input:focus{
-
-    border-color:#666;
-
 }
 
 button{
-
     width:100%;
-
     height:50px;
 
     margin-top:22px;
@@ -176,52 +134,42 @@ button{
 
     border-radius:9px;
 
-    background:#fff;
+    background:white;
 
     color:#050505;
 
     font-weight:900;
 
     cursor:pointer;
-
 }
 
 button:disabled{
-
     opacity:.5;
-
-    cursor:not-allowed;
-
 }
 
 #message{
 
-    min-height:20px;
+    min-height:22px;
 
     margin-top:16px;
 
     text-align:center;
 
-    color:#777;
+    color:#aaa;
 
     font-size:12px;
 
 }
 
 .success{
-
-    color:#64ff91 !important;
-
+    color:#5cff8d !important;
 }
 
 .error{
-
-    color:#ff6565 !important;
-
+    color:#ff6060 !important;
 }
 
 .register{
-
     margin-top:25px;
 
     text-align:center;
@@ -229,13 +177,10 @@ button:disabled{
     color:#666;
 
     font-size:12px;
-
 }
 
 .register a{
-
-    color:#fff;
-
+    color:white;
 }
 
 </style>
@@ -270,7 +215,7 @@ button:disabled{
 </p>
 
 
-<label for="email">
+<label>
     Email
 </label>
 
@@ -279,11 +224,10 @@ button:disabled{
     id="email"
     type="email"
     placeholder="you@email.com"
-    autocomplete="email"
 >
 
 
-<label for="password">
+<label>
     Password
 </label>
 
@@ -292,7 +236,6 @@ button:disabled{
     id="password"
     type="password"
     placeholder="••••••••"
-    autocomplete="current-password"
 >
 
 
@@ -305,17 +248,17 @@ button:disabled{
 
 
 <p id="message">
-    Cargando...
+    Preparando NØX...
 </p>
 
 
 <p class="register">
 
-    Don't have an account?
+Don't have an account?
 
-    <a href="register.html">
-        Create one
-    </a>
+<a href="register.html">
+Create one
+</a>
 
 </p>
 
@@ -327,13 +270,55 @@ button:disabled{
 
 <!-- SUPABASE -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
 
 
 <script>
 
 /* =========================
-   SUPABASE CONFIG
+   STEP 1
+========================= */
+
+const message =
+document.getElementById(
+    "message"
+);
+
+
+message.textContent =
+"1/4 — JavaScript cargado ✓";
+
+
+/* =========================
+   STEP 2
+========================= */
+
+if(
+    typeof window.supabase ===
+    "undefined"
+){
+
+    message.className =
+    "error";
+
+    message.textContent =
+    "❌ 2/4 — Supabase JS NO cargó.";
+
+    throw new Error(
+        "Supabase JS no está disponible."
+    );
+
+}
+
+
+message.textContent =
+"2/4 — Supabase JS cargado ✓";
+
+
+/* =========================
+   CONFIG
 ========================= */
 
 const SUPABASE_URL =
@@ -344,14 +329,38 @@ const SUPABASE_KEY =
 
 
 /* =========================
-   CREATE CLIENT
+   STEP 3
 ========================= */
 
-const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+let supabase;
+
+
+try{
+
+    supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+}
+
+catch(error){
+
+    message.className =
+    "error";
+
+    message.textContent =
+    "❌ 3/4 — Error Supabase: " +
+    error.message;
+
+    throw error;
+
+}
+
+
+message.textContent =
+"3/4 — Cliente Supabase creado ✓";
 
 
 /* =========================
@@ -368,34 +377,29 @@ document.getElementById(
     "password"
 );
 
-const loginButton =
+const button =
 document.getElementById(
     "loginButton"
 );
 
-const message =
-document.getElementById(
-    "message"
+
+/* =========================
+   STEP 4
+========================= */
+
+button.addEventListener(
+    "click",
+    login
 );
 
 
-/* =========================
-   READY
-========================= */
-
 message.textContent =
-"JAVASCRIPT FUNCIONA ✓";
+"4/4 — ¡LOGIN LISTO! ✓";
 
 
 /* =========================
    LOGIN
 ========================= */
-
-loginButton.addEventListener(
-    "click",
-    login
-);
-
 
 async function login(){
 
@@ -428,10 +432,10 @@ async function login(){
     }
 
 
-    loginButton.disabled =
+    button.disabled =
     true;
 
-    loginButton.textContent =
+    button.textContent =
     "Signing in...";
 
 
@@ -460,13 +464,8 @@ async function login(){
 
 
         console.log(
-            "LOGIN DATA:",
-            data
-        );
-
-
-        console.log(
-            "LOGIN ERROR:",
+            "LOGIN:",
+            data,
             error
         );
 
@@ -474,12 +473,10 @@ async function login(){
         if(error){
 
             showError(
-                getError(
-                    error
-                )
+                error.message
             );
 
-            resetButton();
+            reset();
 
             return;
 
@@ -492,10 +489,10 @@ async function login(){
         ){
 
             showError(
-                "No se pudo crear la sesión."
+                "No se creó la sesión."
             );
 
-            resetButton();
+            reset();
 
             return;
 
@@ -509,7 +506,7 @@ async function login(){
         "✓ Login correcto. Entrando...";
 
 
-        loginButton.textContent =
+        button.textContent =
         "Success ✓";
 
 
@@ -531,13 +528,11 @@ async function login(){
             error
         );
 
-
         showError(
             error.message
         );
 
-
-        resetButton();
+        reset();
 
     }
 
@@ -587,69 +582,7 @@ password.addEventListener(
 
 
 /* =========================
-   ERRORS
-========================= */
-
-function getError(
-    error
-){
-
-    const text =
-    String(
-        error.message ||
-        ""
-    ).toLowerCase();
-
-
-    if(
-        text.includes(
-            "invalid login credentials"
-        )
-    ){
-
-        return (
-            "Email o contraseña incorrectos."
-        );
-
-    }
-
-
-    if(
-        text.includes(
-            "email not confirmed"
-        )
-    ){
-
-        return (
-            "Debes confirmar tu email antes de iniciar sesión."
-        );
-
-    }
-
-
-    if(
-        text.includes(
-            "rate limit"
-        )
-    ){
-
-        return (
-            "Demasiados intentos. Espera un momento."
-        );
-
-    }
-
-
-    return (
-        error.message ||
-        "Error al iniciar sesión."
-    );
-
-}
-
-
-/* =========================
-   ERROR MESSAGE
+   ERROR
 ========================= */
 
 function showError(
@@ -667,15 +600,15 @@ function showError(
 
 
 /* =========================
-   RESET BUTTON
+   RESET
 ========================= */
 
-function resetButton(){
+function reset(){
 
-    loginButton.disabled =
+    button.disabled =
     false;
 
-    loginButton.textContent =
+    button.textContent =
     "Sign in";
 
 }
