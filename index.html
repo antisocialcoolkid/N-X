@@ -1,462 +1,691 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
 
 <title>NØX — Profiles</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-    min-height:100vh;
-    overflow-x:hidden;
-    background:#030303;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    background: #030303;
+    color: #fff;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
-/* BACKGROUND */
+/* =========================
+   BACKGROUND
+========================= */
 
-.bg{
-    position:fixed;
-    inset:0;
-    z-index:-5;
-    overflow:hidden;
+.background {
+    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    z-index: -10;
+
     background:
         radial-gradient(
-            circle at 50% 20%,
-            #171717 0%,
-            #070707 35%,
+            circle at 50% 0%,
+            #191919 0%,
+            #080808 35%,
             #030303 75%
         );
 }
 
-.glow{
-    position:absolute;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    filter:blur(120px);
-    opacity:.18;
-    background:#fff;
-    animation:float 10s ease-in-out infinite;
+.grid {
+    position: absolute;
+    inset: 0;
+
+    opacity: .25;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 90%
+        );
 }
 
-.glow.one{
-    top:-250px;
-    left:-150px;
+/* LIGHT ORBS */
+
+.orb {
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    filter: blur(120px);
+
+    opacity: .13;
+
+    background: white;
+
+    animation: orbMove 12s ease-in-out infinite;
 }
 
-.glow.two{
-    right:-250px;
-    bottom:-200px;
-    animation-delay:-5s;
+.orb.one {
+    top: -220px;
+    left: -180px;
 }
 
-@keyframes float{
-    0%,100%{
-        transform:translate(0,0) scale(1);
+.orb.two {
+    right: -220px;
+    top: 35%;
+
+    animation-delay: -5s;
+}
+
+.orb.three {
+    bottom: -280px;
+    left: 35%;
+
+    animation-delay: -8s;
+}
+
+@keyframes orbMove {
+
+    0%,100% {
+        transform:
+            translate3d(0,0,0)
+            scale(1);
     }
 
-    50%{
-        transform:translate(60px,40px) scale(1.15);
-    }
-}
-
-/* PARTICLES */
-
-.particles{
-    position:absolute;
-    inset:0;
-}
-
-.particle{
-    position:absolute;
-    width:2px;
-    height:2px;
-    background:#fff;
-    border-radius:50%;
-    opacity:.25;
-    animation:rise linear infinite;
-}
-
-@keyframes rise{
-    from{
-        transform:translateY(100vh);
-        opacity:0;
-    }
-
-    20%{
-        opacity:.3;
-    }
-
-    80%{
-        opacity:.3;
-    }
-
-    to{
-        transform:translateY(-20vh);
-        opacity:0;
-    }
-}
-
-/* CONTAINER */
-
-.container{
-    width:min(1150px,92%);
-    margin:auto;
-}
-
-/* NAV */
-
-nav{
-    height:82px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    border-bottom:1px solid rgba(255,255,255,.08);
-
-    animation:navIn .8s ease both;
-}
-
-@keyframes navIn{
-    from{
-        opacity:0;
-        transform:translateY(-20px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
+    50% {
+        transform:
+            translate3d(50px,35px,0)
+            scale(1.15);
     }
 }
 
-.logo{
-    color:#fff;
-    text-decoration:none;
+/* =========================
+   PARTICLES
+========================= */
 
-    font-size:23px;
-    font-weight:900;
-    letter-spacing:-1px;
+.particles {
+    position: absolute;
+    inset: 0;
 }
 
-.login{
-    padding:10px 17px;
+.particle {
+    position: absolute;
 
-    border:1px solid #292929;
-    border-radius:8px;
+    width: 2px;
+    height: 2px;
 
-    color:#aaa;
-    background:#0b0b0b;
+    border-radius: 50%;
 
-    text-decoration:none;
+    background: white;
 
-    font-size:12px;
-    font-weight:bold;
+    opacity: .25;
 
-    transition:.25s;
+    animation:
+        particleMove
+        linear
+        infinite;
 }
 
-.login:hover{
-    color:#000;
-    background:#fff;
-    border-color:#fff;
-    transform:translateY(-2px);
-}
+@keyframes particleMove {
 
-/* HERO */
-
-.hero{
-    min-height:690px;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-
-    position:relative;
-}
-
-.hero-content{
-    max-width:850px;
-
-    animation:heroIn 1s cubic-bezier(.2,.8,.2,1) both;
-}
-
-@keyframes heroIn{
-    from{
-        opacity:0;
-        transform:translateY(35px);
+    from {
+        transform:
+            translateY(110vh)
+            scale(.5);
     }
 
-    to{
-        opacity:1;
-        transform:translateY(0);
+    50% {
+        opacity: .35;
+    }
+
+    to {
+        transform:
+            translateY(-20vh)
+            scale(1);
+        opacity: 0;
     }
 }
 
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
+/* =========================
+   MAIN
+========================= */
 
-    padding:8px 13px;
+.container {
+    width: min(1150px, 92%);
 
-    border:1px solid #292929;
-    border-radius:100px;
-
-    background:rgba(255,255,255,.025);
-
-    color:#888;
-
-    font-size:9px;
-    font-weight:bold;
-
-    letter-spacing:2px;
-
-    box-shadow:0 0 30px rgba(255,255,255,.03);
+    margin: auto;
 }
 
-.dot{
-    width:6px;
-    height:6px;
+/* =========================
+   NAVBAR
+========================= */
 
-    border-radius:50%;
+nav {
+    height: 82px;
 
-    background:#fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    box-shadow:0 0 12px #fff;
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+    animation:
+        navIn
+        .8s
+        ease
+        both;
 }
 
-h1{
-    margin-top:28px;
+@keyframes navIn {
 
-    font-size:clamp(
-        65px,
-        11vw,
-        135px
-    );
+    from {
+        opacity: 0;
+        transform: translateY(-18px);
+    }
 
-    line-height:.82;
-
-    letter-spacing:-9px;
-
-    font-weight:900;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-h1 span{
-    color:#3f3f3f;
+.logo {
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 24px;
+
+    font-weight: 900;
+
+    letter-spacing: -1px;
 }
 
-.description{
-    max-width:520px;
-
-    margin-top:35px;
-
-    color:#777;
-
-    font-size:15px;
-
-    line-height:1.7;
+.logo:hover {
+    opacity: .75;
 }
 
-.buttons{
-    display:flex;
+/* LOGIN */
 
-    gap:10px;
+.login {
+    position: relative;
 
-    margin-top:32px;
+    padding: 10px 17px;
+
+    border:
+        1px solid
+        #292929;
+
+    border-radius: 9px;
+
+    background: rgba(255,255,255,.025);
+
+    color: #aaa;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition:
+        .25s ease;
 }
 
-.button{
-    position:relative;
+.login:hover {
+    color: #000;
 
-    padding:14px 21px;
+    background: #fff;
 
-    border-radius:9px;
+    border-color: #fff;
 
-    text-decoration:none;
-
-    font-size:12px;
-
-    font-weight:bold;
-
-    transition:.25s;
-
-    overflow:hidden;
+    transform:
+        translateY(-2px);
 }
 
-.primary{
-    background:#fff;
-    color:#000;
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 700px;
+
+    display: flex;
+    align-items: center;
+
+    position: relative;
+}
+
+.hero-content {
+    max-width: 850px;
+
+    animation:
+        heroIn
+        1s
+        cubic-bezier(.2,.8,.2,1)
+        both;
+}
+
+@keyframes heroIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(35px)
+            scale(.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+/* BADGE */
+
+.badge {
+    width: fit-content;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 8px 13px;
+
+    border:
+        1px solid
+        #292929;
+
+    border-radius: 100px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color: #888;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
 
     box-shadow:
-        0 0 35px rgba(255,255,255,.08);
+        0 0 35px
+        rgba(255,255,255,.025);
 }
 
-.primary:hover{
-    transform:translateY(-4px);
+.badge-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: white;
 
     box-shadow:
-        0 10px 40px rgba(255,255,255,.15);
+        0 0 12px
+        rgba(255,255,255,.8);
+
+    animation:
+        pulse
+        2s
+        infinite;
 }
 
-.secondary{
-    color:#aaa;
+@keyframes pulse {
 
-    background:#0b0b0b;
+    0%,100% {
+        opacity: .5;
+        transform: scale(.8);
+    }
 
-    border:1px solid #252525;
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
 }
 
-.secondary:hover{
-    color:#fff;
+/* TITLE */
 
-    border-color:#444;
+h1 {
+    margin-top: 28px;
 
-    transform:translateY(-4px);
+    font-size:
+        clamp(
+            62px,
+            10.5vw,
+            135px
+        );
+
+    line-height: .84;
+
+    letter-spacing:
+        clamp(
+            -8px,
+            -0.7vw,
+            -5px
+        );
+
+    font-weight: 950;
 }
 
-/* FLOATING CARD */
+.title-gray {
+    color: #3d3d3d;
+}
 
-.preview{
-    position:absolute;
+/* DESCRIPTION */
 
-    right:0;
-    bottom:70px;
+.description {
+    max-width: 520px;
 
-    width:260px;
+    margin-top: 34px;
 
-    padding:18px;
+    color: #737373;
+
+    font-size: 15px;
+
+    line-height: 1.75;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.buttons {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 32px;
+}
+
+.button {
+    position: relative;
+
+    padding: 14px 21px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+.button:hover {
+    transform:
+        translateY(-4px);
+}
+
+.primary {
+    color: #000;
+
+    background: #fff;
+
+    box-shadow:
+        0 0 35px
+        rgba(255,255,255,.06);
+}
+
+.primary:hover {
+    box-shadow:
+        0 15px 45px
+        rgba(255,255,255,.14);
+}
+
+.secondary {
+    color: #aaa;
+
+    background: #0b0b0b;
+
+    border:
+        1px solid
+        #252525;
+}
+
+.secondary:hover {
+    color: #fff;
+
+    border-color: #444;
+}
+
+/* =========================
+   PROFILE PREVIEW
+========================= */
+
+.profile-preview {
+    position: absolute;
+
+    right: 0;
+
+    bottom: 75px;
+
+    width: 275px;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius: 17px;
 
     background:
         linear-gradient(
             145deg,
             rgba(25,25,25,.9),
-            rgba(8,8,8,.9)
+            rgba(7,7,7,.9)
         );
 
-    border:1px solid #252525;
-
-    border-radius:16px;
+    backdrop-filter:
+        blur(18px);
 
     box-shadow:
-        0 30px 80px rgba(0,0,0,.5);
+        0 35px 100px
+        rgba(0,0,0,.6);
 
-    transform:rotate(3deg);
+    transform:
+        rotate(3deg);
 
     animation:
-        cardFloat 5s ease-in-out infinite;
-
-    backdrop-filter:blur(15px);
+        floatingCard
+        5s
+        ease-in-out
+        infinite;
 }
 
-@keyframes cardFloat{
-    0%,100%{
-        transform:translateY(0) rotate(3deg);
+@keyframes floatingCard {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            rotate(3deg);
     }
 
-    50%{
-        transform:translateY(-15px) rotate(1deg);
+    50% {
+        transform:
+            translateY(-15px)
+            rotate(1deg);
     }
 }
 
-.avatar{
-    width:45px;
-    height:45px;
+.avatar {
+    width: 50px;
+    height: 50px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#181818;
+    border:
+        1px solid
+        #333;
 
-    border:1px solid #333;
+    background:
+        linear-gradient(
+            145deg,
+            #222,
+            #0c0c0c
+        );
 
-    font-weight:900;
+    font-size: 18px;
+
+    font-weight: 900;
 }
 
-.preview-name{
-    margin-top:15px;
+.preview-name {
+    margin-top: 16px;
 
-    font-size:17px;
-    font-weight:bold;
+    font-size: 18px;
+
+    font-weight: 800;
 }
 
-.preview-user{
-    margin-top:4px;
+.preview-user {
+    margin-top: 4px;
 
-    color:#666;
+    color: #666;
 
-    font-size:11px;
+    font-size: 11px;
 }
 
-.preview-links{
-    display:grid;
+.preview-bio {
+    margin-top: 14px;
 
-    gap:7px;
+    color: #777;
 
-    margin-top:18px;
+    font-size: 11px;
+
+    line-height: 1.6;
 }
 
-.preview-link{
-    padding:9px;
+.preview-links {
+    display: grid;
 
-    border:1px solid #1f1f1f;
+    gap: 7px;
 
-    border-radius:7px;
-
-    color:#888;
-
-    font-size:10px;
-
-    background:#0d0d0d;
+    margin-top: 18px;
 }
 
-/* FEATURES */
+.preview-link {
+    padding: 10px;
 
-.features{
-    padding:90px 0 120px;
+    border:
+        1px solid
+        #1e1e1e;
+
+    border-radius: 7px;
+
+    background:
+        rgba(255,255,255,.02);
+
+    color: #888;
+
+    font-size: 10px;
+
+    transition: .2s;
 }
 
-.section-title{
-    margin-bottom:25px;
+.preview-link:hover {
+    color: white;
 
-    color:#555;
-
-    font-size:11px;
-
-    font-weight:bold;
-
-    letter-spacing:3px;
+    border-color: #333;
 }
 
-.cards{
-    display:grid;
+/* =========================
+   FEATURES
+========================= */
+
+.features {
+    padding:
+        100px
+        0
+        120px;
+}
+
+.section-label {
+    margin-bottom: 24px;
+
+    color: #4c4c4c;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 3px;
+}
+
+.cards {
+    display: grid;
 
     grid-template-columns:
-        repeat(3,1fr);
+        repeat(3, 1fr);
 
-    gap:12px;
+    gap: 12px;
 }
 
-.card{
-    min-height:220px;
+.card {
+    min-height: 225px;
 
-    padding:26px;
+    padding: 26px;
+
+    border:
+        1px solid
+        #191919;
+
+    border-radius: 15px;
 
     background:
         linear-gradient(
@@ -465,101 +694,183 @@ h1 span{
             #070707
         );
 
-    border:1px solid #1a1a1a;
-
-    border-radius:14px;
-
-    transition:.3s;
+    transition:
+        .3s ease;
 }
 
-.card:hover{
-    transform:translateY(-7px);
+.card:hover {
+    transform:
+        translateY(-8px);
 
-    border-color:#303030;
+    border-color:
+        #303030;
 
     box-shadow:
-        0 25px 70px rgba(0,0,0,.35);
+        0 25px 80px
+        rgba(0,0,0,.4);
 }
 
-.number{
-    color:#444;
+.card-number {
+    color: #444;
 
-    font-size:10px;
+    font-size: 10px;
 
-    letter-spacing:2px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
 }
 
-.card h2{
-    margin-top:45px;
+.card h2 {
+    margin-top: 45px;
 
-    font-size:22px;
+    font-size: 21px;
+
+    letter-spacing: -.5px;
 }
 
-.card p{
-    margin-top:10px;
+.card p {
+    margin-top: 11px;
 
-    color:#666;
+    color: #666;
 
-    font-size:13px;
+    font-size: 13px;
 
-    line-height:1.7;
+    line-height: 1.7;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
-footer{
-    display:flex;
+footer {
+    display: flex;
 
-    justify-content:space-between;
+    align-items: center;
+    justify-content: space-between;
 
-    padding:28px 0;
+    padding:
+        28px
+        0;
 
-    border-top:1px solid #181818;
+    border-top:
+        1px solid
+        #171717;
 
-    color:#3f3f3f;
+    color: #3d3d3d;
 
-    font-size:10px;
+    font-size: 10px;
 
-    letter-spacing:1px;
+    letter-spacing: 1px;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
-@media(max-width:850px){
+@media (max-width: 900px) {
 
-    .preview{
-        display:none;
+    .profile-preview {
+        display: none;
     }
 
-    .hero{
-        min-height:620px;
+    .hero {
+        min-height: 650px;
     }
 }
 
-@media(max-width:650px){
+@media (max-width: 650px) {
 
-    .container{
-        width:90%;
+    .container {
+        width: 90%;
     }
 
-    h1{
-        font-size:65px;
-
-        letter-spacing:-5px;
+    nav {
+        height: 70px;
     }
 
-    .cards{
-        grid-template-columns:1fr;
+    .logo {
+        font-size: 21px;
     }
 
-    .buttons{
-        flex-direction:column;
-
-        width:100%;
+    .login {
+        padding:
+            9px 14px;
     }
 
-    .button{
-        text-align:center;
+    .hero {
+        min-height: 650px;
+
+        align-items: flex-start;
+    }
+
+    h1 {
+        margin-top: 25px;
+
+        font-size:
+            clamp(
+                58px,
+                17vw,
+                85px
+            );
+
+        letter-spacing: -5px;
+    }
+
+    .description {
+        margin-top: 27px;
+
+        font-size: 14px;
+    }
+
+    .buttons {
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 9px;
+    }
+
+    .button {
+        width: 100%;
+
+        padding: 15px;
+
+        text-align: center;
+    }
+
+    .features {
+        padding-top: 60px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        min-height: 190px;
+    }
+
+    .card h2 {
+        margin-top: 32px;
+    }
+
+    footer {
+        padding-bottom: 25px;
+    }
+}
+
+/* =========================
+   REDUCE MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
     }
 }
 </style>
@@ -567,30 +878,62 @@ footer{
 
 <body>
 
-<div class="bg">
+<!-- BACKGROUND -->
 
-    <div class="glow one"></div>
-    <div class="glow two"></div>
+<div class="background">
+
+    <div class="grid"></div>
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
 
     <div class="particles">
 
-        <i class="particle"
-           style="left:10%;animation-duration:12s;"></i>
+        <span
+            class="particle"
+            style="left:5%;animation-duration:14s;">
+        </span>
 
-        <i class="particle"
-           style="left:25%;animation-duration:17s;"></i>
+        <span
+            class="particle"
+            style="left:13%;animation-duration:18s;">
+        </span>
 
-        <i class="particle"
-           style="left:42%;animation-duration:14s;"></i>
+        <span
+            class="particle"
+            style="left:25%;animation-duration:12s;">
+        </span>
 
-        <i class="particle"
-           style="left:58%;animation-duration:19s;"></i>
+        <span
+            class="particle"
+            style="left:38%;animation-duration:17s;">
+        </span>
 
-        <i class="particle"
-           style="left:72%;animation-duration:13s;"></i>
+        <span
+            class="particle"
+            style="left:51%;animation-duration:20s;">
+        </span>
 
-        <i class="particle"
-           style="left:88%;animation-duration:16s;"></i>
+        <span
+            class="particle"
+            style="left:63%;animation-duration:15s;">
+        </span>
+
+        <span
+            class="particle"
+            style="left:76%;animation-duration:19s;">
+        </span>
+
+        <span
+            class="particle"
+            style="left:89%;animation-duration:13s;">
+        </span>
+
+        <span
+            class="particle"
+            style="left:96%;animation-duration:16s;">
+        </span>
 
     </div>
 
@@ -599,53 +942,77 @@ footer{
 
 <div class="container">
 
+<!-- NAV -->
+
 <nav>
 
-    <a href="index.html" class="logo">
+    <a
+        href="index.html"
+        class="logo">
         NØX
     </a>
 
-    <a href="login.html" class="login">
+    <a
+        href="login.html"
+        class="login">
         Login
     </a>
 
 </nav>
 
 
+<!-- HERO -->
+
 <section class="hero">
 
     <div class="hero-content">
 
         <div class="badge">
-            <span class="dot"></span>
+
+            <span class="badge-dot"></span>
+
             NØX PROFILES
+
         </div>
 
+
         <h1>
+
             Your identity.<br>
-            <span>Your space.</span>
+
+            <span class="title-gray">
+                Your space.
+            </span>
+
         </h1>
 
+
         <p class="description">
-            Create a profile that feels like you.
-            Share your socials, links and identity
-            through one simple NØX profile.
+
+            Create your own NØX profile.
+            Share your socials, links and
+            identity through one simple page.
+
         </p>
+
 
         <div class="buttons">
 
             <a
                 href="register.html"
-                class="button primary"
-            >
+                class="button primary">
+
                 Create profile
+
             </a>
+
 
             <a
                 href="#features"
-                class="button secondary"
-            >
+                class="button secondary">
+
                 Explore NØX
+
             </a>
 
         </div>
@@ -653,7 +1020,9 @@ footer{
     </div>
 
 
-    <div class="preview">
+    <!-- PROFILE CARD -->
+
+    <div class="profile-preview">
 
         <div class="avatar">
             N
@@ -665,6 +1034,10 @@ footer{
 
         <div class="preview-user">
             @username
+        </div>
+
+        <div class="preview-bio">
+            Welcome to my NØX profile.
         </div>
 
         <div class="preview-links">
@@ -688,17 +1061,22 @@ footer{
 </section>
 
 
-<section class="features" id="features">
+<!-- FEATURES -->
 
-    <div class="section-title">
+<section
+    class="features"
+    id="features">
+
+    <div class="section-label">
         WHY NØX
     </div>
+
 
     <div class="cards">
 
         <div class="card">
 
-            <div class="number">
+            <div class="card-number">
                 01
             </div>
 
@@ -707,9 +1085,9 @@ footer{
             </h2>
 
             <p>
-                One username, one identity
-                and a profile made entirely
-                around you.
+                Create a unique profile
+                with your own username,
+                bio and identity.
             </p>
 
         </div>
@@ -717,7 +1095,7 @@ footer{
 
         <div class="card">
 
-            <div class="number">
+            <div class="card-number">
                 02
             </div>
 
@@ -727,8 +1105,8 @@ footer{
 
             <p>
                 Put Discord, YouTube,
-                GitHub and everything else
-                in one place.
+                GitHub and your other
+                socials in one place.
             </p>
 
         </div>
@@ -736,7 +1114,7 @@ footer{
 
         <div class="card">
 
-            <div class="number">
+            <div class="card-number">
                 03
             </div>
 
@@ -745,8 +1123,9 @@ footer{
             </h2>
 
             <p>
-                A clean personal page that
-                you can share anywhere.
+                One username.
+                One profile.
+                One NØX identity.
             </p>
 
         </div>
@@ -756,9 +1135,13 @@ footer{
 </section>
 
 
+<!-- FOOTER -->
+
 <footer>
 
-    <span>NØX</span>
+    <span>
+        NØX
+    </span>
 
     <span>
         Profiles V1
@@ -769,4 +1152,4 @@ footer{
 </div>
 
 </body>
-                </html>
+</html>
