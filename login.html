@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,17 +6,58 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NØX — Login</title>
 
-<link
-    rel="stylesheet"
-    href="style.css"
->
+<style>
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#050505;
+    color:white;
+    font-family:Arial,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.box{
+    width:90%;
+    max-width:400px;
+    padding:30px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:20px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    margin:8px 0 15px;
+    box-sizing:border-box;
+    background:#181818;
+    color:white;
+    border:1px solid #333;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+#message{
+    margin-top:15px;
+    color:#aaa;
+}
+
+</style>
 
 </head>
 
@@ -23,118 +65,211 @@
 <body>
 
 
-<main class="auth">
+<div class="box">
 
-    <a
-        href="index.html"
-        class="logo"
-    >
-        NØX
-    </a>
+<h1>Welcome back.</h1>
+
+<p>Sign in to your NØX profile.</p>
 
 
-    <div class="auth-box">
+<label>Email</label>
 
-        <h1>
-            Welcome back.
-        </h1>
-
-
-        <p>
-            Sign in to your NØX profile.
-        </p>
+<input
+    id="email"
+    type="email"
+    autocomplete="email"
+>
 
 
-        <form
-            id="loginForm"
-            novalidate
-        >
+<label>Password</label>
 
-            <label for="email">
-                Email
-            </label>
-
-
-            <input
-                id="email"
-                type="email"
-                placeholder="you@email.com"
-                autocomplete="email"
-                required
-            >
+<input
+    id="password"
+    type="password"
+    autocomplete="current-password"
+>
 
 
-            <label for="password">
-                Password
-            </label>
+<button
+    id="loginButton"
+    type="button"
+>
+    Sign in
+</button>
 
 
-            <input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                autocomplete="current-password"
-                required
-            >
+<p id="message">
+    JS cargando...
+</p>
 
 
-            <button
-                id="loginButton"
-                type="submit"
-            >
-                Sign in
-            </button>
-
-        </form>
+</div>
 
 
-        <div class="divider">
-
-            <span>
-                OR
-            </span>
-
-        </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-        <button
-            id="discordLogin"
-            class="discord"
-            type="button"
-        >
-            Continue with Discord
-        </button>
+<script>
+
+const message =
+document.getElementById(
+    "message"
+);
 
 
-        <p class="register">
-
-            Don't have an account?
-
-            <a href="register.html">
-                Create one
-            </a>
-
-        </p>
+const button =
+document.getElementById(
+    "loginButton"
+);
 
 
-        <p
-            id="message"
-            aria-live="polite"
-        ></p>
-
-    </div>
-
-</main>
+const email =
+document.getElementById(
+    "email"
+);
 
 
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+const password =
+document.getElementById(
+    "password"
+);
+
+
+message.textContent =
+"JAVASCRIPT FUNCIONA ✓";
+
+
+button.addEventListener(
+    "click",
+    login
+);
+
+
+async function login(){
+
+    const emailValue =
+    email.value.trim();
+
+    const passwordValue =
+    password.value;
+
+
+    if(!emailValue){
+
+        message.textContent =
+        "❌ Escribe tu email.";
+
+        return;
+
+    }
+
+
+    if(!passwordValue){
+
+        message.textContent =
+        "❌ Escribe tu contraseña.";
+
+        return;
+
+    }
+
+
+    button.disabled =
+    true;
+
+    button.textContent =
+    "Signing in...";
+
+
+    message.textContent =
+    "Conectando con Supabase...";
+
+
+    try{
+
+        const supabase =
+        window.supabase.createClient(
+
+            "https://asgowauvzfnsszstvzqi.supabase.co",
+
+            "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS"
+
+        );
+
+
+        const result =
+        await supabase.auth.signInWithPassword({
+
+            email:
+            emailValue,
+
+            password:
+            passwordValue
+
+        });
+
+
+        console.log(
+            result
+        );
+
+
+        if(result.error){
+
+            message.textContent =
+            "❌ " +
+            result.error.message;
+
+            button.disabled =
+            false;
+
+            button.textContent =
+            "Sign in";
+
+            return;
+
+        }
+
+
+        message.textContent =
+        "✓ Login correcto. Entrando...";
+
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                "profile.html";
+
+            },
+            500
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        message.textContent =
+        "❌ " +
+        error.message;
+
+
+        button.disabled =
+        false;
+
+        button.textContent =
+        "Sign in";
+
+    }
+
+}
+
 </script>
-
-
-<script
-    src="auth.js?v=10"
-></script>
 
 
 </body>
