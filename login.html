@@ -5,123 +5,441 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>NØX — Login</title>
 
 <style>
 
+/* =========================
+   RESET
+========================= */
+
 *{
     box-sizing:border-box;
 }
 
+html,
 body{
     margin:0;
-    min-height:100vh;
-    background:#050505;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+    padding:0;
+    width:100%;
+    min-height:100%;
 }
+
+body{
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #292929 0%,
+            #0b0b0b 42%,
+            #020202 100%
+        );
+
+    color:#fff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+.bg::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    left:-250px;
+
+    top:-250px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    filter:blur(160px);
+
+    opacity:.06;
+
+}
+
+.bg::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    right:-250px;
+
+    bottom:-250px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    filter:blur(160px);
+
+    opacity:.05;
+
+}
+
+
+/* =========================
+   AUTH
+========================= */
 
 .auth{
+
     width:100%;
-    max-width:420px;
+
+    max-width:430px;
+
 }
+
+
+/* =========================
+   LOGO
+========================= */
 
 .logo{
-    display:block;
-    margin-bottom:20px;
+
+    display:inline-block;
+
+    margin-bottom:22px;
+
     color:#fff;
+
     text-decoration:none;
+
     font-size:26px;
+
     font-weight:900;
+
+    letter-spacing:-1px;
+
 }
 
-.box{
-    padding:30px;
-    background:#0d0d0d;
-    border:1px solid #252525;
-    border-radius:20px;
-    box-shadow:0 30px 80px rgba(0,0,0,.6);
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+
+    width:100%;
+
+    padding:35px 30px;
+
+    background:
+        rgba(10,10,10,.94);
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 35px 100px
+        rgba(0,0,0,.7);
+
 }
+
+
+/* =========================
+   TITLE
+========================= */
 
 h1{
+
     margin:0;
-    font-size:30px;
+
+    font-size:31px;
+
+    letter-spacing:-1.2px;
+
 }
 
 .subtitle{
+
+    margin:
+        8px
+        0
+        28px;
+
     color:#777;
+
     font-size:13px;
-    margin:8px 0 28px;
+
 }
+
+
+/* =========================
+   LABEL
+========================= */
 
 label{
+
     display:block;
-    margin:15px 0 7px;
+
+    margin:
+        16px
+        0
+        7px;
+
     color:#aaa;
-    font-size:12px;
+
+    font-size:11px;
+
+    font-weight:800;
+
 }
 
+
+/* =========================
+   INPUT
+========================= */
+
 input{
+
     width:100%;
-    padding:14px;
-    border:1px solid #292929;
-    border-radius:9px;
+
+    height:50px;
+
+    padding:
+        0
+        14px;
+
     background:#151515;
-    color:white;
+
+    border:
+        1px solid
+        #292929;
+
+    border-radius:9px;
+
+    color:#fff;
+
     outline:none;
+
+    font-size:14px;
+
+    transition:
+        border-color .2s,
+        background .2s;
+
 }
 
 input:focus{
+
+    background:#181818;
+
     border-color:#666;
+
 }
 
-button{
+input::placeholder{
+
+    color:#555;
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+#loginButton{
+
     width:100%;
-    margin-top:20px;
-    padding:14px;
+
+    height:50px;
+
+    margin-top:22px;
+
     border:0;
+
     border-radius:9px;
-    background:white;
+
+    background:#fff;
+
     color:#050505;
+
+    font-size:13px;
+
     font-weight:900;
+
     cursor:pointer;
+
+    transition:
+        transform .2s,
+        box-shadow .2s,
+        opacity .2s;
+
 }
 
-button:disabled{
-    opacity:.5;
+#loginButton:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 35px
+        rgba(255,255,255,.12);
+
 }
+
+#loginButton:active{
+
+    transform:
+        translateY(0);
+
+}
+
+#loginButton:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
 
 #message{
+
     min-height:20px;
-    margin-top:16px;
+
+    margin:
+        16px
+        0
+        0;
+
     text-align:center;
+
+    color:#777;
+
     font-size:12px;
-    color:#888;
+
+    line-height:1.5;
+
 }
 
 .success{
-    color:#5cff8d !important;
+
+    color:#64ff91 !important;
+
 }
 
 .error{
-    color:#ff6060 !important;
+
+    color:#ff6565 !important;
+
 }
 
+
+/* =========================
+   REGISTER
+========================= */
+
 .register{
-    margin-top:25px;
+
+    margin:
+        25px
+        0
+        0;
+
     text-align:center;
+
     color:#666;
+
     font-size:12px;
+
 }
 
 .register a{
-    color:white;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:500px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+    .card{
+
+        padding:
+            30px
+            20px;
+
+    }
+
+    h1{
+
+        font-size:27px;
+
+    }
+
 }
 
 </style>
@@ -130,6 +448,9 @@ button:disabled{
 
 
 <body>
+
+
+<div class="bg"></div>
 
 
 <main class="auth">
@@ -143,7 +464,7 @@ button:disabled{
 </a>
 
 
-<section class="box">
+<section class="card">
 
 
 <h1>
@@ -156,7 +477,7 @@ button:disabled{
 </p>
 
 
-<label>
+<label for="email">
     Email
 </label>
 
@@ -169,7 +490,7 @@ button:disabled{
 >
 
 
-<label>
+<label for="password">
     Password
 </label>
 
@@ -190,8 +511,10 @@ button:disabled{
 </button>
 
 
-<p id="message">
-    Cargando...
+<p
+    id="message"
+>
+    Preparando NØX...
 </p>
 
 
@@ -211,173 +534,355 @@ button:disabled{
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
 
 
 <script>
 
-const URL =
+/* =========================
+   CONFIG
+========================= */
+
+const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
 
-const KEY =
+
+const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-const email =
-document.getElementById("email");
+/* =========================
+   ELEMENTS
+========================= */
 
-const password =
-document.getElementById("password");
+const emailInput =
+document.getElementById(
+    "email"
+);
 
-const button =
-document.getElementById("loginButton");
+const passwordInput =
+document.getElementById(
+    "password"
+);
+
+const loginButton =
+document.getElementById(
+    "loginButton"
+);
 
 const message =
-document.getElementById("message");
+document.getElementById(
+    "message"
+);
 
+
+/* =========================
+   SUPABASE CLIENT
+========================= */
+
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================
+   READY
+========================= */
 
 message.textContent =
 "JAVASCRIPT FUNCIONA ✓";
 
 
-button.addEventListener(
+/* =========================
+   LOGIN CLICK
+========================= */
+
+loginButton.addEventListener(
     "click",
-    async function(){
-
-        const emailValue =
-        email.value.trim();
-
-        const passwordValue =
-        password.value;
+    login
+);
 
 
-        if(!emailValue){
+/* =========================
+   ENTER
+========================= */
 
-            message.className =
-            "error";
+emailInput.addEventListener(
+    "keydown",
+    function(event){
 
-            message.textContent =
-            "❌ Escribe tu email.";
+        if(
+            event.key ===
+            "Enter"
+        ){
 
-            return;
+            event.preventDefault();
 
-        }
-
-
-        if(!passwordValue){
-
-            message.className =
-            "error";
-
-            message.textContent =
-            "❌ Escribe tu contraseña.";
-
-            return;
-
-        }
-
-
-        button.disabled =
-        true;
-
-        button.textContent =
-        "Signing in...";
-
-        message.className = "";
-
-        message.textContent =
-        "Conectando...";
-
-
-        try{
-
-            const client =
-            window.supabase.createClient(
-                URL,
-                KEY
-            );
-
-
-            const result =
-            await client.auth.signInWithPassword({
-
-                email:
-                emailValue,
-
-                password:
-                passwordValue
-
-            });
-
-
-            console.log(
-                result
-            );
-
-
-            if(result.error){
-
-                message.className =
-                "error";
-
-                message.textContent =
-                "❌ " +
-                result.error.message;
-
-                button.disabled =
-                false;
-
-                button.textContent =
-                "Sign in";
-
-                return;
-
-            }
-
-
-            message.className =
-            "success";
-
-            message.textContent =
-            "✓ Login correcto. Entrando...";
-
-
-            setTimeout(
-                function(){
-
-                    window.location.href =
-                    "profile.html";
-
-                },
-                800
-            );
-
-        }
-
-
-        catch(error){
-
-            console.error(
-                error
-            );
-
-            message.className =
-            "error";
-
-            message.textContent =
-            "❌ " +
-            error.message;
-
-            button.disabled =
-            false;
-
-            button.textContent =
-            "Sign in";
+            login();
 
         }
 
     }
 );
+
+
+passwordInput.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            event.preventDefault();
+
+            login();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGIN
+========================= */
+
+async function login(){
+
+    const email =
+    emailInput.value.trim();
+
+    const password =
+    passwordInput.value;
+
+
+    /* VALIDATION */
+
+    if(!email){
+
+        showError(
+            "Escribe tu email."
+        );
+
+        return;
+
+    }
+
+
+    if(!password){
+
+        showError(
+            "Escribe tu contraseña."
+        );
+
+        return;
+
+    }
+
+
+    /* LOADING */
+
+    loginButton.disabled =
+    true;
+
+    loginButton.textContent =
+    "Signing in...";
+
+    message.className = "";
+
+    message.textContent =
+    "Conectando con NØX...";
+
+
+    try{
+
+        console.log(
+            "NØX LOGIN START"
+        );
+
+
+        /* =========================
+           SUPABASE LOGIN
+        ========================= */
+
+        const {
+            data,
+            error
+        } =
+        await supabase.auth
+        .signInWithPassword({
+
+            email:
+            email,
+
+            password:
+            password
+
+        });
+
+
+        console.log(
+            "NØX LOGIN RESULT",
+            data,
+            error
+        );
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        if(error){
+
+            showError(
+                error.message
+            );
+
+
+            resetButton();
+
+            return;
+
+        }
+
+
+        /* =========================
+           CHECK SESSION
+        ========================= */
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+        await supabase.auth
+        .getSession();
+
+
+        if(sessionError){
+
+            showError(
+                sessionError.message
+            );
+
+
+            resetButton();
+
+            return;
+
+        }
+
+
+        if(
+            !sessionData ||
+            !sessionData.session
+        ){
+
+            showError(
+                "La sesión no se creó."
+            );
+
+
+            resetButton();
+
+            return;
+
+        }
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        message.className =
+        "success";
+
+        message.textContent =
+        "✓ Login correcto.";
+
+
+        loginButton.textContent =
+        "Entrando...";
+
+
+        /* =========================
+           REDIRECT
+        ========================= */
+
+        setTimeout(
+        function(){
+
+            window.location.href =
+            "profile.html";
+
+        },
+        700
+        );
+
+    }
+
+
+    catch(error){
+
+        console.error(
+            "NØX LOGIN ERROR",
+            error
+        );
+
+
+        showError(
+            error.message ||
+            "Error desconocido."
+        );
+
+
+        resetButton();
+
+    }
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(
+    text
+){
+
+    message.className =
+    "error";
+
+    message.textContent =
+    "❌ " +
+    text;
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetButton(){
+
+    loginButton.disabled =
+    false;
+
+    loginButton.textContent =
+    "Sign in";
+
+}
 
 </script>
 
