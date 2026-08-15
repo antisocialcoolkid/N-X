@@ -2,9 +2,9 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NØX — Profile</title>
+<title>NØX Profile</title>
 
 <style>
 *{
@@ -13,31 +13,34 @@
 
 html,body{
     margin:0;
+    width:100%;
     min-height:100%;
 }
 
 body{
     min-height:100vh;
     display:flex;
-    align-items:center;
     justify-content:center;
-    padding:20px;
+    align-items:center;
+    padding:25px;
     background:#050505;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+    color:white;
+    font-family:Arial, sans-serif;
     overflow-x:hidden;
 }
-
-/* BACKGROUND */
 
 #background{
     position:fixed;
     inset:0;
-    z-index:-5;
-    background:#050505;
-    background-position:center;
+    z-index:-3;
+    background:
+        radial-gradient(
+            circle at top,
+            #292929,
+            #050505 65%
+        );
     background-size:cover;
-    background-repeat:no-repeat;
+    background-position:center;
 }
 
 #backgroundVideo{
@@ -46,76 +49,81 @@ body{
     width:100%;
     height:100%;
     object-fit:cover;
+    z-index:-2;
     display:none;
-    z-index:-4;
 }
 
-#overlay{
+.overlay{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.4);
-    z-index:-3;
+    background:rgba(0,0,0,.35);
+    z-index:-1;
 }
-
-/* LOADING */
 
 #loading{
     position:fixed;
     inset:0;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     background:#050505;
     color:#888;
     font-size:14px;
-    z-index:100;
+    z-index:50;
 }
 
-#loading.hidden{
-    display:none;
+.hidden{
+    display:none !important;
 }
-
-/* PROFILE */
 
 .profile{
     width:100%;
-    max-width:460px;
-    padding:30px 24px;
-    border:1px solid #292929;
-    border-radius:24px;
-    background:rgba(10,10,10,.72);
-    backdrop-filter:blur(18px);
-    box-shadow:0 30px 100px rgba(0,0,0,.55);
+    max-width:470px;
+    padding:35px 25px;
     text-align:center;
+
+    background:rgba(10,10,10,.82);
+    border:1px solid #292929;
+    border-radius:22px;
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.6);
+
     animation:appear .5s ease;
 }
 
 @keyframes appear{
     from{
         opacity:0;
-        transform:translateY(15px) scale(.97);
+        transform:translateY(15px) scale(.98);
     }
 
     to{
         opacity:1;
-        transform:none;
+        transform:translateY(0) scale(1);
     }
 }
-
-/* AVATAR */
 
 .avatar{
     width:105px;
     height:105px;
+
     margin:auto;
-    border-radius:50%;
-    overflow:hidden;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#181818;
-    border:3px solid #fff;
-    font-size:36px;
+
+    overflow:hidden;
+
+    border-radius:50%;
+    border:4px solid white;
+
+    background:#191919;
+
+    font-size:35px;
     font-weight:900;
 }
 
@@ -124,8 +132,6 @@ body{
     height:100%;
     object-fit:cover;
 }
-
-/* TEXT */
 
 .name{
     margin-top:18px;
@@ -140,130 +146,62 @@ body{
 }
 
 .bio{
-    margin:17px auto 0;
-    max-width:390px;
+    margin:18px auto 0;
+    max-width:380px;
+
     color:#bbb;
-    line-height:1.55;
+
     font-size:14px;
+    line-height:1.55;
 }
-
-/* BADGES */
-
-.badges{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:7px;
-    margin-top:15px;
-}
-
-.badge{
-    padding:6px 10px;
-    border:1px solid #333;
-    border-radius:999px;
-    background:#111;
-    color:#ddd;
-    font-size:11px;
-}
-
-/* VIEWS */
 
 .views{
-    margin-top:14px;
+    margin-top:15px;
+
     color:#777;
+
     font-size:12px;
 }
-
-/* LINKS */
 
 .links{
     display:flex;
     flex-direction:column;
-    gap:8px;
-    margin-top:20px;
+    gap:9px;
+
+    margin-top:22px;
 }
 
 .link{
     display:block;
-    padding:12px;
+
+    padding:13px;
+
     border:1px solid #292929;
-    border-radius:11px;
+    border-radius:10px;
+
     background:#111;
-    color:#fff;
+
+    color:white;
     text-decoration:none;
+
     transition:.2s;
 }
 
 .link:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 25px rgba(255,255,255,.15);
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,.12);
 }
 
-/* MUSIC */
-
-.music{
-    width:100%;
-    margin-top:18px;
-}
-
-.music audio{
-    width:100%;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* RAIN */
-
-.rain{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:5;
-}
-
-.drop{
-    position:absolute;
-    top:-20px;
-    width:1px;
-    height:18px;
-    background:rgba(255,255,255,.35);
-    animation:fall linear infinite;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(110vh);
-    }
-}
-
-/* ERROR */
-
-.error{
-    color:#ff7777;
+#error{
+    color:#ff7070;
     text-align:center;
-    line-height:1.6;
 }
 
-/* MOBILE */
-
-@media(max-width:600px){
-
-    body{
-        padding:12px;
-    }
-
-    .profile{
-        padding:26px 17px;
-    }
-
-    .name{
-        font-size:25px;
-    }
-
+#music{
+    width:100%;
+    margin-top:20px;
 }
 </style>
 </head>
@@ -278,97 +216,86 @@ body{
 
 <video
     id="backgroundVideo"
+    autoplay
     muted
     loop
-    playsinline
-></video>
+    playsinline>
+</video>
 
-<div id="overlay"></div>
+<div class="overlay"></div>
 
-<div
-    id="rain"
-    class="rain hidden"
-></div>
 
 <main
     id="profile"
-    class="profile hidden"
->
+    class="profile hidden">
 
     <div
         id="avatar"
-        class="avatar"
-    >
+        class="avatar">
         N
     </div>
 
     <div
         id="name"
-        class="name"
-    >
+        class="name">
         NØX User
     </div>
 
     <div
         id="username"
-        class="username"
-    >
+        class="username">
         @username
     </div>
 
     <div
         id="bio"
-        class="bio"
-    >
+        class="bio">
         Welcome to my NØX profile.
     </div>
 
     <div
-        id="badges"
-        class="badges"
-    ></div>
-
-    <div
         id="views"
-        class="views"
-    >
+        class="views">
         👁️ 0 vistas
     </div>
 
     <div
         id="links"
-        class="links"
-    ></div>
-
-    <div
-        id="musicBox"
-        class="music hidden"
-    >
-        <audio
-            id="music"
-            controls
-        ></audio>
+        class="links">
     </div>
+
+    <audio
+        id="music"
+        controls
+        class="hidden">
+    </audio>
 
 </main>
 
 
-<!-- SUPABASE DEBE CARGARSE ANTES DEL SCRIPT PRINCIPAL -->
+<!-- ======================================
+     SUPABASE DEBE CARGAR PRIMERO
+====================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-<script>
+<!-- ======================================
+     CÓDIGO DEL PERFIL
+====================================== -->
 
-/* ==========================================
-   SUPABASE
-========================================== */
+<script>
 
 const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
+
+/* ======================================
+   CREAR CLIENTE
+====================================== */
 
 const supabase =
 window.supabase.createClient(
@@ -377,17 +304,17 @@ window.supabase.createClient(
 );
 
 
-/* ==========================================
+/* ======================================
    ELEMENTOS
-========================================== */
+====================================== */
 
 const loading =
 document.getElementById("loading");
 
-const profileElement =
+const profile =
 document.getElementById("profile");
 
-const avatarElement =
+const avatar =
 document.getElementById("avatar");
 
 const nameElement =
@@ -399,79 +326,67 @@ document.getElementById("username");
 const bioElement =
 document.getElementById("bio");
 
-const badgesElement =
-document.getElementById("badges");
-
 const viewsElement =
 document.getElementById("views");
 
 const linksElement =
 document.getElementById("links");
 
-const backgroundElement =
+const background =
 document.getElementById("background");
 
 const backgroundVideo =
 document.getElementById("backgroundVideo");
 
-const overlay =
-document.getElementById("overlay");
-
-const musicBox =
-document.getElementById("musicBox");
-
 const music =
 document.getElementById("music");
 
-const rain =
-document.getElementById("rain");
 
-
-/* ==========================================
-   USERNAME DE LA URL
-========================================== */
+/* ======================================
+   USERNAME DESDE LA URL
+====================================== */
 
 const params =
 new URLSearchParams(
     window.location.search
 );
 
-const requestedUsername =
+const username =
 params.get("username");
 
 
-/* ==========================================
+/* ======================================
    CARGAR PERFIL
-========================================== */
+====================================== */
 
 async function loadProfile(){
 
     try{
 
-        if(!requestedUsername){
+        if(!username){
 
             showError(
                 "No se especificó un username."
             );
 
             return;
+
         }
 
 
         const cleanUsername =
-        requestedUsername
+        username
         .trim()
         .toLowerCase();
 
 
-        /*
-           BUSCAR PERFIL
-        */
+        console.log(
+            "Buscando perfil:",
+            cleanUsername
+        );
 
-        const {
-            data,
-            error
-        } =
+
+        const result =
         await supabase
         .from("profiles")
         .select("*")
@@ -482,6 +397,19 @@ async function loadProfile(){
         .maybeSingle();
 
 
+        const data =
+        result.data;
+
+        const error =
+        result.error;
+
+
+        console.log(
+            "Perfil:",
+            data
+        );
+
+
         if(error){
 
             console.error(
@@ -490,37 +418,40 @@ async function loadProfile(){
             );
 
             showError(
-                "Error cargando el perfil."
+                "Error de Supabase: " +
+                error.message
             );
 
             return;
+
         }
 
 
         if(!data){
 
             showError(
-                "Este perfil no existe."
+                "Perfil @" +
+                cleanUsername +
+                " no encontrado."
             );
 
             return;
+
         }
 
 
-        /*
+        /* ==================================
            MOSTRAR PERFIL
-        */
+        ================================== */
 
         renderProfile(data);
 
 
-        /*
+        /* ==================================
            SUMAR VISTA
-        */
+        ================================== */
 
-        const {
-            error:viewError
-        } =
+        const viewResult =
         await supabase.rpc(
             "increment_profile_views",
             {
@@ -529,22 +460,21 @@ async function loadProfile(){
         );
 
 
-        if(viewError){
+        if(viewResult.error){
 
             console.error(
-                "Error al sumar vista:",
-                viewError
+                "Error sumando vista:",
+                viewResult.error
             );
+
+            /*
+               Aunque falle el contador,
+               el perfil sigue funcionando.
+            */
 
         }else{
 
-            /*
-               Como la RPC incrementó la
-               base de datos, mostramos
-               inmediatamente +1.
-            */
-
-            const newViews =
+            const currentViews =
             Number(
                 data.profile_views || 0
             ) + 1;
@@ -552,22 +482,22 @@ async function loadProfile(){
 
             viewsElement.textContent =
             "👁️ " +
-            newViews +
+            currentViews +
             (
-                newViews === 1
+                currentViews === 1
                 ? " vista"
                 : " vistas"
             );
 
         }
 
-
     }catch(error){
 
         console.error(error);
 
         showError(
-            "Error inesperado."
+            "Error inesperado: " +
+            error.message
         );
 
     }
@@ -575,15 +505,13 @@ async function loadProfile(){
 }
 
 
-/* ==========================================
+/* ======================================
    MOSTRAR PERFIL
-========================================== */
+====================================== */
 
 function renderProfile(data){
 
-    /*
-       APODO
-    */
+    /* APODO */
 
     nameElement.textContent =
     data.display_name ||
@@ -591,31 +519,23 @@ function renderProfile(data){
     "NØX User";
 
 
-    /*
-       USERNAME
-       SOLO SE MUESTRA
-       NO SE MODIFICA
-    */
+    /* USERNAME */
 
     usernameElement.textContent =
     "@" +
     data.username;
 
 
-    /*
-       BIO
-    */
+    /* BIO */
 
     bioElement.textContent =
     data.bio ||
     "Welcome to my NØX profile.";
 
 
-    /*
-       VISTAS
-    */
+    /* VISTAS */
 
-    const views =
+    const totalViews =
     Number(
         data.profile_views || 0
     );
@@ -623,20 +543,17 @@ function renderProfile(data){
 
     viewsElement.textContent =
     "👁️ " +
-    views +
+    totalViews +
     (
-        views === 1
+        totalViews === 1
         ? " vista"
         : " vistas"
     );
 
 
-    /*
-       AVATAR
-    */
+    /* AVATAR */
 
-    avatarElement.innerHTML =
-    "";
+    avatar.innerHTML = "";
 
 
     if(data.avatar_url){
@@ -644,8 +561,10 @@ function renderProfile(data){
         const img =
         document.createElement("img");
 
+
         img.src =
         data.avatar_url;
+
 
         img.alt =
         "Avatar";
@@ -654,7 +573,7 @@ function renderProfile(data){
         img.onerror =
         function(){
 
-            avatarElement.textContent =
+            avatar.textContent =
             getFirstLetter(
                 data.display_name ||
                 data.username
@@ -663,13 +582,11 @@ function renderProfile(data){
         };
 
 
-        avatarElement.appendChild(
-            img
-        );
+        avatar.appendChild(img);
 
     }else{
 
-        avatarElement.textContent =
+        avatar.textContent =
         getFirstLetter(
             data.display_name ||
             data.username
@@ -678,18 +595,10 @@ function renderProfile(data){
     }
 
 
-    /*
-       BADGES
-    */
+    /* LINKS */
 
-    loadBadges(
-        data.badges
-    );
+    linksElement.innerHTML = "";
 
-
-    /*
-       REDES
-    */
 
     addLink(
         data.discord,
@@ -707,11 +616,6 @@ function renderProfile(data){
     );
 
     addLink(
-        data.spotify,
-        "Spotify"
-    );
-
-    addLink(
         data.youtube,
         "YouTube"
     );
@@ -721,152 +625,131 @@ function renderProfile(data){
         "GitHub"
     );
 
+    addLink(
+        data.spotify,
+        "Spotify"
+    );
 
-    /*
+
+    /* ==================================
        FONDO
-    */
+    ================================== */
 
-    loadBackground(
-        data
-    );
+    if(data.background_url){
+
+        if(
+            data.background_type ===
+            "video"
+        ){
+
+            backgroundVideo.src =
+            data.background_url;
+
+            backgroundVideo.style.display =
+            "block";
+
+            background.style.display =
+            "none";
+
+        }else{
+
+            background.style.backgroundImage =
+            "url('" +
+            data.background_url +
+            "')";
+
+        }
+
+    }
 
 
-    /*
+    /* ==================================
        MÚSICA
-    */
+    ================================== */
 
-    loadMusic(
-        data
-    );
+    if(data.music_url){
 
+        music.src =
+        data.music_url;
 
-    /*
-       COLORES
-    */
-
-    applyColors(
-        data
-    );
+        music.classList.remove(
+            "hidden"
+        );
 
 
-    /*
-       EFECTOS
-    */
+        /*
+           Los navegadores bloquean
+           autoplay de audio.
 
-    applyEffects(
-        data
-    );
+           Por eso empieza cuando
+           el visitante toca la página.
+        */
+
+        document.addEventListener(
+            "click",
+            function(){
+
+                music.play()
+                .catch(
+                    function(){}
+                );
+
+            },
+            {
+                once:true
+            }
+        );
+
+    }
 
 
-    /*
-       MOSTRAR
-    */
+    /* MOSTRAR */
 
     loading.classList.add(
         "hidden"
     );
 
-    profileElement.classList.remove(
+    profile.classList.remove(
         "hidden"
     );
 
 }
 
 
-/* ==========================================
-   BADGES
-========================================== */
-
-function loadBadges(
-    badges
-){
-
-    badgesElement.innerHTML =
-    "";
-
-
-    if(!badges)
-        return;
-
-
-    let list = [];
-
-
-    if(Array.isArray(badges)){
-
-        list =
-        badges;
-
-    }else{
-
-        list =
-        String(badges)
-        .split(",");
-
-    }
-
-
-    list
-    .map(
-        x => String(x).trim()
-    )
-    .filter(Boolean)
-    .forEach(
-        badgeText => {
-
-            const badge =
-            document.createElement(
-                "div"
-            );
-
-            badge.className =
-            "badge";
-
-            badge.textContent =
-            badgeText;
-
-            badgesElement.appendChild(
-                badge
-            );
-
-        }
-    );
-
-}
-
-
-/* ==========================================
-   LINKS
-========================================== */
+/* ======================================
+   CREAR LINK
+====================================== */
 
 function addLink(
     url,
-    name
+    text
 ){
 
-    if(!url)
+    if(!url){
         return;
+    }
 
 
     const a =
-    document.createElement(
-        "a"
-    );
+    document.createElement("a");
 
 
     a.className =
     "link";
 
+
     a.textContent =
-    name + " ↗";
+    text +
+    " ↗";
+
 
     a.href =
-    normalizeUrl(
-        url
-    );
+    normalizeUrl(url);
+
 
     a.target =
     "_blank";
+
 
     a.rel =
     "noopener noreferrer";
@@ -879,17 +762,11 @@ function addLink(
 }
 
 
-/* ==========================================
-   NORMALIZAR URL
-========================================== */
+/* ======================================
+   URL
+====================================== */
 
-function normalizeUrl(
-    url
-){
-
-    url =
-    String(url).trim();
-
+function normalizeUrl(url){
 
     if(
         url.startsWith("http://") ||
@@ -900,355 +777,16 @@ function normalizeUrl(
 
     }
 
-
-    return "https://" +
-    url;
+    return "https://" + url;
 
 }
 
 
-/* ==========================================
-   FONDO
-========================================== */
-
-function loadBackground(
-    data
-){
-
-    const url =
-    data.background_url;
-
-
-    const type =
-    data.background_type ||
-    "image";
-
-
-    if(!url){
-
-        backgroundElement.style.background =
-        data.background_color ||
-        "#050505";
-
-        return;
-    }
-
-
-    if(type === "video"){
-
-        backgroundElement.style.display =
-        "none";
-
-        backgroundVideo.src =
-        url;
-
-        backgroundVideo.style.display =
-        "block";
-
-
-        backgroundVideo.play()
-        .catch(
-            () => {}
-        );
-
-    }else{
-
-        backgroundVideo.pause();
-
-        backgroundVideo.removeAttribute(
-            "src"
-        );
-
-        backgroundVideo.style.display =
-        "none";
-
-        backgroundElement.style.backgroundImage =
-        `url("${url}")`;
-
-    }
-
-}
-
-
-/* ==========================================
-   MÚSICA
-========================================== */
-
-function loadMusic(
-    data
-){
-
-    if(!data.music_url){
-
-        musicBox.classList.add(
-            "hidden"
-        );
-
-        return;
-    }
-
-
-    music.src =
-    data.music_url;
-
-
-    musicBox.classList.remove(
-        "hidden"
-    );
-
-
-    /*
-       Los navegadores bloquean
-       autoplay de audio en muchos casos.
-       Se intenta reproducir después
-       del primer clic.
-    */
-
-    document.addEventListener(
-        "click",
-        function playMusic(){
-
-            music.play()
-            .catch(
-                () => {}
-            );
-
-            document.removeEventListener(
-                "click",
-                playMusic
-            );
-
-        }
-    );
-
-}
-
-
-/* ==========================================
-   COLORES
-========================================== */
-
-function applyColors(
-    data
-){
-
-    if(data.background_color){
-
-        backgroundElement.style.backgroundColor =
-        data.background_color;
-
-    }
-
-
-    if(data.text_color){
-
-        document.body.style.color =
-        data.text_color;
-
-    }
-
-
-    if(data.overlay_opacity !== null &&
-       data.overlay_opacity !== undefined){
-
-        overlay.style.background =
-        `rgba(0,0,0,${
-            data.overlay_opacity
-        })`;
-
-    }
-
-}
-
-
-/* ==========================================
-   EFECTOS
-========================================== */
-
-function applyEffects(
-    data
-){
-
-    /*
-       GLITCH
-    */
-
-    if(data.glitch_enabled){
-
-        usernameElement.style.textShadow =
-        "2px 0 #ff004c,-2px 0 #00eaff";
-
-        usernameElement.style.animation =
-        "glitch .18s infinite alternate";
-
-    }
-
-
-    /*
-       3D
-    */
-
-    if(data.three_d_enabled){
-
-        enable3D();
-
-    }
-
-
-    /*
-       LLUVIA
-    */
-
-    if(data.rain_enabled){
-
-        createRain();
-
-    }
-
-
-    /*
-       CURSOR
-    */
-
-    if(data.cursor_url){
-
-        document.body.style.cursor =
-        `url("${data.cursor_url}"), auto`;
-
-    }
-
-
-    /*
-       FUENTE
-    */
-
-    if(data.font_family){
-
-        document.body.style.fontFamily =
-        data.font_family;
-
-    }
-
-}
-
-
-/* ==========================================
-   3D
-========================================== */
-
-function enable3D(){
-
-    profileElement.addEventListener(
-        "mousemove",
-        function(event){
-
-            const rect =
-            profileElement.getBoundingClientRect();
-
-
-            const x =
-            event.clientX -
-            rect.left;
-
-
-            const y =
-            event.clientY -
-            rect.top;
-
-
-            const rotateY =
-            ((x / rect.width) - .5) * 10;
-
-
-            const rotateX =
-            ((y / rect.height) - .5) * -10;
-
-
-            profileElement.style.transform =
-            `perspective(900px)
-             rotateX(${rotateX}deg)
-             rotateY(${rotateY}deg)`;
-
-        }
-    );
-
-
-    profileElement.addEventListener(
-        "mouseleave",
-        function(){
-
-            profileElement.style.transform =
-            "";
-
-        }
-    );
-
-}
-
-
-/* ==========================================
-   LLUVIA
-========================================== */
-
-function createRain(){
-
-    rain.classList.remove(
-        "hidden"
-    );
-
-
-    for(
-        let i = 0;
-        i < 80;
-        i++
-    ){
-
-        const drop =
-        document.createElement(
-            "div"
-        );
-
-
-        drop.className =
-        "drop";
-
-
-        drop.style.left =
-        Math.random() * 100 +
-        "%";
-
-
-        drop.style.animationDuration =
-        (
-            0.5 +
-            Math.random() * 1.5
-        ) +
-        "s";
-
-
-        drop.style.animationDelay =
-        (
-            Math.random() * 2
-        ) +
-        "s";
-
-
-        rain.appendChild(
-            drop
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   PRIMERA LETRA
-========================================== */
-
-function getFirstLetter(
-    text
-){
+/* ======================================
+   LETRA DEL AVATAR
+====================================== */
+
+function getFirstLetter(text){
 
     return (
         text ||
@@ -1260,41 +798,35 @@ function getFirstLetter(
 }
 
 
-/* ==========================================
+/* ======================================
    ERROR
-========================================== */
+====================================== */
 
-function showError(
-    message
-){
+function showError(text){
 
     loading.classList.add(
         "hidden"
     );
 
-
-    profileElement.classList.remove(
+    profile.classList.remove(
         "hidden"
     );
 
-
-    profileElement.innerHTML =
+    profile.innerHTML =
     `
-        <div class="error">
-            ${escapeHtml(message)}
+        <div id="error">
+            ${escapeHtml(text)}
         </div>
     `;
 
 }
 
 
-/* ==========================================
-   ESCAPAR HTML
-========================================== */
+/* ======================================
+   SEGURIDAD
+====================================== */
 
-function escapeHtml(
-    value
-){
+function escapeHtml(value){
 
     return String(value)
     .replaceAll(
@@ -1321,9 +853,9 @@ function escapeHtml(
 }
 
 
-/* ==========================================
+/* ======================================
    INICIAR
-========================================== */
+====================================== */
 
 loadProfile();
 
