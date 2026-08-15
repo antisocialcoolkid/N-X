@@ -1,20 +1,387 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<title>PRUEBA NØX</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NØX — Login</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:#050505;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.auth{
+    width:100%;
+    max-width:420px;
+}
+
+.logo{
+    display:block;
+    margin-bottom:20px;
+    color:#fff;
+    text-decoration:none;
+    font-size:26px;
+    font-weight:900;
+}
+
+.box{
+    padding:30px;
+    background:#0d0d0d;
+    border:1px solid #252525;
+    border-radius:20px;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+
+h1{
+    margin:0;
+    font-size:30px;
+}
+
+.subtitle{
+    color:#777;
+    font-size:13px;
+    margin:8px 0 28px;
+}
+
+label{
+    display:block;
+    margin:15px 0 7px;
+    color:#aaa;
+    font-size:12px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:1px solid #292929;
+    border-radius:9px;
+    background:#151515;
+    color:white;
+    outline:none;
+}
+
+input:focus{
+    border-color:#666;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:white;
+    color:#050505;
+    font-weight:900;
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.5;
+}
+
+#message{
+    min-height:20px;
+    margin-top:16px;
+    text-align:center;
+    font-size:12px;
+    color:#888;
+}
+
+.success{
+    color:#5cff8d !important;
+}
+
+.error{
+    color:#ff6060 !important;
+}
+
+.register{
+    margin-top:25px;
+    text-align:center;
+    color:#666;
+    font-size:12px;
+}
+
+.register a{
+    color:white;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<h1>ESTE ES EL LOGIN NUEVO</h1>
+
+<main class="auth">
+
+
+<a
+    href="index.html"
+    class="logo"
+>
+    NØX
+</a>
+
+
+<section class="box">
+
+
+<h1>
+    Welcome back.
+</h1>
+
+
+<p class="subtitle">
+    Sign in to your NØX profile.
+</p>
+
+
+<label>
+    Email
+</label>
+
+
+<input
+    id="email"
+    type="email"
+    placeholder="you@email.com"
+    autocomplete="email"
+>
+
+
+<label>
+    Password
+</label>
+
+
+<input
+    id="password"
+    type="password"
+    placeholder="••••••••"
+    autocomplete="current-password"
+>
+
 
 <button
+    id="loginButton"
     type="button"
-    onclick="document.body.innerHTML += '<h2>FUNCIONA ✓</h2>'"
 >
-    HACER PRUEBA
+    Sign in
 </button>
 
+
+<p id="message">
+    Cargando...
+</p>
+
+
+<p class="register">
+
+    Don't have an account?
+
+    <a href="register.html">
+        Create one
+    </a>
+
+</p>
+
+
+</section>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
+
+const KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
+
+const email =
+document.getElementById("email");
+
+const password =
+document.getElementById("password");
+
+const button =
+document.getElementById("loginButton");
+
+const message =
+document.getElementById("message");
+
+
+message.textContent =
+"JAVASCRIPT FUNCIONA ✓";
+
+
+button.addEventListener(
+    "click",
+    async function(){
+
+        const emailValue =
+        email.value.trim();
+
+        const passwordValue =
+        password.value;
+
+
+        if(!emailValue){
+
+            message.className =
+            "error";
+
+            message.textContent =
+            "❌ Escribe tu email.";
+
+            return;
+
+        }
+
+
+        if(!passwordValue){
+
+            message.className =
+            "error";
+
+            message.textContent =
+            "❌ Escribe tu contraseña.";
+
+            return;
+
+        }
+
+
+        button.disabled =
+        true;
+
+        button.textContent =
+        "Signing in...";
+
+        message.className = "";
+
+        message.textContent =
+        "Conectando...";
+
+
+        try{
+
+            const client =
+            window.supabase.createClient(
+                URL,
+                KEY
+            );
+
+
+            const result =
+            await client.auth.signInWithPassword({
+
+                email:
+                emailValue,
+
+                password:
+                passwordValue
+
+            });
+
+
+            console.log(
+                result
+            );
+
+
+            if(result.error){
+
+                message.className =
+                "error";
+
+                message.textContent =
+                "❌ " +
+                result.error.message;
+
+                button.disabled =
+                false;
+
+                button.textContent =
+                "Sign in";
+
+                return;
+
+            }
+
+
+            message.className =
+            "success";
+
+            message.textContent =
+            "✓ Login correcto. Entrando...";
+
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                    "profile.html";
+
+                },
+                800
+            );
+
+        }
+
+
+        catch(error){
+
+            console.error(
+                error
+            );
+
+            message.className =
+            "error";
+
+            message.textContent =
+            "❌ " +
+            error.message;
+
+            button.disabled =
+            false;
+
+            button.textContent =
+            "Sign in";
+
+        }
+
+    }
+);
+
+</script>
+
+
 </body>
+
 </html>
