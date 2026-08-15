@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>NØX — Perfil</title>
 
+
 <style>
+
 *{
     box-sizing:border-box;
 }
 
+
 html,
 body{
     margin:0;
-    width:100%;
     min-height:100%;
 }
 
+
 body{
     min-height:100vh;
+
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+
     padding:20px;
 
     background:#050505;
-    color:#fff;
+    color:white;
 
     font-family:
         Arial,
@@ -34,173 +44,305 @@ body{
         sans-serif;
 }
 
-.loading{
+
+/* =========================
+   LOADING
+========================= */
+
+#loading{
+
     position:fixed;
+
     inset:0;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
     background:#050505;
 
     color:#aaa;
+
     font-size:15px;
 
     z-index:9999;
 }
 
-.hidden{
-    display:none !important;
-}
 
-.profile{
+/* =========================
+   PROFILE
+========================= */
+
+#profile{
+
     width:100%;
+
     max-width:470px;
 
     padding:35px 25px;
 
     text-align:center;
 
-    background:rgba(15,15,15,.85);
+    background:
+        rgba(15,15,15,.85);
 
-    border:1px solid #292929;
+    border:
+        1px solid #292929;
+
     border-radius:24px;
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:
+        blur(18px);
 
     box-shadow:
-        0 30px 100px rgba(0,0,0,.6);
+        0 30px 100px
+        rgba(0,0,0,.6);
+
+    animation:
+        profileIn .5s ease;
 }
 
+
+@keyframes profileIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(15px)
+            scale(.98);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================
+   AVATAR
+========================= */
+
 .avatar{
+
     width:105px;
     height:105px;
 
     margin:auto;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
     overflow:hidden;
 
     border-radius:50%;
-    border:3px solid #fff;
+
+    border:
+        3px solid white;
 
     background:#181818;
 
     font-size:35px;
+
     font-weight:900;
 }
 
+
 .avatar img{
+
     width:100%;
     height:100%;
+
     object-fit:cover;
+
 }
 
+
+/* =========================
+   NAME
+========================= */
+
 .name{
+
     margin-top:18px;
 
     font-size:28px;
+
     font-weight:900;
+
 }
 
+
 .username{
+
     margin-top:5px;
 
     color:#888;
+
     font-size:14px;
+
 }
 
+
+/* =========================
+   BIO
+========================= */
+
 .bio{
-    margin:18px auto 0;
+
+    margin:
+        18px auto 0;
 
     max-width:380px;
 
     color:#bbb;
 
     font-size:14px;
+
     line-height:1.5;
+
 }
 
+
+/* =========================
+   VIEWS
+========================= */
+
 .views{
+
     margin-top:15px;
 
     color:#777;
 
     font-size:13px;
+
 }
 
+
+/* =========================
+   LINKS
+========================= */
+
 .links{
+
     display:flex;
+
     flex-direction:column;
 
     gap:9px;
 
     margin-top:22px;
+
 }
 
+
 .link{
+
     display:block;
 
     padding:13px;
 
     color:white;
+
     text-decoration:none;
 
     background:#111;
 
-    border:1px solid #292929;
+    border:
+        1px solid #292929;
+
     border-radius:11px;
 
-    transition:.2s;
+    transition:
+        .2s;
+
 }
 
+
 .link:hover{
-    transform:translateY(-2px);
+
+    transform:
+        translateY(-2px);
 
     background:#181818;
 
     box-shadow:
-        0 0 20px rgba(255,255,255,.12);
+        0 0 20px
+        rgba(255,255,255,.12);
+
 }
+
+
+/* =========================
+   ERROR
+========================= */
 
 .error{
+
     color:#ff7070;
+
     text-align:center;
+
 }
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden{
+
+    display:none !important;
+
+}
+
 </style>
 
-<!-- IMPORTANTE:
-     Supabase se carga ANTES del código principal -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- SUPABASE -->
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
 
 </head>
 
+
 <body>
 
-<!-- =================================
-     CARGANDO
-================================= -->
+
+<!-- =========================
+     LOADING
+========================= -->
 
 <div
     id="loading"
-    class="loading"
 >
-    PRUEBA NUEVA NØX 123 ✓
+    Cargando perfil...
 </div>
 
 
-<!-- =================================
-     PERFIL
-================================= -->
+<!-- =========================
+     PROFILE
+========================= -->
 
 <main
     id="profile"
-    class="profile hidden"
+    class="hidden"
 >
+
 
     <div
         id="avatar"
@@ -247,14 +389,16 @@ body{
         class="links"
     ></div>
 
+
 </main>
 
 
 <script>
 
-/* =================================
-   CONFIGURACIÓN SUPABASE
-================================= */
+/* =====================================
+   SUPABASE
+===================================== */
+
 
 const SUPABASE_URL =
     "https://asgowauvzfnsszstvzqi.supabase.co";
@@ -264,44 +408,26 @@ const SUPABASE_KEY =
     "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-/* =================================
-   COMPROBAR SUPABASE
-================================= */
+const supabase =
+    window.supabase.createClient(
+
+        SUPABASE_URL,
+
+        SUPABASE_KEY
+
+    );
+
+
+/* =====================================
+   ELEMENTOS
+===================================== */
+
 
 const loading =
     document.getElementById(
         "loading"
     );
 
-
-if(
-    !window.supabase ||
-    !window.supabase.createClient
-){
-
-    loading.textContent =
-        "❌ SUPABASE JS NO CARGÓ";
-
-    throw new Error(
-        "Supabase JS no está disponible."
-    );
-}
-
-
-/* =================================
-   CREAR CLIENTE
-================================= */
-
-const supabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* =================================
-   ELEMENTOS
-================================= */
 
 const profile =
     document.getElementById(
@@ -345,9 +471,10 @@ const linksElement =
     );
 
 
-/* =================================
-   USERNAME DESDE LA URL
-================================= */
+/* =====================================
+   USERNAME
+===================================== */
+
 
 const params =
     new URLSearchParams(
@@ -361,9 +488,10 @@ const username =
     );
 
 
-/* =================================
-   MOSTRAR ERROR
-================================= */
+/* =====================================
+   ERROR
+===================================== */
+
 
 function showError(
     message
@@ -375,17 +503,21 @@ function showError(
 }
 
 
-/* =================================
-   PRIMERA LETRA
-================================= */
+/* =====================================
+   FIRST LETTER
+===================================== */
+
 
 function firstLetter(
     text
 ){
 
     return (
+
         text ||
+
         "N"
+
     )
     .charAt(0)
     .toUpperCase();
@@ -393,9 +525,10 @@ function firstLetter(
 }
 
 
-/* =================================
-   NORMALIZAR URL
-================================= */
+/* =====================================
+   NORMALIZE URL
+===================================== */
+
 
 function normalizeUrl(
     url
@@ -406,12 +539,17 @@ function normalizeUrl(
 
 
     if(
+
         url.startsWith(
             "http://"
-        ) ||
+        )
+
+        ||
+
         url.startsWith(
             "https://"
         )
+
     ){
 
         return url;
@@ -419,24 +557,30 @@ function normalizeUrl(
     }
 
 
-    return "https://" +
-        url;
+    return (
+        "https://" +
+        url
+    );
 
 }
 
 
-/* =================================
-   AGREGAR LINK
-================================= */
+/* =====================================
+   ADD LINK
+===================================== */
+
 
 function addLink(
     url,
-    name
+    title
 ){
 
     if(
+
         !url ||
+
         !url.trim()
+
     ){
 
         return;
@@ -455,7 +599,8 @@ function addLink(
 
 
     link.textContent =
-        name + " ↗";
+        title +
+        " ↗";
 
 
     link.href =
@@ -479,52 +624,75 @@ function addLink(
 }
 
 
-/* =================================
-   MOSTRAR PERFIL
-================================= */
+/* =====================================
+   RENDER PROFILE
+===================================== */
+
 
 function renderProfile(
     data
 ){
 
-    /* APODO */
+    /* NAME */
 
     nameElement.textContent =
+
         data.display_name ||
+
         data.username ||
+
         "NØX User";
 
 
     /* USERNAME */
 
     usernameElement.textContent =
+
         "@" +
+
         data.username;
 
 
     /* BIO */
 
     bioElement.textContent =
+
         data.bio ||
+
         "Welcome to my NØX profile.";
 
 
-    /* VISTAS */
+    /* VIEWS */
 
     const views =
+
         Number(
+
             data.profile_views ||
+
             0
+
         );
 
 
     viewsElement.textContent =
+
         "👁️ " +
+
         views +
+
         (
+
             views === 1
-            ? " vista"
-            : " vistas"
+
+            ?
+
+            " vista"
+
+            :
+
+            " vistas"
+
         );
 
 
@@ -556,9 +724,13 @@ function renderProfile(
         function(){
 
             avatar.textContent =
+
                 firstLetter(
+
                     data.display_name ||
+
                     data.username
+
                 );
 
         };
@@ -571,9 +743,13 @@ function renderProfile(
     }else{
 
         avatar.textContent =
+
             firstLetter(
+
                 data.display_name ||
+
                 data.username
+
             );
 
     }
@@ -621,7 +797,7 @@ function renderProfile(
     );
 
 
-    /* MOSTRAR */
+    /* SHOW */
 
     loading.classList.add(
         "hidden"
@@ -635,17 +811,19 @@ function renderProfile(
 }
 
 
-/* =================================
-   CARGAR PERFIL
-================================= */
+/* =====================================
+   LOAD PROFILE
+===================================== */
+
 
 async function loadProfile(){
 
     try{
 
-        /* PASO 1 */
+        /* STEP 1 */
 
         loading.textContent =
+
             "1/4 — JavaScript funciona ✓";
 
 
@@ -660,17 +838,23 @@ async function loadProfile(){
         }
 
 
-        /* PASO 2 */
+        /* STEP 2 */
 
         loading.textContent =
+
             "2/4 — Buscando @" +
+
             username +
+
             "...";
 
 
         const cleanUsername =
+
             username
+
             .trim()
+
             .toLowerCase();
 
 
@@ -680,21 +864,29 @@ async function loadProfile(){
         );
 
 
-        /* CONSULTA */
+        /* QUERY */
 
         const {
+
             data,
+
             error
+
         } =
+
         await supabase
+
         .from(
             "profiles"
         )
+
         .select("*")
+
         .eq(
             "username",
             cleanUsername
         )
+
         .maybeSingle();
 
 
@@ -715,8 +907,11 @@ async function loadProfile(){
         if(error){
 
             showError(
+
                 "Supabase: " +
+
                 error.message
+
             );
 
             return;
@@ -724,7 +919,7 @@ async function loadProfile(){
         }
 
 
-        /* SIN PERFIL */
+        /* NOT FOUND */
 
         if(!data){
 
@@ -737,9 +932,10 @@ async function loadProfile(){
         }
 
 
-        /* PASO 3 */
+        /* STEP 3 */
 
         loading.textContent =
+
             "3/4 — Perfil encontrado ✓";
 
 
@@ -749,56 +945,86 @@ async function loadProfile(){
 
 
         /* =================================
-           CONTADOR DE VISTAS
+           INCREMENTAR VISTAS
         ================================= */
 
+
         const {
+
             error:viewError
+
         } =
+
         await supabase.rpc(
+
             "increment_profile_views",
+
             {
+
                 profile_uuid:
+
                     data.id
+
             }
+
         );
 
 
         if(viewError){
 
             console.error(
-                "Error de vistas:",
+
+                "Error contador:",
+
                 viewError
+
             );
 
         }else{
 
             const newViews =
+
                 Number(
+
                     data.profile_views ||
+
                     0
+
                 ) + 1;
 
 
             viewsElement.textContent =
+
                 "👁️ " +
+
                 newViews +
+
                 (
+
                     newViews === 1
-                    ? " vista"
-                    : " vistas"
+
+                    ?
+
+                    " vista"
+
+                    :
+
+                    " vistas"
+
                 );
 
         }
 
 
-        /* PASO 4 */
+        /* STEP 4 */
 
         console.log(
-            "Perfil cargado correctamente ✓"
+            "PERFIL CARGADO ✓"
         );
 
-    }catch(error){
+    }
+
+    catch(error){
 
         console.error(
             error
@@ -806,7 +1032,9 @@ async function loadProfile(){
 
 
         showError(
+
             error.message
+
         );
 
     }
@@ -814,13 +1042,15 @@ async function loadProfile(){
 }
 
 
-/* =================================
-   INICIAR
-================================= */
+/* =====================================
+   START
+===================================== */
+
 
 loadProfile();
 
 </script>
 
+
 </body>
-</html>
+        </html>
