@@ -5,10 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>NØX — Perfil</title>
 
@@ -19,663 +17,217 @@
 }
 
 body{
-
     margin:0;
-
     min-height:100vh;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     padding:20px;
-
     background:#050505;
-
-    color:#fff;
-
+    color:white;
     font-family:Arial,sans-serif;
-
 }
 
 #app{
-
     width:100%;
-
-    max-width:470px;
-
+    max-width:480px;
     padding:30px;
-
-    text-align:center;
-
-    background:#111;
-
     border:1px solid #292929;
-
-    border-radius:20px;
-
-    box-shadow:
-        0 20px 80px
-        rgba(0,0,0,.5);
-
+    border-radius:22px;
+    background:#101010;
+    box-shadow:0 20px 80px rgba(0,0,0,.6);
 }
 
 #status{
-
+    text-align:center;
+    color:#aaa;
     white-space:pre-wrap;
-
     line-height:1.6;
-
-    color:#aaa;
-
-}
-
-#profile{
-
-    display:none;
-
-}
-
-#avatar{
-
-    width:105px;
-
-    height:105px;
-
-    margin:auto;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
-
-    border-radius:50%;
-
-    border:3px solid #fff;
-
-    background:#222;
-
-    font-size:36px;
-
-    font-weight:bold;
-
-}
-
-#avatar img{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
-}
-
-#name{
-
-    margin-top:18px;
-
-    font-size:28px;
-
-    font-weight:800;
-
-}
-
-#username{
-
-    margin-top:5px;
-
-    color:#888;
-
-}
-
-#bio{
-
-    margin-top:18px;
-
-    color:#aaa;
-
-    line-height:1.5;
-
-}
-
-#views{
-
-    margin-top:15px;
-
-    color:#777;
-
 }
 
 #error{
-
     display:none;
-
-    margin-top:20px;
-
     padding:15px;
-
     border-radius:10px;
-
     background:#190909;
-
-    color:#ff7777;
-
+    color:#ff7070;
     white-space:pre-wrap;
+}
 
-    text-align:left;
+#profile{
+    display:none;
+    text-align:center;
+}
 
+#avatar{
+    width:110px;
+    height:110px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:50%;
+    border:3px solid white;
+    background:#222;
+    font-size:38px;
+    font-weight:bold;
+}
+
+#avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+#name{
+    margin-top:18px;
+    font-size:28px;
+    font-weight:800;
+}
+
+#username{
+    margin-top:5px;
+    color:#888;
+}
+
+#bio{
+    margin-top:18px;
+    color:#aaa;
+    line-height:1.5;
+}
+
+#views{
+    margin-top:15px;
+    color:#777;
+}
+
+#links{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:22px;
+}
+
+.link{
+    display:block;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid #292929;
+    background:#151515;
+    color:white;
+    text-decoration:none;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div id="app">
 
-
     <div id="status">
-
         NØX — iniciando...
-
     </div>
-
 
     <div id="error"></div>
 
-
     <div id="profile">
 
-
-        <div id="avatar">
-
-            N
-
-        </div>
-
+        <div id="avatar">N</div>
 
         <div id="name"></div>
 
-
         <div id="username"></div>
-
 
         <div id="bio"></div>
 
-
         <div id="views"></div>
 
+        <div id="links"></div>
 
     </div>
-
 
 </div>
 
 
-<!-- =================================
-     SUPABASE
-     CARGAR ANTES DEL SCRIPT PRINCIPAL
-================================= -->
-
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-/* =================================
-   ELEMENTOS
-================================= */
-
-const status =
-document.getElementById(
-    "status"
-);
-
-
-const errorBox =
-document.getElementById(
-    "error"
-);
+/*
+==================================================
+NØX PROFILE
+NO USAMOS SUPABASE_URL NI SUPABASE_KEY
+PARA EVITAR CONFLICTOS CON OTROS SCRIPTS.
+==================================================
+*/
 
 
-const profile =
-document.getElementById(
-    "profile"
-);
-
-
-const avatar =
-document.getElementById(
-    "avatar"
-);
-
-
-const nameElement =
-document.getElementById(
-    "name"
-);
-
-
-const usernameElement =
-document.getElementById(
-    "username"
-);
-
-
-const bioElement =
-document.getElementById(
-    "bio"
-);
-
-
-const viewsElement =
-document.getElementById(
-    "views"
-);
-
-
-/* =================================
-   PASO 1
-================================= */
-
-status.textContent =
-"NØX — comprobando Supabase...";
-
-
-/* =================================
-   COMPROBAR SUPABASE
-================================= */
-
-if(
-    typeof window.supabase ===
-    "undefined"
-){
-
-    showError(
-        "❌ PASO 1 FALLÓ\n\n" +
-        "Supabase JS no cargó."
-    );
-
-}else{
-
-    status.textContent =
-        "✓ PASO 1 — Supabase JS funciona\n\n" +
-        "NØX — creando conexión...";
-
-
-    start();
-
-}
-
-
-/* =================================
-   CONFIGURACIÓN
-================================= */
-
-const SUPABASE_URL =
+var NX_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
 
 
-const SUPABASE_KEY =
+var NX_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-/* =================================
-   START
-================================= */
+var NX_STATUS =
+document.getElementById("status");
 
-async function start(){
 
-    try{
+var NX_ERROR =
+document.getElementById("error");
 
 
-        /* =============================
-           PASO 2
-        ============================= */
+var NX_PROFILE =
+document.getElementById("profile");
 
-        const supabase =
-            window.supabase.createClient(
-                SUPABASE_URL,
-                SUPABASE_KEY
-            );
 
+var NX_AVATAR =
+document.getElementById("avatar");
 
-        status.textContent =
-            "✓ PASO 1 — Supabase JS funciona\n\n" +
 
-            "✓ PASO 2 — Cliente Supabase creado\n\n" +
+var NX_NAME =
+document.getElementById("name");
 
-            "NØX — leyendo URL...";
 
+var NX_USERNAME =
+document.getElementById("username");
 
-        /* =============================
-           URL
-        ============================= */
 
-        const params =
-            new URLSearchParams(
-                window.location.search
-            );
+var NX_BIO =
+document.getElementById("bio");
 
 
-        const username =
-            params.get(
-                "username"
-            );
+var NX_VIEWS =
+document.getElementById("views");
 
 
-        if(!username){
+var NX_LINKS =
+document.getElementById("links");
 
-            showError(
-                "❌ PASO 3 FALLÓ\n\n" +
 
-                "La URL no tiene username.\n\n" +
+function NX_error(text){
 
-                "Ejemplo:\n" +
+    NX_STATUS.style.display =
+        "none";
 
-                "u.html?username=pan"
-            );
+    NX_PROFILE.style.display =
+        "none";
 
-            return;
-        }
+    NX_ERROR.style.display =
+        "block";
 
-
-        status.textContent =
-            "✓ PASO 1 — Supabase JS funciona\n\n" +
-
-            "✓ PASO 2 — Cliente creado\n\n" +
-
-            "✓ PASO 3 — Username encontrado\n\n" +
-
-            "Username: @" +
-            username +
-            "\n\n" +
-
-            "NØX — conectando con Supabase...";
-
-
-        /* =============================
-           CONSULTA
-        ============================= */
-
-        let result;
-
-
-        try{
-
-            result =
-                await supabase
-                    .from("profiles")
-                    .select("*")
-                    .eq(
-                        "username",
-                        username
-                            .trim()
-                            .toLowerCase()
-                    )
-                    .maybeSingle();
-
-        }catch(queryError){
-
-            showError(
-                "❌ PASO 4 FALLÓ\n\n" +
-
-                "No se pudo ejecutar la consulta.\n\n" +
-
-                queryError.message
-            );
-
-            return;
-        }
-
-
-        /* =============================
-           RESULTADO
-        ============================= */
-
-        console.log(
-            "SUPABASE:",
-            result
-        );
-
-
-        if(result.error){
-
-            showError(
-                "❌ PASO 4 — ERROR SUPABASE\n\n" +
-
-                result.error.message
-            );
-
-            return;
-        }
-
-
-        if(!result.data){
-
-            showError(
-                "❌ PASO 4\n\n" +
-
-                "La conexión funciona,\n" +
-
-                "pero no existe un perfil con:\n\n" +
-
-                "@" +
-                username
-            );
-
-            return;
-        }
-
-
-        const data =
-            result.data;
-
-
-        /* =============================
-           PERFIL ENCONTRADO
-        ============================= */
-
-        status.textContent =
-            "✓ PASO 1 — Supabase JS funciona\n\n" +
-
-            "✓ PASO 2 — Cliente creado\n\n" +
-
-            "✓ PASO 3 — Username encontrado\n\n" +
-
-            "✓ PASO 4 — PERFIL ENCONTRADO ✓\n\n" +
-
-            "Cargando perfil...";
-
-
-        /* =============================
-           DATOS
-        ============================= */
-
-        nameElement.textContent =
-            data.display_name ||
-            data.username ||
-            "NØX User";
-
-
-        usernameElement.textContent =
-            "@" +
-            data.username;
-
-
-        bioElement.textContent =
-            data.bio ||
-            "Welcome to my NØX profile.";
-
-
-        const oldViews =
-            Number(
-                data.profile_views || 0
-            );
-
-
-        viewsElement.textContent =
-            "👁️ " +
-            oldViews +
-            (
-                oldViews === 1
-                ? " vista"
-                : " vistas"
-            );
-
-
-        /* =============================
-           AVATAR
-        ============================= */
-
-        if(data.avatar_url){
-
-            const img =
-                document.createElement(
-                    "img"
-                );
-
-
-            img.src =
-                data.avatar_url;
-
-
-            img.alt =
-                "Avatar";
-
-
-            img.onerror =
-                function(){
-
-                    avatar.textContent =
-                        firstLetter(
-                            data.username
-                        );
-
-                };
-
-
-            avatar.innerHTML =
-                "";
-
-
-            avatar.appendChild(
-                img
-            );
-
-        }else{
-
-            avatar.textContent =
-                firstLetter(
-                    data.username
-                );
-
-        }
-
-
-        /* =============================
-           MOSTRAR PERFIL
-        ============================= */
-
-        status.style.display =
-            "none";
-
-
-        profile.style.display =
-            "block";
-
-
-        /* =============================
-           PASO 5
-        ============================= */
-
-        console.log(
-            "NØX: aumentando vistas..."
-        );
-
-
-        const viewResult =
-            await supabase.rpc(
-                "increment_profile_views",
-                {
-                    profile_uuid:
-                        data.id
-                }
-            );
-
-
-        console.log(
-            "VIEW RESULT:",
-            viewResult
-        );
-
-
-        if(
-            viewResult.error
-        ){
-
-            console.error(
-                viewResult.error
-            );
-
-            return;
-        }
-
-
-        /* =============================
-           ACTUALIZAR VISTA
-        ============================= */
-
-        const newViews =
-            oldViews + 1;
-
-
-        viewsElement.textContent =
-            "👁️ " +
-            newViews +
-            (
-                newViews === 1
-                ? " vista"
-                : " vistas"
-            );
-
-
-    }catch(error){
-
-        console.error(
-            error
-        );
-
-
-        showError(
-            "❌ ERROR GENERAL\n\n" +
-
-            error.message
-        );
-
-    }
+    NX_ERROR.textContent =
+        text;
 
 }
 
 
-/* =================================
-   PRIMERA LETRA
-================================= */
-
-function firstLetter(
-    text
-){
+function NX_letter(text){
 
     return (
         text ||
@@ -687,33 +239,362 @@ function firstLetter(
 }
 
 
-/* =================================
-   ERROR
-================================= */
+function NX_link(url,name){
 
-function showError(
-    message
-){
+    if(!url){
+        return;
+    }
 
-    status.style.display =
-        "none";
+    var a =
+    document.createElement("a");
 
+    a.className =
+        "link";
 
-    profile.style.display =
-        "none";
+    a.textContent =
+        name + " ↗";
 
+    if(
+        url.indexOf("http://") === 0 ||
+        url.indexOf("https://") === 0
+    ){
 
-    errorBox.style.display =
-        "block";
+        a.href =
+            url;
 
+    }else{
 
-    errorBox.textContent =
-        message;
+        a.href =
+            "https://" + url;
+
+    }
+
+    a.target =
+        "_blank";
+
+    a.rel =
+        "noopener noreferrer";
+
+    NX_LINKS.appendChild(a);
 
 }
+
+
+async function NX_start(){
+
+    try{
+
+        NX_STATUS.textContent =
+            "NØX — comprobando Supabase...";
+
+
+        if(
+            typeof window.supabase ===
+            "undefined"
+        ){
+
+            NX_error(
+                "❌ Supabase JS no cargó."
+            );
+
+            return;
+
+        }
+
+
+        NX_STATUS.textContent =
+            "NØX — conectando...";
+
+
+        var client =
+            window.supabase.createClient(
+                NX_URL,
+                NX_KEY
+            );
+
+
+        var params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        var username =
+            params.get("username");
+
+
+        if(!username){
+
+            NX_error(
+                "❌ La URL no tiene ?username=...\n\n" +
+                "Ejemplo:\n" +
+                "u.html?username=pan"
+            );
+
+            return;
+
+        }
+
+
+        username =
+            username
+                .trim()
+                .toLowerCase();
+
+
+        NX_STATUS.textContent =
+            "NØX — buscando @" +
+            username +
+            "...";
+
+
+        var result =
+            await client
+                .from("profiles")
+                .select("*")
+                .eq(
+                    "username",
+                    username
+                )
+                .maybeSingle();
+
+
+        if(result.error){
+
+            NX_error(
+                "❌ ERROR SUPABASE\n\n" +
+                result.error.message
+            );
+
+            return;
+
+        }
+
+
+        if(!result.data){
+
+            NX_error(
+                "❌ PERFIL NO ENCONTRADO\n\n" +
+                "@" + username
+            );
+
+            return;
+
+        }
+
+
+        var profile =
+            result.data;
+
+
+        /*
+        ==========================================
+        MOSTRAR PERFIL
+        ==========================================
+        */
+
+
+        NX_NAME.textContent =
+            profile.display_name ||
+            profile.username ||
+            "NØX User";
+
+
+        NX_USERNAME.textContent =
+            "@" +
+            profile.username;
+
+
+        NX_BIO.textContent =
+            profile.bio ||
+            "Welcome to my NØX profile.";
+
+
+        var oldViews =
+            Number(
+                profile.profile_views || 0
+            );
+
+
+        NX_VIEWS.textContent =
+            "👁️ " +
+            oldViews +
+            (
+                oldViews === 1
+                ? " vista"
+                : " vistas"
+            );
+
+
+        /*
+        ==========================================
+        AVATAR
+        ==========================================
+        */
+
+
+        if(profile.avatar_url){
+
+            var img =
+                document.createElement("img");
+
+            img.src =
+                profile.avatar_url;
+
+            img.alt =
+                "Avatar";
+
+            img.onerror =
+                function(){
+
+                    NX_AVATAR.textContent =
+                        NX_letter(
+                            profile.username
+                        );
+
+                };
+
+            NX_AVATAR.innerHTML =
+                "";
+
+            NX_AVATAR.appendChild(img);
+
+        }else{
+
+            NX_AVATAR.textContent =
+                NX_letter(
+                    profile.username
+                );
+
+        }
+
+
+        /*
+        ==========================================
+        REDES
+        ==========================================
+        */
+
+
+        NX_LINKS.innerHTML =
+            "";
+
+
+        NX_link(
+            profile.discord,
+            "Discord"
+        );
+
+
+        NX_link(
+            profile.youtube,
+            "YouTube"
+        );
+
+
+        NX_link(
+            profile.github,
+            "GitHub"
+        );
+
+
+        NX_link(
+            profile.instagram,
+            "Instagram"
+        );
+
+
+        NX_link(
+            profile.tiktok,
+            "TikTok"
+        );
+
+
+        NX_link(
+            profile.spotify,
+            "Spotify"
+        );
+
+
+        /*
+        ==========================================
+        MOSTRAR
+        ==========================================
+        */
+
+
+        NX_STATUS.style.display =
+            "none";
+
+        NX_PROFILE.style.display =
+            "block";
+
+
+        /*
+        ==========================================
+        SUMAR VISTA
+        ==========================================
+        */
+
+        try{
+
+            var view =
+                await client.rpc(
+                    "increment_profile_views",
+                    {
+                        profile_uuid:
+                            profile.id
+                    }
+                );
+
+
+            if(
+                !view.error
+            ){
+
+                NX_VIEWS.textContent =
+                    "👁️ " +
+                    (oldViews + 1) +
+                    (
+                        oldViews + 1 === 1
+                        ? " vista"
+                        : " vistas"
+                    );
+
+            }
+
+        }catch(viewError){
+
+            console.log(
+                "Contador de vistas:",
+                viewError
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "NØX ERROR:",
+            error
+        );
+
+
+        NX_error(
+            "❌ ERROR GENERAL\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+NX_start();
 
 </script>
 
 </body>
 
-    </html>
+</html>
