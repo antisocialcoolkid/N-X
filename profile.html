@@ -5,563 +5,336 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#030303">
-
-<title>NØX — Profile</title>
+<title>NØX — Customize</title>
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
 }
 
 body{
+    margin:0;
     min-height:100vh;
-    background:#030303;
-    color:white;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-/* BACKGROUND */
-
-.background{
-    position:fixed;
-    inset:0;
-    z-index:-2;
 
     background:
         radial-gradient(
-            circle at 50% 0%,
-            #222 0%,
-            #090909 35%,
-            #030303 75%
-        );
-}
-
-.grid{
-    position:absolute;
-    inset:0;
-    opacity:.2;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
+            circle at 20% 0%,
+            #252525,
+            #070707 45%,
+            #020202
         );
 
-    background-size:45px 45px;
+    color:white;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    padding:25px;
 }
 
-.glow{
-    position:absolute;
-    width:450px;
-    height:450px;
-    border-radius:50%;
-    background:white;
-    filter:blur(150px);
-    opacity:.06;
-}
-
-.glow.one{
-    top:-250px;
-    left:-180px;
-}
-
-.glow.two{
-    right:-250px;
-    bottom:-250px;
-}
-
-/* NAV */
-
-nav{
-    width:min(1150px,92%);
-    height:80px;
+.container{
+    width:100%;
+    max-width:1100px;
     margin:auto;
+}
 
+.top{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-
-    border-bottom:1px solid #191919;
+    align-items:center;
+    margin-bottom:25px;
 }
 
 .logo{
     color:white;
     text-decoration:none;
     font-size:25px;
-    font-weight:950;
-}
-
-.nav-right{
-    display:flex;
-    gap:9px;
-}
-
-.nav-button{
-    padding:10px 15px;
-
-    border:1px solid #292929;
-    border-radius:9px;
-
-    background:#0b0b0b;
-    color:#aaa;
-
-    text-decoration:none;
-    font-size:10px;
-    font-weight:800;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.nav-button:hover{
-    color:white;
-    border-color:#444;
-}
-
-/* MAIN */
-
-.container{
-    width:min(1150px,92%);
-    margin:45px auto 80px;
-}
-
-.page-title{
-    margin-bottom:30px;
-}
-
-.badge{
-    width:max-content;
-
-    padding:7px 11px;
-
-    border:1px solid #292929;
-    border-radius:100px;
-
-    color:#777;
-
-    font-size:8px;
     font-weight:900;
-    letter-spacing:2px;
 }
 
-.page-title h1{
-    margin-top:18px;
-
-    font-size:42px;
-    letter-spacing:-2px;
+.logout{
+    background:#151515;
+    border:1px solid #292929;
+    color:white;
+    padding:10px 15px;
+    border-radius:9px;
+    cursor:pointer;
 }
 
-.page-title p{
-    margin-top:8px;
-
-    color:#666;
-    font-size:12px;
-}
-
-/* GRID */
-
-.editor-grid{
+.layout{
     display:grid;
-
-    grid-template-columns:
-        1fr 390px;
-
+    grid-template-columns:1fr 380px;
     gap:20px;
 }
 
-/* CARD */
-
 .card{
-    padding:28px;
-
-    border:1px solid #1d1d1d;
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #0d0d0d,
-            #070707
-        );
-
-    box-shadow:
-        0 30px 90px
-        rgba(0,0,0,.35);
+    background:#0c0c0c;
+    border:1px solid #242424;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 25px 70px rgba(0,0,0,.45);
 }
 
-.card-title{
-    font-size:18px;
+h1{
+    margin:0 0 5px;
+}
+
+.subtitle{
+    color:#777;
+    font-size:13px;
+    margin-bottom:25px;
+}
+
+.section{
+    margin-top:25px;
+}
+
+.section-title{
+    font-size:12px;
     font-weight:900;
-}
-
-.card-subtitle{
-    margin-top:6px;
-
-    color:#555;
-    font-size:10px;
-}
-
-/* FORM */
-
-.field{
-    margin-top:20px;
+    color:#999;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:12px;
 }
 
 label{
     display:block;
-
-    margin-bottom:8px;
-
-    color:#777;
-
-    font-size:9px;
-    font-weight:900;
-
-    text-transform:uppercase;
-    letter-spacing:1.5px;
+    color:#aaa;
+    font-size:11px;
+    margin:13px 0 6px;
 }
 
 input,
-textarea{
-
+textarea,
+select{
     width:100%;
-
-    border:1px solid #292929;
+    padding:13px;
     border-radius:9px;
-
-    outline:none;
-
-    background:#050505;
+    border:1px solid #292929;
+    background:#151515;
     color:white;
-
+    outline:none;
     font-family:inherit;
-    font-size:12px;
-
-    transition:.2s;
-}
-
-input{
-    height:50px;
-    padding:0 14px;
 }
 
 textarea{
     min-height:100px;
-    padding:14px;
     resize:vertical;
 }
 
 input:focus,
-textarea:focus{
+textarea:focus,
+select:focus{
     border-color:#666;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255,255,255,.025);
 }
 
-input::placeholder,
-textarea::placeholder{
-    color:#3d3d3d;
+input:disabled{
+    color:#777;
+    cursor:not-allowed;
+    background:#101010;
 }
 
-.username-wrap{
+.file{
+    padding:10px;
+}
+
+.username-row{
     display:flex;
-}
-
-.username-prefix{
-    height:50px;
-
-    display:flex;
+    gap:10px;
     align-items:center;
+}
 
-    padding:0 13px;
-
+.lock{
+    padding:12px 14px;
+    background:#151515;
     border:1px solid #292929;
-    border-right:0;
-
-    border-radius:9px 0 0 9px;
-
-    background:#0a0a0a;
-
-    color:#555;
-
-    font-size:12px;
+    border-radius:9px;
+    color:#777;
 }
 
-.username-wrap input{
-    border-radius:0 9px 9px 0;
-}
-
-/* BUTTON */
-
-.save{
-    width:100%;
-
-    height:52px;
-
+.actions{
+    display:flex;
+    gap:10px;
     margin-top:25px;
+}
 
+.actions button{
+    flex:1;
+}
+
+button{
     border:0;
     border-radius:9px;
+    padding:13px 16px;
+    cursor:pointer;
+    font-weight:800;
+}
 
+.save{
     background:white;
     color:black;
-
-    cursor:pointer;
-
-    font-size:11px;
-    font-weight:950;
-
-    transition:.2s;
 }
 
-.save:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 15px 40px
-        rgba(255,255,255,.12);
+.generate{
+    background:#1b1b1b;
+    border:1px solid #333;
+    color:white;
 }
 
-.save:disabled{
+button:disabled{
     opacity:.5;
     cursor:not-allowed;
 }
 
-/* STATUS */
-
-#message{
-    min-height:18px;
-
-    margin-top:14px;
-
+.message{
+    min-height:20px;
+    margin-top:15px;
     text-align:center;
-
+    font-size:12px;
     color:#777;
-
-    font-size:10px;
 }
 
 .success{
-    color:#70ffad !important;
+    color:#5cff8d !important;
 }
 
 .error{
-    color:#ff6e6e !important;
+    color:#ff6060 !important;
 }
 
 /* PREVIEW */
 
-.preview-card{
+.preview{
     position:sticky;
-    top:25px;
+    top:20px;
+    overflow:hidden;
+    padding:0;
+}
 
-    padding:30px;
-
-    border:1px solid #252525;
-    border-radius:20px;
-
+.banner{
+    height:150px;
     background:
         linear-gradient(
-            145deg,
-            #111,
-            #070707
+            135deg,
+            #222,
+            #080808
         );
-
-    box-shadow:
-        0 35px 100px
-        rgba(0,0,0,.5);
+    background-size:cover;
+    background-position:center;
 }
 
-.preview-label{
-    color:#555;
-
-    font-size:8px;
-    font-weight:900;
-
-    letter-spacing:2px;
+.preview-content{
+    padding:0 22px 25px;
+    text-align:center;
 }
 
-.preview-avatar{
+.avatar{
+    width:90px;
+    height:90px;
+    margin:-45px auto 12px;
 
-    width:76px;
-    height:76px;
+    border-radius:50%;
 
-    margin-top:25px;
+    background:#202020;
+
+    border:4px solid #0c0c0c;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
+    font-size:30px;
+    font-weight:900;
+
     overflow:hidden;
-
-    border:1px solid #333;
-    border-radius:50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #252525,
-            #080808
-        );
-
-    color:white;
-
-    font-size:27px;
-    font-weight:950;
 }
 
-.preview-avatar img{
+.avatar img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
 .preview-name{
-    margin-top:18px;
-
     font-size:23px;
     font-weight:900;
 }
 
-.preview-username{
+.preview-user{
+    color:#777;
+    font-size:12px;
     margin-top:4px;
-
-    color:#555;
-
-    font-size:11px;
 }
 
 .preview-bio{
-    margin-top:17px;
-
-    color:#777;
-
-    font-size:11px;
-    line-height:1.7;
+    color:#aaa;
+    font-size:13px;
+    margin-top:15px;
+    line-height:1.5;
 }
 
 .preview-links{
-    display:grid;
-    gap:8px;
-
-    margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    margin-top:18px;
 }
 
-.preview-link{
-
-    padding:12px;
-
-    border:1px solid #1f1f1f;
-    border-radius:8px;
-
-    background:#0a0a0a;
-
-    color:#777;
-
+.preview-links a{
+    color:white;
     text-decoration:none;
-
-    font-size:10px;
-
-    transition:.2s;
-}
-
-.preview-link:hover{
-    color:white;
-    border-color:#444;
-}
-
-.profile-url{
-    margin-top:22px;
-    padding:13px;
-
-    border:1px solid #1d1d1d;
-    border-radius:9px;
-
-    background:#050505;
-
-    color:#555;
-
-    font-size:9px;
-
-    word-break:break-all;
-}
-
-.copy{
-    width:100%;
-
-    height:43px;
-
-    margin-top:8px;
-
+    padding:12px;
+    background:#151515;
     border:1px solid #292929;
-    border-radius:8px;
+    border-radius:9px;
+}
 
-    background:#0d0d0d;
+.music{
+    margin-top:18px;
+    width:100%;
+}
+
+.link-row{
+    display:flex;
+    gap:8px;
+    margin-bottom:8px;
+}
+
+.link-row input{
+    min-width:0;
+}
+
+.remove-link{
+    background:#181818;
+    color:#ff6060;
+}
+
+.profile-link{
+    margin-top:18px;
+    padding:14px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:10px;
+    word-break:break-all;
     color:#aaa;
-
-    cursor:pointer;
-
-    font-size:10px;
-    font-weight:800;
+    font-size:12px;
 }
-
-.copy:hover{
-    color:white;
-    border-color:#444;
-}
-
-/* MOBILE */
 
 @media(max-width:850px){
 
-    body{
-        overflow:auto;
-    }
-
-    .editor-grid{
+    .layout{
         grid-template-columns:1fr;
     }
 
-    .preview-card{
+    .preview{
         position:relative;
-        top:auto;
-    }
-
-}
-
-@media(max-width:600px){
-
-    nav{
-        height:70px;
-    }
-
-    .container{
-        margin-top:30px;
-    }
-
-    .page-title h1{
-        font-size:34px;
-    }
-
-    .card{
-        padding:22px;
+        top:0;
     }
 
 }
@@ -574,307 +347,1113 @@ textarea::placeholder{
 <body>
 
 
-<div class="background">
-
-    <div class="grid"></div>
-
-    <div class="glow one"></div>
-
-    <div class="glow two"></div>
-
-</div>
+<div class="container">
 
 
-<nav>
+<div class="top">
 
-    <a
-        href="index.html"
-        class="logo">
+<a href="index.html" class="logo">
+NØX
+</a>
 
-        NØX
-
-    </a>
-
-
-    <div class="nav-right">
-
-        <a
-            id="viewProfile"
-            class="nav-button"
-            href="#"
-            target="_blank">
-
-            View profile ↗
-
-        </a>
-
-
-        <button
-            id="logout"
-            class="nav-button">
-
-            Logout
-
-        </button>
-
-    </div>
-
-</nav>
-
-
-<main class="container">
-
-
-<div class="page-title">
-
-    <div class="badge">
-        NØX PROFILE
-    </div>
-
-    <h1>
-        Customize your identity.
-    </h1>
-
-    <p>
-        Control everything people see on your NØX profile.
-    </p>
+<button
+    id="logout"
+    class="logout"
+    type="button"
+>
+Logout
+</button>
 
 </div>
 
 
-<div class="editor-grid">
+<div class="layout">
 
 
 <!-- EDITOR -->
 
 <section class="card">
 
-    <h2 class="card-title">
-        Profile settings
-    </h2>
 
-    <p class="card-subtitle">
-        Update your public NØX identity.
-    </p>
+<h1>
+Customize your profile
+</h1>
 
 
-    <form id="profileForm">
+<p class="subtitle">
+Make your NØX profile yours.
+</p>
 
 
-        <div class="field">
+<div class="section">
 
-            <label>
-                Username
-            </label>
-
-            <div class="username-wrap">
-
-                <span class="username-prefix">
-                    @
-                </span>
-
-                <input
-                    id="username"
-                    type="text"
-                    placeholder="maxiii"
-                    required
-                >
-
-            </div>
-
-        </div>
+<div class="section-title">
+Identity
+</div>
 
 
-        <div class="field">
-
-            <label>
-                Display name
-            </label>
-
-            <input
-                id="displayName"
-                type="text"
-                placeholder="Maxiii"
-            >
-
-        </div>
+<label>
+Username
+</label>
 
 
-        <div class="field">
+<div class="username-row">
 
-            <label>
-                Bio
-            </label>
-
-            <textarea
-                id="bio"
-                placeholder="Welcome to my NØX profile."
-            ></textarea>
-
-        </div>
+<input
+    id="username"
+    disabled
+>
 
 
-        <div class="field">
+<div class="lock">
+🔒
+</div>
 
-            <label>
-                Avatar URL
-            </label>
-
-            <input
-                id="avatarUrl"
-                type="url"
-                placeholder="https://..."
-            >
-
-        </div>
+</div>
 
 
-        <div class="field">
+<label>
+Display name
+</label>
 
-            <label>
-                Discord
-            </label>
-
-            <input
-                id="discord"
-                type="text"
-                placeholder="https://discord.com/..."
-            >
-
-        </div>
+<input
+    id="displayName"
+    placeholder="Your name"
+>
 
 
-        <div class="field">
+<label>
+Bio
+</label>
 
-            <label>
-                YouTube
-            </label>
+<textarea
+    id="bio"
+    placeholder="Tell people about yourself..."
+></textarea>
 
-            <input
-                id="youtube"
-                type="url"
-                placeholder="https://youtube.com/..."
-            >
-
-        </div>
+</div>
 
 
-        <div class="field">
+<div class="section">
 
-            <label>
-                GitHub
-            </label>
-
-            <input
-                id="github"
-                type="url"
-                placeholder="https://github.com/..."
-            >
-
-        </div>
+<div class="section-title">
+Images
+</div>
 
 
-        <button
-            id="saveButton"
-            class="save"
-            type="submit">
+<label>
+Avatar
+</label>
 
-            Save changes
+<input
+    id="avatarFile"
+    class="file"
+    type="file"
+    accept="image/*"
+>
 
-        </button>
+
+<label>
+Banner
+</label>
+
+<input
+    id="bannerFile"
+    class="file"
+    type="file"
+    accept="image/*"
+>
+
+</div>
 
 
-        <div id="message"></div>
+<div class="section">
+
+<div class="section-title">
+Music
+</div>
 
 
-    </form>
+<label>
+Profile music
+</label>
+
+<input
+    id="musicFile"
+    class="file"
+    type="file"
+    accept="audio/*"
+>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">
+Socials
+</div>
+
+
+<label>
+Discord
+</label>
+
+<input
+    id="discord"
+    placeholder="username"
+>
+
+
+<label>
+YouTube
+</label>
+
+<input
+    id="youtube"
+    placeholder="https://youtube.com/..."
+>
+
+
+<label>
+GitHub
+</label>
+
+<input
+    id="github"
+    placeholder="https://github.com/..."
+>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">
+Custom links
+</div>
+
+
+<div id="links"></div>
+
+
+<button
+    id="addLink"
+    type="button"
+    class="generate"
+>
++ Add link
+</button>
+
+</div>
+
+
+<div class="actions">
+
+<button
+    id="save"
+    class="save"
+    type="button"
+>
+Save changes
+</button>
+
+
+<button
+    id="generate"
+    class="generate"
+    type="button"
+>
+Generate link
+</button>
+
+</div>
+
+
+<div
+    id="message"
+    class="message"
+>
+Loading...
+</div>
+
+
+<div
+    id="profileLink"
+    class="profile-link"
+    style="display:none"
+></div>
+
 
 </section>
 
 
 <!-- PREVIEW -->
 
-<aside class="preview-card">
+<section class="card preview">
 
 
-<div class="preview-label">
-    LIVE PREVIEW
-</div>
+<div
+    id="previewBanner"
+    class="banner"
+></div>
+
+
+<div class="preview-content">
 
 
 <div
     id="previewAvatar"
-    class="preview-avatar">
-
-    N
-
+    class="avatar"
+>
+N
 </div>
 
 
 <div
     id="previewName"
-    class="preview-name">
-
-    NØX User
-
+    class="preview-name"
+>
+NØX User
 </div>
 
 
 <div
     id="previewUsername"
-    class="preview-username">
-
-    @username
-
+    class="preview-user"
+>
+@username
 </div>
 
 
 <div
     id="previewBio"
-    class="preview-bio">
-
-    Welcome to my NØX profile.
-
+    class="preview-bio"
+>
+Welcome to my NØX profile.
 </div>
 
 
 <div
     id="previewLinks"
-    class="preview-links">
-
-</div>
-
-
-<div
-    id="profileUrl"
-    class="profile-url">
-
-    Loading profile URL...
-
-</div>
+    class="preview-links"
+></div>
 
 
-<button
-    id="copyButton"
-    class="copy">
-
-    Copy profile link
-
-</button>
-
-
-</aside>
+<audio
+    id="previewMusic"
+    class="music"
+    controls
+    style="display:none"
+></audio>
 
 
 </div>
 
-</main>
+</section>
+
+
+</div>
+
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-<script src="profile.js"></script>
+<script>
+
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
+
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const username =
+document.getElementById("username");
+
+const displayName =
+document.getElementById("displayName");
+
+const bio =
+document.getElementById("bio");
+
+const discord =
+document.getElementById("discord");
+
+const youtube =
+document.getElementById("youtube");
+
+const github =
+document.getElementById("github");
+
+const avatarFile =
+document.getElementById("avatarFile");
+
+const bannerFile =
+document.getElementById("bannerFile");
+
+const musicFile =
+document.getElementById("musicFile");
+
+const saveButton =
+document.getElementById("save");
+
+const generateButton =
+document.getElementById("generate");
+
+const logout =
+document.getElementById("logout");
+
+const message =
+document.getElementById("message");
+
+const profileLink =
+document.getElementById("profileLink");
+
+const links =
+document.getElementById("links");
+
+
+let currentUser = null;
+
+let profile = null;
+
+let avatarUrl = null;
+
+let bannerUrl = null;
+
+let musicUrl = null;
+
+
+/* =========================
+   LOAD
+========================= */
+
+async function loadProfile(){
+
+    message.textContent =
+    "Cargando perfil...";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabase.auth.getUser();
+
+
+    if(error || !data.user){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    currentUser =
+    data.user;
+
+
+    const result =
+    await supabase
+    .from("profiles")
+    .select("*")
+    .eq(
+        "id",
+        currentUser.id
+    )
+    .maybeSingle();
+
+
+    if(result.error){
+
+        showError(
+            result.error.message
+        );
+
+        return;
+
+    }
+
+
+    if(!result.data){
+
+        showError(
+            "No existe tu perfil."
+        );
+
+        return;
+
+    }
+
+
+    profile =
+    result.data;
+
+
+    username.value =
+    profile.username || "";
+
+
+    displayName.value =
+    profile.display_name || "";
+
+
+    bio.value =
+    profile.bio || "";
+
+
+    discord.value =
+    profile.discord || "";
+
+
+    youtube.value =
+    profile.youtube || "";
+
+
+    github.value =
+    profile.github || "";
+
+
+    avatarUrl =
+    profile.avatar_url || null;
+
+
+    bannerUrl =
+    profile.banner_url || null;
+
+
+    musicUrl =
+    profile.music_url || null;
+
+
+    updatePreview();
+
+
+    message.textContent =
+    "";
+
+}
+
+
+/* =========================
+   PREVIEW
+========================= */
+
+function updatePreview(){
+
+    const name =
+    displayName.value.trim();
+
+    const user =
+    username.value.trim();
+
+    const biography =
+    bio.value.trim();
+
+
+    document
+    .getElementById(
+        "previewName"
+    )
+    .textContent =
+    name ||
+    user ||
+    "NØX User";
+
+
+    document
+    .getElementById(
+        "previewUsername"
+    )
+    .textContent =
+    "@" +
+    (
+        user ||
+        "username"
+    );
+
+
+    document
+    .getElementById(
+        "previewBio"
+    )
+    .textContent =
+    biography ||
+    "Welcome to my NØX profile.";
+
+
+    const avatar =
+    document.getElementById(
+        "previewAvatar"
+    );
+
+
+    avatar.innerHTML = "";
+
+
+    if(avatarUrl){
+
+        const img =
+        document.createElement(
+            "img"
+        );
+
+        img.src =
+        avatarUrl;
+
+        avatar.appendChild(
+            img
+        );
+
+    }else{
+
+        avatar.textContent =
+        (
+            name ||
+            user ||
+            "N"
+        )
+        .charAt(0)
+        .toUpperCase();
+
+    }
+
+
+    const banner =
+    document.getElementById(
+        "previewBanner"
+    );
+
+
+    if(bannerUrl){
+
+        banner.style.backgroundImage =
+        `url("${bannerUrl}")`;
+
+    }else{
+
+        banner.style.backgroundImage =
+        "linear-gradient(135deg,#222,#080808)";
+
+    }
+
+
+    const music =
+    document.getElementById(
+        "previewMusic"
+    );
+
+
+    if(musicUrl){
+
+        music.src =
+        musicUrl;
+
+        music.style.display =
+        "block";
+
+    }else{
+
+        music.style.display =
+        "none";
+
+    }
+
+
+    updateLinks();
+
+}
+
+
+/* =========================
+   LINKS
+========================= */
+
+function updateLinks(){
+
+    const container =
+    document.getElementById(
+        "previewLinks"
+    );
+
+
+    container.innerHTML = "";
+
+
+    addLink(
+        discord.value,
+        "Discord"
+    );
+
+
+    addLink(
+        youtube.value,
+        "YouTube"
+    );
+
+
+    addLink(
+        github.value,
+        "GitHub"
+    );
+
+}
+
+
+function addLink(
+    url,
+    title
+){
+
+    if(!url)
+        return;
+
+
+    const a =
+    document.createElement(
+        "a"
+    );
+
+
+    a.href =
+    normalizeUrl(url);
+
+    a.target =
+    "_blank";
+
+    a.rel =
+    "noopener noreferrer";
+
+    a.textContent =
+    title + " ↗";
+
+
+    document
+    .getElementById(
+        "previewLinks"
+    )
+    .appendChild(a);
+
+}
+
+
+function normalizeUrl(
+    value
+){
+
+    if(
+        value.startsWith(
+            "http://"
+        ) ||
+        value.startsWith(
+            "https://"
+        )
+    ){
+
+        return value;
+
+    }
+
+
+    return "https://" + value;
+
+}
+
+
+/* =========================
+   LIVE PREVIEW
+========================= */
+
+[
+    displayName,
+    bio,
+    discord,
+    youtube,
+    github
+]
+.forEach(
+    input => {
+
+        input.addEventListener(
+            "input",
+            updatePreview
+        );
+
+    }
+);
+
+
+/* =========================
+   FILE UPLOAD
+========================= */
+
+async function uploadFile(
+    file,
+    folder
+){
+
+    if(!file)
+        return null;
+
+
+    const extension =
+    file.name
+    .split(".")
+    .pop()
+    .toLowerCase();
+
+
+    const path =
+    currentUser.id +
+    "/" +
+    folder +
+    "-" +
+    Date.now() +
+    "." +
+    extension;
+
+
+    const result =
+    await supabase.storage
+    .from(
+        "profile-assets"
+    )
+    .upload(
+        path,
+        file,
+        {
+            upsert:true
+        }
+    );
+
+
+    if(result.error){
+
+        throw result.error;
+
+    }
+
+
+    const publicUrl =
+    supabase.storage
+    .from(
+        "profile-assets"
+    )
+    .getPublicUrl(
+        path
+    );
+
+
+    return publicUrl
+    .data
+    .publicUrl;
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+saveButton.addEventListener(
+    "click",
+    saveProfile
+);
+
+
+async function saveProfile(){
+
+    saveButton.disabled =
+    true;
+
+    saveButton.textContent =
+    "Saving...";
+
+
+    message.className = "";
+
+    message.textContent =
+    "Guardando cambios...";
+
+
+    try{
+
+        /* AVATAR */
+
+        if(
+            avatarFile.files[0]
+        ){
+
+            avatarUrl =
+            await uploadFile(
+                avatarFile.files[0],
+                "avatar"
+            );
+
+        }
+
+
+        /* BANNER */
+
+        if(
+            bannerFile.files[0]
+        ){
+
+            bannerUrl =
+            await uploadFile(
+                bannerFile.files[0],
+                "banner"
+            );
+
+        }
+
+
+        /* MUSIC */
+
+        if(
+            musicFile.files[0]
+        ){
+
+            musicUrl =
+            await uploadFile(
+                musicFile.files[0],
+                "music"
+            );
+
+        }
+
+
+        const result =
+        await supabase
+        .from("profiles")
+        .update({
+
+            display_name:
+            displayName.value.trim(),
+
+            bio:
+            bio.value.trim(),
+
+            avatar_url:
+            avatarUrl,
+
+            banner_url:
+            bannerUrl,
+
+            music_url:
+            musicUrl,
+
+            discord:
+            discord.value.trim(),
+
+            youtube:
+            youtube.value.trim(),
+
+            github:
+            github.value.trim()
+
+        })
+        .eq(
+            "id",
+            currentUser.id
+        );
+
+
+        if(result.error){
+
+            throw result.error;
+
+        }
+
+
+        updatePreview();
+
+
+        message.className =
+        "success";
+
+        message.textContent =
+        "✓ Perfil guardado";
+
+
+        saveButton.textContent =
+        "Saved ✓";
+
+
+        setTimeout(
+        () => {
+
+            saveButton.disabled =
+            false;
+
+            saveButton.textContent =
+            "Save changes";
+
+        },
+        1200
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showError(
+            error.message
+        );
+
+
+        saveButton.disabled =
+        false;
+
+        saveButton.textContent =
+        "Save changes";
+
+    }
+
+}
+
+
+/* =========================
+   GENERATE LINK
+========================= */
+
+generateButton.addEventListener(
+    "click",
+    generateLink
+);
+
+
+function generateLink(){
+
+    const user =
+    username.value.trim();
+
+
+    if(!user){
+
+        showError(
+            "Tu username no existe."
+        );
+
+        return;
+
+    }
+
+
+    const url =
+    window.location.origin +
+    "/N-X/u.html?username=" +
+    encodeURIComponent(
+        user
+    );
+
+
+    profileLink.style.display =
+    "block";
+
+
+    profileLink.textContent =
+    url;
+
+
+    navigator.clipboard
+    .writeText(
+        url
+    )
+    .then(
+        () => {
+
+            message.className =
+            "success";
+
+            message.textContent =
+            "✓ Link generado y copiado";
+
+        }
+    )
+    .catch(
+        () => {
+
+            message.className =
+            "success";
+
+            message.textContent =
+            "✓ Link generado";
+
+        }
+    );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+logout.addEventListener(
+    "click",
+    async function(){
+
+        await supabase.auth.signOut();
+
+        window.location.href =
+        "login.html";
+
+    }
+);
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(
+    text
+){
+
+    message.className =
+    "error";
+
+    message.textContent =
+    "❌ " +
+    text;
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadProfile();
+
+</script>
 
 
 </body>
