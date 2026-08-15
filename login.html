@@ -4,406 +4,111 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NØX — Editor</title>
+<title>NØX — Perfil</title>
 
 <style>
-
 *{
     box-sizing:border-box;
 }
 
-:root{
-    --accent:#ffffff;
-    --bg:#050505;
-    --panel:#0d0d0d;
-    --panel2:#151515;
-    --border:#292929;
-    --text:#ffffff;
-    --muted:#888;
-}
-
 html,body{
     margin:0;
-    width:100%;
     min-height:100%;
-    background:var(--bg);
-    color:var(--text);
-    font-family:Arial,sans-serif;
 }
 
 body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
+    background:#050505;
+    color:#fff;
+    font-family:Arial,sans-serif;
     overflow-x:hidden;
 }
 
-button,
-input,
-textarea,
-select{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.app{
-    width:100%;
-    min-height:100vh;
-    display:grid;
-    grid-template-columns:320px 1fr;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar{
+.background{
     position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    width:320px;
-    padding:22px;
-    background:#080808;
-    border-right:1px solid var(--border);
-    overflow-y:auto;
-    z-index:20;
-}
-
-.logo{
-    font-size:25px;
-    font-weight:1000;
-    letter-spacing:-1px;
-    margin-bottom:5px;
-}
-
-.logo-sub{
-    color:#666;
-    font-size:11px;
-    margin-bottom:25px;
-}
-
-.tabs{
-    display:flex;
-    flex-direction:column;
-    gap:7px;
-}
-
-.tab{
-    width:100%;
-    border:1px solid transparent;
-    background:transparent;
-    color:#888;
-    padding:12px;
-    border-radius:10px;
-    text-align:left;
-    transition:.2s;
-}
-
-.tab:hover{
-    background:#111;
-    color:#fff;
-}
-
-.tab.active{
-    background:#151515;
-    border-color:#292929;
-    color:#fff;
-}
-
-.save-area{
-    margin-top:25px;
-    padding-top:20px;
-    border-top:1px solid #222;
-}
-
-.save{
-    width:100%;
-    border:0;
-    padding:14px;
-    border-radius:10px;
-    background:white;
-    color:black;
-    font-weight:900;
-}
-
-.reset{
-    width:100%;
-    margin-top:8px;
-    padding:12px;
-    border:1px solid #292929;
-    border-radius:10px;
-    background:#111;
-    color:#aaa;
-}
-
-/* =========================
-   EDITOR
-========================= */
-
-.editor{
-    margin-left:320px;
-    padding:30px;
-    min-width:0;
-}
-
-.editor-inner{
-    max-width:850px;
-    margin:auto;
-}
-
-.header{
-    margin-bottom:25px;
-}
-
-.header h1{
-    margin:0;
-    font-size:30px;
-}
-
-.header p{
-    color:#777;
-    margin:7px 0 0;
-    font-size:13px;
-}
-
-.section{
-    display:none;
-}
-
-.section.active{
-    display:block;
-    animation:fade .25s ease;
-}
-
-@keyframes fade{
-    from{
-        opacity:0;
-        transform:translateY(5px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.card{
-    padding:22px;
-    background:var(--panel);
-    border:1px solid var(--border);
-    border-radius:16px;
-    margin-bottom:16px;
-}
-
-.card h2{
-    margin:0 0 5px;
-    font-size:18px;
-}
-
-.card p{
-    margin:0 0 18px;
-    color:#777;
-    font-size:12px;
-}
-
-label{
-    display:block;
-    margin:15px 0 7px;
-    color:#aaa;
-    font-size:11px;
-    font-weight:bold;
-}
-
-input,
-textarea,
-select{
-    width:100%;
-    border:1px solid #292929;
-    background:#141414;
-    color:#fff;
-    border-radius:9px;
-    padding:12px;
-    outline:none;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-    border-color:#666;
-}
-
-textarea{
-    min-height:100px;
-    resize:vertical;
-}
-
-input[type="color"]{
-    height:46px;
-    padding:4px;
-}
-
-input[type="range"]{
-    padding:0;
-}
-
-.file{
-    padding:10px;
-}
-
-.row{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.check{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:12px;
-    margin-top:10px;
-    border:1px solid #222;
-    border-radius:10px;
-    background:#101010;
-}
-
-.check input{
-    width:auto;
-}
-
-.check label{
-    margin:0;
-}
-
-.value{
-    float:right;
-    color:#777;
-}
-
-/* =========================
-   LINKS
-========================= */
-
-.link-item{
-    display:grid;
-    grid-template-columns:120px 1fr 45px;
-    gap:8px;
-    margin-bottom:8px;
-}
-
-.remove{
-    background:#171717;
-    border:1px solid #292929;
-    color:#ff6565;
-    border-radius:9px;
-}
-
-.add{
-    margin-top:5px;
-    padding:11px 15px;
-    border:1px solid #292929;
-    border-radius:9px;
-    background:#151515;
-    color:#fff;
-}
-
-/* =========================
-   BADGES
-========================= */
-
-.badge-item{
-    display:grid;
-    grid-template-columns:1fr 1fr 45px;
-    gap:8px;
-    margin-bottom:8px;
-}
-
-/* =========================
-   PREVIEW
-========================= */
-
-.preview-wrap{
-    position:fixed;
-    right:25px;
-    top:25px;
-    width:350px;
-    z-index:10;
-}
-
-.preview-label{
-    margin-bottom:8px;
-    color:#777;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-}
-
-.preview{
-    position:relative;
-    min-height:560px;
-    overflow:hidden;
-    border:1px solid #292929;
-    border-radius:20px;
-    background:#090909;
-    box-shadow:0 30px 80px rgba(0,0,0,.5);
-    transform-style:preserve-3d;
-    transition:transform .12s ease;
-}
-
-.preview-bg{
-    position:absolute;
     inset:0;
-    z-index:0;
+    z-index:-3;
     background:
         radial-gradient(
             circle at 50% 0%,
-            #333,
-            #090909 55%
+            #292929,
+            #050505 65%
         );
     background-size:cover;
     background-position:center;
 }
 
-.preview-video{
-    position:absolute;
+#backgroundVideo{
+    position:fixed;
     inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
-    z-index:1;
+    z-index:-2;
     display:none;
 }
 
 .overlay{
-    position:absolute;
+    position:fixed;
     inset:0;
-    z-index:2;
-    background:rgba(0,0,0,.25);
-    pointer-events:none;
+    z-index:-1;
+    background:rgba(0,0,0,.35);
 }
 
-.preview-content{
-    position:relative;
-    z-index:5;
-    padding:70px 25px 30px;
+.loading{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#050505;
+    color:#888;
+    font-size:14px;
+    z-index:100;
+}
+
+.profile{
+    width:100%;
+    max-width:470px;
+    padding:35px 25px;
+    border:1px solid #292929;
+    border-radius:22px;
+    background:rgba(10,10,10,.82);
+    backdrop-filter:blur(18px);
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
     text-align:center;
+    animation:appear .5s ease;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
 }
 
 .avatar{
-    width:92px;
-    height:92px;
+    width:105px;
+    height:105px;
     margin:auto;
-    border-radius:50%;
-    overflow:hidden;
     display:flex;
-    justify-content:center;
     align-items:center;
-    background:#202020;
-    border:4px solid rgba(255,255,255,.8);
-    box-shadow:0 0 25px rgba(255,255,255,.12);
-    font-size:30px;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:50%;
+    border:4px solid #fff;
+    background:#1b1b1b;
+    font-size:35px;
     font-weight:900;
-    transition:.25s;
 }
 
 .avatar img{
@@ -413,1271 +118,729 @@ input[type="range"]{
 }
 
 .name{
-    margin-top:15px;
-    font-size:25px;
-    font-weight:1000;
+    margin-top:18px;
+    font-size:28px;
+    font-weight:900;
 }
 
 .username{
-    margin-top:4px;
+    margin-top:5px;
     color:#888;
-    font-size:12px;
+    font-size:13px;
 }
 
 .bio{
-    margin-top:15px;
+    margin:18px auto 0;
+    max-width:380px;
     color:#bbb;
-    font-size:13px;
-    line-height:1.5;
+    line-height:1.55;
+    font-size:14px;
 }
 
-.socials{
+.views{
+    margin-top:15px;
+    color:#777;
+    font-size:12px;
+}
+
+.links{
     display:flex;
     flex-direction:column;
-    gap:8px;
-    margin-top:20px;
+    gap:9px;
+    margin-top:22px;
 }
 
-.social{
-    padding:11px;
+.link{
+    display:block;
+    padding:13px;
     border:1px solid #292929;
-    background:rgba(15,15,15,.8);
-    color:white;
+    border-radius:10px;
+    background:#111;
+    color:#fff;
     text-decoration:none;
-    border-radius:9px;
     transition:.2s;
 }
 
-.social:hover{
-    box-shadow:0 0 18px var(--accent);
+.link:hover{
     transform:translateY(-2px);
+    box-shadow:0 0 20px rgba(255,255,255,.12);
 }
 
-.badges{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:6px;
-    margin-top:15px;
+.error{
+    text-align:center;
+    color:#ff7070;
 }
 
-.badge{
-    padding:5px 8px;
-    border-radius:20px;
-    background:#171717;
-    border:1px solid #292929;
-    font-size:10px;
-}
-
-.preview-music{
+.music{
     width:100%;
-    margin-top:15px;
-    display:none;
+    margin-top:18px;
 }
 
-.glitch{
-    animation:glitch .35s infinite;
+.hidden{
+    display:none!important;
 }
-
-@keyframes glitch{
-    0%{text-shadow:2px 0 #f00,-2px 0 #0ff;}
-    25%{text-shadow:-2px 0 #f00,2px 0 #0ff;}
-    50%{text-shadow:2px 0 #0ff,-2px 0 #f00;}
-    75%{text-shadow:-2px 0 #0ff,2px 0 #f00;}
-    100%{text-shadow:0 0 transparent;}
-}
-
-.rain{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    z-index:3;
-    pointer-events:none;
-    display:none;
-}
-
-.drop{
-    position:absolute;
-    top:-20px;
-    width:1px;
-    height:15px;
-    background:rgba(255,255,255,.35);
-    animation:fall linear infinite;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(620px);
-    }
-}
-
-.status{
-    position:fixed;
-    left:20px;
-    bottom:20px;
-    z-index:100;
-    padding:10px 14px;
-    border-radius:9px;
-    background:#111;
-    border:1px solid #292929;
-    color:#777;
-    font-size:11px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:1100px){
-
-    .preview-wrap{
-        position:relative;
-        right:auto;
-        top:auto;
-        width:100%;
-        max-width:400px;
-        margin:25px auto 0;
-    }
-
-}
-
-@media(max-width:750px){
-
-    .app{
-        display:block;
-    }
-
-    .sidebar{
-        position:relative;
-        width:100%;
-        height:auto;
-        border-right:0;
-        border-bottom:1px solid #222;
-    }
-
-    .tabs{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-    }
-
-    .editor{
-        margin-left:0;
-        padding:18px;
-    }
-
-    .row{
-        grid-template-columns:1fr;
-    }
-
-}
-
 </style>
 </head>
 
-
 <body>
 
-
-<div class="app">
-
-
-<!-- =========================
-     SIDEBAR
-========================= -->
-
-<aside class="sidebar">
-
-<div class="logo">
-NØX
+<div id="loading" class="loading">
+    Cargando perfil...
 </div>
 
-<div class="logo-sub">
-PROFILE CUSTOMIZER
-</div>
-
-
-<div class="tabs">
-
-<button class="tab active" data-tab="appearance">
-🎨 Apariencia
-</button>
-
-<button class="tab" data-tab="text">
-✍️ Texto
-</button>
-
-<button class="tab" data-tab="media">
-📦 Multimedia
-</button>
-
-<button class="tab" data-tab="social">
-🔗 Redes
-</button>
-
-<button class="tab" data-tab="effects">
-✨ Efectos
-</button>
-
-<button class="tab" data-tab="cursor">
-🖱️ Cursor
-</button>
-
-<button class="tab" data-tab="badges">
-🏅 Badges
-</button>
-
-</div>
-
-
-<div class="save-area">
-
-<button
-    id="save"
-    class="save"
->
-    Guardar cambios
-</button>
-
-<button
-    id="reset"
-    class="reset"
->
-    Restablecer
-</button>
-
-</div>
-
-</aside>
-
-
-<!-- =========================
-     EDITOR
-========================= -->
-
-<main class="editor">
-
-<div class="editor-inner">
-
-<div class="header">
-
-<h1>
-Personaliza tu NØX
-</h1>
-
-<p>
-Todo lo que cambies aparece en la vista previa.
-</p>
-
-</div>
-
-
-<!-- =========================
-     APARIENCIA
-========================= -->
-
-<section
-    id="appearance"
-    class="section active"
->
-
-<div class="card">
-
-<h2>
-🎨 Colores
-</h2>
-
-<p>
-Personaliza los colores de tu perfil.
-</p>
-
-
-<div class="row">
-
-<div>
-
-<label>
-Color principal
-</label>
-
-<input
-    id="accent"
-    type="color"
-    value="#ffffff"
->
-
-</div>
-
-
-<div>
-
-<label>
-Color de fondo
-</label>
-
-<input
-    id="backgroundColor"
-    type="color"
-    value="#050505"
->
-
-</div>
-
-</div>
-
-
-<div class="row">
-
-<div>
-
-<label>
-Color del texto
-</label>
-
-<input
-    id="textColor"
-    type="color"
-    value="#ffffff"
->
-
-</div>
-
-
-<div>
-
-<label>
-Color de bordes
-</label>
-
-<input
-    id="borderColor"
-    type="color"
-    value="#292929"
->
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-🔤 Fuente
-</h2>
-
-<p>
-Elige una fuente para tu perfil.
-</p>
-
-<select id="font">
-
-<option value="Arial">
-Arial
-</option>
-
-<option value="Verdana">
-Verdana
-</option>
-
-<option value="Trebuchet MS">
-Trebuchet MS
-</option>
-
-<option value="Georgia">
-Georgia
-</option>
-
-<option value="Courier New">
-Courier New
-</option>
-
-<option value="Impact">
-Impact
-</option>
-
-</select>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     TEXTO
-========================= -->
-
-<section
-    id="text"
-    class="section"
->
-
-<div class="card">
-
-<h2>
-✍️ Texto del perfil
-</h2>
-
-<label>
-Apodo
-</label>
-
-<input
-    id="displayName"
-    placeholder="Tu apodo"
->
-
-<label>
-Biografía
-</label>
-
-<textarea
-    id="bio"
-    placeholder="Escribe tu biografía..."
-></textarea>
-
-<p style="margin-top:15px;">
-El username es fijo y no aparece como opción editable.
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-⌨️ Máquina de escribir
-</h2>
-
-<div class="check">
-
-<input
-    id="typing"
-    type="checkbox"
->
-
-<label for="typing">
-Activar efecto
-</label>
-
-</div>
-
-
-<label>
-Velocidad
-
-<span
-    id="typingValue"
-    class="value"
->
-60
-</span>
-
-</label>
-
-<input
-    id="typingSpeed"
-    type="range"
-    min="20"
-    max="200"
-    value="60"
->
-
-</div>
-
-
-<div class="card">
-
-<h2>
-📺 Glitch
-</h2>
-
-<div class="check">
-
-<input
-    id="glitch"
-    type="checkbox"
->
-
-<label for="glitch">
-Glitch en el apodo
-</label>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     MULTIMEDIA
-========================= -->
-
-<section
-    id="media"
-    class="section"
->
-
-<div class="card">
-
-<h2>
-🖼️ Avatar
-</h2>
-
-<p>
-Carga una imagen desde tu dispositivo.
-</p>
-
-<input
-    id="avatar"
-    class="file"
-    type="file"
-    accept="image/*"
->
-
-<label>
-Borde del avatar
-</label>
-
-<input
-    id="avatarBorder"
-    type="color"
-    value="#ffffff"
->
-
-</div>
-
-
-<div class="card">
-
-<h2>
-🌆 Fondo
-</h2>
-
-<p>
-Puedes usar una imagen o un vídeo MP4.
-</p>
-
-<label>
-Imagen
-</label>
-
-<input
-    id="backgroundImage"
-    class="file"
-    type="file"
-    accept="image/*"
->
-
-<label>
-Vídeo MP4
-</label>
-
-<input
-    id="backgroundVideo"
-    class="file"
-    type="file"
-    accept="video/mp4,video/webm"
->
-
-</div>
-
-
-<div class="card">
-
-<h2>
-🎵 Música
-</h2>
-
-<p>
-La música se prepara para reproducirse cuando el visitante interactúe con el perfil.
-</p>
-
-<input
-    id="music"
-    class="file"
-    type="file"
-    accept="audio/*"
->
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     REDES
-========================= -->
-
-<section
-    id="social"
-    class="section"
->
-
-<div class="card">
-
-<h2>
-🔗 Redes sociales
-</h2>
-
-<p>
-Añade tus redes y enlaces.
-</p>
-
-<label>
-Discord
-</label>
-
-<input
-    id="discord"
-    placeholder="Tu Discord"
->
-
-<label>
-Instagram
-</label>
-
-<input
-    id="instagram"
-    placeholder="https://instagram.com/..."
->
-
-<label>
-TikTok
-</label>
-
-<input
-    id="tiktok"
-    placeholder="https://tiktok.com/@..."
->
-
-<label>
-YouTube
-</label>
-
-<input
-    id="youtube"
-    placeholder="https://youtube.com/..."
->
-
-<label>
-GitHub
-</label>
-
-<input
-    id="github"
-    placeholder="https://github.com/..."
->
-
-<label>
-Spotify
-</label>
-
-<input
-    id="spotify"
-    placeholder="https://open.spotify.com/..."
->
-
-</div>
-
-
-<div class="card">
-
-<h2>
-➕ Links personalizados
-</h2>
-
-<div id="links"></div>
-
-<button
-    id="addLink"
-    class="add"
-    type="button"
->
-+ Añadir link
-</button>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     EFFECTS
-========================= -->
-
-<section
-    id="effects"
-    class="section"
->
-
-<div class="card">
-
-<h2>
-🌀 Efecto 3D
-</h2>
-
-<p>
-La tarjeta sigue el movimiento del ratón.
-</p>
-
-<div class="check">
-
-<input
-    id="threeD"
-    type="checkbox"
->
-
-<label for="threeD">
-Activar efecto 3D
-</label>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-🌧️ Lluvia / partículas
-</h2>
-
-<div class="check">
-
-<input
-    id="rain"
-    type="checkbox"
->
-
-<label for="rain">
-Activar lluvia
-</label>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     CURSOR
-========================= -->
-
-<section
-    id="cursor"
-    class="section"
->
-
-<div class="card">
-
-<h2>
-🖱️ Cursor personalizado
-</h2>
-
-<p>
-Carga una imagen pequeña para utilizarla como cursor.
-</p>
-
-<input
-    id="cursorFile"
-    class="file"
-    type="file"
-    accept="image/png,image/webp,image/gif,image/svg+xml"
->
-
-<div class="check">
-
-<input
-    id="cursorEnabled"
-    type="checkbox"
->
-
-<label for="cursorEnabled">
-Activar cursor personalizado
-</label>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     BADGES
-========================= -->
-
-<section
-    id="badges"
-    class="section"
->
-
-<div class="card">
-
-<h2>
-🏅 Badges
-</h2>
-
-<p>
-Añade insignias para mostrar en tu perfil.
-</p>
-
-<div id="badges"></div>
-
-<button
-    id="addBadge"
-    class="add"
-    type="button"
->
-+ Añadir badge
-</button>
-
-</div>
-
-</section>
-
-
-<!-- =========================
-     PREVIEW
-========================= -->
-
-<div class="preview-wrap">
-
-<div class="preview-label">
-Vista previa
-</div>
-
-
-<div
-    id="preview"
-    class="preview"
->
-
-
-<div
-    id="previewBg"
-    class="preview-bg"
-></div>
-
+<div id="background" class="background"></div>
 
 <video
-    id="previewVideo"
-    class="preview-video"
+    id="backgroundVideo"
     autoplay
     muted
     loop
     playsinline
 ></video>
 
-
 <div class="overlay"></div>
 
 
-<div
-    id="rainLayer"
-    class="rain"
-></div>
-
-
-<div class="preview-content">
-
-
-<div
-    id="previewAvatar"
-    class="avatar"
+<main
+    id="profile"
+    class="profile hidden"
 >
-N
-</div>
 
+    <div
+        id="avatar"
+        class="avatar"
+    >
+        N
+    </div>
 
-<div
-    id="previewName"
-    class="name"
->
-NØX User
-</div>
+    <div
+        id="name"
+        class="name"
+    >
+        NØX User
+    </div>
 
+    <div
+        id="username"
+        class="username"
+    >
+        @username
+    </div>
 
-<div
-    id="previewUsername"
-    class="username"
->
-@username
-</div>
+    <div
+        id="bio"
+        class="bio"
+    >
+        Welcome to my NØX profile.
+    </div>
 
+    <div
+        id="views"
+        class="views"
+    >
+        👁️ 0 vistas
+    </div>
 
-<div
-    id="previewBio"
-    class="bio"
->
-Welcome to my NØX profile.
-</div>
+    <div
+        id="links"
+        class="links"
+    ></div>
 
-
-<div
-    id="previewSocials"
-    class="socials"
-></div>
-
-
-<div
-    id="previewBadges"
-    class="badges"
-></div>
-
-
-<audio
-    id="previewMusic"
-    class="preview-music"
-    controls
->
-</audio>
-
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+    <audio
+        id="music"
+        class="music hidden"
+        controls
+    ></audio>
 
 </main>
-
-</div>
-
-
-<div
-    id="status"
-    class="status"
->
-Editor listo ✓
-</div>
 
 
 <script>
 
+/* =================================
+   SUPABASE
+================================= */
 
-/* =========================
-   ESTADO
-========================= */
+const SUPABASE_URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
 
-const state = {
-
-    displayName:"",
-    bio:"",
-
-    accent:"#ffffff",
-    backgroundColor:"#050505",
-    textColor:"#ffffff",
-    borderColor:"#292929",
-
-    font:"Arial",
-
-    typing:false,
-    typingSpeed:60,
-
-    glitch:false,
-    threeD:false,
-    rain:false,
-
-    avatar:"",
-    backgroundImage:"",
-    backgroundVideo:"",
-    music:"",
-    cursor:"",
-
-    avatarBorder:"#ffffff",
-
-    cursorEnabled:false,
-
-    discord:"",
-    instagram:"",
-    tiktok:"",
-    youtube:"",
-    github:"",
-    spotify:"",
-
-    links:[],
-    badges:[]
-
-};
+const SUPABASE_KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-/* =========================
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =================================
    ELEMENTOS
-========================= */
+================================= */
 
-const $ = id =>
-document.getElementById(id);
+const loading =
+document.getElementById("loading");
+
+const profile =
+document.getElementById("profile");
+
+const avatar =
+document.getElementById("avatar");
+
+const nameElement =
+document.getElementById("name");
+
+const usernameElement =
+document.getElementById("username");
+
+const bioElement =
+document.getElementById("bio");
+
+const viewsElement =
+document.getElementById("views");
+
+const linksElement =
+document.getElementById("links");
+
+const background =
+document.getElementById("background");
+
+const backgroundVideo =
+document.getElementById("backgroundVideo");
+
+const music =
+document.getElementById("music");
 
 
-const preview =
-$("preview");
+/* =================================
+   USERNAME DE LA URL
+================================= */
+
+const params =
+new URLSearchParams(
+    window.location.search
+);
+
+const username =
+params.get("username");
 
 
-/* =========================
-   TABS
-========================= */
+/* =================================
+   CARGAR PERFIL
+================================= */
 
-document
-.querySelectorAll(".tab")
-.forEach(button => {
+async function loadProfile(){
 
-    button.addEventListener(
-        "click",
-        () => {
+    try{
 
-            document
-            .querySelectorAll(".tab")
-            .forEach(x =>
-                x.classList.remove("active")
+        if(!username){
+
+            showError(
+                "No se especificó ningún username."
             );
 
-
-            document
-            .querySelectorAll(".section")
-            .forEach(x =>
-                x.classList.remove("active")
-            );
-
-
-            button.classList.add(
-                "active"
-            );
-
-
-            $(
-                button.dataset.tab
-            )
-            .classList.add(
-                "active"
-            );
-
-        }
-    );
-
-});
-
-
-/* =========================
-   INPUTS
-========================= */
-
-function bind(
-    id,
-    property,
-    event="input"
-){
-
-    $(id).addEventListener(
-        event,
-        () => {
-
-            state[property] =
-            $(id).type === "checkbox"
-                ? $(id).checked
-                : $(id).value;
-
-            update();
-
-        }
-    );
-
-}
-
-
-bind(
-    "displayName",
-    "displayName"
-);
-
-bind(
-    "bio",
-    "bio"
-);
-
-bind(
-    "accent",
-    "accent"
-);
-
-bind(
-    "backgroundColor",
-    "backgroundColor"
-);
-
-bind(
-    "textColor",
-    "textColor"
-);
-
-bind(
-    "borderColor",
-    "borderColor"
-);
-
-bind(
-    "font",
-    "font",
-    "change"
-);
-
-bind(
-    "typing",
-    "typing",
-    "change"
-);
-
-bind(
-    "typingSpeed",
-    "typingSpeed"
-);
-
-bind(
-    "glitch",
-    "glitch",
-    "change"
-);
-
-bind(
-    "threeD",
-    "threeD",
-    "change"
-);
-
-bind(
-    "rain",
-    "rain",
-    "change"
-);
-
-bind(
-    "avatarBorder",
-    "avatarBorder"
-);
-
-bind(
-    "cursorEnabled",
-    "cursorEnabled",
-    "change"
-);
-
-bind(
-    "discord",
-    "discord"
-);
-
-bind(
-    "instagram",
-    "instagram"
-);
-
-bind(
-    "tiktok",
-    "tiktok"
-);
-
-bind(
-    "youtube",
-    "youtube"
-);
-
-bind(
-    "github",
-    "github"
-);
-
-bind(
-    "spotify",
-    "spotify"
-);
-
-
-/* =========================
-   RANGE VALUE
-========================= */
-
-$("typingSpeed")
-.addEventListener(
-    "input",
-    () => {
-
-        $("typingValue")
-        .textContent =
-        $("typingSpeed").value;
-
-    }
-);
-
-
-/* =========================
-   FILE READER
-========================= */
-
-function readFile(
-    file
-){
-
-    return new Promise(
-        (resolve,reject) => {
-
-            const reader =
-            new FileReader();
-
-
-            reader.onload =
-            () =>
-            resolve(
-                reader.result
-            );
-
-
-            reader.onerror =
-            reject;
-
-
-            reader.readAsDataURL(
-                file
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================
-   AVATAR
-========================= */
-
-$("avatar")
-.addEventListener(
-    "change",
-    async () => {
-
-        const file =
-        $("avatar").files[0];
-
-
-        if(!file)
             return;
 
-
-        state.avatar =
-        await readFile(file);
+        }
 
 
-        update();
+        const cleanUsername =
+        username
+        .trim()
+        .toLowerCase();
+
+
+        const {
+            data,
+            error
+        } =
+        await supabase
+        .from("profiles")
+        .select("*")
+        .eq(
+            "username",
+            cleanUsername
+        )
+        .maybeSingle();
+
+
+        if(error){
+
+            console.error(error);
+
+            showError(
+                "Error al cargar el perfil."
+            );
+
+            return;
+
+        }
+
+
+        if(!data){
+
+            showError(
+                "Perfil no encontrado."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           PERFIL ENCONTRADO
+        */
+
+        renderProfile(data);
+
+
+        /*
+           SUMAR VISTA
+
+           Se hace DESPUÉS de encontrar
+           correctamente el perfil.
+        */
+
+        const {
+            error:viewError
+        } =
+        await supabase.rpc(
+            "increment_profile_views",
+            {
+                profile_uuid:data.id
+            }
+        );
+
+
+        if(viewError){
+
+            console.error(
+                "Error contando vista:",
+                viewError
+            );
+
+        }else{
+
+            /*
+               Actualizamos el número
+               mostrado localmente.
+            */
+
+            const currentViews =
+            Number(
+                data.profile_views || 0
+            ) + 1;
+
+
+            viewsElement.textContent =
+            "👁️ " +
+            currentViews +
+            (
+                currentViews === 1
+                ? " vista"
+                : " vistas"
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        showError(
+            "Ocurrió un error inesperado."
+        );
 
     }
-);
+
+}
 
 
-/* =========================
-   BACKGROUND IMAGE
-==============
+/* =================================
+   MOSTRAR PERFIL
+================================= */
+
+function renderProfile(data){
+
+    /*
+       APODO
+    */
+
+    nameElement.textContent =
+    data.display_name ||
+    data.username ||
+    "NØX User";
+
+
+    /*
+       USERNAME
+       NO EDITABLE
+    */
+
+    usernameElement.textContent =
+    "@" +
+    data.username;
+
+
+    /*
+       BIO
+    */
+
+    bioElement.textContent =
+    data.bio ||
+    "Welcome to my NØX profile.";
+
+
+    /*
+       VISTAS INICIALES
+    */
+
+    const views =
+    Number(
+        data.profile_views || 0
+    );
+
+
+    viewsElement.textContent =
+    "👁️ " +
+    views +
+    (
+        views === 1
+        ? " vista"
+        : " vistas"
+    );
+
+
+    /*
+       AVATAR
+    */
+
+    avatar.innerHTML = "";
+
+
+    if(data.avatar_url){
+
+        const img =
+        document.createElement(
+            "img"
+        );
+
+
+        img.src =
+        data.avatar_url;
+
+
+        img.alt =
+        "Avatar de " +
+        data.username;
+
+
+        img.onerror =
+        function(){
+
+            avatar.textContent =
+            firstLetter(
+                data.display_name ||
+                data.username
+            );
+
+        };
+
+
+        avatar.appendChild(
+            img
+        );
+
+    }else{
+
+        avatar.textContent =
+        firstLetter(
+            data.display_name ||
+            data.username
+        );
+
+    }
+
+
+    /*
+       ENLACES
+    */
+
+    addLink(
+        data.discord,
+        "Discord"
+    );
+
+    addLink(
+        data.instagram,
+        "Instagram"
+    );
+
+    addLink(
+        data.tiktok,
+        "TikTok"
+    );
+
+    addLink(
+        data.youtube,
+        "YouTube"
+    );
+
+    addLink(
+        data.github,
+        "GitHub"
+    );
+
+    addLink(
+        data.spotify,
+        "Spotify"
+    );
+
+
+    /*
+       FONDO
+    */
+
+    if(data.background_url){
+
+        if(
+            data.background_type ===
+            "video"
+        ){
+
+            backgroundVideo.src =
+            data.background_url;
+
+            backgroundVideo.style.display =
+            "block";
+
+            background.style.display =
+            "none";
+
+        }else{
+
+            background.style.backgroundImage =
+            `url("${data.background_url}")`;
+
+        }
+
+    }
+
+
+    /*
+       MÚSICA
+    */
+
+    if(data.music_url){
+
+        music.src =
+        data.music_url;
+
+        music.classList.remove(
+            "hidden"
+        );
+
+
+        /*
+           Los navegadores normalmente
+           requieren interacción del visitante
+           antes de reproducir audio.
+        */
+
+        document.addEventListener(
+            "click",
+            () => {
+
+                music.play()
+                .catch(
+                    () => {}
+                );
+
+            },
+            {
+                once:true
+            }
+        );
+
+    }
+
+
+    /*
+       MOSTRAR PERFIL
+    */
+
+    loading.classList.add(
+        "hidden"
+    );
+
+    profile.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =================================
+   LINK
+================================= */
+
+function addLink(
+    url,
+    label
+){
+
+    if(!url)
+        return;
+
+
+    const a =
+    document.createElement(
+        "a"
+    );
+
+
+    a.className =
+    "link";
+
+
+    a.textContent =
+    label +
+    " ↗";
+
+
+    a.href =
+    normalizeUrl(url);
+
+
+    a.target =
+    "_blank";
+
+
+    a.rel =
+    "noopener noreferrer";
+
+
+    linksElement.appendChild(
+        a
+    );
+
+}
+
+
+/* =================================
+   NORMALIZAR URL
+================================= */
+
+function normalizeUrl(
+    url
+){
+
+    if(
+        url.startsWith(
+            "http://"
+        ) ||
+        url.startsWith(
+            "https://"
+        )
+    ){
+
+        return url;
+
+    }
+
+
+    return "https://" +
+    url;
+
+}
+
+
+/* =================================
+   PRIMERA LETRA
+================================= */
+
+function firstLetter(
+    text
+){
+
+    return (
+        text ||
+        "N"
+    )
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* =================================
+   ERROR
+================================= */
+
+function showError(
+    text
+){
+
+    loading.classList.add(
+        "hidden"
+    );
+
+    profile.classList.remove(
+        "hidden"
+    );
+
+    profile.innerHTML =
+    `<div class="error">${escapeHtml(text)}</div>`;
+
+}
+
+
+/* =================================
+   SEGURIDAD
+================================= */
+
+function escapeHtml(
+    value
+){
+
+    return String(value)
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+
+/* =================================
+   START
+================================= */
+
+loadProfile();
+
+</script>
+
+
+<!-- SUPABASE JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</body>
+    </html>
