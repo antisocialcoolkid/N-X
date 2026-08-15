@@ -1,23 +1,533 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>NØX TEST</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NØX Profile</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top,
+                    #202020 0%,
+                    #080808 45%,
+                    #030303 100%
+                );
+
+            color: white;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+        }
+
+        .card {
+            width: min(520px, 100%);
+
+            padding: 40px 28px;
+
+            border: 1px solid #222;
+
+            border-radius: 22px;
+
+            background: rgba(10,10,10,.96);
+
+            box-shadow:
+                0 30px 100px
+                rgba(0,0,0,.7);
+
+            text-align: center;
+        }
+
+        .logo {
+            position: fixed;
+
+            top: 25px;
+            left: 30px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 24px;
+
+            font-weight: 900;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            border: 1px solid #333;
+
+            background: #151515;
+
+            font-size: 35px;
+
+            font-weight: 900;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+        .name {
+            margin-top: 20px;
+
+            font-size: 28px;
+
+            font-weight: 900;
+        }
+
+        .username {
+            margin-top: 7px;
+
+            color: #555;
+
+            font-size: 12px;
+        }
+
+        .bio {
+            margin: 20px auto 0;
+
+            max-width: 420px;
+
+            color: #777;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        .links {
+            display: grid;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .link {
+            display: block;
+
+            padding: 15px;
+
+            border: 1px solid #242424;
+
+            border-radius: 10px;
+
+            background: #0b0b0b;
+
+            color: #aaa;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            transition: .2s;
+        }
+
+        .link:hover {
+            color: white;
+
+            border-color: #555;
+
+            transform: translateY(-2px);
+        }
+
+        .message {
+            color: #666;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+        .error {
+            color: #ff6868;
+        }
+
+    </style>
+
 </head>
 
-<body style="
-    background:#050505;
-    color:white;
-    font-family:Arial;
-    text-align:center;
-    padding-top:100px;
-">
 
-<h1>JAVASCRIPT / HTML NUEVO ✓</h1>
+<body>
 
-<p>
-Si ves esto, GitHub está mostrando el archivo correcto.
-</p>
+
+<a
+    href="index.html"
+    class="logo"
+>
+    NØX
+</a>
+
+
+<main
+    id="app"
+    class="card"
+>
+
+    <p class="message">
+        LOADING PROFILE...
+    </p>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://asgowauvzfnsszstvzqi.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
+
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const app =
+    document.getElementById("app");
+
+
+async function loadProfile() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const username =
+        params.get("username");
+
+
+    if (!username) {
+
+        showMessage(
+            "Falta el username en la URL.",
+            true
+        );
+
+        return;
+    }
+
+
+    const cleanUsername =
+        username
+            .trim()
+            .toLowerCase();
+
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabase
+
+            .from("profiles")
+
+            .select("*")
+
+            .eq(
+                "username",
+                cleanUsername
+            )
+
+            .maybeSingle();
+
+
+        console.log(
+            "PROFILE:",
+            data
+        );
+
+        console.log(
+            "ERROR:",
+            error
+        );
+
+
+        if (error) {
+
+            showMessage(
+                "Supabase: " +
+                error.message,
+                true
+            );
+
+            return;
+        }
+
+
+        if (!data) {
+
+            showMessage(
+                "No existe el perfil @" +
+                cleanUsername,
+                true
+            );
+
+            return;
+        }
+
+
+        showProfile(data);
+
+
+    } catch (error) {
+
+        showMessage(
+            "Error: " +
+            error.message,
+            true
+        );
+
+    }
+
+}
+
+
+function showProfile(data) {
+
+    document.title =
+        "@" +
+        (data.username || "") +
+        " — NØX";
+
+
+    let avatarHTML;
+
+
+    if (data.avatar_url) {
+
+        avatarHTML = `
+            <img
+                src="${escapeHTML(data.avatar_url)}"
+                alt="Avatar"
+            >
+        `;
+
+    } else {
+
+        const initial =
+            (
+                data.display_name ||
+                data.username ||
+                "N"
+            )
+            .charAt(0)
+            .toUpperCase();
+
+
+        avatarHTML =
+            escapeHTML(initial);
+    }
+
+
+    let linksHTML = "";
+
+
+    if (data.discord) {
+
+        linksHTML += `
+            <a
+                class="link"
+                href="${makeURL(data.discord)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Discord ↗
+            </a>
+        `;
+
+    }
+
+
+    if (data.youtube) {
+
+        linksHTML += `
+            <a
+                class="link"
+                href="${makeURL(data.youtube)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                YouTube ↗
+            </a>
+        `;
+
+    }
+
+
+    if (data.github) {
+
+        linksHTML += `
+            <a
+                class="link"
+                href="${makeURL(data.github)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub ↗
+            </a>
+        `;
+
+    }
+
+
+    app.innerHTML = `
+
+        <div class="avatar">
+            ${avatarHTML}
+        </div>
+
+
+        <h1 class="name">
+
+            ${escapeHTML(
+                data.display_name ||
+                data.username
+            )}
+
+        </h1>
+
+
+        <p class="username">
+
+            @${escapeHTML(
+                data.username
+            )}
+
+        </p>
+
+
+        ${
+            data.bio
+            ?
+            `
+            <p class="bio">
+                ${escapeHTML(data.bio)}
+            </p>
+            `
+            :
+            ""
+        }
+
+
+        <div class="links">
+
+            ${linksHTML}
+
+        </div>
+
+    `;
+
+}
+
+
+function showMessage(
+    message,
+    error = false
+) {
+
+    app.innerHTML = `
+
+        <p
+            class="message ${error ? "error" : ""}"
+        >
+            ${escapeHTML(message)}
+        </p>
+
+    `;
+
+}
+
+
+function makeURL(value) {
+
+    value =
+        String(value).trim();
+
+
+    if (
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+    ) {
+
+        return escapeHTML(value);
+
+    }
+
+
+    return escapeHTML(
+        "https://" + value
+    );
+
+}
+
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+loadProfile();
+
+</script>
+
 
 </body>
+
 </html>
