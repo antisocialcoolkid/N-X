@@ -5,214 +5,151 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#030303">
+<meta name="theme-color" content="#020202">
 
 <title>NØX — Login</title>
 
-
 <style>
 
-/* =========================
-   RESET
-========================= */
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
 }
 
 body{
-
     min-height:100vh;
-
     overflow:hidden;
-
     background:#020202;
-
-    color:white;
-
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-
-/* =========================
-   BACKGROUND
-========================= */
+/* BACKGROUND */
 
 .background{
-
     position:fixed;
-
     inset:0;
-
     overflow:hidden;
-
     background:
         radial-gradient(
             circle at 50% 0%,
-            #242424 0%,
-            #0a0a0a 35%,
+            #292929 0%,
+            #090909 38%,
             #020202 75%
         );
 }
 
-
-/* GRID */
-
 .grid{
-
     position:absolute;
-
     inset:0;
-
     opacity:.22;
 
     background-image:
-
         linear-gradient(
             rgba(255,255,255,.035) 1px,
             transparent 1px
         ),
-
         linear-gradient(
             90deg,
             rgba(255,255,255,.035) 1px,
             transparent 1px
         );
 
-    background-size:
-        45px 45px;
+    background-size:45px 45px;
 
     mask-image:
         linear-gradient(
             to bottom,
             black,
-            transparent
+            transparent 90%
         );
 }
 
-
-/* GLOW */
-
 .glow{
-
     position:absolute;
-
-    width:500px;
-
-    height:500px;
-
+    width:450px;
+    height:450px;
     border-radius:50%;
-
-    background:white;
-
+    background:#fff;
     filter:blur(150px);
-
     opacity:.07;
 
     animation:
-        floatingGlow
+        glowMove
         10s
         ease-in-out
         infinite;
 }
 
 .glow.one{
-
-    top:-300px;
-
-    left:-200px;
+    top:-250px;
+    left:-180px;
 }
 
 .glow.two{
-
-    right:-300px;
-
+    right:-250px;
     bottom:-250px;
-
     animation-delay:-5s;
 }
 
-@keyframes floatingGlow{
+@keyframes glowMove{
 
     0%,100%{
-        transform:
-            translate(0,0)
-            scale(1);
+        transform:translate(0,0) scale(1);
     }
 
     50%{
-        transform:
-            translate(60px,40px)
-            scale(1.15);
+        transform:translate(50px,35px) scale(1.15);
     }
 }
-
 
 /* PARTICLES */
 
 .particle{
-
     position:absolute;
-
     width:2px;
-
     height:2px;
-
     border-radius:50%;
-
-    background:white;
-
-    opacity:.25;
+    background:#fff;
+    opacity:.3;
 
     animation:
-        particle
+        particleMove
         linear
         infinite;
 }
 
 .p1{
-    left:10%;
-    animation-duration:13s;
+    left:8%;
+    animation-duration:14s;
 }
 
 .p2{
-    left:22%;
-    animation-duration:17s;
+    left:20%;
+    animation-duration:18s;
 }
 
 .p3{
-    left:37%;
-    animation-duration:15s;
+    left:35%;
+    animation-duration:13s;
 }
 
 .p4{
-    left:52%;
+    left:50%;
     animation-duration:20s;
 }
 
 .p5{
-    left:68%;
-    animation-duration:14s;
+    left:65%;
+    animation-duration:16s;
 }
 
 .p6{
-    left:81%;
-    animation-duration:18s;
+    left:80%;
+    animation-duration:19s;
 }
 
 .p7{
@@ -220,85 +157,58 @@ body{
     animation-duration:12s;
 }
 
-@keyframes particle{
+@keyframes particleMove{
 
     from{
-        transform:
-            translateY(110vh);
+        transform:translateY(110vh);
     }
 
     to{
-        transform:
-            translateY(-20vh);
+        transform:translateY(-20vh);
         opacity:0;
     }
 }
 
-
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .auth{
-
     position:relative;
-
     z-index:2;
 
     min-height:100vh;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
-    padding:25px;
+    padding:30px;
 }
 
-
-/* =========================
-   LOGO
-========================= */
+/* LOGO */
 
 .logo{
-
     position:absolute;
-
     top:30px;
-
     left:40px;
 
-    color:white;
-
+    color:#fff;
     text-decoration:none;
 
     font-size:26px;
-
     font-weight:950;
-
     letter-spacing:-1px;
 
-    transition:.25s;
+    transition:.2s;
 }
 
 .logo:hover{
-
     opacity:.65;
-
-    transform:
-        translateY(-2px);
+    transform:translateY(-2px);
 }
 
-
-/* =========================
-   CARD
-========================= */
+/* CARD */
 
 .auth-box{
-
-    position:relative;
-
     width:min(420px,100%);
 
     padding:38px;
@@ -312,87 +222,46 @@ body{
     background:
         linear-gradient(
             145deg,
-            rgba(25,25,25,.94),
-            rgba(5,5,5,.97)
+            rgba(25,25,25,.96),
+            rgba(5,5,5,.98)
         );
 
-    backdrop-filter:
-        blur(25px);
+    backdrop-filter:blur(25px);
 
     box-shadow:
-
-        0 40px 120px
-        rgba(0,0,0,.7),
-
-        0 0 80px
-        rgba(255,255,255,.025);
+        0 40px 120px rgba(0,0,0,.7);
 
     animation:
         cardIn
-        .8s
-        cubic-bezier(.2,.8,.2,1)
+        .7s
+        ease
         both;
 }
 
 @keyframes cardIn{
 
     from{
-
         opacity:0;
-
         transform:
             translateY(30px)
             scale(.97);
-
     }
 
     to{
-
         opacity:1;
-
         transform:
             translateY(0)
             scale(1);
-
     }
 }
 
-
-/* CARD LIGHT */
-
-.auth-box::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    border-radius:22px;
-
-    pointer-events:none;
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(255,255,255,.08),
-            transparent 30%,
-            transparent 70%,
-            rgba(255,255,255,.03)
-        );
-}
-
-
-/* =========================
-   HEADER
-========================= */
+/* BADGE */
 
 .badge{
 
     width:max-content;
 
     display:flex;
-
     align-items:center;
 
     gap:8px;
@@ -408,21 +277,18 @@ body{
     color:#777;
 
     font-size:8px;
-
     font-weight:900;
-
     letter-spacing:2px;
 }
 
 .badge-dot{
 
     width:5px;
-
     height:5px;
 
     border-radius:50%;
 
-    background:white;
+    background:#fff;
 
     box-shadow:
         0 0 10px
@@ -447,23 +313,17 @@ body{
     }
 }
 
+/* TEXT */
+
 h1{
-
-    position:relative;
-
     margin-top:22px;
 
     font-size:34px;
 
     letter-spacing:-1.7px;
-
-    line-height:1;
 }
 
 .subtitle{
-
-    position:relative;
-
     margin-top:10px;
 
     color:#666;
@@ -473,25 +333,17 @@ h1{
     line-height:1.6;
 }
 
-
-/* =========================
-   FORM
-========================= */
+/* FORM */
 
 form{
-
-    position:relative;
-
     margin-top:28px;
 }
 
 .field{
-
     margin-top:16px;
 }
 
 label{
-
     display:block;
 
     margin-bottom:8px;
@@ -507,19 +359,13 @@ label{
     text-transform:uppercase;
 }
 
-.input-wrap{
-
-    position:relative;
-}
-
 input{
 
     width:100%;
 
     height:53px;
 
-    padding:
-        0 15px;
+    padding:0 15px;
 
     border:
         1px solid
@@ -529,26 +375,20 @@ input{
 
     outline:none;
 
-    background:
-        rgba(0,0,0,.6);
+    background:#050505;
 
-    color:white;
+    color:#fff;
 
     font-size:13px;
 
-    transition:
-        border-color .25s,
-        box-shadow .25s,
-        background .25s;
+    transition:.2s;
 }
 
 input::placeholder{
-
     color:#3e3e3e;
 }
 
 input:hover{
-
     border-color:#3b3b3b;
 }
 
@@ -556,17 +396,12 @@ input:focus{
 
     border-color:#777;
 
-    background:#080808;
-
     box-shadow:
         0 0 0 3px
         rgba(255,255,255,.025);
 }
 
-
-/* =========================
-   SIGN IN
-========================= */
+/* BUTTON */
 
 .signin{
 
@@ -580,7 +415,7 @@ input:focus{
 
     border-radius:10px;
 
-    background:white;
+    background:#fff;
 
     color:#000;
 
@@ -590,48 +425,29 @@ input:focus{
 
     font-weight:950;
 
-    letter-spacing:.3px;
-
-    transition:
-        transform .2s,
-        box-shadow .2s,
-        opacity .2s;
+    transition:.2s;
 }
 
 .signin:hover{
 
-    transform:
-        translateY(-3px);
+    transform:translateY(-3px);
 
     box-shadow:
         0 15px 45px
         rgba(255,255,255,.12);
 }
 
-.signin:active{
-
-    transform:
-        translateY(0);
-}
-
 .signin:disabled{
-
     opacity:.5;
-
     cursor:not-allowed;
-
     transform:none;
 }
 
-
-/* =========================
-   DIVIDER
-========================= */
+/* DIVIDER */
 
 .divider{
 
     display:flex;
-
     align-items:center;
 
     gap:12px;
@@ -641,9 +457,7 @@ input:focus{
     color:#3e3e3e;
 
     font-size:9px;
-
     font-weight:bold;
-
     letter-spacing:2px;
 }
 
@@ -659,10 +473,7 @@ input:focus{
     background:#1d1d1d;
 }
 
-
-/* =========================
-   DISCORD
-========================= */
+/* DISCORD */
 
 .discord{
 
@@ -686,29 +497,23 @@ input:focus{
 
     font-weight:800;
 
-    transition:.25s;
+    transition:.2s;
 }
 
 .discord:hover{
 
-    color:white;
+    color:#fff;
 
     border-color:#444;
 
     background:#111;
 
-    transform:
-        translateY(-2px);
+    transform:translateY(-2px);
 }
 
-
-/* =========================
-   REGISTER
-========================= */
+/* REGISTER */
 
 .register{
-
-    position:relative;
 
     margin-top:24px;
 
@@ -721,7 +526,7 @@ input:focus{
 
 .register a{
 
-    color:white;
+    color:#fff;
 
     text-decoration:none;
 
@@ -729,20 +534,14 @@ input:focus{
 }
 
 .register a:hover{
-
     text-decoration:underline;
 }
 
-
-/* =========================
-   MESSAGE
-========================= */
+/* MESSAGE */
 
 #message{
 
     min-height:18px;
-
-    position:relative;
 
     margin-top:16px;
 
@@ -751,66 +550,46 @@ input:focus{
     color:#888;
 
     font-size:10px;
-
-    line-height:1.5;
 }
 
 .success{
-
     color:#6dffab !important;
 }
 
 .error{
-
     color:#ff7070 !important;
 }
 
-
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:600px){
 
     .logo{
-
         top:22px;
-
         left:22px;
-
         font-size:23px;
     }
 
     .auth{
-
-        padding:
-            80px 18px
-            30px;
+        padding:80px 18px 30px;
     }
 
     .auth-box{
-
         padding:27px 22px;
-
         border-radius:18px;
     }
 
     h1{
-
         font-size:29px;
     }
-
 }
 
 </style>
 
 </head>
 
-
 <body>
 
-
-<!-- BACKGROUND -->
 
 <div class="background">
 
@@ -818,7 +597,6 @@ input:focus{
 
     <div class="glow one"></div>
     <div class="glow two"></div>
-
 
     <span class="particle p1"></span>
     <span class="particle p2"></span>
@@ -829,7 +607,6 @@ input:focus{
     <span class="particle p7"></span>
 
 </div>
-
 
 
 <main class="auth">
@@ -844,15 +621,14 @@ input:focus{
 </a>
 
 
-
 <section class="auth-box">
 
 
 <div class="badge">
 
-<span class="badge-dot"></span>
+    <span class="badge-dot"></span>
 
-NØX PROFILES
+    NØX PROFILES
 
 </div>
 
@@ -867,7 +643,6 @@ Sign in to your NØX profile.
 </p>
 
 
-
 <form id="loginForm">
 
 
@@ -876,8 +651,6 @@ Sign in to your NØX profile.
 <label for="email">
 Email
 </label>
-
-<div class="input-wrap">
 
 <input
     id="email"
@@ -888,17 +661,12 @@ Email
 
 </div>
 
-</div>
-
-
 
 <div class="field">
 
 <label for="password">
 Password
 </label>
-
-<div class="input-wrap">
 
 <input
     id="password"
@@ -909,13 +677,10 @@ Password
 
 </div>
 
-</div>
-
-
 
 <button
-    class="signin"
     id="loginButton"
+    class="signin"
     type="submit">
 
 Sign in
@@ -925,11 +690,9 @@ Sign in
 </form>
 
 
-
 <div class="divider">
 OR
 </div>
-
 
 
 <button
@@ -940,7 +703,6 @@ OR
 Continue with Discord
 
 </button>
-
 
 
 <p class="register">
@@ -954,7 +716,6 @@ Create one
 </p>
 
 
-
 <p id="message"></p>
 
 
@@ -963,24 +724,16 @@ Create one
 </main>
 
 
-
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
-
-document.addEventListener(
-"DOMContentLoaded",
-function(){
 
 const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
-
 
 const supabase =
 window.supabase.createClient(
@@ -990,39 +743,25 @@ window.supabase.createClient(
 
 
 const form =
-document.getElementById(
-    "loginForm"
-);
+document.getElementById("loginForm");
 
 const email =
-document.getElementById(
-    "email"
-);
+document.getElementById("email");
 
 const password =
-document.getElementById(
-    "password"
-);
-
-const message =
-document.getElementById(
-    "message"
-);
+document.getElementById("password");
 
 const button =
-document.getElementById(
-    "loginButton"
-);
+document.getElementById("loginButton");
+
+const message =
+document.getElementById("message");
 
 const discord =
-document.getElementById(
-    "discordLogin"
-);
+document.getElementById("discordLogin");
 
 
-/* =========================
-   EMAIL LOGIN
-========================= */
+/* LOGIN */
 
 form.addEventListener(
 "submit",
@@ -1041,11 +780,8 @@ async function(event){
     "Connecting to NØX...";
 
 
-    const {
-        error
-    } =
-    await supabase.auth
-    .signInWithPassword({
+    const result =
+    await supabase.auth.signInWithPassword({
 
         email:
         email.value.trim(),
@@ -1056,14 +792,14 @@ async function(event){
     });
 
 
-    if(error){
+    if(result.error){
 
         message.className=
         "error";
 
         message.textContent=
         "❌ " +
-        error.message;
+        result.error.message;
 
         button.disabled=false;
 
@@ -1071,7 +807,6 @@ async function(event){
         "Sign in";
 
         return;
-
     }
 
 
@@ -1080,7 +815,6 @@ async function(event){
 
     message.textContent=
     "✓ Welcome back.";
-
 
     button.textContent=
     "Success ✓";
@@ -1099,9 +833,7 @@ async function(event){
 });
 
 
-/* =========================
-   DISCORD
-========================= */
+/* DISCORD */
 
 discord.addEventListener(
 "click",
@@ -1113,33 +845,28 @@ async function(){
     "Connecting...";
 
 
-    const {
-        error
-    } =
-    await supabase.auth
-    .signInWithOAuth({
+    const result =
+    await supabase.auth.signInWithOAuth({
 
         provider:"discord",
 
         options:{
-
             redirectTo:
-                window.location.origin +
-                "/profile.html"
-
+            window.location.origin +
+            "/profile.html"
         }
 
     });
 
 
-    if(error){
+    if(result.error){
 
         message.className=
         "error";
 
         message.textContent=
         "❌ " +
-        error.message;
+        result.error.message;
 
         discord.disabled=false;
 
@@ -1147,8 +874,6 @@ async function(){
         "Continue with Discord";
 
     }
-
-});
 
 });
 
