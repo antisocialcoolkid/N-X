@@ -1,40 +1,20 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NØX — PRUEBA</title>
+<title>NØX TEST</title>
 </head>
 
 <body>
 
 <h1>NØX — PRUEBA DEFINITIVA</h1>
 
-<button id="test">
-    PROBAR
-</button>
-
-<div id="result">
-    Esperando...
-</div>
+<p>JAVASCRIPT FUNCIONA ✓</p>
 
 <script>
-
-console.log("JAVASCRIPT NØX FUNCIONA");
-
-document.getElementById("test").addEventListener(
-    "click",
-    function(){
-
-        document.getElementById("result").textContent =
-        "JAVASCRIPT FUNCIONA ✓";
-
-    }
+document.body.insertAdjacentHTML(
+    "beforeend",
+    "<h2>JS FUNCIONA ✓</h2>"
 );
-
-document.getElementById("result").textContent =
-"JAVASCRIPT FUNCIONA ✓";
-
 </script>
 
 </body>
