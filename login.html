@@ -14,10 +14,6 @@
 
 <style>
 
-/* =========================
-   RESET
-========================= */
-
 *{
     box-sizing:border-box;
 }
@@ -25,8 +21,6 @@
 html,
 body{
     margin:0;
-    padding:0;
-    width:100%;
     min-height:100%;
 }
 
@@ -37,9 +31,9 @@ body{
     background:
         radial-gradient(
             circle at 50% 0%,
-            #292929 0%,
-            #0b0b0b 42%,
-            #020202 100%
+            #252525,
+            #090909 45%,
+            #020202
         );
 
     color:#fff;
@@ -51,85 +45,13 @@ body{
 
     display:flex;
 
-    justify-content:center;
-
     align-items:center;
+
+    justify-content:center;
 
     padding:20px;
 
 }
-
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.bg{
-
-    position:fixed;
-
-    inset:0;
-
-    overflow:hidden;
-
-    pointer-events:none;
-
-    z-index:-1;
-
-}
-
-.bg::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:500px;
-
-    height:500px;
-
-    left:-250px;
-
-    top:-250px;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    filter:blur(160px);
-
-    opacity:.06;
-
-}
-
-.bg::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:500px;
-
-    height:500px;
-
-    right:-250px;
-
-    bottom:-250px;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    filter:blur(160px);
-
-    opacity:.05;
-
-}
-
-
-/* =========================
-   AUTH
-========================= */
 
 .auth{
 
@@ -138,11 +60,6 @@ body{
     max-width:430px;
 
 }
-
-
-/* =========================
-   LOGO
-========================= */
 
 .logo{
 
@@ -158,23 +75,14 @@ body{
 
     font-weight:900;
 
-    letter-spacing:-1px;
-
 }
 
-
-/* =========================
-   CARD
-========================= */
-
 .card{
-
-    width:100%;
 
     padding:35px 30px;
 
     background:
-        rgba(10,10,10,.94);
+        rgba(10,10,10,.95);
 
     border:
         1px solid
@@ -188,18 +96,11 @@ body{
 
 }
 
-
-/* =========================
-   TITLE
-========================= */
-
 h1{
 
     margin:0;
 
     font-size:31px;
-
-    letter-spacing:-1.2px;
 
 }
 
@@ -215,11 +116,6 @@ h1{
     font-size:13px;
 
 }
-
-
-/* =========================
-   LABEL
-========================= */
 
 label{
 
@@ -238,20 +134,13 @@ label{
 
 }
 
-
-/* =========================
-   INPUT
-========================= */
-
 input{
 
     width:100%;
 
     height:50px;
 
-    padding:
-        0
-        14px;
+    padding:0 14px;
 
     background:#151515;
 
@@ -267,32 +156,15 @@ input{
 
     font-size:14px;
 
-    transition:
-        border-color .2s,
-        background .2s;
-
 }
 
 input:focus{
-
-    background:#181818;
 
     border-color:#666;
 
 }
 
-input::placeholder{
-
-    color:#555;
-
-}
-
-
-/* =========================
-   BUTTON
-========================= */
-
-#loginButton{
+button{
 
     width:100%;
 
@@ -308,38 +180,13 @@ input::placeholder{
 
     color:#050505;
 
-    font-size:13px;
-
     font-weight:900;
 
     cursor:pointer;
 
-    transition:
-        transform .2s,
-        box-shadow .2s,
-        opacity .2s;
-
 }
 
-#loginButton:hover{
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 12px 35px
-        rgba(255,255,255,.12);
-
-}
-
-#loginButton:active{
-
-    transform:
-        translateY(0);
-
-}
-
-#loginButton:disabled{
+button:disabled{
 
     opacity:.5;
 
@@ -347,27 +194,17 @@ input::placeholder{
 
 }
 
-
-/* =========================
-   MESSAGE
-========================= */
-
 #message{
 
     min-height:20px;
 
-    margin:
-        16px
-        0
-        0;
+    margin-top:16px;
 
     text-align:center;
 
     color:#777;
 
     font-size:12px;
-
-    line-height:1.5;
 
 }
 
@@ -383,17 +220,9 @@ input::placeholder{
 
 }
 
-
-/* =========================
-   REGISTER
-========================= */
-
 .register{
 
-    margin:
-        25px
-        0
-        0;
+    margin-top:25px;
 
     text-align:center;
 
@@ -407,39 +236,6 @@ input::placeholder{
 
     color:#fff;
 
-    text-decoration:none;
-
-    font-weight:700;
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:500px){
-
-    body{
-
-        padding:15px;
-
-    }
-
-    .card{
-
-        padding:
-            30px
-            20px;
-
-    }
-
-    h1{
-
-        font-size:27px;
-
-    }
-
 }
 
 </style>
@@ -448,9 +244,6 @@ input::placeholder{
 
 
 <body>
-
-
-<div class="bg"></div>
 
 
 <main class="auth">
@@ -511,10 +304,8 @@ input::placeholder{
 </button>
 
 
-<p
-    id="message"
->
-    Preparando NØX...
+<p id="message">
+    Cargando...
 </p>
 
 
@@ -534,39 +325,45 @@ input::placeholder{
 </main>
 
 
-<!-- =========================
-     SUPABASE
-========================= -->
+<!-- SUPABASE -->
 
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
 /* =========================
-   CONFIG
+   SUPABASE CONFIG
 ========================= */
 
 const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
-
 
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
 /* =========================
+   CREATE CLIENT
+========================= */
+
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================
    ELEMENTS
 ========================= */
 
-const emailInput =
+const email =
 document.getElementById(
     "email"
 );
 
-const passwordInput =
+const password =
 document.getElementById(
     "password"
 );
@@ -583,17 +380,6 @@ document.getElementById(
 
 
 /* =========================
-   SUPABASE CLIENT
-========================= */
-
-const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
-/* =========================
    READY
 ========================= */
 
@@ -602,7 +388,7 @@ message.textContent =
 
 
 /* =========================
-   LOGIN CLICK
+   LOGIN
 ========================= */
 
 loginButton.addEventListener(
@@ -611,64 +397,16 @@ loginButton.addEventListener(
 );
 
 
-/* =========================
-   ENTER
-========================= */
-
-emailInput.addEventListener(
-    "keydown",
-    function(event){
-
-        if(
-            event.key ===
-            "Enter"
-        ){
-
-            event.preventDefault();
-
-            login();
-
-        }
-
-    }
-);
-
-
-passwordInput.addEventListener(
-    "keydown",
-    function(event){
-
-        if(
-            event.key ===
-            "Enter"
-        ){
-
-            event.preventDefault();
-
-            login();
-
-        }
-
-    }
-);
-
-
-/* =========================
-   LOGIN
-========================= */
-
 async function login(){
 
-    const email =
-    emailInput.value.trim();
+    const emailValue =
+    email.value.trim();
 
-    const password =
-    passwordInput.value;
+    const passwordValue =
+    password.value;
 
 
-    /* VALIDATION */
-
-    if(!email){
+    if(!emailValue){
 
         showError(
             "Escribe tu email."
@@ -679,7 +417,7 @@ async function login(){
     }
 
 
-    if(!password){
+    if(!passwordValue){
 
         showError(
             "Escribe tu contraseña."
@@ -690,30 +428,20 @@ async function login(){
     }
 
 
-    /* LOADING */
-
     loginButton.disabled =
     true;
 
     loginButton.textContent =
     "Signing in...";
 
+
     message.className = "";
 
     message.textContent =
-    "Conectando con NØX...";
+    "Iniciando sesión...";
 
 
     try{
-
-        console.log(
-            "NØX LOGIN START"
-        );
-
-
-        /* =========================
-           SUPABASE LOGIN
-        ========================= */
 
         const {
             data,
@@ -723,57 +451,33 @@ async function login(){
         .signInWithPassword({
 
             email:
-            email,
+            emailValue,
 
             password:
-            password
+            passwordValue
 
         });
 
 
         console.log(
-            "NØX LOGIN RESULT",
-            data,
+            "LOGIN DATA:",
+            data
+        );
+
+
+        console.log(
+            "LOGIN ERROR:",
             error
         );
 
 
-        /* =========================
-           ERROR
-        ========================= */
-
         if(error){
 
             showError(
-                error.message
+                getError(
+                    error
+                )
             );
-
-
-            resetButton();
-
-            return;
-
-        }
-
-
-        /* =========================
-           CHECK SESSION
-        ========================= */
-
-        const {
-            data: sessionData,
-            error: sessionError
-        } =
-        await supabase.auth
-        .getSession();
-
-
-        if(sessionError){
-
-            showError(
-                sessionError.message
-            );
-
 
             resetButton();
 
@@ -783,14 +487,13 @@ async function login(){
 
 
         if(
-            !sessionData ||
-            !sessionData.session
+            !data ||
+            !data.session
         ){
 
             showError(
-                "La sesión no se creó."
+                "No se pudo crear la sesión."
             );
-
 
             resetButton();
 
@@ -799,24 +502,16 @@ async function login(){
         }
 
 
-        /* =========================
-           SUCCESS
-        ========================= */
-
         message.className =
         "success";
 
         message.textContent =
-        "✓ Login correcto.";
+        "✓ Login correcto. Entrando...";
 
 
         loginButton.textContent =
-        "Entrando...";
+        "Success ✓";
 
-
-        /* =========================
-           REDIRECT
-        ========================= */
 
         setTimeout(
         function(){
@@ -830,18 +525,15 @@ async function login(){
 
     }
 
-
     catch(error){
 
         console.error(
-            "NØX LOGIN ERROR",
             error
         );
 
 
         showError(
-            error.message ||
-            "Error desconocido."
+            error.message
         );
 
 
@@ -853,7 +545,111 @@ async function login(){
 
 
 /* =========================
-   ERROR
+   ENTER
+========================= */
+
+email.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            event.preventDefault();
+
+            login();
+
+        }
+
+    }
+);
+
+
+password.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            event.preventDefault();
+
+            login();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ERRORS
+========================= */
+
+function getError(
+    error
+){
+
+    const text =
+    String(
+        error.message ||
+        ""
+    ).toLowerCase();
+
+
+    if(
+        text.includes(
+            "invalid login credentials"
+        )
+    ){
+
+        return (
+            "Email o contraseña incorrectos."
+        );
+
+    }
+
+
+    if(
+        text.includes(
+            "email not confirmed"
+        )
+    ){
+
+        return (
+            "Debes confirmar tu email antes de iniciar sesión."
+        );
+
+    }
+
+
+    if(
+        text.includes(
+            "rate limit"
+        )
+    ){
+
+        return (
+            "Demasiados intentos. Espera un momento."
+        );
+
+    }
+
+
+    return (
+        error.message ||
+        "Error al iniciar sesión."
+    );
+
+}
+
+
+/* =========================
+   ERROR MESSAGE
 ========================= */
 
 function showError(
@@ -871,7 +667,7 @@ function showError(
 
 
 /* =========================
-   RESET
+   RESET BUTTON
 ========================= */
 
 function resetButton(){
