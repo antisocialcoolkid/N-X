@@ -2,541 +2,606 @@
 <html lang="es">
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#050505">
 
-    <title>NØX — Create Profile</title>
+<title>NØX — Create Profile</title>
 
-    <style>
+<style>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        html {
-            background: #020202;
-        }
+html{
+    background:#020202;
+}
 
-        body {
-            min-height: 100vh;
-            overflow-x: hidden;
+body{
+    min-height:100vh;
+    overflow-x:hidden;
 
-            color: #fff;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #242424 0%,
+            #090909 40%,
+            #020202 100%
+        );
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+    color:#fff;
 
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    #292929 0%,
-                    #090909 42%,
-                    #020202 100%
-                );
-        }
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
 
-        body::before {
-            content: "";
+/* BACKGROUND */
 
-            position: fixed;
-            inset: 0;
+body::before{
+    content:"";
 
-            pointer-events: none;
+    position:fixed;
+    inset:0;
 
-            opacity: .12;
+    pointer-events:none;
 
-            background-image:
-                linear-gradient(
-                    rgba(255,255,255,.035) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,.035) 1px,
-                    transparent 1px
-                );
+    opacity:.12;
 
-            background-size: 50px 50px;
-        }
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
 
-        .glow {
-            position: fixed;
+    background-size:45px 45px;
+}
 
-            width: 360px;
-            height: 360px;
+.glow{
+    position:fixed;
 
-            border-radius: 50%;
+    width:350px;
+    height:350px;
 
-            background: white;
+    border-radius:50%;
 
-            filter: blur(150px);
+    background:white;
 
-            opacity: .035;
+    filter:blur(150px);
 
-            pointer-events: none;
+    opacity:.035;
 
-            animation: float 9s ease-in-out infinite;
-        }
+    pointer-events:none;
 
-        .glow.one {
-            top: -200px;
-            left: -180px;
-        }
+    animation:float 8s ease-in-out infinite;
+}
 
-        .glow.two {
-            right: -220px;
-            bottom: -220px;
+.glow.one{
+    top:-200px;
+    left:-150px;
+}
 
-            animation-delay: -4s;
-        }
+.glow.two{
+    right:-180px;
+    bottom:-200px;
 
-        @keyframes float {
+    animation-delay:-4s;
+}
 
-            0%, 100% {
-                transform: translate(0, 0);
-            }
+@keyframes float{
 
-            50% {
-                transform: translate(40px, 30px);
-            }
-        }
+    0%,100%{
+        transform:translate(0,0);
+    }
 
-        nav {
-            position: relative;
+    50%{
+        transform:translate(40px,30px);
+    }
+}
 
-            width: 92%;
-            max-width: 1100px;
 
-            height: 75px;
+/* NAV */
 
-            margin: auto;
+nav{
+    position:relative;
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+    width:92%;
+    max-width:1100px;
 
-            border-bottom: 1px solid #222;
-        }
+    height:75px;
 
-        .logo {
-            color: white;
+    margin:auto;
 
-            text-decoration: none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-            font-size: 25px;
-            font-weight: 900;
+    border-bottom:1px solid #222;
+}
 
-            letter-spacing: -1px;
-        }
+.logo{
+    color:#fff;
 
-        .back {
-            color: #777;
+    text-decoration:none;
 
-            text-decoration: none;
+    font-size:25px;
 
-            font-size: 12px;
+    font-weight:900;
 
-            transition: .2s;
-        }
+    letter-spacing:-1px;
+}
 
-        .back:hover {
-            color: white;
-        }
+.back{
+    color:#777;
 
-        main {
-            position: relative;
+    text-decoration:none;
 
-            width: 92%;
-            max-width: 1100px;
+    font-size:12px;
 
-            min-height: calc(100vh - 75px);
+    transition:.2s;
+}
 
-            margin: auto;
+.back:hover{
+    color:#fff;
+}
 
-            display: grid;
 
-            grid-template-columns:
-                1fr 420px;
+/* MAIN */
 
-            gap: 70px;
+main{
+    position:relative;
 
-            align-items: center;
+    width:92%;
+    max-width:1100px;
 
-            padding: 50px 0;
-        }
+    min-height:
+        calc(100vh - 75px);
 
-        .hero h1 {
-            font-size:
-                clamp(55px, 8vw, 100px);
+    margin:auto;
 
-            line-height: .85;
+    display:grid;
 
-            letter-spacing: -7px;
-        }
+    grid-template-columns:
+        1fr 420px;
 
-        .hero h1 span {
-            color: #444;
-        }
+    gap:70px;
 
-        .hero p {
-            max-width: 500px;
+    align-items:center;
 
-            margin-top: 30px;
+    padding:50px 0;
+}
 
-            color: #777;
 
-            font-size: 14px;
+/* HERO */
 
-            line-height: 1.8;
-        }
+.hero h1{
+    font-size:
+        clamp(
+            55px,
+            8vw,
+            100px
+        );
 
-        .preview {
-            width: 330px;
+    line-height:.85;
 
-            margin-top: 40px;
+    letter-spacing:-7px;
+}
 
-            padding: 24px;
+.hero h1 span{
+    color:#444;
+}
 
-            border: 1px solid #252525;
+.hero p{
+    max-width:500px;
 
-            border-radius: 18px;
+    margin-top:30px;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #151515,
-                    #060606
-                );
+    color:#777;
 
-            transform: rotate(-2deg);
+    font-size:14px;
 
-            box-shadow:
-                0 30px 80px
-                rgba(0,0,0,.55);
-        }
+    line-height:1.8;
+}
 
-        .avatar {
-            width: 55px;
-            height: 55px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+/* PREVIEW */
 
-            border: 1px solid #333;
+.preview{
+    width:330px;
 
-            border-radius: 50%;
+    margin-top:40px;
 
-            background: #0a0a0a;
+    padding:23px;
 
-            font-size: 19px;
-            font-weight: 900;
-        }
+    border:
+        1px solid
+        #252525;
 
-        .preview-name {
-            margin-top: 15px;
+    border-radius:18px;
 
-            font-size: 19px;
-            font-weight: 800;
-        }
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #060606
+        );
 
-        .preview-user {
-            margin-top: 5px;
+    transform:rotate(-2deg);
 
-            color: #555;
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.55);
+}
 
-            font-size: 11px;
-        }
+.avatar{
+    width:55px;
+    height:55px;
 
-        .preview-bio {
-            margin-top: 15px;
+    display:flex;
 
-            color: #777;
+    align-items:center;
+    justify-content:center;
 
-            font-size: 11px;
-        }
+    border:
+        1px solid
+        #333;
 
-        .links {
-            display: grid;
+    border-radius:50%;
 
-            gap: 7px;
+    background:#0b0b0b;
 
-            margin-top: 17px;
-        }
+    font-size:18px;
 
-        .link {
-            padding: 9px;
+    font-weight:900;
+}
 
-            border: 1px solid #202020;
+.preview-name{
+    margin-top:15px;
 
-            border-radius: 7px;
+    font-size:19px;
 
-            background: #090909;
+    font-weight:800;
+}
 
-            color: #666;
+.preview-user{
+    margin-top:5px;
 
-            font-size: 10px;
-        }
+    color:#555;
 
-        .card {
-            padding: 32px;
+    font-size:11px;
+}
 
-            border: 1px solid #292929;
+.preview-bio{
+    margin-top:15px;
 
-            border-radius: 18px;
+    color:#777;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #121212,
-                    #060606
-                );
+    font-size:11px;
+}
 
-            box-shadow:
-                0 30px 90px
-                rgba(0,0,0,.65);
-        }
+.preview-links{
+    display:grid;
 
-        .card h2 {
-            font-size: 27px;
-        }
+    gap:7px;
 
-        .subtitle {
-            margin-top: 8px;
+    margin-top:17px;
+}
 
-            color: #666;
+.preview-link{
+    padding:9px;
 
-            font-size: 12px;
-        }
+    border:
+        1px solid
+        #202020;
 
-        form {
-            margin-top: 28px;
-        }
+    border-radius:7px;
 
-        .field {
-            margin-bottom: 17px;
-        }
+    background:#090909;
 
-        label {
-            display: block;
+    color:#666;
 
-            margin-bottom: 8px;
+    font-size:10px;
+}
 
-            color: #777;
 
-            font-size: 10px;
+/* CARD */
 
-            font-weight: bold;
+.card{
+    padding:32px;
 
-            text-transform: uppercase;
+    border:
+        1px solid
+        #292929;
 
-            letter-spacing: 1px;
-        }
+    border-radius:18px;
 
-        input {
-            width: 100%;
+    background:
+        linear-gradient(
+            145deg,
+            #121212,
+            #060606
+        );
 
-            height: 52px;
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.65);
+}
 
-            padding: 0 15px;
+.card h2{
+    font-size:27px;
+}
 
-            background: #050505;
+.subtitle{
+    margin-top:8px;
 
-            color: white;
+    color:#666;
 
-            border: 1px solid #292929;
+    font-size:12px;
+}
 
-            border-radius: 9px;
 
-            outline: none;
+/* FORM */
 
-            font-size: 13px;
+form{
+    margin-top:28px;
+}
 
-            transition: .2s;
-        }
+.field{
+    margin-bottom:17px;
+}
 
-        input:focus {
-            border-color: #777;
+label{
+    display:block;
 
-            box-shadow:
-                0 0 0 3px
-                rgba(255,255,255,.025);
-        }
+    margin-bottom:8px;
 
-        input::placeholder {
-            color: #444;
-        }
+    color:#777;
 
-        button {
-            width: 100%;
+    font-size:10px;
 
-            height: 52px;
+    font-weight:bold;
 
-            border: none;
+    text-transform:uppercase;
 
-            border-radius: 9px;
+    letter-spacing:1px;
+}
 
-            background: white;
+input{
+    width:100%;
 
-            color: black;
+    height:52px;
 
-            font-weight: 900;
+    padding:0 15px;
 
-            cursor: pointer;
+    background:#050505;
 
-            transition: .2s;
-        }
+    color:white;
 
-        button:hover {
-            transform: translateY(-2px);
-        }
+    border:
+        1px solid
+        #292929;
 
-        button:disabled {
-            opacity: .5;
+    border-radius:9px;
 
-            cursor: not-allowed;
+    outline:none;
 
-            transform: none;
-        }
+    font-size:13px;
 
-        .divider {
-            display: flex;
+    transition:.2s;
+}
 
-            align-items: center;
+input:focus{
+    border-color:#777;
 
-            gap: 10px;
+    box-shadow:
+        0 0 0 3px
+        rgba(255,255,255,.025);
+}
 
-            margin: 22px 0;
+input::placeholder{
+    color:#444;
+}
 
-            color: #444;
 
-            font-size: 10px;
-        }
+/* BUTTON */
 
-        .divider::before,
-        .divider::after {
-            content: "";
+#createButton{
+    width:100%;
 
-            height: 1px;
+    height:52px;
 
-            flex: 1;
+    border:none;
 
-            background: #222;
-        }
+    border-radius:9px;
 
-        .discord {
-            background: #111;
+    background:#fff;
 
-            color: white;
+    color:#000;
 
-            border: 1px solid #292929;
-        }
+    font-weight:900;
 
-        .login {
-            margin-top: 20px;
+    cursor:pointer;
 
-            text-align: center;
+    transition:.2s;
+}
 
-            color: #555;
+#createButton:hover{
+    transform:translateY(-2px);
+}
 
-            font-size: 11px;
-        }
+#createButton:disabled{
+    opacity:.5;
 
-        .login a {
-            color: white;
+    cursor:not-allowed;
 
-            text-decoration: none;
-        }
+    transform:none;
+}
 
-        #message {
-            min-height: 20px;
 
-            margin-top: 15px;
+/* DIVIDER */
 
-            text-align: center;
+.divider{
+    display:flex;
 
-            color: #aaa;
+    align-items:center;
 
-            font-size: 11px;
+    gap:10px;
 
-            line-height: 1.5;
-        }
+    margin:22px 0;
 
-        @media (max-width: 800px) {
+    color:#444;
 
-            main {
-                grid-template-columns: 1fr;
+    font-size:10px;
+}
 
-                gap: 40px;
+.divider::before,
+.divider::after{
+    content:"";
 
-                padding:
-                    55px 0
-                    70px;
-            }
+    height:1px;
 
-            .hero {
-                text-align: center;
-            }
+    flex:1;
 
-            .hero p {
-                margin-left: auto;
-                margin-right: auto;
-            }
+    background:#222;
+}
 
-            .preview {
-                display: none;
-            }
 
-            .card {
-                width: 100%;
+/* DISCORD */
 
-                max-width: 480px;
+#discordRegister{
+    width:100%;
 
-                margin: auto;
-            }
-        }
+    height:50px;
 
-        @media (max-width: 500px) {
+    border:
+        1px solid
+        #292929;
 
-            nav {
-                height: 65px;
-            }
+    border-radius:9px;
 
-            main {
-                padding:
-                    45px 0
-                    60px;
-            }
+    background:#111;
 
-            .hero h1 {
-                font-size: 18vw;
+    color:white;
 
-                letter-spacing: -5px;
-            }
+    cursor:pointer;
+}
 
-            .card {
-                padding: 23px;
 
-                border-radius: 15px;
-            }
-        }
+/* LOGIN */
 
-    </style>
+.login{
+    margin-top:20px;
+
+    text-align:center;
+
+    color:#555;
+
+    font-size:11px;
+}
+
+.login a{
+    color:#fff;
+
+    text-decoration:none;
+}
+
+
+/* MESSAGE */
+
+#message{
+    min-height:25px;
+
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#aaa;
+
+    font-size:11px;
+
+    line-height:1.5;
+}
+
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    main{
+        grid-template-columns:1fr;
+
+        gap:40px;
+
+        padding:
+            55px 0
+            70px;
+    }
+
+    .hero{
+        text-align:center;
+    }
+
+    .hero p{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .preview{
+        display:none;
+    }
+
+    .card{
+        width:100%;
+
+        max-width:480px;
+
+        margin:auto;
+    }
+}
+
+
+@media(max-width:500px){
+
+    nav{
+        height:65px;
+    }
+
+    main{
+        padding:
+            45px 0
+            60px;
+    }
+
+    .hero h1{
+        font-size:18vw;
+
+        letter-spacing:-5px;
+    }
+
+    .card{
+        padding:23px;
+    }
+}
+
+</style>
 
 </head>
 
 
 <body>
-
 
 <div class="glow one"></div>
 <div class="glow two"></div>
@@ -544,22 +609,22 @@
 
 <nav>
 
-    <a
-        class="logo"
-        href="index.html">
+<a
+    class="logo"
+    href="index.html">
 
-        NØX
+    NØX
 
-    </a>
+</a>
 
 
-    <a
-        class="back"
-        href="index.html">
+<a
+    class="back"
+    href="index.html">
 
-        ← Back
+    ← Back
 
-    </a>
+</a>
 
 </nav>
 
@@ -567,199 +632,189 @@
 <main>
 
 
-    <section class="hero">
+<section class="hero">
 
-        <h1>
+<h1>
 
-            Claim<br>
+Claim<br>
 
-            <span>
-                your identity.
-            </span>
+<span>
+your identity.
+</span>
 
-        </h1>
+</h1>
 
 
-        <p>
+<p>
 
-            Create your own NØX profile.
-            Choose your username and build
-            your identity in one place.
+Create your own NØX profile.
+Choose your username and build
+your identity in one place.
 
-        </p>
+</p>
 
 
-        <div class="preview">
+<div class="preview">
 
-            <div
-                class="avatar"
-                id="previewAvatar">
+<div class="avatar" id="avatar">
+N
+</div>
 
-                N
 
-            </div>
+<div
+    class="preview-name"
+    id="previewName">
 
+NØX User
 
-            <div
-                class="preview-name"
-                id="previewName">
+</div>
 
-                NØX User
 
-            </div>
+<div
+    class="preview-user"
+    id="previewUsername">
 
+@username
 
-            <div
-                class="preview-user"
-                id="previewUsername">
+</div>
 
-                @username
 
-            </div>
+<div class="preview-bio">
 
+Building my identity on NØX.
 
-            <div class="preview-bio">
+</div>
 
-                Building my identity on NØX.
 
-            </div>
+<div class="preview-links">
 
+<div class="preview-link">
+Discord
+</div>
 
-            <div class="links">
+<div class="preview-link">
+YouTube
+</div>
 
-                <div class="link">
-                    Discord
-                </div>
+<div class="preview-link">
+GitHub
+</div>
 
-                <div class="link">
-                    YouTube
-                </div>
+</div>
 
-                <div class="link">
-                    GitHub
-                </div>
+</div>
 
-            </div>
+</section>
 
-        </div>
 
-    </section>
+<section>
 
+<div class="card">
 
-    <section>
+<h2>
+Create your profile
+</h2>
 
 
-        <div class="card">
+<p class="subtitle">
+Choose your unique NØX username.
+</p>
 
 
-            <h2>
-                Create your profile
-            </h2>
+<form id="registerForm">
 
+<div class="field">
 
-            <p class="subtitle">
-                Choose your unique NØX username.
-            </p>
+<label for="username">
+Username
+</label>
 
+<input
+    id="username"
+    type="text"
+    placeholder="maxiii"
+    maxlength="24"
+    autocomplete="username"
+    required>
 
-            <form id="registerForm">
+</div>
 
 
-                <div class="field">
+<div class="field">
 
-                    <label for="username">
-                        Username
-                    </label>
+<label for="email">
+Email
+</label>
 
-                    <input
-                        id="username"
-                        type="text"
-                        placeholder="maxiii"
-                        maxlength="24"
-                        autocomplete="username"
-                        required>
+<input
+    id="email"
+    type="email"
+    placeholder="you@email.com"
+    autocomplete="email"
+    required>
 
-                </div>
+</div>
 
 
-                <div class="field">
+<div class="field">
 
-                    <label for="email">
-                        Email
-                    </label>
+<label for="password">
+Password
+</label>
 
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="you@email.com"
-                        autocomplete="email"
-                        required>
+<input
+    id="password"
+    type="password"
+    placeholder="••••••••"
+    minlength="6"
+    autocomplete="new-password"
+    required>
 
-                </div>
+</div>
 
 
-                <div class="field">
+<button
+    id="createButton"
+    type="submit">
 
-                    <label for="password">
-                        Password
-                    </label>
+Create account
 
-                    <input
-                        id="password"
-                        type="password"
-                        placeholder="••••••••"
-                        minlength="6"
-                        autocomplete="new-password"
-                        required>
+</button>
 
-                </div>
+</form>
 
 
-                <button
-                    id="createButton"
-                    type="submit">
+<div class="divider">
+OR
+</div>
 
-                    Create account
 
-                </button>
+<button
+    id="discordRegister"
+    type="button">
 
+Continue with Discord
 
-            </form>
+</button>
 
 
-            <div class="divider">
-                OR
-            </div>
+<div class="login">
 
+Already have an account?
 
-            <button
-                class="discord"
-                id="discordRegister"
-                type="button">
+<a href="login.html">
+Sign in
+</a>
 
-                Continue with Discord
+</div>
 
-            </button>
 
+<div id="message"></div>
 
-            <div class="login">
 
-                Already have an account?
+</div>
 
-                <a href="login.html">
-                    Sign in
-                </a>
-
-            </div>
-
-
-            <div id="message"></div>
-
-
-        </div>
-
-    </section>
-
+</section>
 
 </main>
 
@@ -771,166 +826,181 @@
 
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
-    "https://asgowauvzfnsszstvzqi.supabase.co";
+"https://asgowauvzfnsszstvzqi.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
-
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 const supabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const form =
-    document.getElementById(
-        "registerForm"
-    );
-
+document.getElementById(
+    "registerForm"
+);
 
 const message =
-    document.getElementById(
-        "message"
-    );
+document.getElementById(
+    "message"
+);
 
-
-const createButton =
-    document.getElementById(
-        "createButton"
-    );
-
+const button =
+document.getElementById(
+    "createButton"
+);
 
 const usernameInput =
-    document.getElementById(
-        "username"
-    );
+document.getElementById(
+    "username"
+);
 
 
-/* PREVIEW */
+/* =========================
+   LIVE PREVIEW
+========================= */
 
 usernameInput.addEventListener(
     "input",
-    function() {
+    function(){
 
         const username =
             usernameInput.value
-                .trim();
+            .trim();
 
 
         document
-            .getElementById(
-                "previewName"
-            )
-            .textContent =
+        .getElementById(
+            "previewName"
+        )
+        .textContent =
             username ||
             "NØX User";
 
 
         document
-            .getElementById(
-                "previewUsername"
-            )
-            .textContent =
+        .getElementById(
+            "previewUsername"
+        )
+        .textContent =
             username
-                ? "@" + username
-                : "@username";
+            ? "@" + username
+            : "@username";
 
 
         document
-            .getElementById(
-                "previewAvatar"
-            )
-            .textContent =
+        .getElementById(
+            "avatar"
+        )
+        .textContent =
             username
-                ? username
-                    .charAt(0)
-                    .toUpperCase()
-                : "N";
+            ? username
+                .charAt(0)
+                .toUpperCase()
+            : "N";
 
     }
 );
 
 
-/* REGISTER */
+/* =========================
+   REGISTER
+========================= */
 
 form.addEventListener(
     "submit",
-    async function(event) {
+    async function(event){
+
+        /*
+         * ESTA LÍNEA EVITA
+         * QUE LA PÁGINA SE RECARGUE.
+         */
 
         event.preventDefault();
+
+        event.stopPropagation();
+
+
+        message.textContent =
+            "NØX está procesando tu cuenta...";
 
 
         const username =
             document
-                .getElementById("username")
-                .value
-                .trim()
-                .toLowerCase();
+            .getElementById(
+                "username"
+            )
+            .value
+            .trim()
+            .toLowerCase();
 
 
         const email =
             document
-                .getElementById("email")
-                .value
-                .trim();
+            .getElementById(
+                "email"
+            )
+            .value
+            .trim();
 
 
         const password =
             document
-                .getElementById("password")
-                .value;
-
-
-        if (username.length < 3) {
-
-            message.textContent =
-                "❌ Username demasiado corto.";
-
-            return;
-
-        }
-
-
-        if (
-            !/^[a-z0-9_]+$/.test(
-                username
+            .getElementById(
+                "password"
             )
-        ) {
+            .value;
+
+
+        if(username.length < 3){
 
             message.textContent =
-                "❌ Usa solo letras, números y _.";
+                "❌ El username necesita mínimo 3 caracteres.";
 
             return;
-
         }
 
 
-        if (password.length < 6) {
+        if(
+            !/^[a-z0-9_]+$/
+            .test(username)
+        ){
+
+            message.textContent =
+                "❌ Usa solamente letras, números y _.";
+
+            return;
+        }
+
+
+        if(password.length < 6){
 
             message.textContent =
                 "❌ La contraseña necesita mínimo 6 caracteres.";
 
             return;
-
         }
 
 
-        createButton.disabled =
-            true;
+        button.disabled = true;
 
-
-        createButton.textContent =
+        button.textContent =
             "Creating...";
 
 
-        message.textContent =
-            "Conectando con NØX...";
-
-
-        try {
+        try{
 
 
             /* CHECK USERNAME */
@@ -940,39 +1010,36 @@ form.addEventListener(
 
 
             const {
-                data: existing,
-                error: checkError
+                data:existing,
+                error:checkError
             } =
-                await supabase
-                    .from("profiles")
-                    .select("username")
-                    .eq(
-                        "username",
-                        username
-                    )
-                    .maybeSingle();
+            await supabase
+            .from("profiles")
+            .select("username")
+            .eq(
+                "username",
+                username
+            )
+            .maybeSingle();
 
 
-            if (checkError) {
+            if(checkError){
 
                 throw new Error(
-                    "No se pudo comprobar el username: " +
                     checkError.message
                 );
-
             }
 
 
-            if (existing) {
+            if(existing){
 
                 throw new Error(
                     "Ese username ya está ocupado."
                 );
-
             }
 
 
-            /* AUTH */
+            /* CREATE AUTH */
 
             message.textContent =
                 "Creando cuenta...";
@@ -982,90 +1049,85 @@ form.addEventListener(
                 data,
                 error
             } =
-                await supabase.auth.signUp({
+            await supabase
+            .auth
+            .signUp({
 
-                    email:
-                        email,
+                email:email,
 
-                    password:
-                        password,
+                password:password,
 
-                    options: {
-
-                        data: {
-
-                            username:
-                                username
-
-                        }
-
+                options:{
+                    data:{
+                        username:username
                     }
+                }
 
-                });
+            });
 
 
-            if (error) {
+            if(error){
 
-                throw error;
-
+                throw new Error(
+                    error.message
+                );
             }
 
 
-            if (!data.user) {
+            if(!data.user){
 
                 message.textContent =
-                    "✓ Cuenta creada. Revisa tu correo para confirmar.";
+                    "✓ Cuenta creada. Revisa tu correo para confirmarla.";
 
-                createButton.disabled =
-                    false;
+                button.disabled = false;
 
-                createButton.textContent =
+                button.textContent =
                     "Create account";
 
                 return;
-
             }
 
 
-            /* PROFILE */
+            /* CREATE PROFILE */
 
             message.textContent =
                 "Creando perfil...";
 
 
             const {
-                error: profileError
+                error:profileError
             } =
-                await supabase
-                    .from("profiles")
-                    .insert({
+            await supabase
+            .from("profiles")
+            .insert({
 
-                        id:
-                            data.user.id,
+                id:data.user.id,
 
-                        username:
-                            username
+                username:username
 
-                    });
+            });
 
 
-            if (profileError) {
+            if(profileError){
 
-                throw profileError;
-
+                throw new Error(
+                    profileError.message
+                );
             }
 
 
+            /* SUCCESS */
+
             message.textContent =
-                "✓ ¡Perfil creado correctamente!";
+                "✓ ¡NØX profile creado!";
 
 
-            createButton.textContent =
+            button.textContent =
                 "Created ✓";
 
 
             setTimeout(
-                function() {
+                function(){
 
                     window.location.href =
                         "profile.html";
@@ -1075,7 +1137,7 @@ form.addEventListener(
             );
 
 
-        } catch (error) {
+        }catch(error){
 
             console.error(
                 "NØX ERROR:",
@@ -1088,11 +1150,11 @@ form.addEventListener(
                 error.message;
 
 
-            createButton.disabled =
+            button.disabled =
                 false;
 
 
-            createButton.textContent =
+            button.textContent =
                 "Create account";
 
         }
@@ -1101,55 +1163,52 @@ form.addEventListener(
 );
 
 
-/* DISCORD */
+/* =========================
+   DISCORD
+========================= */
 
 document
-    .getElementById(
-        "discordRegister"
-    )
-    .addEventListener(
-        "click",
-        async function() {
+.getElementById(
+    "discordRegister"
+)
+.addEventListener(
+    "click",
+    async function(){
 
-            message.textContent =
-                "Conectando con Discord...";
-
-
-            const {
-                error
-            } =
-                await supabase
-                    .auth
-                    .signInWithOAuth({
-
-                        provider:
-                            "discord",
-
-                        options: {
-
-                            redirectTo:
-                                window.location.origin +
-                                "/profile.html"
-
-                        }
-
-                    });
+        message.textContent =
+            "Conectando con Discord...";
 
 
-            if (error) {
+        const {
+            error
+        } =
+        await supabase
+        .auth
+        .signInWithOAuth({
 
-                message.textContent =
-                    "❌ " +
-                    error.message;
+            provider:"discord",
 
+            options:{
+                redirectTo:
+                    window.location.origin +
+                    "/profile.html"
             }
 
+        });
+
+
+        if(error){
+
+            message.textContent =
+                "❌ " +
+                error.message;
         }
-    );
+
+    }
+);
 
 </script>
 
 
 </body>
-
 </html>
