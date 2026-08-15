@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NØX TEST</title>
+<title>NØX — Create Profile</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -15,113 +16,217 @@
 
 body{
     min-height:100vh;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#050505;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #242424 0%,
+            #080808 45%,
+            #020202 100%
+        );
+
     color:white;
-    font-family:Arial,sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+body::before{
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.1;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.04) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
 }
 
 .card{
+
+    position:relative;
+
     width:92%;
-    max-width:420px;
-    padding:30px;
+    max-width:430px;
 
-    background:#0d0d0d;
+    padding:32px;
 
-    border:1px solid #292929;
-    border-radius:18px;
+    background:
+        linear-gradient(
+            145deg,
+            #141414,
+            #070707
+        );
 
-    box-shadow:0 30px 80px #000;
+    border:
+        1px solid
+        #292929;
+
+    border-radius:20px;
+
+    box-shadow:
+        0 30px 100px
+        rgba(0,0,0,.7);
 }
 
 .logo{
+
     margin-bottom:25px;
 
-    font-size:30px;
+    font-size:28px;
+
     font-weight:900;
+
+    letter-spacing:-1px;
 }
 
 h1{
+
     font-size:28px;
 }
 
-p{
+.subtitle{
+
     margin-top:8px;
+
     color:#666;
-    font-size:13px;
+
+    font-size:12px;
+
+    line-height:1.6;
 }
 
 .field{
-    margin-top:18px;
+
+    margin-top:19px;
 }
 
 label{
+
     display:block;
 
-    margin-bottom:7px;
+    margin-bottom:8px;
 
     color:#777;
 
     font-size:10px;
+
     font-weight:bold;
+
     text-transform:uppercase;
+
+    letter-spacing:1px;
 }
 
 input{
-    width:100%;
-    height:50px;
 
-    padding:0 14px;
+    width:100%;
+
+    height:52px;
+
+    padding:
+        0 15px;
 
     background:#050505;
+
     color:white;
 
-    border:1px solid #292929;
+    border:
+        1px solid
+        #292929;
+
     border-radius:9px;
 
     outline:none;
+
+    font-size:13px;
+
+    transition:.2s;
 }
 
 input:focus{
+
     border-color:#777;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,255,255,.025);
 }
 
 button{
+
     width:100%;
+
     height:52px;
 
-    margin-top:22px;
+    margin-top:23px;
 
-    border:0;
+    border:none;
+
     border-radius:9px;
 
     background:white;
+
     color:black;
 
     font-weight:900;
 
     cursor:pointer;
+
+    transition:.2s;
+}
+
+button:hover{
+
+    transform:
+        translateY(-2px);
 }
 
 button:disabled{
+
     opacity:.5;
+
+    cursor:not-allowed;
+
+    transform:none;
 }
 
 #message{
-    min-height:25px;
 
-    margin-top:18px;
+    min-height:35px;
+
+    margin-top:17px;
 
     text-align:center;
 
     color:#aaa;
 
     font-size:12px;
+
+    line-height:1.5;
 }
 
 .back{
+
     display:block;
 
     margin-top:20px;
@@ -130,81 +235,113 @@ button:disabled{
 
     text-align:center;
 
+    text-decoration:none;
+
     font-size:11px;
 }
+
+.back:hover{
+
+    color:white;
+}
+
+.success{
+
+    color:#8fffba !important;
+}
+
+.error{
+
+    color:#ff7777 !important;
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="card">
+
 
 <div class="logo">
 NØX
 </div>
 
+
 <h1>
 Create your profile
 </h1>
 
-<p>
-Choose your NØX username.
+
+<p class="subtitle">
+Choose your unique NØX username and create your account.
 </p>
+
 
 <form id="noxForm">
 
+
 <div class="field">
 
-<label>
+<label for="username">
 Username
 </label>
 
 <input
-id="username"
-type="text"
-placeholder="maxiii"
-required>
+    id="username"
+    type="text"
+    placeholder="maxiii"
+    maxlength="24"
+    autocomplete="username"
+    required>
 
 </div>
 
 
 <div class="field">
 
-<label>
+<label for="email">
 Email
 </label>
 
 <input
-id="email"
-type="email"
-placeholder="you@email.com"
-required>
+    id="email"
+    type="email"
+    placeholder="you@email.com"
+    autocomplete="email"
+    required>
 
 </div>
 
 
 <div class="field">
 
-<label>
+<label for="password">
 Password
 </label>
 
 <input
-id="password"
-type="password"
-placeholder="••••••••"
-required>
+    id="password"
+    type="password"
+    placeholder="••••••••"
+    minlength="6"
+    autocomplete="new-password"
+    required>
 
 </div>
 
 
 <button
-id="submitButton"
-type="submit">
+    id="submitButton"
+    type="submit">
 
 Create account
 
 </button>
+
 
 </form>
 
@@ -213,92 +350,327 @@ Create account
 
 
 <a
-class="back"
-href="index.html">
+    class="back"
+    href="index.html">
 
-← Back to NØX
+    ← Back to NØX
 
 </a>
+
 
 </div>
 
 
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
 <script>
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+/* =========================
+   SUPABASE CONFIG
+========================= */
 
-        const form =
-            document.getElementById(
-                "noxForm"
-            );
+const SUPABASE_URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
 
-        const message =
-            document.getElementById(
-                "message"
-            );
-
-        const button =
-            document.getElementById(
-                "submitButton"
-            );
+const SUPABASE_KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-        form.addEventListener(
-            "submit",
-            function(event){
-
-                event.preventDefault();
-
-                event.stopPropagation();
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-                const username =
-                    document
-                    .getElementById(
-                        "username"
-                    )
-                    .value
-                    .trim();
+/* =========================
+   ELEMENTS
+========================= */
+
+const form =
+document.getElementById(
+    "noxForm"
+);
+
+const message =
+document.getElementById(
+    "message"
+);
+
+const button =
+document.getElementById(
+    "submitButton"
+);
 
 
-                const email =
-                    document
-                    .getElementById(
-                        "email"
-                    )
-                    .value
-                    .trim();
+/* =========================
+   REGISTER
+========================= */
+
+form.addEventListener(
+    "submit",
+    async function(event){
+
+        /* EVITA RECARGAR */
+
+        event.preventDefault();
+
+        event.stopPropagation();
 
 
-                const password =
-                    document
-                    .getElementById(
-                        "password"
-                    )
-                    .value;
+        const username =
+        document
+        .getElementById("username")
+        .value
+        .trim()
+        .toLowerCase();
 
+
+        const email =
+        document
+        .getElementById("email")
+        .value
+        .trim();
+
+
+        const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+        /* VALIDATION */
+
+        if(username.length < 3){
+
+            message.className =
+                "error";
+
+            message.textContent =
+                "❌ El username necesita mínimo 3 caracteres.";
+
+            return;
+        }
+
+
+        if(
+            !/^[a-z0-9_]+$/
+            .test(username)
+        ){
+
+            message.className =
+                "error";
+
+            message.textContent =
+                "❌ Usa solamente letras, números y _.";
+
+            return;
+        }
+
+
+        if(password.length < 6){
+
+            message.className =
+                "error";
+
+            message.textContent =
+                "❌ La contraseña necesita mínimo 6 caracteres.";
+
+            return;
+        }
+
+
+        /* LOADING */
+
+        button.disabled = true;
+
+        button.textContent =
+            "Creating...";
+
+        message.className = "";
+
+        message.textContent =
+            "Conectando con NØX...";
+
+
+        try{
+
+
+            /* =====================
+               CHECK USERNAME
+            ===================== */
+
+            message.textContent =
+                "Comprobando username...";
+
+
+            const {
+                data:existing,
+                error:checkError
+            } =
+            await supabase
+            .from("profiles")
+            .select("username")
+            .eq(
+                "username",
+                username
+            )
+            .maybeSingle();
+
+
+            if(checkError){
+
+                throw new Error(
+                    checkError.message
+                );
+            }
+
+
+            if(existing){
+
+                throw new Error(
+                    "Ese username ya está ocupado."
+                );
+            }
+
+
+            /* =====================
+               CREATE AUTH ACCOUNT
+            ===================== */
+
+            message.textContent =
+                "Creando cuenta...";
+
+
+            const {
+                data,
+                error
+            } =
+            await supabase
+            .auth
+            .signUp({
+
+                email:email,
+
+                password:password,
+
+                options:{
+                    data:{
+                        username:username
+                    }
+                }
+
+            });
+
+
+            if(error){
+
+                throw new Error(
+                    error.message
+                );
+            }
+
+
+            if(!data.user){
+
+                message.className =
+                    "success";
 
                 message.textContent =
-                    "✓ FORMULARIO FUNCIONANDO";
+                    "✓ Cuenta creada. Revisa tu correo para confirmarla.";
 
+                button.disabled = false;
 
                 button.textContent =
-                    "FUNCIONA ✓";
+                    "Create account";
 
-                button.disabled = true;
-
-
-                console.log(
-                    "NØX FORM OK",
-                    username,
-                    email,
-                    password.length
-                );
-
+                return;
             }
-        );
+
+
+            /* =====================
+               CREATE PROFILE
+            ===================== */
+
+            message.textContent =
+                "Guardando tu perfil...";
+
+
+            const {
+                error:profileError
+            } =
+            await supabase
+            .from("profiles")
+            .insert({
+
+                id:data.user.id,
+
+                username:username
+
+            });
+
+
+            if(profileError){
+
+                throw new Error(
+                    profileError.message
+                );
+            }
+
+
+            /* =====================
+               SUCCESS
+            ===================== */
+
+            message.className =
+                "success";
+
+            message.textContent =
+                "✓ ¡Perfil creado correctamente!";
+
+
+            button.textContent =
+                "Created ✓";
+
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        "profile.html";
+
+                },
+                1200
+            );
+
+
+        }
+        catch(error){
+
+            console.error(
+                "NØX ERROR:",
+                error
+            );
+
+
+            message.className =
+                "error";
+
+            message.textContent =
+                "❌ " +
+                error.message;
+
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Create account";
+
+        }
 
     }
 );
