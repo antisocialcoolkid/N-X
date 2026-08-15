@@ -1,19 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>NØX</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NØX Profiles</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:#050505;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.container{
+    width:min(1100px,92%);
+    margin:auto;
+}
+
+nav{
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #1c1c1c;
+}
+
+.logo{
+    color:#fff;
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:-1px;
+}
+
+.login{
+    padding:10px 18px;
+    background:#fff;
+    color:#000;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.hero{
+    min-height:600px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.badge{
+    width:max-content;
+    padding:8px 12px;
+    border:1px solid #292929;
+    border-radius:50px;
+    color:#888;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+h1{
+    margin-top:25px;
+    font-size:clamp(55px,9vw,110px);
+    line-height:.88;
+    letter-spacing:-6px;
+}
+
+h1 span{
+    color:#444;
+}
+
+.description{
+    max-width:500px;
+    margin-top:30px;
+    color:#777;
+    line-height:1.7;
+    font-size:15px;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:30px;
+}
+
+.button{
+    padding:14px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.primary{
+    background:#fff;
+    color:#000;
+}
+
+.secondary{
+    background:#101010;
+    color:#fff;
+    border:1px solid #292929;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    padding-bottom:100px;
+}
+
+.card{
+    min-height:210px;
+    padding:25px;
+    background:#0b0b0b;
+    border:1px solid #1d1d1d;
+    border-radius:14px;
+}
+
+.number{
+    color:#444;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.card h2{
+    margin-top:45px;
+    font-size:21px;
+}
+
+.card p{
+    margin-top:10px;
+    color:#666;
+    font-size:13px;
+    line-height:1.6;
+}
+
+footer{
+    padding:25px 0;
+    border-top:1px solid #1c1c1c;
+    display:flex;
+    justify-content:space-between;
+    color:#444;
+    font-size:11px;
+}
+
+@media(max-width:700px){
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        letter-spacing:-4px;
+    }
+}
+</style>
 </head>
 
-<body style="background:#050505;color:white;font-family:Arial;text-align:center;padding-top:100px;">
+<body>
 
-    <h1>NØX</h1>
+<div class="container">
 
-    <p>Profiles V1</p>
+<nav>
+    <div class="logo">NØX</div>
 
-    <a href="register.html" style="color:white;">
-        Create profile
+    <a href="login.html" class="login">
+        Login
     </a>
+</nav>
+
+<section class="hero">
+
+    <div class="badge">
+        ✦ NØX PROFILES
+    </div>
+
+    <h1>
+        Your identity.<br>
+        <span>Your profile.</span>
+    </h1>
+
+    <p class="description">
+        Create your own NØX profile and share
+        your socials, links and identity
+        in one place.
+    </p>
+
+    <div class="buttons">
+
+        <a href="register.html" class="button primary">
+            Create profile
+        </a>
+
+        <a href="#features" class="button secondary">
+            Explore
+        </a>
+
+    </div>
+
+</section>
+
+<section class="cards" id="features">
+
+    <div class="card">
+        <div class="number">01</div>
+        <h2>Profiles</h2>
+        <p>
+            Create your own profile with a
+            unique NØX username.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="number">02</div>
+        <h2>Socials</h2>
+        <p>
+            Put Discord, YouTube, GitHub
+            and your other links together.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="number">03</div>
+        <h2>Your space</h2>
+        <p>
+            One username. One profile.
+            Your NØX identity.
+        </p>
+    </div>
+
+</section>
+
+<footer>
+    <span>NØX</span>
+    <span>Profiles V1</span>
+</footer>
+
+</div>
 
 </body>
 </html>
