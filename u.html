@@ -30,9 +30,11 @@ body{
 
     align-items:center;
 
+    padding:20px;
+
     background:#050505;
 
-    color:white;
+    color:#fff;
 
     font-family:Arial,sans-serif;
 
@@ -40,9 +42,9 @@ body{
 
 #app{
 
-    width:90%;
+    width:100%;
 
-    max-width:450px;
+    max-width:470px;
 
     padding:30px;
 
@@ -54,21 +56,19 @@ body{
 
     border-radius:20px;
 
-}
-
-#loading{
-
-    color:#aaa;
+    box-shadow:
+        0 20px 80px
+        rgba(0,0,0,.5);
 
 }
 
-#error{
-
-    display:none;
-
-    color:#ff6b6b;
+#status{
 
     white-space:pre-wrap;
+
+    line-height:1.6;
+
+    color:#aaa;
 
 }
 
@@ -80,9 +80,9 @@ body{
 
 #avatar{
 
-    width:100px;
+    width:105px;
 
-    height:100px;
+    height:105px;
 
     margin:auto;
 
@@ -96,11 +96,11 @@ body{
 
     border-radius:50%;
 
+    border:3px solid #fff;
+
     background:#222;
 
-    border:3px solid white;
-
-    font-size:35px;
+    font-size:36px;
 
     font-weight:bold;
 
@@ -120,9 +120,9 @@ body{
 
     margin-top:18px;
 
-    font-size:27px;
+    font-size:28px;
 
-    font-weight:bold;
+    font-weight:800;
 
 }
 
@@ -140,6 +140,8 @@ body{
 
     color:#aaa;
 
+    line-height:1.5;
+
 }
 
 #views{
@@ -147,6 +149,26 @@ body{
     margin-top:15px;
 
     color:#777;
+
+}
+
+#error{
+
+    display:none;
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    background:#190909;
+
+    color:#ff7777;
+
+    white-space:pre-wrap;
+
+    text-align:left;
 
 }
 
@@ -160,9 +182,10 @@ body{
 
 <div id="app">
 
-    <div id="loading">
 
-        NØX — cargando...
+    <div id="status">
+
+        NØX — iniciando...
 
     </div>
 
@@ -172,6 +195,7 @@ body{
 
     <div id="profile">
 
+
         <div id="avatar">
 
             N
@@ -179,31 +203,28 @@ body{
         </div>
 
 
-        <div id="name">
-
-        </div>
+        <div id="name"></div>
 
 
-        <div id="username">
-
-        </div>
+        <div id="username"></div>
 
 
-        <div id="bio">
-
-        </div>
+        <div id="bio"></div>
 
 
-        <div id="views">
+        <div id="views"></div>
 
-        </div>
 
     </div>
+
 
 </div>
 
 
-<!-- SUPABASE -->
+<!-- =================================
+     SUPABASE
+     CARGAR ANTES DEL SCRIPT PRINCIPAL
+================================= -->
 
 <script
 src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
@@ -212,12 +233,95 @@ src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 
 <script>
 
-/* ====================================
-   NØX
-==================================== */
+/* =================================
+   ELEMENTOS
+================================= */
+
+const status =
+document.getElementById(
+    "status"
+);
 
 
-/* SUPABASE */
+const errorBox =
+document.getElementById(
+    "error"
+);
+
+
+const profile =
+document.getElementById(
+    "profile"
+);
+
+
+const avatar =
+document.getElementById(
+    "avatar"
+);
+
+
+const nameElement =
+document.getElementById(
+    "name"
+);
+
+
+const usernameElement =
+document.getElementById(
+    "username"
+);
+
+
+const bioElement =
+document.getElementById(
+    "bio"
+);
+
+
+const viewsElement =
+document.getElementById(
+    "views"
+);
+
+
+/* =================================
+   PASO 1
+================================= */
+
+status.textContent =
+"NØX — comprobando Supabase...";
+
+
+/* =================================
+   COMPROBAR SUPABASE
+================================= */
+
+if(
+    typeof window.supabase ===
+    "undefined"
+){
+
+    showError(
+        "❌ PASO 1 FALLÓ\n\n" +
+        "Supabase JS no cargó."
+    );
+
+}else{
+
+    status.textContent =
+        "✓ PASO 1 — Supabase JS funciona\n\n" +
+        "NØX — creando conexión...";
+
+
+    start();
+
+}
+
+
+/* =================================
+   CONFIGURACIÓN
+================================= */
 
 const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
@@ -227,151 +331,121 @@ const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-/* ELEMENTOS */
-
-const loading =
-document.getElementById(
-    "loading"
-);
-
-const errorBox =
-document.getElementById(
-    "error"
-);
-
-const profile =
-document.getElementById(
-    "profile"
-);
-
-const avatar =
-document.getElementById(
-    "avatar"
-);
-
-const nameElement =
-document.getElementById(
-    "name"
-);
-
-const usernameElement =
-document.getElementById(
-    "username"
-);
-
-const bio =
-document.getElementById(
-    "bio"
-);
-
-const views =
-document.getElementById(
-    "views"
-);
-
-
-/* ====================================
-   SUPABASE
-==================================== */
-
-if(!window.supabase){
-
-    loading.style.display =
-        "none";
-
-    errorBox.style.display =
-        "block";
-
-    errorBox.textContent =
-        "❌ Supabase JS no cargó.";
-
-}else{
-
-    start();
-
-}
-
-
-/* ====================================
+/* =================================
    START
-==================================== */
+================================= */
 
 async function start(){
-
-    const supabase =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-
-    /* URL */
-
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    const username =
-        params
-            .get("username");
-
-
-    console.log(
-        "Username:",
-        username
-    );
-
-
-    /* SIN USERNAME */
-
-    if(!username){
-
-        showError(
-            "❌ Falta el username.\n\n" +
-
-            "Usa:\n" +
-
-            "u.html?username=pan"
-        );
-
-        return;
-    }
-
-
-    loading.textContent =
-        "NØX — buscando @" +
-        username +
-        "...";
-
 
     try{
 
 
-        /* =================================
-           BUSCAR PERFIL
-        ================================= */
+        /* =============================
+           PASO 2
+        ============================= */
 
-        const result =
-            await supabase
+        const supabase =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
-                .from("profiles")
 
-                .select("*")
+        status.textContent =
+            "✓ PASO 1 — Supabase JS funciona\n\n" +
 
-                .eq(
-                    "username",
-                    username
-                        .trim()
-                        .toLowerCase()
-                )
+            "✓ PASO 2 — Cliente Supabase creado\n\n" +
 
-                .maybeSingle();
+            "NØX — leyendo URL...";
 
+
+        /* =============================
+           URL
+        ============================= */
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const username =
+            params.get(
+                "username"
+            );
+
+
+        if(!username){
+
+            showError(
+                "❌ PASO 3 FALLÓ\n\n" +
+
+                "La URL no tiene username.\n\n" +
+
+                "Ejemplo:\n" +
+
+                "u.html?username=pan"
+            );
+
+            return;
+        }
+
+
+        status.textContent =
+            "✓ PASO 1 — Supabase JS funciona\n\n" +
+
+            "✓ PASO 2 — Cliente creado\n\n" +
+
+            "✓ PASO 3 — Username encontrado\n\n" +
+
+            "Username: @" +
+            username +
+            "\n\n" +
+
+            "NØX — conectando con Supabase...";
+
+
+        /* =============================
+           CONSULTA
+        ============================= */
+
+        let result;
+
+
+        try{
+
+            result =
+                await supabase
+                    .from("profiles")
+                    .select("*")
+                    .eq(
+                        "username",
+                        username
+                            .trim()
+                            .toLowerCase()
+                    )
+                    .maybeSingle();
+
+        }catch(queryError){
+
+            showError(
+                "❌ PASO 4 FALLÓ\n\n" +
+
+                "No se pudo ejecutar la consulta.\n\n" +
+
+                queryError.message
+            );
+
+            return;
+        }
+
+
+        /* =============================
+           RESULTADO
+        ============================= */
 
         console.log(
-            "Resultado:",
+            "SUPABASE:",
             result
         );
 
@@ -379,7 +453,7 @@ async function start(){
         if(result.error){
 
             showError(
-                "❌ ERROR SUPABASE\n\n" +
+                "❌ PASO 4 — ERROR SUPABASE\n\n" +
 
                 result.error.message
             );
@@ -391,7 +465,11 @@ async function start(){
         if(!result.data){
 
             showError(
-                "❌ PERFIL NO ENCONTRADO\n\n" +
+                "❌ PASO 4\n\n" +
+
+                "La conexión funciona,\n" +
+
+                "pero no existe un perfil con:\n\n" +
 
                 "@" +
                 username
@@ -405,19 +483,25 @@ async function start(){
             result.data;
 
 
-        /* =================================
-           MOSTRAR
-        ================================= */
+        /* =============================
+           PERFIL ENCONTRADO
+        ============================= */
 
-        loading.style.display =
-            "none";
+        status.textContent =
+            "✓ PASO 1 — Supabase JS funciona\n\n" +
+
+            "✓ PASO 2 — Cliente creado\n\n" +
+
+            "✓ PASO 3 — Username encontrado\n\n" +
+
+            "✓ PASO 4 — PERFIL ENCONTRADO ✓\n\n" +
+
+            "Cargando perfil...";
 
 
-        profile.style.display =
-            "block";
-
-
-        /* APODO */
+        /* =============================
+           DATOS
+        ============================= */
 
         nameElement.textContent =
             data.display_name ||
@@ -425,21 +509,15 @@ async function start(){
             "NØX User";
 
 
-        /* USERNAME */
-
         usernameElement.textContent =
             "@" +
             data.username;
 
 
-        /* BIO */
-
-        bio.textContent =
+        bioElement.textContent =
             data.bio ||
             "Welcome to my NØX profile.";
 
-
-        /* VISTAS */
 
         const oldViews =
             Number(
@@ -447,7 +525,7 @@ async function start(){
             );
 
 
-        views.textContent =
+        viewsElement.textContent =
             "👁️ " +
             oldViews +
             (
@@ -457,9 +535,9 @@ async function start(){
             );
 
 
-        /* =================================
+        /* =============================
            AVATAR
-        ================================= */
+        ============================= */
 
         if(data.avatar_url){
 
@@ -477,6 +555,17 @@ async function start(){
                 "Avatar";
 
 
+            img.onerror =
+                function(){
+
+                    avatar.textContent =
+                        firstLetter(
+                            data.username
+                        );
+
+                };
+
+
             avatar.innerHTML =
                 "";
 
@@ -488,72 +577,91 @@ async function start(){
         }else{
 
             avatar.textContent =
-                (
-                    data.username ||
-                    "N"
-                )
-                .charAt(0)
-                .toUpperCase();
-
-        }
-
-
-        /* =================================
-           SUMAR VISTA
-        ================================= */
-
-        console.log(
-            "Sumando vista..."
-        );
-
-
-        const view =
-            await supabase.rpc(
-
-                "increment_profile_views",
-
-                {
-                    profile_uuid:
-                        data.id
-                }
-
-            );
-
-
-        console.log(
-            "Vista:",
-            view
-        );
-
-
-        if(!view.error){
-
-            const newViews =
-                oldViews + 1;
-
-
-            views.textContent =
-                "👁️ " +
-                newViews +
-                (
-                    newViews === 1
-                    ? " vista"
-                    : " vistas"
+                firstLetter(
+                    data.username
                 );
 
         }
 
 
-    }catch(err){
+        /* =============================
+           MOSTRAR PERFIL
+        ============================= */
+
+        status.style.display =
+            "none";
+
+
+        profile.style.display =
+            "block";
+
+
+        /* =============================
+           PASO 5
+        ============================= */
+
+        console.log(
+            "NØX: aumentando vistas..."
+        );
+
+
+        const viewResult =
+            await supabase.rpc(
+                "increment_profile_views",
+                {
+                    profile_uuid:
+                        data.id
+                }
+            );
+
+
+        console.log(
+            "VIEW RESULT:",
+            viewResult
+        );
+
+
+        if(
+            viewResult.error
+        ){
+
+            console.error(
+                viewResult.error
+            );
+
+            return;
+        }
+
+
+        /* =============================
+           ACTUALIZAR VISTA
+        ============================= */
+
+        const newViews =
+            oldViews + 1;
+
+
+        viewsElement.textContent =
+            "👁️ " +
+            newViews +
+            (
+                newViews === 1
+                ? " vista"
+                : " vistas"
+            );
+
+
+    }catch(error){
 
         console.error(
-            err
+            error
         );
 
 
         showError(
-            "❌ ERROR\n\n" +
-            err.message
+            "❌ ERROR GENERAL\n\n" +
+
+            error.message
         );
 
     }
@@ -561,15 +669,33 @@ async function start(){
 }
 
 
-/* ====================================
+/* =================================
+   PRIMERA LETRA
+================================= */
+
+function firstLetter(
+    text
+){
+
+    return (
+        text ||
+        "N"
+    )
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* =================================
    ERROR
-==================================== */
+================================= */
 
 function showError(
     message
 ){
 
-    loading.style.display =
+    status.style.display =
         "none";
 
 
@@ -590,4 +716,4 @@ function showError(
 
 </body>
 
-</html>
+    </html>
