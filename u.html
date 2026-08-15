@@ -1,271 +1,948 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NØX — Diagnóstico</title>
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>NØX Profile</title>
 
 <style>
-body{
+
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
     min-height:100vh;
-    background:#050505;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #242424 0%,
+            #090909 42%,
+            #020202 100%
+        );
+
     color:#fff;
-    font-family:Arial,sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    padding:20px;
+
+    padding:25px;
+
+    transition:.4s;
 }
 
-.box{
-    width:min(600px,100%);
-    padding:30px;
-    border:1px solid #222;
-    border-radius:18px;
-    background:#0b0b0b;
+
+body.light{
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #ffffff,
+            #eeeeee 55%,
+            #dddddd
+        );
+
+    color:#111;
 }
 
-h1{
-    font-size:22px;
+
+/* BACKGROUND */
+
+.bg{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-1;
 }
 
-#result{
-    margin-top:20px;
+
+.glow{
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    filter:blur(150px);
+
+    opacity:.06;
+
+    animation:
+        floatGlow
+        12s
+        ease-in-out
+        infinite;
+}
+
+
+.glow.one{
+
+    top:-300px;
+
+    left:-250px;
+}
+
+
+.glow.two{
+
+    right:-300px;
+
+    bottom:-300px;
+
+    animation-delay:-6s;
+}
+
+
+@keyframes floatGlow{
+
+    0%,100%{
+        transform:translate(0,0) scale(1);
+    }
+
+    50%{
+        transform:translate(50px,40px) scale(1.15);
+    }
+
+}
+
+
+/* LOGO */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:30px;
+
+    color:inherit;
+
+    text-decoration:none;
+
+    font-size:24px;
+
+    font-weight:950;
+
+    letter-spacing:-1px;
+}
+
+
+/* CARD */
+
+.profile{
+
+    width:min(
+        520px,
+        100%
+    );
+
+    padding:
+        42px
+        28px
+        30px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:25px;
+
+    background:
+        rgba(8,8,8,.92);
+
+    backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+
+        0 40px 120px
+        rgba(0,0,0,.7),
+
+        inset
+        0 1px
+        rgba(255,255,255,.03);
+
+    text-align:center;
+
+    animation:
+        profileIn
+        .7s
+        ease
+        both;
+}
+
+
+body.light .profile{
+
+    background:
+        rgba(255,255,255,.8);
+
+    border-color:
+        rgba(0,0,0,.1);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.15);
+}
+
+
+@keyframes profileIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(25px)
+            scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* AVATAR */
+
+.avatar{
+
+    width:105px;
+
+    height:105px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #292929,
+            #090909
+        );
+
+    border:
+        1px solid
+        #3b3b3b;
+
+    font-size:36px;
+
+    font-weight:950;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.55);
+}
+
+
+.avatar img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+}
+
+
+/* NAME */
+
+.username{
+
+    margin-top:22px;
+
+    font-size:29px;
+
+    font-weight:950;
+
+    letter-spacing:-1px;
+}
+
+
+.handle{
+
+    margin-top:7px;
+
+    color:#555;
+
+    font-size:12px;
+}
+
+
+body.light .handle{
+
+    color:#777;
+}
+
+
+/* BIO */
+
+.bio{
+
+    margin:
+        20px
+        auto
+        0;
+
+    max-width:430px;
+
+    color:#777;
+
+    font-size:13px;
+
+    line-height:1.7;
+}
+
+
+/* LINKS */
+
+.links{
+
+    display:grid;
+
+    gap:9px;
+
+    margin-top:27px;
+}
+
+
+.link{
+
+    display:block;
+
     padding:15px;
-    border-radius:10px;
-    background:#111;
+
+    border:
+        1px solid
+        #222;
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.025);
+
     color:#aaa;
-    white-space:pre-wrap;
-    word-break:break-word;
-    line-height:1.6;
+
+    text-decoration:none;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    transition:.25s;
 }
 
-.ok{
-    color:#7cff9b;
+
+.link:hover{
+
+    color:#fff;
+
+    border-color:#555;
+
+    background:#111;
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.4);
 }
+
+
+body.light .link{
+
+    color:#444;
+
+    border-color:#ddd;
+
+    background:#fff;
+}
+
+
+body.light .link:hover{
+
+    color:#111;
+
+    border-color:#aaa;
+
+}
+
+
+/* ERROR */
 
 .error{
+
     color:#ff7070;
+
+    font-size:13px;
+
+    line-height:1.7;
 }
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    body{
+
+        padding:20px;
+
+    }
+
+    .logo{
+
+        top:20px;
+
+        left:20px;
+
+        font-size:21px;
+
+    }
+
+    .profile{
+
+        padding:
+            35px
+            20px
+            28px;
+
+        border-radius:20px;
+
+    }
+
+    .avatar{
+
+        width:90px;
+
+        height:90px;
+
+        font-size:30px;
+
+    }
+
+    .username{
+
+        font-size:25px;
+
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="box">
 
-<h1>NØX — comprobando perfil</h1>
+<div class="bg">
 
-<div id="result">
-Iniciando...
+    <div class="glow one"></div>
+
+    <div class="glow two"></div>
+
 </div>
 
-</div>
+
+<a
+    href="index.html"
+    class="logo"
+>
+    NØX
+</a>
+
+
+<main
+    id="app"
+    class="profile"
+>
+
+    <div>
+
+        LOADING PROFILE...
+
+    </div>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-const result =
-document.getElementById("result");
+const SUPABASE_URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
 
 
-function show(text,className=""){
-    result.className=className;
-    result.textContent=text;
-}
+const SUPABASE_KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-show("1/4 — Cargando Supabase...");
-
-
-const script =
-document.createElement("script");
-
-script.src =
-"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-
-script.onload =
-function(){
-
-    show(
-        "2/4 — Supabase cargado.\n\nBuscando username..."
-    );
-
-    start();
-
-};
-
-
-script.onerror =
-function(){
-
-    show(
-        "❌ NO SE PUDO CARGAR SUPABASE.\n\n" +
-        "Revisa tu conexión o el CDN.",
-        "error"
-    );
-
-};
-
-
-document.head.appendChild(
-    script
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
 
-async function start(){
-
-    const SUPABASE_URL =
-    "https://asgowauvzfnsszstvzqi.supabase.co";
+const app =
+document.getElementById("app");
 
 
-    const SUPABASE_KEY =
-    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+const params =
+new URLSearchParams(
+    window.location.search
+);
 
 
-    const supabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+const username =
+params.get("username");
+
+
+if(!username){
+
+    showError(
+        "Falta el username."
     );
 
+}else{
 
-    const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-
-    const username =
-    params.get("username");
-
-
-    if(!username){
-
-        show(
-            "❌ Falta ?username=\n\n" +
-            "Ejemplo:\n" +
-            "u.html?username=pan",
-            "error"
-        );
-
-        return;
-    }
-
-
-    show(
-        "3/4 — Consultando Supabase...\n\n" +
-        "Username buscado: " +
+    loadProfile(
         username
     );
 
+}
+
+
+/* =========================
+   LOAD
+========================= */
+
+async function loadProfile(
+    username
+){
 
     try{
 
-        const response =
-        await Promise.race([
+        const result =
+        await supabase
 
-            supabase
-            .from("profiles")
-            .select("*")
-            .eq(
-                "username",
-                username.trim().toLowerCase()
-            )
-            .maybeSingle(),
+        .from("profiles")
 
-            new Promise(
-                resolve =>
-                setTimeout(
-                    () => resolve({
-                        timeout:true
-                    }),
-                    7000
-                )
-            )
+        .select(`
+            id,
+            username,
+            avatar_url,
+            bio,
+            github,
+            youtube,
+            theme,
+            discord_id,
+            discord_username,
+            created_at,
+            discord
+        `)
 
-        ]);
+        .eq(
+            "username",
+            username
+            .trim()
+            .toLowerCase()
+        )
+
+        .maybeSingle();
 
 
-        if(response.timeout){
+        if(result.error){
 
-            show(
-                "❌ TIMEOUT\n\n" +
-                "Supabase no respondió después de 7 segundos.\n\n" +
-                "Esto apunta a un problema de conexión, URL/clave de Supabase o acceso a la tabla.",
-                "error"
+            showError(
+                result.error.message
             );
 
             return;
         }
 
 
-        console.log(
-            "SUPABASE RESPONSE:",
-            response
-        );
+        if(!result.data){
 
-
-        if(response.error){
-
-            show(
-                "❌ ERROR DE SUPABASE\n\n" +
-                response.error.message +
-                "\n\nCódigo: " +
-                (response.error.code || "sin código"),
-                "error"
+            showError(
+                "Perfil no encontrado."
             );
 
             return;
         }
 
 
-        if(!response.data){
-
-            show(
-                "❌ PERFIL NO ENCONTRADO\n\n" +
-                "Supabase respondió correctamente,\n" +
-                "pero no existe un perfil con:\n\n" +
-                "username = " +
-                username,
-                "error"
-            );
-
-            return;
-        }
-
-
-        show(
-            "4/4 — ¡PERFIL ENCONTRADO! ✓\n\n" +
-            JSON.stringify(
-                response.data,
-                null,
-                2
-            ),
-            "ok"
+        renderProfile(
+            result.data
         );
 
 
     }catch(error){
 
-        console.error(
-            error
-        );
-
-
-        show(
-            "❌ ERROR JAVASCRIPT\n\n" +
-            error.message,
-            "error"
+        showError(
+            error.message
         );
 
     }
 
 }
 
+
+/* =========================
+   RENDER
+========================= */
+
+function renderProfile(
+    profile
+){
+
+    const username =
+    profile.username ||
+    "user";
+
+
+    const bio =
+    profile.bio ||
+    "Welcome to my NØX profile.";
+
+
+    let avatarHTML;
+
+
+    if(profile.avatar_url){
+
+        avatarHTML = `
+
+            <img
+                src="${escapeHTML(
+                    profile.avatar_url
+                )}"
+                alt="Avatar"
+            >
+
+        `;
+
+    }else{
+
+        avatarHTML =
+        escapeHTML(
+            username
+            .charAt(0)
+            .toUpperCase()
+        );
+
+    }
+
+
+    let links = "";
+
+
+    /* DISCORD */
+
+    if(profile.discord_username){
+
+        links += createLink(
+            getDiscordURL(
+                profile.discord_username
+            ),
+            "Discord ↗"
+        );
+
+    }
+
+    else if(profile.discord){
+
+        links += createLink(
+            profile.discord,
+            "Discord ↗"
+        );
+
+    }
+
+
+    /* GITHUB */
+
+    if(profile.github){
+
+        links += createLink(
+            profile.github,
+            "GitHub ↗"
+        );
+
+    }
+
+
+    /* YOUTUBE */
+
+    if(profile.youtube){
+
+        links += createLink(
+            profile.youtube,
+            "YouTube ↗"
+        );
+
+    }
+
+
+    /* THEME */
+
+    if(
+        profile.theme ===
+        "light"
+    ){
+
+        document.body
+        .classList
+        .add("light");
+
+    }
+
+
+    document.title =
+    "@" +
+    username +
+    " — NØX";
+
+
+    app.innerHTML = `
+
+        <div class="avatar">
+
+            ${avatarHTML}
+
+        </div>
+
+
+        <h1 class="username">
+
+            @${escapeHTML(
+                username
+            )}
+
+        </h1>
+
+
+        <div class="handle">
+
+            NØX Profile
+
+        </div>
+
+
+        <p class="bio">
+
+            ${escapeHTML(
+                bio
+            )}
+
+        </p>
+
+
+        ${
+            links
+            ?
+            `
+            <div class="links">
+
+                ${links}
+
+            </div>
+            `
+            :
+            ""
+        }
+
+    `;
+
+}
+
+
+/* =========================
+   DISCORD
+========================= */
+
+function getDiscordURL(
+    value
+){
+
+    const clean =
+    String(value)
+    .trim();
+
+
+    if(
+        clean.startsWith(
+            "http://"
+        ) ||
+        clean.startsWith(
+            "https://"
+        )
+    ){
+
+        return clean;
+
+    }
+
+
+    return (
+        "https://discord.com/users/" +
+        encodeURIComponent(
+            clean
+        )
+    );
+
+}
+
+
+/* =========================
+   LINK
+========================= */
+
+function createLink(
+    url,
+    text
+){
+
+    let clean =
+    String(url)
+    .trim();
+
+
+    if(
+        !clean.startsWith(
+            "http://"
+        ) &&
+        !clean.startsWith(
+            "https://"
+        )
+    ){
+
+        clean =
+        "https://" +
+        clean;
+
+    }
+
+
+    return `
+
+        <a
+            class="link"
+            href="${escapeHTML(
+                clean
+            )}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            ${text}
+
+        </a>
+
+    `;
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(
+    message
+){
+
+    app.innerHTML = `
+
+        <div class="error">
+
+            ❌ ${escapeHTML(
+                message
+            )}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHTML(
+    value
+){
+
+    const div =
+    document.createElement(
+        "div"
+    );
+
+    div.textContent =
+    value ?? "";
+
+    return div.innerHTML;
+
+}
+
 </script>
 
+
 </body>
+
 </html>
