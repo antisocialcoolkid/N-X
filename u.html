@@ -15,409 +15,134 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
 }
 
 body{
+
+    margin:0;
+
     min-height:100vh;
 
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #252525 0%,
-            #090909 45%,
-            #020202 100%
-        );
+    background:#050505;
 
-    color:#fff;
+    color:white;
 
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family:Arial,sans-serif;
 
     display:flex;
+
     align-items:center;
+
     justify-content:center;
 
-    padding:25px;
+    padding:20px;
+
 }
 
-.background{
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    overflow:hidden;
-    pointer-events:none;
-}
+.card{
 
-.glow{
-    position:absolute;
+    width:100%;
 
-    width:500px;
-    height:500px;
+    max-width:500px;
 
-    border-radius:50%;
+    padding:40px 25px;
 
-    background:#fff;
+    background:#0d0d0d;
 
-    filter:blur(150px);
+    border:1px solid #222;
 
-    opacity:.055;
-
-    animation:
-        glowMove
-        12s
-        ease-in-out
-        infinite;
-}
-
-.glow.one{
-    top:-300px;
-    left:-250px;
-}
-
-.glow.two{
-    right:-300px;
-    bottom:-300px;
-
-    animation-delay:-6s;
-}
-
-@keyframes glowMove{
-
-    0%,100%{
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    50%{
-        transform:
-            translate(50px,40px)
-            scale(1.15);
-    }
-}
-
-
-/* LOGO */
-
-.logo{
-    position:fixed;
-
-    top:25px;
-    left:30px;
-
-    color:#fff;
-
-    text-decoration:none;
-
-    font-size:24px;
-
-    font-weight:950;
-
-    letter-spacing:-1px;
-
-    transition:.2s;
-}
-
-.logo:hover{
-    opacity:.6;
-}
-
-
-/* PROFILE */
-
-.profile{
-
-    width:min(
-        520px,
-        100%
-    );
-
-    padding:
-        45px
-        28px
-        30px;
-
-    background:
-        rgba(8,8,8,.94);
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius:25px;
-
-    backdrop-filter:
-        blur(20px);
-
-    box-shadow:
-
-        0 40px 120px
-        rgba(0,0,0,.7),
-
-        inset
-        0 1px
-        rgba(255,255,255,.03);
+    border-radius:20px;
 
     text-align:center;
 
-    animation:
-        profileIn
-        .6s
-        ease
-        both;
 }
-
-@keyframes profileIn{
-
-    from{
-        opacity:0;
-
-        transform:
-            translateY(25px)
-            scale(.97);
-    }
-
-    to{
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-}
-
-
-/* AVATAR */
 
 .avatar{
 
-    width:110px;
-    height:110px;
+    width:100px;
+
+    height:100px;
 
     margin:auto;
 
     border-radius:50%;
 
-    overflow:hidden;
+    background:#222;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
-    background:
-        linear-gradient(
-            145deg,
-            #292929,
-            #080808
-        );
+    font-size:35px;
 
-    border:
-        1px solid
-        #3b3b3b;
+    font-weight:bold;
 
-    font-size:38px;
+    overflow:hidden;
 
-    font-weight:950;
-
-    box-shadow:
-
-        0 20px 60px
-        rgba(0,0,0,.6),
-
-        0 0 50px
-        rgba(255,255,255,.035);
 }
 
 .avatar img{
 
     width:100%;
+
     height:100%;
 
     object-fit:cover;
+
 }
-
-
-/* USERNAME */
 
 .username{
 
-    margin-top:22px;
+    margin-top:20px;
 
-    font-size:30px;
+    font-size:28px;
 
-    font-weight:950;
+    font-weight:bold;
 
-    letter-spacing:-1px;
 }
-
-
-/* HANDLE */
-
-.handle{
-
-    margin-top:7px;
-
-    color:#555;
-
-    font-size:12px;
-}
-
-
-/* BIO */
 
 .bio{
 
-    max-width:430px;
+    color:#888;
 
-    margin:
-        20px
-        auto
-        0;
+    margin-top:15px;
 
-    color:#777;
+    line-height:1.6;
 
-    font-size:13px;
-
-    line-height:1.7;
 }
 
-
-/* LINKS */
-
 .links{
+
+    margin-top:25px;
 
     display:grid;
 
     gap:10px;
 
-    margin-top:28px;
 }
 
-.link{
-
-    display:block;
+.links a{
 
     padding:15px;
 
-    border:
-        1px solid
-        #222;
+    background:#151515;
 
-    border-radius:11px;
+    border:1px solid #292929;
 
-    background:
-        rgba(255,255,255,.025);
-
-    color:#aaa;
-
-    text-decoration:none;
-
-    font-size:11px;
-
-    font-weight:800;
-
-    transition:
-        .25s ease;
-}
-
-.link:hover{
+    border-radius:10px;
 
     color:#fff;
 
-    border-color:#555;
+    text-decoration:none;
 
-    background:#111;
-
-    transform:
-        translateY(-3px);
-
-    box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.45);
 }
-
-
-/* LOADING */
-
-.loading{
-
-    color:#555;
-
-    font-size:10px;
-
-    font-weight:800;
-
-    letter-spacing:3px;
-
-    animation:
-        pulse
-        1.5s
-        infinite;
-}
-
-@keyframes pulse{
-
-    0%,100%{
-        opacity:.35;
-    }
-
-    50%{
-        opacity:1;
-    }
-}
-
-
-/* ERROR */
 
 .error{
 
-    color:#ff7070;
-
-    font-size:13px;
-
-    line-height:1.7;
-}
-
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    body{
-        padding:20px;
-    }
-
-    .logo{
-        top:20px;
-        left:20px;
-        font-size:21px;
-    }
-
-    .profile{
-        padding:
-            35px
-            20px
-            28px;
-
-        border-radius:20px;
-    }
-
-    .avatar{
-        width:90px;
-        height:90px;
-        font-size:30px;
-    }
-
-    .username{
-        font-size:25px;
-    }
+    color:#ff5555;
 
 }
 
@@ -429,36 +154,14 @@ body{
 <body>
 
 
-<div class="background">
+<div
+    id="app"
+    class="card"
+>
 
-    <div class="glow one"></div>
-
-    <div class="glow two"></div>
+    Cargando perfil...
 
 </div>
-
-
-<a
-    href="index.html"
-    class="logo"
->
-    NØX
-</a>
-
-
-<main
-    id="app"
-    class="profile"
->
-
-    <div class="loading">
-        LOADING PROFILE...
-    </div>
-
-</main>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
@@ -471,74 +174,84 @@ const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
 const app =
 document.getElementById("app");
 
 
-/* =========================
-   USERNAME
-========================= */
+/* Cargar Supabase */
 
-const params =
-new URLSearchParams(
-    window.location.search
+const script =
+document.createElement("script");
+
+
+script.src =
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+
+
+script.onload =
+function(){
+
+    loadProfile();
+
+};
+
+
+script.onerror =
+function(){
+
+    app.innerHTML =
+    '<div class="error">No se pudo cargar Supabase.</div>';
+
+};
+
+
+document.head.appendChild(
+    script
 );
 
 
-const username =
-params.get("username");
+/* Perfil */
 
+async function loadProfile(){
 
-if(!username){
-
-    showError(
-        "Falta el username."
+    const params =
+    new URLSearchParams(
+        window.location.search
     );
 
-}else{
 
-    loadProfile(
-        username
-    );
-
-}
+    const username =
+    params
+    .get("username");
 
 
-/* =========================
-   LOAD PROFILE
-========================= */
+    if(!username){
 
-async function loadProfile(
-    username
-){
+        app.innerHTML =
+        '<div class="error">Falta el username.</div>';
+
+        return;
+
+    }
+
 
     try{
 
-        const result =
+        const supabase =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+        const response =
         await supabase
 
         .from("profiles")
 
-        .select(`
-            id,
-            username,
-            avatar_url,
-            bio,
-            github,
-            youtube,
-            theme,
-            discord_id,
-            discord_username,
-            created_at,
-            discord
-        `)
+        .select(
+            "*"
+        )
 
         .eq(
             "username",
@@ -550,47 +263,79 @@ async function loadProfile(
         .maybeSingle();
 
 
-        if(result.error){
+        console.log(
+            response
+        );
 
-            showError(
-                result.error.message
-            );
+
+        if(response.error){
+
+            app.innerHTML = `
+
+                <div class="error">
+
+                    ❌ ${response.error.message}
+
+                </div>
+
+            `;
 
             return;
+
         }
 
 
-        if(!result.data){
+        if(!response.data){
 
-            showError(
-                "Perfil no encontrado."
-            );
+            app.innerHTML = `
+
+                <div class="error">
+
+                    ❌ Perfil no encontrado
+
+                </div>
+
+            `;
 
             return;
+
         }
 
 
-        renderProfile(
-            result.data
+        const profile =
+        response.data;
+
+
+        render(
+            profile
         );
 
 
     }catch(error){
 
-        showError(
-            error.message
+        console.error(
+            error
         );
+
+
+        app.innerHTML = `
+
+            <div class="error">
+
+                ❌ ${error.message}
+
+            </div>
+
+        `;
 
     }
 
 }
 
 
-/* =========================
-   RENDER
-========================= */
+/* Mostrar perfil */
 
-function renderProfile(
+function render(
     profile
 ){
 
@@ -604,152 +349,149 @@ function renderProfile(
     "Welcome to my NØX profile.";
 
 
-    let avatarHTML;
+    let avatar;
 
 
-    if(profile.avatar_url){
+    if(
+        profile.avatar_url
+    ){
 
-        avatarHTML = `
+        avatar = `
 
             <img
-                src="${escapeHTML(
-                    profile.avatar_url
-                )}"
+                src="${profile.avatar_url}"
                 alt="Avatar"
-                onerror="
-                    this.style.display='none';
-                    this.parentElement.textContent='${escapeHTML(
-                        username
-                        .charAt(0)
-                        .toUpperCase()
-                    )}';
-                "
             >
 
         `;
 
     }else{
 
-        avatarHTML =
-        escapeHTML(
-            username
-            .charAt(0)
-            .toUpperCase()
-        );
+        avatar =
+        username
+        .charAt(0)
+        .toUpperCase();
 
     }
 
 
-    let linksHTML = "";
+    let links = "";
 
 
-    /* DISCORD */
+    if(profile.discord){
+
+        links += `
+
+            <a
+                href="${makeURL(
+                    profile.discord
+                )}"
+                target="_blank"
+            >
+
+                Discord ↗
+
+            </a>
+
+        `;
+
+    }
+
 
     if(profile.discord_username){
 
-        linksHTML += createLink(
-            profile.discord_username,
-            "Discord ↗"
-        );
+        links += `
+
+            <a
+                href="https://discord.com/users/${encodeURIComponent(
+                    profile.discord_username
+                )}"
+                target="_blank"
+            >
+
+                Discord ↗
+
+            </a>
+
+        `;
 
     }
-    else if(profile.discord){
 
-        linksHTML += createLink(
-            profile.discord,
-            "Discord ↗"
-        );
-
-    }
-
-
-    /* GITHUB */
 
     if(profile.github){
 
-        linksHTML += createLink(
-            profile.github,
-            "GitHub ↗"
-        );
+        links += `
+
+            <a
+                href="${makeURL(
+                    profile.github
+                )}"
+                target="_blank"
+            >
+
+                GitHub ↗
+
+            </a>
+
+        `;
 
     }
 
-
-    /* YOUTUBE */
 
     if(profile.youtube){
 
-        linksHTML += createLink(
-            profile.youtube,
-            "YouTube ↗"
-        );
+        links += `
+
+            <a
+                href="${makeURL(
+                    profile.youtube
+                )}"
+                target="_blank"
+            >
+
+                YouTube ↗
+
+            </a>
+
+        `;
 
     }
-
-
-    /* THEME */
-
-    if(
-        profile.theme ===
-        "light"
-    ){
-
-        document.body.style.background =
-        "#eeeeee";
-
-        document.body.style.color =
-        "#111";
-
-    }
-
-
-    document.title =
-    "@" +
-    username +
-    " — NØX";
 
 
     app.innerHTML = `
 
         <div class="avatar">
 
-            ${avatarHTML}
+            ${avatar}
 
         </div>
 
 
-        <h1 class="username">
+        <div class="username">
 
             @${escapeHTML(
                 username
             )}
 
-        </h1>
-
-
-        <div class="handle">
-
-            NØX Profile
-
         </div>
 
 
-        <p class="bio">
+        <div class="bio">
 
             ${escapeHTML(
                 bio
             )}
 
-        </p>
+        </div>
 
 
         ${
-            linksHTML
+            links
             ?
             `
             <div class="links">
 
-                ${linksHTML}
+                ${links}
 
             </div>
             `
@@ -759,85 +501,49 @@ function renderProfile(
 
     `;
 
+
+    document.title =
+    "@" +
+    username +
+    " — NØX";
+
 }
 
 
-/* =========================
-   CREATE LINK
-========================= */
+/* URL */
 
-function createLink(
-    url,
-    text
+function makeURL(
+    value
 ){
 
-    let clean =
-    String(url)
+    const text =
+    String(value)
     .trim();
 
 
     if(
-        !clean.startsWith(
+        text.startsWith(
             "http://"
-        ) &&
-        !clean.startsWith(
+        ) ||
+        text.startsWith(
             "https://"
         )
     ){
 
-        clean =
-        "https://" +
-        clean;
+        return text;
 
     }
 
 
-    return `
-
-        <a
-            class="link"
-            href="${escapeHTML(
-                clean
-            )}"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-
-            ${text}
-
-        </a>
-
-    `;
+    return (
+        "https://" +
+        text
+    );
 
 }
 
 
-/* =========================
-   ERROR
-========================= */
-
-function showError(
-    text
-){
-
-    app.innerHTML = `
-
-        <div class="error">
-
-            ❌ ${escapeHTML(
-                text
-            )}
-
-        </div>
-
-    `;
-
-}
-
-
-/* =========================
-   ESCAPE
-========================= */
+/* Seguridad */
 
 function escapeHTML(
     value
@@ -848,15 +554,16 @@ function escapeHTML(
         "div"
     );
 
+
     div.textContent =
     value ?? "";
+
 
     return div.innerHTML;
 
 }
 
 </script>
-
 
 </body>
 
