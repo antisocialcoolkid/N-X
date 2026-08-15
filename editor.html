@@ -2,1469 +2,1136 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>NØX — Editor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NØX — Personalizar perfil</title>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box}
-
-html,body{
- margin:0;
- min-height:100%;
+*{
+    box-sizing:border-box;
 }
 
 body{
- font-family:Arial,Helvetica,sans-serif;
- background:#050505;
- color:#fff;
- overflow-x:hidden;
+    margin:0;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top,#222,#070707 60%);
+    color:#fff;
+    font-family:Arial,sans-serif;
 }
 
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-
-.app{
- min-height:100vh;
- display:grid;
- grid-template-columns:270px 1fr;
+.container{
+    width:100%;
+    max-width:1150px;
+    margin:auto;
+    padding:25px;
 }
 
-.sidebar{
- position:sticky;
- top:0;
- height:100vh;
- padding:20px;
- border-right:1px solid #202020;
- background:rgba(8,8,8,.92);
- backdrop-filter:blur(20px);
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
 }
 
 .logo{
- font-size:25px;
- font-weight:900;
- margin-bottom:5px;
+    font-size:25px;
+    font-weight:900;
 }
 
-.sub{
- color:#777;
- font-size:12px;
- margin-bottom:25px;
+.header button{
+    padding:10px 15px;
+    border:1px solid #333;
+    border-radius:10px;
+    background:#111;
+    color:#fff;
+    cursor:pointer;
 }
 
-.nav{
- display:flex;
- flex-direction:column;
- gap:8px;
+.grid{
+    display:grid;
+    grid-template-columns:1fr 420px;
+    gap:20px;
 }
 
-.nav button{
- border:1px solid transparent;
- border-radius:12px;
- padding:12px;
- text-align:left;
- color:#aaa;
- background:transparent;
- transition:.25s;
+.panel{
+    background:rgba(15,15,15,.9);
+    border:1px solid #292929;
+    border-radius:18px;
+    padding:20px;
 }
 
-.nav button:hover,
-.nav button.active{
- color:#fff;
- background:#151515;
- border-color:#292929;
- transform:translateX(3px);
+.tabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
 }
 
-.save{
- position:absolute;
- left:20px;
- right:20px;
- bottom:20px;
- padding:13px;
- border:0;
- border-radius:12px;
- background:#fff;
- color:#000;
- font-weight:800;
+.tab{
+    border:1px solid #292929;
+    background:#111;
+    color:#aaa;
+    padding:9px 13px;
+    border-radius:9px;
+    cursor:pointer;
 }
 
-.main{
- min-width:0;
- padding:25px;
+.tab.active{
+    background:#fff;
+    color:#000;
 }
 
-.top{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:15px;
- margin-bottom:20px;
+.section{
+    display:none;
 }
 
-.title{
- font-size:24px;
- font-weight:900;
+.section.active{
+    display:block;
 }
 
-.status{
- color:#777;
- font-size:12px;
+h2{
+    margin-top:0;
 }
 
-.previewWrap{
- position:sticky;
- top:25px;
- float:right;
- width:42%;
- margin-left:25px;
+h3{
+    margin-top:25px;
 }
 
-.preview{
- min-height:600px;
- position:relative;
- overflow:hidden;
- border:1px solid #292929;
- border-radius:25px;
- background:#080808;
- display:flex;
- justify-content:center;
- align-items:center;
- padding:25px;
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:7px;
+    color:#aaa;
+    font-size:13px;
 }
 
-.previewBg{
- position:absolute;
- inset:0;
- background:
- radial-gradient(circle at top,#282828,#050505 70%);
- background-size:cover;
- background-position:center;
- z-index:0;
- transition:.3s;
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #303030;
+    border-radius:9px;
+    background:#0b0b0b;
+    color:#fff;
+    outline:none;
 }
 
-.previewVideo{
- position:absolute;
- inset:0;
- width:100%;
- height:100%;
- object-fit:cover;
- z-index:0;
- display:none;
+textarea{
+    min-height:100px;
+    resize:vertical;
 }
 
-.previewOverlay{
- position:absolute;
- inset:0;
- background:rgba(0,0,0,.4);
- z-index:1;
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#777;
 }
 
-.card{
- position:relative;
- z-index:2;
- width:100%;
- max-width:390px;
- padding:30px 24px;
- border:1px solid #333;
- border-radius:24px;
- background:rgba(10,10,10,.72);
- backdrop-filter:blur(18px);
- box-shadow:0 25px 80px rgba(0,0,0,.5);
- text-align:center;
- transition:transform .15s ease;
-}
-
-.avatar{
- width:100px;
- height:100px;
- margin:auto;
- border-radius:50%;
- overflow:hidden;
- display:flex;
- align-items:center;
- justify-content:center;
- background:#191919;
- border:3px solid #fff;
- font-size:35px;
- font-weight:900;
-}
-
-.avatar img{
- width:100%;
- height:100%;
- object-fit:cover;
-}
-
-.pname{
- margin-top:17px;
- font-size:27px;
- font-weight:900;
-}
-
-.puser{
- margin-top:4px;
- color:#888;
- font-size:13px;
-}
-
-.pbio{
- margin-top:15px;
- color:#bbb;
- line-height:1.5;
- font-size:14px;
- min-height:21px;
-}
-
-.badges{
- display:flex;
- justify-content:center;
- gap:7px;
- flex-wrap:wrap;
- margin-top:15px;
-}
-
-.badge{
- padding:6px 9px;
- border:1px solid #333;
- border-radius:999px;
- background:#111;
- font-size:11px;
-}
-
-.pviews{
- margin-top:13px;
- color:#777;
- font-size:12px;
-}
-
-.plinks{
- display:flex;
- flex-direction:column;
- gap:8px;
- margin-top:18px;
-}
-
-.plink{
- padding:11px;
- border:1px solid #292929;
- border-radius:11px;
- background:#111;
- color:#fff;
- text-decoration:none;
- transition:.2s;
-}
-
-.plink:hover{
- transform:translateY(-3px);
- box-shadow:0 0 25px rgba(255,255,255,.12);
-}
-
-.music{
- margin-top:17px;
- padding:12px;
- border:1px solid #292929;
- border-radius:13px;
- background:#111;
- display:flex;
- align-items:center;
- justify-content:center;
- gap:10px;
-}
-
-.music button{
- width:38px;
- height:38px;
- border-radius:50%;
- border:0;
- background:#fff;
- color:#000;
- font-weight:900;
-}
-
-.controls{
- margin-top:20px;
- display:flex;
- gap:10px;
- flex-wrap:wrap;
-}
-
-.control{
- display:none;
- padding:20px;
- border:1px solid #242424;
- border-radius:18px;
- background:#0b0b0b;
-}
-
-.control.active{
- display:block;
- animation:panel .25s ease;
-}
-
-@keyframes panel{
- from{
-  opacity:0;
-  transform:translateY(8px);
- }
- to{
-  opacity:1;
-  transform:none;
- }
-}
-
-.field{
- margin-bottom:15px;
-}
-
-.field label{
- display:block;
- margin-bottom:7px;
- color:#aaa;
- font-size:12px;
-}
-
-.field input,
-.field textarea,
-.field select{
- width:100%;
- padding:12px;
- border:1px solid #292929;
- outline:none;
- border-radius:10px;
- background:#111;
- color:#fff;
-}
-
-.field input:focus,
-.field textarea:focus,
-.field select:focus{
- border-color:#555;
-}
-
-.field textarea{
- min-height:90px;
- resize:vertical;
+input:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
 .row{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
 .check{
- display:flex;
- align-items:center;
- gap:10px;
- padding:11px;
- border:1px solid #222;
- border-radius:10px;
- background:#0d0d0d;
- margin-bottom:8px;
- color:#bbb;
- font-size:13px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px;
+    margin-top:8px;
+    border:1px solid #292929;
+    border-radius:9px;
+    background:#0d0d0d;
 }
 
-.file{
- padding:15px;
- border:1px dashed #333;
- border-radius:12px;
- background:#0d0d0d;
- margin-bottom:15px;
+.check input{
+    width:auto;
 }
 
-.file label{
- display:block;
- margin-bottom:8px;
- color:#aaa;
- font-size:12px;
+.color{
+    height:45px;
+    padding:4px;
 }
 
-.small{
- color:#666;
- font-size:11px;
- margin-top:6px;
+.save{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#fff;
+    color:#000;
+    font-weight:800;
+    cursor:pointer;
 }
 
-.generate{
- display:block;
- margin-top:20px;
- padding:13px;
- border-radius:11px;
- background:#fff;
- color:#000;
- text-align:center;
- text-decoration:none;
- font-weight:900;
- transition:.2s;
+.save:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
-.generate:hover{
- transform:translateY(-2px);
- box-shadow:0 10px 30px rgba(255,255,255,.15);
+.message{
+    min-height:20px;
+    margin-top:12px;
+    text-align:center;
+    color:#aaa;
 }
 
-.error{
- color:#ff6b6b;
+.preview-wrap{
+    position:sticky;
+    top:20px;
 }
 
-@media(max-width:1000px){
-
- .app{
-  grid-template-columns:1fr;
- }
-
- .sidebar{
-  position:relative;
-  height:auto;
-  border-right:0;
-  border-bottom:1px solid #202020;
- }
-
- .save{
-  position:static;
-  width:100%;
-  margin-top:20px;
- }
-
- .previewWrap{
-  float:none;
-  width:100%;
-  margin:0 0 25px;
-  position:relative;
-  top:auto;
- }
-
- .preview{
-  min-height:500px;
- }
-
+.preview-title{
+    color:#aaa;
+    font-size:13px;
+    margin-bottom:10px;
 }
 
-@media(max-width:600px){
+.preview{
+    min-height:500px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:18px;
+    overflow:hidden;
+    position:relative;
+    background:#050505;
+}
 
- .main{
-  padding:15px;
- }
+.preview-bg{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+}
 
- .row{
-  grid-template-columns:1fr;
- }
+.preview-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.35);
+}
 
- .preview{
-  padding:15px;
- }
+.card{
+    position:relative;
+    z-index:2;
+    width:88%;
+    padding:30px 20px;
+    text-align:center;
+    border-radius:20px;
+    background:rgba(10,10,10,.82);
+    border:1px solid #333;
+    backdrop-filter:blur(15px);
+    transition:transform .15s ease;
+}
 
- .card{
-  padding:25px 18px;
- }
+.avatar{
+    width:90px;
+    height:90px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:50%;
+    background:#191919;
+    border:3px solid #fff;
+    font-size:30px;
+    font-weight:bold;
+}
 
- .top{
-  align-items:flex-start;
-  flex-direction:column;
- }
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
 
+.pname{
+    margin-top:15px;
+    font-size:23px;
+    font-weight:900;
+}
+
+.pusername{
+    margin-top:4px;
+    color:#777;
+    font-size:12px;
+}
+
+.pbio{
+    margin-top:14px;
+    color:#aaa;
+    font-size:13px;
+}
+
+.pviews{
+    margin-top:10px;
+    color:#777;
+    font-size:11px;
+}
+
+.plinks{
+    margin-top:18px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.plink{
+    padding:10px;
+    border-radius:8px;
+    background:#111;
+    border:1px solid #292929;
+}
+
+@media(max-width:850px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .preview-wrap{
+        position:static;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-<aside class="sidebar">
+    <div class="header">
+        <div class="logo">NØX</div>
 
- <div class="logo">NØX</div>
- <div class="sub">Profile Studio</div>
-
- <div class="nav">
-
-  <button class="active" data-tab="general">✦ General</button>
-  <button data-tab="appearance">🎨 Appearance</button>
-  <button data-tab="background">🖼️ Background</button>
-  <button data-tab="music">♪ Music</button>
-  <button data-tab="links">🔗 Links</button>
-  <button data-tab="effects">✨ Effects</button>
-  <button data-tab="badges">🏅 Badges</button>
-
- </div>
-
- <button class="save" id="save">
-  Guardar ahora
- </button>
-
-</aside>
+        <button id="logout">
+            Cerrar sesión
+        </button>
+    </div>
 
 
-<main class="main">
+    <div class="grid">
 
-<div class="top">
- <div class="title">Personaliza tu perfil</div>
- <div class="status" id="status">Cargando...</div>
+        <!-- EDITOR -->
+
+        <div class="panel">
+
+            <div class="tabs">
+
+                <button class="tab active" data-tab="general">
+                    General
+                </button>
+
+                <button class="tab" data-tab="media">
+                    Multimedia
+                </button>
+
+                <button class="tab" data-tab="effects">
+                    Efectos
+                </button>
+
+                <button class="tab" data-tab="colors">
+                    Colores
+                </button>
+
+                <button class="tab" data-tab="social">
+                    Redes
+                </button>
+
+            </div>
+
+
+            <!-- GENERAL -->
+
+            <section id="general" class="section active">
+
+                <h2>⚙️ General</h2>
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    id="username"
+                    disabled
+                    placeholder="username"
+                >
+
+                <small style="color:#666">
+                    El username no se puede cambiar.
+                </small>
+
+
+                <label>
+                    Apodo
+                </label>
+
+                <input
+                    id="display_name"
+                    maxlength="40"
+                    placeholder="Tu apodo"
+                >
+
+
+                <label>
+                    Biografía
+                </label>
+
+                <textarea
+                    id="bio"
+                    maxlength="300"
+                    placeholder="Escribe tu biografía..."
+                ></textarea>
+
+
+                <h3>🔤 Fuente</h3>
+
+                <label>
+                    Fuente
+                </label>
+
+                <select id="font_url">
+
+                    <option value="">
+                        Predeterminada
+                    </option>
+
+                    <option value="Arial">
+                        Arial
+                    </option>
+
+                    <option value="Georgia">
+                        Georgia
+                    </option>
+
+                    <option value="Courier New">
+                        Courier New
+                    </option>
+
+                    <option value="Verdana">
+                        Verdana
+                    </option>
+
+                    <option value="Trebuchet MS">
+                        Trebuchet MS
+                    </option>
+
+                </select>
+
+            </section>
+
+
+            <!-- MULTIMEDIA -->
+
+            <section id="media" class="section">
+
+                <h2>📦 Multimedia</h2>
+
+                <label>
+                    Avatar URL
+                </label>
+
+                <input
+                    id="avatar_url"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Fondo URL
+                </label>
+
+                <input
+                    id="background_url"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Tipo de fondo
+                </label>
+
+                <select id="background_type">
+
+                    <option value="image">
+                        Imagen
+                    </option>
+
+                    <option value="video">
+                        Video
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Música URL
+                </label>
+
+                <input
+                    id="music_url"
+                    placeholder="https://..."
+                >
+
+
+                <label>
+                    Cursor personalizado
+                </label>
+
+                <input
+                    id="cursor_url"
+                    placeholder="https://..."
+                >
+
+            </section>
+
+
+            <!-- EFFECTS -->
+
+            <section id="effects" class="section">
+
+                <h2>✨ Efectos</h2>
+
+
+                <div class="check">
+
+                    <input
+                        type="checkbox"
+                        id="typing_enabled"
+                    >
+
+                    <label
+                        for="typing_enabled"
+                        style="margin:0"
+                    >
+                        Máquina de escribir
+                    </label>
+
+                </div>
+
+
+                <label>
+                    Velocidad de escritura
+                </label>
+
+                <input
+                    type="number"
+                    id="typing_speed"
+                    min="10"
+                    max="500"
+                    value="70"
+                >
+
+
+                <div class="check">
+
+                    <input
+                        type="checkbox"
+                        id="glitch_enabled"
+                    >
+
+                    <label
+                        for="glitch_enabled"
+                        style="margin:0"
+                    >
+                        Efecto Glitch
+                    </label>
+
+                </div>
+
+
+                <div class="check">
+
+                    <input
+                        type="checkbox"
+                        id="three_d_enabled"
+                    >
+
+                    <label
+                        for="three_d_enabled"
+                        style="margin:0"
+                    >
+                        Efecto 3D
+                    </label>
+
+                </div>
+
+
+                <div class="check">
+
+                    <input
+                        type="checkbox"
+                        id="rain_enabled"
+                    >
+
+                    <label
+                        for="rain_enabled"
+                        style="margin:0"
+                    >
+                        Lluvia / partículas
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- COLORS -->
+
+            <section id="colors" class="section">
+
+                <h2>🎨 Colores</h2>
+
+                <label>
+                    Color principal
+                </label>
+
+                <input
+                    class="color"
+                    type="color"
+                    id="accent_color"
+                    value="#ffffff"
+                >
+
+
+                <label>
+                    Fondo
+                </label>
+
+                <input
+                    class="color"
+                    type="color"
+                    id="background_color"
+                    value="#050505"
+                >
+
+
+                <label>
+                    Texto
+                </label>
+
+                <input
+                    class="color"
+                    type="color"
+                    id="text_color"
+                    value="#ffffff"
+                >
+
+
+                <label>
+                    Bordes
+                </label>
+
+                <input
+                    class="color"
+                    type="color"
+                    id="border_color"
+                    value="#292929"
+                >
+
+            </section>
+
+
+            <!-- SOCIAL -->
+
+            <section id="social" class="section">
+
+                <h2>🔗 Redes sociales</h2>
+
+
+                <label>
+                    Discord
+                </label>
+
+                <input
+                    id="discord"
+                    placeholder="discord.gg/... o usuario"
+                >
+
+
+                <label>
+                    Instagram
+                </label>
+
+                <input
+                    id="instagram"
+                    placeholder="instagram.com/..."
+                >
+
+
+                <label>
+                    TikTok
+                </label>
+
+                <input
+                    id="tiktok"
+                    placeholder="tiktok.com/@..."
+                >
+
+
+                <label>
+                    Spotify
+                </label>
+
+                <input
+                    id="spotify"
+                    placeholder="open.spotify.com/..."
+                >
+
+
+                <label>
+                    YouTube
+                </label>
+
+                <input
+                    id="youtube"
+                    placeholder="youtube.com/..."
+                >
+
+
+                <label>
+                    GitHub
+                </label>
+
+                <input
+                    id="github"
+                    placeholder="github.com/..."
+                >
+
+            </section>
+
+
+            <button
+                id="saveButton"
+                class="save"
+            >
+                Guardar cambios
+            </button>
+
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+        </div>
+
+
+        <!-- PREVIEW -->
+
+        <div class="preview-wrap">
+
+            <div class="preview-title">
+                Vista previa
+            </div>
+
+            <div
+                id="preview"
+                class="preview"
+            >
+
+                <div
+                    id="previewBg"
+                    class="preview-bg"
+                ></div>
+
+                <div class="preview-overlay"></div>
+
+
+                <div
+                    id="previewCard"
+                    class="card"
+                >
+
+                    <div
+                        id="previewAvatar"
+                        class="avatar"
+                    >
+                        N
+                    </div>
+
+
+                    <div
+                        id="previewName"
+                        class="pname"
+                    >
+                        NØX User
+                    </div>
+
+
+                    <div
+                        id="previewUsername"
+                        class="pusername"
+                    >
+                        @username
+                    </div>
+
+
+                    <div
+                        id="previewBio"
+                        class="pbio"
+                    >
+                        Welcome to my NØX profile.
+                    </div>
+
+
+                    <div
+                        id="previewViews"
+                        class="pviews"
+                    >
+                        👁️ 0 vistas
+                    </div>
+
+
+                    <div
+                        id="previewLinks"
+                        class="plinks"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-
-<div class="previewWrap">
-
- <div id="preview" class="preview">
-
-  <div id="previewBg" class="previewBg"></div>
-
-  <video
-   id="previewVideo"
-   class="previewVideo"
-   muted
-   loop
-   playsinline
-  ></video>
-
-  <div id="previewOverlay" class="previewOverlay"></div>
-
-  <div id="previewCard" class="card">
-
-   <div id="avatar" class="avatar">N</div>
-
-   <div id="pname" class="pname">
-    NØX User
-   </div>
-
-   <div id="puser" class="puser">
-    @username
-   </div>
-
-   <div id="pbio" class="pbio">
-    Welcome to my NØX profile.
-   </div>
-
-   <div id="badges" class="badges"></div>
-
-   <div id="pviews" class="pviews">
-    👁️ 0 vistas
-   </div>
-
-   <div id="plinks" class="plinks"></div>
-
-   <div id="pmusic" class="music">
-    <button id="play">▶</button>
-    <span id="songName">Sin música</span>
-   </div>
-
-  </div>
-
- </div>
-
-</div>
-
-
-<section id="general" class="control active">
-
- <h3>General</h3>
-
- <div class="field">
-  <label>Username</label>
-  <input id="username" disabled>
-  <div class="small">
-   El username no se puede cambiar.
-  </div>
- </div>
-
- <div class="field">
-  <label>Apodo / nombre visible</label>
-  <input id="displayName" placeholder="Tu apodo">
- </div>
-
- <div class="field">
-  <label>Biografía</label>
-  <textarea id="bio" placeholder="Escribe algo sobre ti..."></textarea>
- </div>
-
- <div class="field">
-  <label>URL del avatar</label>
-  <input id="avatarUrl" placeholder="https://...">
- </div>
-
- <div class="file">
-  <label>O subir avatar desde archivos</label>
-  <input id="avatarFile" type="file" accept="image/*">
- </div>
-
-</section>
-
-
-<section id="appearance" class="control">
-
- <h3>Apariencia</h3>
-
- <div class="row">
-
-  <div class="field">
-   <label>Color principal</label>
-   <input id="accentColor" type="color" value="#ffffff">
-  </div>
-
-  <div class="field">
-   <label>Color de fondo</label>
-   <input id="backgroundColor" type="color" value="#050505">
-  </div>
-
- </div>
-
- <div class="row">
-
-  <div class="field">
-   <label>Color texto</label>
-   <input id="textColor" type="color" value="#ffffff">
-  </div>
-
-  <div class="field">
-   <label>Color bordes</label>
-   <input id="borderColor" type="color" value="#292929">
-  </div>
-
- </div>
-
- <div class="field">
-  <label>Opacidad del cristal</label>
-  <input
-   id="glassOpacity"
-   type="range"
-   min="0.2"
-   max="0.95"
-   step="0.05"
-   value="0.72"
-  >
- </div>
-
- <div class="field">
-  <label>Fuente</label>
-
-  <select id="fontFamily">
-   <option value="Arial">Arial</option>
-   <option value="Verdana">Verdana</option>
-   <option value="Trebuchet MS">Trebuchet MS</option>
-   <option value="Georgia">Georgia</option>
-   <option value="monospace">Monospace</option>
-  </select>
-
- </div>
-
-</section>
-
-
-<section id="background" class="control">
-
- <h3>Fondo</h3>
-
- <div class="field">
-  <label>URL del fondo</label>
-  <input id="backgroundUrl" placeholder="https://...">
- </div>
-
- <div class="field">
-
-  <label>Tipo</label>
-
-  <select id="backgroundType">
-
-   <option value="image">
-    Imagen / GIF
-   </option>
-
-   <option value="video">
-    Video MP4
-   </option>
-
-  </select>
-
- </div>
-
- <div class="file">
-
-  <label>Subir fondo</label>
-
-  <input
-   id="backgroundFile"
-   type="file"
-   accept="image/*,video/mp4"
-  >
-
- </div>
-
- <div class="field">
-
-  <label>Oscurecimiento</label>
-
-  <input
-   id="overlayOpacity"
-   type="range"
-   min="0"
-   max="0.9"
-   step="0.05"
-   value="0.4"
-  >
-
- </div>
-
-</section>
-
-
-<section id="music" class="control">
-
- <h3>Música</h3>
-
- <div class="field">
-  <label>Nombre de canción</label>
-  <input id="musicName" placeholder="Mi canción">
- </div>
-
- <div class="field">
-  <label>URL de audio</label>
-  <input id="musicUrl" placeholder="https://...mp3">
- </div>
-
- <div class="file">
-
-  <label>Subir audio</label>
-
-  <input
-   id="musicFile"
-   type="file"
-   accept="audio/*"
-  >
-
- </div>
-
-</section>
-
-
-<section id="links" class="control">
-
- <h3>Redes y enlaces</h3>
-
- <div class="field">
-  <label>Discord</label>
-  <input id="discord">
- </div>
-
- <div class="field">
-  <label>Instagram</label>
-  <input id="instagram">
- </div>
-
- <div class="field">
-  <label>TikTok</label>
-  <input id="tiktok">
- </div>
-
- <div class="field">
-  <label>Spotify</label>
-  <input id="spotify">
- </div>
-
- <div class="field">
-  <label>YouTube</label>
-  <input id="youtube">
- </div>
-
- <div class="field">
-  <label>GitHub</label>
-  <input id="github">
- </div>
-
-</section>
-
-
-<section id="effects" class="control">
-
- <h3>Efectos</h3>
-
- <label class="check">
-  <input id="typingEnabled" type="checkbox">
-  Máquina de escribir
- </label>
-
- <label class="check">
-  <input id="glitchEnabled" type="checkbox">
-  Glitch en username
- </label>
-
- <label class="check">
-  <input id="threeDEnabled" type="checkbox" checked>
-  Tarjeta 3D con el mouse
- </label>
-
- <label class="check">
-  <input id="rainEnabled" type="checkbox">
-  Lluvia / partículas
- </label>
-
- <label class="check">
-  <input id="snowEnabled" type="checkbox">
-  Nieve
- </label>
-
- <label class="check">
-  <input id="cursorEnabled" type="checkbox">
-  Cursor personalizado
- </label>
-
-</section>
-
-
-<section id="badges" class="control">
-
- <h3>Badges</h3>
-
- <div class="field">
-
-  <label>
-   Badges separados por coma
-  </label>
-
-  <input
-   id="badgeInput"
-   placeholder="OG, Verified, Developer"
-  >
-
- </div>
-
-</section>
-
-
-<a
- id="profileLink"
- class="generate"
- href="#"
- target="_blank"
->
- 🚀 Generar / abrir mi perfil
-</a>
-
-</main>
-
-</div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-"use strict";
-
-
-/* =========================
+/* ==========================================
    SUPABASE
-========================= */
+========================================== */
 
 const SUPABASE_URL =
- "https://asgowauvzfnsszstvzqi.supabase.co";
+    "https://asgowauvzfnsszstvzqi.supabase.co";
 
 const SUPABASE_KEY =
- "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
 
 const supabase =
- window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-/* =========================
-   HELPERS
-========================= */
+/* ==========================================
+   ELEMENTOS
+========================================== */
 
 const $ = id =>
- document.getElementById(id);
-
+    document.getElementById(id);
 
 let currentUser = null;
-let profile = null;
-let saveTimer = null;
-let audio = null;
-let typingTimer = null;
+let currentProfile = null;
 
 
-/* =========================
+/* ==========================================
    TABS
-========================= */
+========================================== */
 
 document
- .querySelectorAll(".nav button")
- .forEach(button => {
+.querySelectorAll(".tab")
+.forEach(button => {
 
-  button.addEventListener(
-   "click",
-   () => {
+    button.addEventListener(
+        "click",
+        () => {
 
-    document
-     .querySelectorAll(".nav button")
-     .forEach(x =>
-      x.classList.remove("active")
-     );
+            document
+            .querySelectorAll(".tab")
+            .forEach(x =>
+                x.classList.remove("active")
+            );
 
-    button.classList.add("active");
 
-    document
-     .querySelectorAll(".control")
-     .forEach(x =>
-      x.classList.remove("active")
-     );
+            document
+            .querySelectorAll(".section")
+            .forEach(x =>
+                x.classList.remove("active")
+            );
 
-    const section =
-     $(button.dataset.tab);
 
-    if(section){
-     section.classList.add("active");
+            button.classList.add(
+                "active"
+            );
+
+
+            $(
+                button.dataset.tab
+            ).classList.add(
+                "active"
+            );
+
+        }
+    );
+
+});
+
+
+/* ==========================================
+   CARGAR USUARIO
+========================================== */
+
+async function loadEditor(){
+
+    setMessage(
+        "Cargando editor..."
+    );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabase.auth.getUser();
+
+
+    if(error){
+
+        console.error(error);
+
+        setMessage(
+            "❌ " + error.message,
+            true
+        );
+
+        return;
     }
 
-   }
-  );
 
- });
+    if(!data.user){
 
+        window.location.href =
+            "login.html";
 
-/* =========================
-   CARGAR USUARIO
-========================= */
-
-async function load(){
-
- try{
-
-  $("status").textContent =
-   "Comprobando sesión...";
+        return;
+    }
 
 
-  const result =
-   await supabase.auth.getUser();
+    currentUser =
+        data.user;
 
 
-  if(
-   result.error ||
-   !result.data ||
-   !result.data.user
-  ){
+    /*
+       BUSCAR PERFIL
+    */
 
-   $("status").textContent =
-    "Sesión no encontrada.";
-
-   setTimeout(
-    () => {
-     location.href =
-      "login.html";
-    },
-    1000
-   );
-
-   return;
-  }
-
-
-  currentUser =
-   result.data.user;
-
-
-  $("status").textContent =
-   "Cargando perfil...";
-
-
-  const resultProfile =
-   await supabase
+    const {
+        data:profile,
+        error:profileError
+    } =
+    await supabase
     .from("profiles")
     .select("*")
     .eq(
-     "id",
-     currentUser.id
+        "id",
+        currentUser.id
     )
     .maybeSingle();
 
 
-  if(resultProfile.error){
+    if(profileError){
 
-   console.error(
-    resultProfile.error
-   );
+        console.error(
+            profileError
+        );
 
-   $("status").textContent =
-    "❌ " +
-    resultProfile.error.message;
+        setMessage(
+            "❌ " +
+            profileError.message,
+            true
+        );
 
-   return;
-  }
-
-
-  if(!resultProfile.data){
-
-   $("status").textContent =
-    "❌ No existe tu perfil.";
-
-   return;
-  }
+        return;
+    }
 
 
-  profile =
-   resultProfile.data;
+    if(!profile){
+
+        setMessage(
+            "❌ No se encontró tu perfil.",
+            true
+        );
+
+        return;
+    }
 
 
-  fill(profile);
+    currentProfile =
+        profile;
 
 
-  updateProfileLink();
+    fillEditor(
+        profile
+    );
 
 
-  $("status").textContent =
-   "Editor listo ✓";
+    updatePreview();
 
 
- }catch(error){
-
-  console.error(error);
-
-  $("status").textContent =
-   "❌ Error inesperado.";
-
- }
-
+    setMessage(
+        "Editor listo ✓"
+    );
 }
 
 
-/* =========================
-   RELLENAR
-========================= */
+/* ==========================================
+   LLENAR EDITOR
+========================================== */
 
-function fill(p){
+function fillEditor(data){
 
- $("username").value =
-  p.username || "";
-
- $("displayName").value =
-  p.display_name || "";
-
- $("bio").value =
-  p.bio || "";
-
- $("avatarUrl").value =
-  p.avatar_url || "";
-
- $("discord").value =
-  p.discord || "";
-
- $("instagram").value =
-  p.instagram || "";
-
- $("tiktok").value =
-  p.tiktok || "";
-
- $("spotify").value =
-  p.spotify || "";
-
- $("youtube").value =
-  p.youtube || "";
-
- $("github").value =
-  p.github || "";
-
- $("backgroundUrl").value =
-  p.background_url || "";
-
- $("backgroundType").value =
-  p.background_type || "image";
-
- $("musicUrl").value =
-  p.music_url || "";
-
- $("musicName").value =
-  p.music_name || "";
-
- $("accentColor").value =
-  p.accent_color || "#ffffff";
-
- $("backgroundColor").value =
-  p.background_color || "#050505";
-
- $("textColor").value =
-  p.text_color || "#ffffff";
-
- $("borderColor").value =
-  p.border_color || "#292929";
-
- $("glassOpacity").value =
-  p.glass_opacity ?? .72;
-
- $("overlayOpacity").value =
-  p.overlay_opacity ?? .4;
-
- $("fontFamily").value =
-  p.font_family || "Arial";
-
- $("typingEnabled").checked =
-  !!p.typing_enabled;
-
- $("glitchEnabled").checked =
-  !!p.glitch_enabled;
-
- $("threeDEnabled").checked =
-  p.three_d_enabled !== false;
-
- $("rainEnabled").checked =
-  !!p.rain_enabled;
-
- $("snowEnabled").checked =
-  !!p.snow_enabled;
-
- $("cursorEnabled").checked =
-  !!p.cursor_enabled;
-
- $("badgeInput").value =
-  p.badges || "";
+    $("username").value =
+        data.username || "";
 
 
- updatePreview();
+    $("display_name").value =
+        data.display_name || "";
 
+
+    $("bio").value =
+        data.bio || "";
+
+
+    $("avatar_url").value =
+        data.avatar_url || "";
+
+
+    $("background_url").value =
+        data.background_url || "";
+
+
+    $("background_type").value =
+        data.background_type || "image";
+
+
+    $("music_url").value =
+        data.music_url || "";
+
+
+    $("cursor_url").value =
+        data.cursor_url || "";
+
+
+    $("font_url").value =
+        data.font_url || "";
+
+
+    $("accent_color").value =
+        data.accent_color || "#ffffff";
+
+
+    $("background_color").value =
+        data.background_color || "#050505";
+
+
+    $("text_color").value =
+        data.text_color || "#ffffff";
+
+
+    $("border_color").value =
+        data.border_color || "#292929";
+
+
+    $("typing_enabled").checked =
+        Boolean(
+            data.typing_enabled
+        );
+
+
+    $("typing_speed").value =
+        data.typing_speed || 70;
+
+
+    $("glitch_enabled").checked =
+        Boolean(
+            data.glitch_enabled
+        );
+
+
+    $("three_d_enabled").checked =
+        Boolean(
+            data.three_d_enabled
+        );
+
+
+    $("rain_enabled").checked =
+        Boolean(
+            data.rain_enabled
+        );
+
+
+    $("discord").value =
+        data.discord || "";
+
+
+    $("instagram").value =
+        data.instagram || "";
+
+
+    $("tiktok").value =
+        data.tiktok || "";
+
+
+    $("spotify").value =
+        data.spotify || "";
+
+
+    $("youtube").value =
+        data.youtube || "";
+
+
+    $("github").value =
+        data.github || "";
 }
 
 
-/* =========================
+/* ==========================================
    PREVIEW
-========================= */
+========================================== */
 
 function updatePreview(){
 
- const username =
-  $("username").value.trim();
+    const username =
+        $("username").value.trim();
 
- const displayName =
-  $("displayName").value.trim();
 
- const bio =
-  $("bio").value.trim();
+    const displayName =
+        $("display_name").value.trim();
 
 
- $("pname").textContent =
-  displayName ||
-  username ||
-  "NØX User";
+    const bio =
+        $("bio").value.trim();
 
 
- $("puser").textContent =
-  "@" +
-  (
-   username ||
-   "username"
-  );
+    const avatarURL =
+        $("avatar_url").value.trim();
 
 
- $("pbio").textContent =
-  bio ||
-  "Welcome to my NØX profile.";
+    $("previewName").textContent =
+        displayName ||
+        username ||
+        "NØX User";
 
 
- $("pviews").textContent =
-  "👁️ " +
-  (
-   profile?.profile_views ||
-   0
-  ) +
-  " vistas";
-
-
- /* COLORES */
-
- document.body.style.color =
-  $("textColor").value;
-
-
- $("preview").style.background =
-  $("backgroundColor").value;
-
-
- $("previewCard").style.background =
-  `rgba(10,10,10,${
-   $("glassOpacity").value
-  })`;
-
-
- $("previewCard").style.borderColor =
-  $("borderColor").value;
-
-
- $("previewOverlay").style.background =
-  `rgba(0,0,0,${
-   $("overlayOpacity").value
-  })`;
-
-
- $("preview").style.fontFamily =
-  $("fontFamily").value;
-
-
- /* AVATAR */
-
- $("avatar").innerHTML = "";
-
- const avatarUrl =
-  $("avatarUrl").value.trim();
-
-
- if(avatarUrl){
-
-  const img =
-   document.createElement("img");
-
-  img.src =
-   avatarUrl;
-
-  img.alt =
-   "Avatar";
-
-
-  img.onerror =
-   () => {
-
-    $("avatar").innerHTML =
-     "";
-
-    $("avatar").textContent =
-     getLetter(
-      displayName ||
-      username
-     );
-
-   };
-
-
-  $("avatar").appendChild(
-   img
-  );
-
- }else{
-
-  $("avatar").textContent =
-   getLetter(
-    displayName ||
-    username
-   );
-
- }
-
-
- /* BADGES */
-
- $("badges").innerHTML =
-  "";
-
-
- const badges =
-  $("badgeInput")
-   .value
-   .split(",")
-   .map(
-    x => x.trim()
-   )
-   .filter(Boolean);
-
-
- badges.forEach(
-  text => {
-
-   const badge =
-    document.createElement(
-     "div"
-    );
-
-   badge.className =
-    "badge";
-
-   badge.textContent =
-    text;
-
-   badge.style.borderColor =
-    $("borderColor").value;
-
-   badge.style.color =
-    $("textColor").value;
-
-   $("badges")
-    .appendChild(badge);
-
-  }
- );
-
-
- /* LINKS */
-
- $("plinks").innerHTML =
-  "";
-
-
- addPreviewLink(
-  $("discord").value,
-  "Discord"
- );
-
- addPreviewLink(
-  $("instagram").value,
-  "Instagram"
- );
-
- addPreviewLink(
-  $("tiktok").value,
-  "TikTok"
- );
-
- addPreviewLink(
-  $("spotify").value,
-  "Spotify"
- );
-
- addPreviewLink(
-  $("youtube").value,
-  "YouTube"
- );
-
- addPreviewLink(
-  $("github").value,
-  "GitHub"
- );
-
-
- /* BACKGROUND */
-
- updateBackground();
-
-
- /* MUSIC */
-
- $("songName").textContent =
-  $("musicName").value ||
-  "Sin música";
-
-
- /* GLITCH */
-
- if(
-  $("glitchEnabled").checked
- ){
-
-  $("puser").style.textShadow =
-   "2px 0 #f00,-2px 0 #0ff";
-
- }else{
-
-  $("puser").style.textShadow =
-   "none";
-
- }
-
-
- /* 3D */
-
- if(
-  $("threeDEnabled").checked
- ){
-
-  $("preview").onmousemove =
-   tilt;
-
-  $("preview").onmouseleave =
-   resetTilt;
-
- }else{
-
-  $("preview").onmousemove =
-   null;
-
-  $("preview").onmouseleave =
-   null;
-
-  resetTilt();
-
- }
-
-
- /* TYPING */
-
- startTyping();
-
-
- /* LINK */
-
- updateProfileLink();
-
-
- scheduleSave();
-
-}
-
-
-/* =========================
-   FONDO
-========================= */
-
-function updateBackground(){
-
- const bg =
-  $("backgroundUrl")
-   .value
-   .trim();
-
- const type =
-  $("backgroundType")
-   .value;
-
-
- $("previewVideo").pause();
-
- $("previewVideo").style.display =
-  "none";
-
-
- if(!bg){
-
-  $("previewBg").style.backgroundImage =
-   "";
-
-  return;
-
- }
-
-
- if(type === "video"){
-
-  $("previewBg").style.backgroundImage =
-   "none";
-
-  $("previewVideo").src =
-   bg;
-
-  $("previewVideo").style.display =
-   "block";
-
-  $("previewVideo")
-   .play()
-   .catch(
-    () => {}
-   );
-
- }else{
-
-  $("previewBg").style.backgroundImage =
-   `url("${bg}")`;
-
- }
-
-}
-
-
-/* =========================
-   LINKS
-========================= */
-
-function addPreviewLink(
- url,
- text
-){
-
- url =
-  url.t
+    $("previewUsername").textContent =
+        "@" +
+        (
+            username ||
+            "username"
+                 
