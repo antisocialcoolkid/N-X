@@ -1,2 +1,2 @@
-# N-X
-My personal tools and projects website
+# nox
+NØX — personal tools, projects and utilities.
