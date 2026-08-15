@@ -20,7 +20,6 @@
 html,
 body{
     margin:0;
-    width:100%;
     min-height:100%;
 }
 
@@ -33,7 +32,13 @@ body{
 
     padding:20px;
 
-    background:#050505;
+    background:
+        radial-gradient(
+            circle at top,
+            #202020,
+            #050505 70%
+        );
+
     color:#fff;
 
     font-family:
@@ -42,13 +47,29 @@ body{
         sans-serif;
 }
 
+
+/* =========================
+   LOADING
+========================= */
+
 #loading{
+
     position:fixed;
+
     inset:0;
 
     display:flex;
+
+    flex-direction:column;
+
     align-items:center;
     justify-content:center;
+
+    gap:12px;
+
+    padding:30px;
+
+    text-align:center;
 
     background:#050505;
 
@@ -57,140 +78,242 @@ body{
     font-size:15px;
 
     z-index:9999;
+
 }
 
-.hidden{
-    display:none !important;
+#status{
+    max-width:90%;
+
+    color:#777;
+
+    font-size:12px;
+
+    word-break:break-word;
 }
+
+
+/* =========================
+   PERFIL
+========================= */
 
 #profile{
+
     width:100%;
+
     max-width:470px;
 
     padding:35px 25px;
 
     text-align:center;
 
-    background:rgba(15,15,15,.85);
+    background:
+        rgba(15,15,15,.88);
 
-    border:1px solid #292929;
+    border:
+        1px solid #292929;
+
     border-radius:24px;
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:
+        blur(18px);
 
     box-shadow:
-        0 30px 100px rgba(0,0,0,.6);
+        0 30px 100px
+        rgba(0,0,0,.6);
+
+    animation:
+        profileIn .5s ease;
+
 }
 
+
+@keyframes profileIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(15px)
+            scale(.98);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================
+   AVATAR
+========================= */
+
 .avatar{
+
     width:105px;
     height:105px;
 
     margin:auto;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
     overflow:hidden;
 
     border-radius:50%;
-    border:3px solid #fff;
+
+    border:
+        3px solid white;
 
     background:#181818;
 
     font-size:35px;
+
     font-weight:900;
+
 }
+
 
 .avatar img{
+
     width:100%;
     height:100%;
+
     object-fit:cover;
+
 }
 
+
+/* =========================
+   NOMBRE
+========================= */
+
 .name{
+
     margin-top:18px;
 
     font-size:28px;
+
     font-weight:900;
+
 }
 
+
 .username{
+
     margin-top:5px;
 
     color:#888;
+
     font-size:14px;
+
 }
 
+
 .bio{
-    margin:18px auto 0;
+
+    margin:
+        18px auto 0;
 
     max-width:380px;
 
     color:#bbb;
 
     font-size:14px;
+
     line-height:1.5;
+
 }
 
+
 .views{
+
     margin-top:15px;
 
     color:#777;
 
     font-size:13px;
+
 }
 
+
+/* =========================
+   LINKS
+========================= */
+
 .links{
+
     display:flex;
+
     flex-direction:column;
 
     gap:9px;
 
     margin-top:22px;
+
 }
 
+
 .link{
+
     display:block;
 
     padding:13px;
 
     color:white;
+
     text-decoration:none;
 
     background:#111;
 
-    border:1px solid #292929;
+    border:
+        1px solid #292929;
 
     border-radius:11px;
 
     transition:.2s;
+
 }
 
+
 .link:hover{
-    transform:translateY(-2px);
+
+    transform:
+        translateY(-2px);
 
     background:#181818;
 
     box-shadow:
-        0 0 20px rgba(255,255,255,.12);
+        0 0 20px
+        rgba(255,255,255,.12);
+
 }
 
-.error{
-    color:#ff7070;
 
-    text-align:center;
+/* =========================
+   OCULTO
+========================= */
 
-    padding:25px;
+.hidden{
+
+    display:none !important;
+
 }
 
 </style>
 
 
-<!-- ================================
-     SUPABASE
-================================ -->
+<!-- SUPABASE -->
 
 <script
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
@@ -202,18 +325,26 @@ body{
 <body>
 
 
-<!-- ================================
-     LOADING
-================================ -->
+<!-- =========================
+     CARGANDO
+========================= -->
 
 <div id="loading">
-    Cargando perfil...
+
+    <div id="loadingText">
+        Iniciando NØX...
+    </div>
+
+    <div id="status">
+        Preparando perfil...
+    </div>
+
 </div>
 
 
-<!-- ================================
+<!-- =========================
      PERFIL
-================================ -->
+========================= -->
 
 <main
     id="profile"
@@ -270,205 +401,421 @@ body{
 
 <script>
 
-/* =================================
-   CONFIGURACIÓN
-================================= */
+/* =====================================
+   CONFIGURACIÓN SUPABASE
+===================================== */
 
 const SUPABASE_URL =
-"https://asgowauvzfnsszstvzqi.supabase.co";
+    "https://asgowauvzfnsszstvzqi.supabase.co";
+
 
 const SUPABASE_KEY =
-"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-/* =================================
-   SUPABASE CLIENT
-================================= */
-
-const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
-/* =================================
+/* =====================================
    ELEMENTOS
-================================= */
+===================================== */
 
 const loading =
-document.getElementById(
-    "loading"
-);
+    document.getElementById(
+        "loading"
+    );
+
+
+const loadingText =
+    document.getElementById(
+        "loadingText"
+    );
+
+
+const status =
+    document.getElementById(
+        "status"
+    );
+
 
 const profile =
-document.getElementById(
-    "profile"
-);
+    document.getElementById(
+        "profile"
+    );
+
 
 const avatar =
-document.getElementById(
-    "avatar"
-);
+    document.getElementById(
+        "avatar"
+    );
+
 
 const nameElement =
-document.getElementById(
-    "name"
-);
+    document.getElementById(
+        "name"
+    );
+
 
 const usernameElement =
-document.getElementById(
-    "username"
-);
+    document.getElementById(
+        "username"
+    );
+
 
 const bioElement =
-document.getElementById(
-    "bio"
-);
+    document.getElementById(
+        "bio"
+    );
+
 
 const viewsElement =
-document.getElementById(
-    "views"
-);
+    document.getElementById(
+        "views"
+    );
+
 
 const linksElement =
-document.getElementById(
-    "links"
-);
+    document.getElementById(
+        "links"
+    );
 
 
-/* =================================
-   URL
-================================= */
+/* =====================================
+   FUNCIÓN DE ESTADO
+===================================== */
 
-const params =
-new URLSearchParams(
-    window.location.search
-);
+function setStatus(
+    title,
+    detail
+){
 
-const username =
-params.get(
-    "username"
-);
+    loadingText.textContent =
+        title;
+
+    status.textContent =
+        detail || "";
+
+}
 
 
-/* =================================
+/* =====================================
    ERROR
-================================= */
+===================================== */
 
 function showError(
     message
 ){
 
-    loading.textContent =
-        "❌ " + message;
+    loadingText.textContent =
+        "❌ Error";
 
-}
+    status.textContent =
+        message;
 
-
-/* =================================
-   PRIMERA LETRA
-================================= */
-
-function firstLetter(
-    text
-){
-
-    return (
-        text || "N"
-    )
-    .charAt(0)
-    .toUpperCase();
-
-}
-
-
-/* =================================
-   URL DE LINK
-================================= */
-
-function normalizeUrl(
-    url
-){
-
-    url =
-        url.trim();
-
-    if(
-        url.startsWith(
-            "http://"
-        ) ||
-        url.startsWith(
-            "https://"
-        )
-    ){
-
-        return url;
-
-    }
-
-    return (
-        "https://" +
-        url
+    console.error(
+        message
     );
 
 }
 
 
-/* =================================
-   CREAR LINK
-================================= */
+/* =====================================
+   USERNAME DE LA URL
+===================================== */
 
-function addLink(
-    url,
-    title
-){
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const username =
+    params.get(
+        "username"
+    );
+
+
+/* =====================================
+   COMPROBAR SUPABASE
+===================================== */
+
+async function start(){
+
+    setStatus(
+        "1/5 — JavaScript funciona ✓",
+        "Comprobando Supabase..."
+    );
+
+
+    /* SUPABASE JS */
 
     if(
-        !url ||
-        !url.trim()
+        !window.supabase
     ){
+
+        showError(
+            "La librería de Supabase no cargó."
+        );
 
         return;
 
     }
 
-    const link =
-    document.createElement(
-        "a"
-    );
 
-    link.className =
-        "link";
+    if(
+        !window.supabase.createClient
+    ){
 
-    link.textContent =
-        title + " ↗";
-
-    link.href =
-        normalizeUrl(
-            url
+        showError(
+            "createClient de Supabase no está disponible."
         );
 
-    link.target =
-        "_blank";
+        return;
 
-    link.rel =
-        "noopener noreferrer";
+    }
 
-    linksElement.appendChild(
-        link
+
+    setStatus(
+        "2/5 — Supabase cargado ✓",
+        "Creando conexión..."
     );
+
+
+    /* CLIENTE */
+
+    let client;
+
+    try{
+
+        client =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+    }catch(error){
+
+        showError(
+            "No se pudo crear Supabase: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    setStatus(
+        "3/5 — Conexión preparada ✓",
+        "Comprobando tabla profiles..."
+    );
+
+
+    /* =================================
+       COMPROBAR TABLA
+    ================================= */
+
+    try{
+
+        const test =
+            await client
+            .from("profiles")
+            .select(
+                "id,username"
+            )
+            .limit(1);
+
+
+        console.log(
+            "TEST PROFILES:",
+            test
+        );
+
+
+        if(test.error){
+
+            showError(
+                "Supabase respondió con error: " +
+                test.error.message
+            );
+
+            return;
+
+        }
+
+
+        setStatus(
+            "4/5 — Tabla profiles funciona ✓",
+            "Buscando @" +
+            (
+                username ||
+                "???"
+            )
+        );
+
+
+        /* =================================
+           COMPROBAR USERNAME
+        ================================= */
+
+        if(!username){
+
+            showError(
+                "La URL no tiene ?username=..."
+            );
+
+            return;
+
+        }
+
+
+        const cleanUsername =
+            username
+            .trim()
+            .toLowerCase();
+
+
+        const result =
+            await client
+            .from("profiles")
+            .select("*")
+            .eq(
+                "username",
+                cleanUsername
+            )
+            .maybeSingle();
+
+
+        console.log(
+            "PERFIL:",
+            result
+        );
+
+
+        if(result.error){
+
+            showError(
+                "Error buscando perfil: " +
+                result.error.message
+            );
+
+            return;
+
+        }
+
+
+        if(!result.data){
+
+            showError(
+                "No existe el perfil @" +
+                cleanUsername
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            result.data;
+
+
+        /* =================================
+           MOSTRAR PERFIL
+        ================================= */
+
+        renderProfile(
+            data
+        );
+
+
+        setStatus(
+            "5/5 — ¡PERFIL ENCONTRADO! ✓",
+            "@" + data.username
+        );
+
+
+        /* =================================
+           CONTADOR DE VISTAS
+        ================================= */
+
+        try{
+
+            const viewResult =
+                await client.rpc(
+                    "increment_profile_views",
+                    {
+                        profile_uuid:
+                            data.id
+                    }
+                );
+
+
+            console.log(
+                "VISTA:",
+                viewResult
+            );
+
+
+            if(
+                !viewResult.error
+            ){
+
+                const current =
+                    Number(
+                        data.profile_views ||
+                        0
+                    );
+
+
+                const newViews =
+                    current + 1;
+
+
+                viewsElement.textContent =
+                    "👁️ " +
+                    newViews +
+                    (
+                        newViews === 1
+                        ? " vista"
+                        : " vistas"
+                    );
+
+            }
+
+        }catch(viewError){
+
+            console.error(
+                "Error de vistas:",
+                viewError
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "ERROR GENERAL:",
+            error
+        );
+
+
+        showError(
+            error.message
+        );
+
+    }
 
 }
 
 
-/* =================================
-   MOSTRAR PERFIL
-================================= */
+/* =====================================
+   RENDER PROFILE
+===================================== */
 
 function renderProfile(
     data
 ){
+
+    /* APODO */
 
     nameElement.textContent =
         data.display_name ||
@@ -476,19 +823,26 @@ function renderProfile(
         "NØX User";
 
 
+    /* USERNAME */
+
     usernameElement.textContent =
         "@" +
         data.username;
 
+
+    /* BIO */
 
     bioElement.textContent =
         data.bio ||
         "Welcome to my NØX profile.";
 
 
+    /* VISTAS */
+
     const views =
         Number(
-            data.profile_views || 0
+            data.profile_views ||
+            0
         );
 
 
@@ -504,25 +858,29 @@ function renderProfile(
 
     /* AVATAR */
 
-    avatar.innerHTML = "";
+    avatar.innerHTML =
+        "";
 
 
     if(
         data.avatar_url
     ){
 
-        const img =
-        document.createElement(
-            "img"
-        );
+        const image =
+            document.createElement(
+                "img"
+            );
 
-        img.src =
+
+        image.src =
             data.avatar_url;
 
-        img.alt =
+
+        image.alt =
             "Avatar";
 
-        img.onerror =
+
+        image.onerror =
         function(){
 
             avatar.textContent =
@@ -533,8 +891,9 @@ function renderProfile(
 
         };
 
+
         avatar.appendChild(
-            img
+            image
         );
 
     }else{
@@ -550,7 +909,8 @@ function renderProfile(
 
     /* LINKS */
 
-    linksElement.innerHTML = "";
+    linksElement.innerHTML =
+        "";
 
 
     addLink(
@@ -558,25 +918,30 @@ function renderProfile(
         "Discord"
     );
 
+
     addLink(
         data.instagram,
         "Instagram"
     );
+
 
     addLink(
         data.tiktok,
         "TikTok"
     );
 
+
     addLink(
         data.youtube,
         "YouTube"
     );
 
+
     addLink(
         data.github,
         "GitHub"
     );
+
 
     addLink(
         data.spotify,
@@ -590,6 +955,7 @@ function renderProfile(
         "hidden"
     );
 
+
     profile.classList.remove(
         "hidden"
     );
@@ -597,147 +963,120 @@ function renderProfile(
 }
 
 
-/* =================================
-   CARGAR PERFIL
-================================= */
+/* =====================================
+   PRIMERA LETRA
+===================================== */
 
-async function loadProfile(){
+function firstLetter(
+    text
+){
 
-    if(!username){
+    return (
+        text ||
+        "N"
+    )
+    .charAt(0)
+    .toUpperCase();
 
-        showError(
-            "No se indicó un username."
-        );
+}
+
+
+/* =====================================
+   CREAR LINK
+===================================== */
+
+function addLink(
+    url,
+    title
+){
+
+    if(
+        !url ||
+        !url.trim()
+    ){
 
         return;
 
     }
 
 
-    const cleanUsername =
-        username
-        .trim()
-        .toLowerCase();
-
-
-    try{
-
-        const result =
-        await supabase
-        .from("profiles")
-        .select("*")
-        .eq(
-            "username",
-            cleanUsername
-        )
-        .maybeSingle();
-
-
-        if(result.error){
-
-            console.error(
-                result.error
-            );
-
-            showError(
-                result.error.message
-            );
-
-            return;
-
-        }
-
-
-        if(!result.data){
-
-            showError(
-                "Perfil @" +
-                cleanUsername +
-                " no encontrado."
-            );
-
-            return;
-
-        }
-
-
-        const data =
-            result.data;
-
-
-        /* MOSTRAR PERFIL */
-
-        renderProfile(
-            data
+    const link =
+        document.createElement(
+            "a"
         );
 
 
-        /* =================================
-           SUMAR VISTA
-        ================================= */
+    link.className =
+        "link";
 
-        const viewResult =
-        await supabase.rpc(
-            "increment_profile_views",
-            {
-                profile_uuid:
-                    data.id
-            }
+
+    link.textContent =
+        title +
+        " ↗";
+
+
+    link.href =
+        normalizeUrl(
+            url
         );
 
 
-        if(viewResult.error){
-
-            console.error(
-                "No se pudo sumar la vista:",
-                viewResult.error
-            );
-
-            return;
-
-        }
+    link.target =
+        "_blank";
 
 
-        /* ACTUALIZAR CONTADOR */
-
-        const newViews =
-            Number(
-                data.profile_views || 0
-            ) + 1;
+    link.rel =
+        "noopener noreferrer";
 
 
-        viewsElement.textContent =
-            "👁️ " +
-            newViews +
-            (
-                newViews === 1
-                ? " vista"
-                : " vistas"
-            );
-
-    }
-    catch(error){
-
-        console.error(
-            error
-        );
-
-        showError(
-            error.message
-        );
-
-    }
+    linksElement.appendChild(
+        link
+    );
 
 }
 
 
-/* =================================
-   INICIAR
-================================= */
+/* =====================================
+   NORMALIZAR URL
+===================================== */
 
-loadProfile();
+function normalizeUrl(
+    url
+){
+
+    url =
+        url.trim();
+
+
+    if(
+        url.startsWith(
+            "http://"
+        ) ||
+        url.startsWith(
+            "https://"
+        )
+    ){
+
+        return url;
+
+    }
+
+
+    return (
+        "https://" +
+        url
+    );
+
+}
+
+
+/* =====================================
+   INICIAR
+===================================== */
+
+start();
 
 </script>
 
 </body>
-</html>
+    </html>
