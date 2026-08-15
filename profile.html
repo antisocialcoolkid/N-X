@@ -1,940 +1,882 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta name="theme-color" content="#030303">
+
 <title>NØX — Profile</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
 }
 
 body{
     min-height:100vh;
-    background:
-        radial-gradient(circle at 50% -10%,#303030,#090909 45%,#020202);
-    color:#fff;
+    background:#030303;
+    color:white;
     font-family:Arial,Helvetica,sans-serif;
 }
 
-.container{
-    width:min(1150px,92%);
-    margin:auto;
+/* BACKGROUND */
+
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #222 0%,
+            #090909 35%,
+            #030303 75%
+        );
 }
 
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.2;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+}
+
+.glow{
+    position:absolute;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    background:white;
+    filter:blur(150px);
+    opacity:.06;
+}
+
+.glow.one{
+    top:-250px;
+    left:-180px;
+}
+
+.glow.two{
+    right:-250px;
+    bottom:-250px;
+}
+
+/* NAV */
+
 nav{
+    width:min(1150px,92%);
     height:80px;
+    margin:auto;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
-    border-bottom:1px solid #222;
+
+    border-bottom:1px solid #191919;
 }
 
 .logo{
-    color:#fff;
+    color:white;
     text-decoration:none;
     font-size:25px;
-    font-weight:900;
+    font-weight:950;
 }
 
-.logout{
-    padding:10px 16px;
+.nav-right{
+    display:flex;
+    gap:9px;
+}
+
+.nav-button{
+    padding:10px 15px;
+
     border:1px solid #292929;
     border-radius:9px;
-    background:#0d0d0d;
+
+    background:#0b0b0b;
     color:#aaa;
+
+    text-decoration:none;
+    font-size:10px;
+    font-weight:800;
+
     cursor:pointer;
+
+    transition:.2s;
 }
 
-.logout:hover{
-    background:#fff;
-    color:#000;
+.nav-button:hover{
+    color:white;
+    border-color:#444;
 }
 
-.dashboard{
-    display:grid;
-    grid-template-columns:1fr 400px;
-    gap:20px;
-    padding:40px 0 70px;
+/* MAIN */
+
+.container{
+    width:min(1150px,92%);
+    margin:45px auto 80px;
 }
 
-.panel,
-.preview{
-    border:1px solid #242424;
-    border-radius:20px;
-    background:linear-gradient(145deg,#151515,#070707);
-    box-shadow:0 30px 90px rgba(0,0,0,.5);
+.page-title{
+    margin-bottom:30px;
 }
 
-.panel{
-    padding:30px;
+.badge{
+    width:max-content;
+
+    padding:7px 11px;
+
+    border:1px solid #292929;
+    border-radius:100px;
+
+    color:#777;
+
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:2px;
 }
 
-.small{
-    color:#555;
-    font-size:9px;
-    font-weight:bold;
-    letter-spacing:3px;
+.page-title h1{
+    margin-top:18px;
+
+    font-size:42px;
+    letter-spacing:-2px;
 }
 
-h1{
-    margin-top:10px;
-    font-size:32px;
-}
-
-.desc{
+.page-title p{
     margin-top:8px;
+
     color:#666;
     font-size:12px;
 }
 
-.section{
-    margin-top:28px;
-    padding-top:22px;
-    border-top:1px solid #1d1d1d;
+/* GRID */
+
+.editor-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 390px;
+
+    gap:20px;
 }
 
-.section-title{
-    margin-bottom:15px;
-    color:#777;
-    font-size:10px;
-    font-weight:bold;
-    letter-spacing:2px;
+/* CARD */
+
+.card{
+    padding:28px;
+
+    border:1px solid #1d1d1d;
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0d0d0d,
+            #070707
+        );
+
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.35);
 }
+
+.card-title{
+    font-size:18px;
+    font-weight:900;
+}
+
+.card-subtitle{
+    margin-top:6px;
+
+    color:#555;
+    font-size:10px;
+}
+
+/* FORM */
 
 .field{
-    margin-top:14px;
+    margin-top:20px;
 }
 
 label{
     display:block;
-    margin-bottom:7px;
-    color:#666;
+
+    margin-bottom:8px;
+
+    color:#777;
+
     font-size:9px;
-    font-weight:bold;
-    letter-spacing:1px;
+    font-weight:900;
+
     text-transform:uppercase;
+    letter-spacing:1.5px;
 }
 
 input,
-textarea,
-select{
+textarea{
+
     width:100%;
+
     border:1px solid #292929;
     border-radius:9px;
-    background:#050505;
-    color:#fff;
+
     outline:none;
-    font-family:Arial;
+
+    background:#050505;
+    color:white;
+
+    font-family:inherit;
+    font-size:12px;
+
+    transition:.2s;
 }
 
-input,
-select{
-    height:48px;
-    padding:0 13px;
+input{
+    height:50px;
+    padding:0 14px;
 }
 
 textarea{
-    min-height:90px;
-    padding:13px;
+    min-height:100px;
+    padding:14px;
     resize:vertical;
 }
 
 input:focus,
-textarea:focus,
-select:focus{
+textarea:focus{
     border-color:#666;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255,255,255,.025);
 }
+
+input::placeholder,
+textarea::placeholder{
+    color:#3d3d3d;
+}
+
+.username-wrap{
+    display:flex;
+}
+
+.username-prefix{
+    height:50px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 13px;
+
+    border:1px solid #292929;
+    border-right:0;
+
+    border-radius:9px 0 0 9px;
+
+    background:#0a0a0a;
+
+    color:#555;
+
+    font-size:12px;
+}
+
+.username-wrap input{
+    border-radius:0 9px 9px 0;
+}
+
+/* BUTTON */
 
 .save{
     width:100%;
-    height:50px;
+
+    height:52px;
+
     margin-top:25px;
+
     border:0;
     border-radius:9px;
-    background:#fff;
-    color:#000;
-    font-weight:900;
+
+    background:white;
+    color:black;
+
     cursor:pointer;
+
+    font-size:11px;
+    font-weight:950;
+
+    transition:.2s;
+}
+
+.save:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(255,255,255,.12);
 }
 
 .save:disabled{
     opacity:.5;
+    cursor:not-allowed;
 }
 
+/* STATUS */
+
 #message{
-    min-height:20px;
-    margin-top:13px;
+    min-height:18px;
+
+    margin-top:14px;
+
     text-align:center;
+
     color:#777;
-    font-size:11px;
+
+    font-size:10px;
 }
 
 .success{
-    color:#65ff9d!important;
+    color:#70ffad !important;
 }
 
 .error{
-    color:#ff7070!important;
+    color:#ff6e6e !important;
 }
 
-.preview-box{
+/* PREVIEW */
+
+.preview-card{
     position:sticky;
-    top:20px;
+    top:25px;
+
+    padding:30px;
+
+    border:1px solid #252525;
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111,
+            #070707
+        );
+
+    box-shadow:
+        0 35px 100px
+        rgba(0,0,0,.5);
 }
 
 .preview-label{
-    margin-bottom:12px;
     color:#555;
-    font-size:9px;
-    font-weight:bold;
-    letter-spacing:3px;
-}
 
-.preview{
-    min-height:550px;
-    padding:35px 25px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-}
-
-.avatar{
-    width:95px;
-    height:95px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    border:1px solid #444;
-    border-radius:50%;
-    background:linear-gradient(145deg,#333,#111);
-    font-size:30px;
+    font-size:8px;
     font-weight:900;
+
+    letter-spacing:2px;
 }
 
-.avatar img{
+.preview-avatar{
+
+    width:76px;
+    height:76px;
+
+    margin-top:25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    border:1px solid #333;
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #252525,
+            #080808
+        );
+
+    color:white;
+
+    font-size:27px;
+    font-weight:950;
+}
+
+.preview-avatar img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-.name{
-    margin-top:20px;
-    font-size:26px;
+.preview-name{
+    margin-top:18px;
+
+    font-size:23px;
     font-weight:900;
 }
 
-.handle{
-    margin-top:5px;
+.preview-username{
+    margin-top:4px;
+
     color:#555;
+
     font-size:11px;
 }
 
-.bio{
-    max-width:310px;
-    margin-top:18px;
+.preview-bio{
+    margin-top:17px;
+
     color:#777;
-    font-size:12px;
+
+    font-size:11px;
     line-height:1.7;
 }
 
-.links{
-    width:100%;
+.preview-links{
     display:grid;
     gap:8px;
-    margin-top:25px;
+
+    margin-top:22px;
 }
 
-.link{
-    display:block;
+.preview-link{
+
+    padding:12px;
+
+    border:1px solid #1f1f1f;
+    border-radius:8px;
+
+    background:#0a0a0a;
+
+    color:#777;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    transition:.2s;
+}
+
+.preview-link:hover{
+    color:white;
+    border-color:#444;
+}
+
+.profile-url{
+    margin-top:22px;
     padding:13px;
-    border:1px solid #252525;
+
+    border:1px solid #1d1d1d;
     border-radius:9px;
+
+    background:#050505;
+
+    color:#555;
+
+    font-size:9px;
+
+    word-break:break-all;
+}
+
+.copy{
+    width:100%;
+
+    height:43px;
+
+    margin-top:8px;
+
+    border:1px solid #292929;
+    border-radius:8px;
+
     background:#0d0d0d;
     color:#aaa;
-    text-decoration:none;
-    font-size:11px;
-}
 
-.link:hover{
-    color:#fff;
-    border-color:#555;
-}
+    cursor:pointer;
 
-.empty{
-    color:#444;
     font-size:10px;
+    font-weight:800;
 }
+
+.copy:hover{
+    color:white;
+    border-color:#444;
+}
+
+/* MOBILE */
 
 @media(max-width:850px){
-    .dashboard{
+
+    body{
+        overflow:auto;
+    }
+
+    .editor-grid{
         grid-template-columns:1fr;
     }
 
-    .preview-box{
-        position:static;
-        order:-1;
+    .preview-card{
+        position:relative;
+        top:auto;
     }
+
 }
 
-@media(max-width:500px){
-    .panel{
+@media(max-width:600px){
+
+    nav{
+        height:70px;
+    }
+
+    .container{
+        margin-top:30px;
+    }
+
+    .page-title h1{
+        font-size:34px;
+    }
+
+    .card{
         padding:22px;
     }
 
-    h1{
-        font-size:27px;
-    }
 }
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
+
+<div class="background">
+
+    <div class="grid"></div>
+
+    <div class="glow one"></div>
+
+    <div class="glow two"></div>
+
+</div>
+
 
 <nav>
 
-<a href="index.html" class="logo">NØX</a>
+    <a
+        href="index.html"
+        class="logo">
 
-<button id="logout" class="logout">
-Logout
-</button>
+        NØX
+
+    </a>
+
+
+    <div class="nav-right">
+
+        <a
+            id="viewProfile"
+            class="nav-button"
+            href="#"
+            target="_blank">
+
+            View profile ↗
+
+        </a>
+
+
+        <button
+            id="logout"
+            class="nav-button">
+
+            Logout
+
+        </button>
+
+    </div>
 
 </nav>
 
 
-<div class="dashboard">
+<main class="container">
+
+
+<div class="page-title">
+
+    <div class="badge">
+        NØX PROFILE
+    </div>
+
+    <h1>
+        Customize your identity.
+    </h1>
+
+    <p>
+        Control everything people see on your NØX profile.
+    </p>
+
+</div>
+
+
+<div class="editor-grid">
 
 
 <!-- EDITOR -->
 
-<section class="panel">
+<section class="card">
 
-<div class="small">
-NØX PROFILE
-</div>
+    <h2 class="card-title">
+        Profile settings
+    </h2>
 
-<h1>
-Customize your profile
-</h1>
-
-<p class="desc">
-Edit tu identidad y mira los cambios en tiempo real.
-</p>
+    <p class="card-subtitle">
+        Update your public NØX identity.
+    </p>
 
 
-<div class="section">
-
-<div class="section-title">
-IDENTITY
-</div>
+    <form id="profileForm">
 
 
-<div class="field">
+        <div class="field">
 
-<label>
-Username
-</label>
+            <label>
+                Username
+            </label>
 
-<input
-id="username"
-type="text"
-maxlength="24"
-placeholder="username">
+            <div class="username-wrap">
 
-</div>
+                <span class="username-prefix">
+                    @
+                </span>
 
+                <input
+                    id="username"
+                    type="text"
+                    placeholder="maxiii"
+                    required
+                >
 
-<div class="field">
+            </div>
 
-<label>
-Avatar URL
-</label>
-
-<input
-id="avatar"
-type="url"
-placeholder="https://...">
-
-</div>
+        </div>
 
 
-<div class="field">
+        <div class="field">
 
-<label>
-Bio
-</label>
+            <label>
+                Display name
+            </label>
 
-<textarea
-id="bio"
-maxlength="180"
-placeholder="Escribe tu bio..."></textarea>
+            <input
+                id="displayName"
+                type="text"
+                placeholder="Maxiii"
+            >
 
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="section-title">
-SOCIAL LINKS
-</div>
+        </div>
 
 
-<div class="field">
+        <div class="field">
 
-<label>
-Discord
-</label>
+            <label>
+                Bio
+            </label>
 
-<input
-id="discord"
-type="text"
-placeholder="discord.gg/...">
+            <textarea
+                id="bio"
+                placeholder="Welcome to my NØX profile."
+            ></textarea>
 
-</div>
-
-
-<div class="field">
-
-<label>
-GitHub
-</label>
-
-<input
-id="github"
-type="url"
-placeholder="https://github.com/...">
-
-</div>
+        </div>
 
 
-<div class="field">
+        <div class="field">
 
-<label>
-YouTube
-</label>
+            <label>
+                Avatar URL
+            </label>
 
-<input
-id="youtube"
-type="url"
-placeholder="https://youtube.com/@...">
+            <input
+                id="avatarUrl"
+                type="url"
+                placeholder="https://..."
+            >
 
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="section-title">
-APPEARANCE
-</div>
-
-<div class="field">
-
-<label>
-Theme
-</label>
-
-<select id="theme">
-
-<option value="dark">
-Dark
-</option>
-
-<option value="black">
-Pure Black
-</option>
-
-<option value="silver">
-Silver
-</option>
-
-</select>
-
-</div>
-
-</div>
+        </div>
 
 
-<button
-id="save"
-class="save">
+        <div class="field">
 
-Save changes
+            <label>
+                Discord
+            </label>
 
-</button>
+            <input
+                id="discord"
+                type="text"
+                placeholder="https://discord.com/..."
+            >
 
-<div id="message"></div>
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                YouTube
+            </label>
+
+            <input
+                id="youtube"
+                type="url"
+                placeholder="https://youtube.com/..."
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                GitHub
+            </label>
+
+            <input
+                id="github"
+                type="url"
+                placeholder="https://github.com/..."
+            >
+
+        </div>
+
+
+        <button
+            id="saveButton"
+            class="save"
+            type="submit">
+
+            Save changes
+
+        </button>
+
+
+        <div id="message"></div>
+
+
+    </form>
 
 </section>
 
 
 <!-- PREVIEW -->
 
-<section class="preview-box">
+<aside class="preview-card">
+
 
 <div class="preview-label">
-LIVE PREVIEW
+    LIVE PREVIEW
 </div>
 
-<div class="preview">
 
 <div
-id="previewAvatar"
-class="avatar">
+    id="previewAvatar"
+    class="preview-avatar">
 
-N
+    N
 
 </div>
+
 
 <div
-id="previewName"
-class="name">
+    id="previewName"
+    class="preview-name">
 
-Username
+    NØX User
 
 </div>
+
 
 <div
-id="previewHandle"
-class="handle">
+    id="previewUsername"
+    class="preview-username">
 
-@username
+    @username
 
 </div>
+
 
 <div
-id="previewBio"
-class="bio">
+    id="previewBio"
+    class="preview-bio">
 
-Welcome to my NØX profile.
+    Welcome to my NØX profile.
 
 </div>
+
 
 <div
-id="previewLinks"
-class="links">
-
-<div class="empty">
-Your links will appear here
-</div>
+    id="previewLinks"
+    class="preview-links">
 
 </div>
 
+
+<div
+    id="profileUrl"
+    class="profile-url">
+
+    Loading profile URL...
+
 </div>
 
-</section>
+
+<button
+    id="copyButton"
+    class="copy">
+
+    Copy profile link
+
+</button>
+
+
+</aside>
+
 
 </div>
 
-</div>
+</main>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
 
-document.addEventListener(
-"DOMContentLoaded",
-async function(){
+<script src="profile.js"></script>
 
-const SUPABASE_URL =
-"https://asgowauvzfnsszstvzqi.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
-
-const supabase =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
-
-
-/* ELEMENTS */
-
-const username =
-document.getElementById("username");
-
-const avatar =
-document.getElementById("avatar");
-
-const bio =
-document.getElementById("bio");
-
-const discord =
-document.getElementById("discord");
-
-const github =
-document.getElementById("github");
-
-const youtube =
-document.getElementById("youtube");
-
-const theme =
-document.getElementById("theme");
-
-const save =
-document.getElementById("save");
-
-const message =
-document.getElementById("message");
-
-const previewAvatar =
-document.getElementById("previewAvatar");
-
-const previewName =
-document.getElementById("previewName");
-
-const previewHandle =
-document.getElementById("previewHandle");
-
-const previewBio =
-document.getElementById("previewBio");
-
-const previewLinks =
-document.getElementById("previewLinks");
-
-
-/* USER */
-
-const {
-data:{
-user
-}
-} =
-await supabase.auth.getUser();
-
-
-if(!user){
-
-window.location.href="login.html";
-
-return;
-
-}
-
-
-/* LOAD PROFILE */
-
-const {
-data:profile,
-error
-} =
-await supabase
-.from("profiles")
-.select("*")
-.eq("id",user.id)
-.maybeSingle();
-
-
-if(error){
-
-message.className="error";
-
-message.textContent=
-"❌ "+error.message;
-
-return;
-
-}
-
-
-/* PUT DATA */
-
-if(profile){
-
-username.value=
-profile.username || "";
-
-avatar.value=
-profile.avatar_url || "";
-
-bio.value=
-profile.bio ||
-"Welcome to my NØX profile.";
-
-discord.value=
-profile.discord || "";
-
-github.value=
-profile.github || "";
-
-youtube.value=
-profile.youtube || "";
-
-theme.value=
-profile.theme || "dark";
-
-}
-
-updatePreview();
-
-
-/* PREVIEW */
-
-function updatePreview(){
-
-const name =
-username.value.trim()
-|| "Username";
-
-
-previewName.textContent=
-name;
-
-previewHandle.textContent=
-"@"+name;
-
-previewBio.textContent=
-bio.value.trim()
-|| "Welcome to my NØX profile.";
-
-
-/* AVATAR */
-
-const url =
-avatar.value.trim();
-
-
-if(url){
-
-previewAvatar.innerHTML="";
-
-const img =
-document.createElement("img");
-
-img.src=url;
-
-img.onerror=function(){
-
-previewAvatar.textContent=
-name.charAt(0).toUpperCase();
-
-};
-
-previewAvatar.appendChild(img);
-
-}else{
-
-previewAvatar.textContent=
-name.charAt(0).toUpperCase();
-
-}
-
-
-/* LINKS */
-
-previewLinks.innerHTML="";
-
-let links=0;
-
-
-function addLink(
-value,
-title
-){
-
-if(!value.trim()) return;
-
-const a =
-document.createElement("a");
-
-a.className="link";
-
-a.textContent=
-title+" ↗";
-
-a.href=
-value.startsWith("http")
-? value
-: "https://"+value;
-
-a.target="_blank";
-
-previewLinks.appendChild(a);
-
-links++;
-
-}
-
-
-addLink(
-discord.value,
-"Discord"
-);
-
-addLink(
-github.value,
-"GitHub"
-);
-
-addLink(
-youtube.value,
-"YouTube"
-);
-
-
-if(!links){
-
-previewLinks.innerHTML=
-'<div class="empty">Your links will appear here</div>';
-
-}
-
-}
-
-
-/* LIVE */
-
-[
-username,
-avatar,
-bio,
-discord,
-github,
-youtube,
-theme
-].forEach(
-function(el){
-
-el.addEventListener(
-"input",
-updatePreview
-);
-
-el.addEventListener(
-"change",
-updatePreview
-);
-
-});
-
-
-/* SAVE */
-
-save.addEventListener(
-"click",
-async function(){
-
-save.disabled=true;
-
-save.textContent=
-"Saving...";
-
-message.className="";
-
-message.textContent=
-"Guardando perfil...";
-
-
-const {
-error
-} =
-await supabase
-.from("profiles")
-.update({
-
-username:
-username.value
-.trim()
-.toLowerCase(),
-
-avatar_url:
-avatar.value.trim(),
-
-bio:
-bio.value.trim(),
-
-discord:
-discord.value.trim(),
-
-github:
-github.value.trim(),
-
-youtube:
-youtube.value.trim(),
-
-theme:
-theme.value
-
-})
-.eq(
-"id",
-user.id
-);
-
-
-if(error){
-
-message.className="error";
-
-message.textContent=
-"❌ "+error.message;
-
-save.disabled=false;
-
-save.textContent=
-"Save changes";
-
-return;
-
-}
-
-
-message.className=
-"success";
-
-message.textContent=
-"✓ Perfil guardado.";
-
-save.textContent=
-"Saved ✓";
-
-
-setTimeout(
-function(){
-
-save.textContent=
-"Save changes";
-
-},
-1800
-);
-
-save.disabled=false;
-
-});
-
-
-/* LOGOUT */
-
-document
-.getElementById("logout")
-.addEventListener(
-"click",
-async function(){
-
-await supabase.auth.signOut();
-
-window.location.href=
-"index.html";
-
-});
-
-});
-
-</script>
 
 </body>
+
 </html>
