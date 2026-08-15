@@ -21,72 +21,43 @@
 }
 
 body{
-
     min-height:100vh;
 
     background:
         radial-gradient(
             circle at 50% 0%,
-            #242424 0%,
-            #090909 42%,
+            #252525 0%,
+            #090909 45%,
             #020202 100%
         );
 
     color:#fff;
 
     font-family:
+        Inter,
         Arial,
         Helvetica,
         sans-serif;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
 
     padding:25px;
-
-    transition:.4s;
 }
 
-
-body.light{
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #ffffff,
-            #eeeeee 55%,
-            #dddddd
-        );
-
-    color:#111;
-}
-
-
-/* BACKGROUND */
-
-.bg{
-
+.background{
     position:fixed;
-
     inset:0;
-
-    overflow:hidden;
-
-    pointer-events:none;
-
     z-index:-1;
+    overflow:hidden;
+    pointer-events:none;
 }
-
 
 .glow{
-
     position:absolute;
 
     width:500px;
-
     height:500px;
 
     border-radius:50%;
@@ -95,58 +66,52 @@ body.light{
 
     filter:blur(150px);
 
-    opacity:.06;
+    opacity:.055;
 
     animation:
-        floatGlow
+        glowMove
         12s
         ease-in-out
         infinite;
 }
 
-
 .glow.one{
-
     top:-300px;
-
     left:-250px;
 }
 
-
 .glow.two{
-
     right:-300px;
-
     bottom:-300px;
 
     animation-delay:-6s;
 }
 
-
-@keyframes floatGlow{
+@keyframes glowMove{
 
     0%,100%{
-        transform:translate(0,0) scale(1);
+        transform:
+            translate(0,0)
+            scale(1);
     }
 
     50%{
-        transform:translate(50px,40px) scale(1.15);
+        transform:
+            translate(50px,40px)
+            scale(1.15);
     }
-
 }
 
 
 /* LOGO */
 
 .logo{
-
     position:fixed;
 
     top:25px;
-
     left:30px;
 
-    color:inherit;
+    color:#fff;
 
     text-decoration:none;
 
@@ -155,10 +120,16 @@ body.light{
     font-weight:950;
 
     letter-spacing:-1px;
+
+    transition:.2s;
+}
+
+.logo:hover{
+    opacity:.6;
 }
 
 
-/* CARD */
+/* PROFILE */
 
 .profile{
 
@@ -168,18 +139,18 @@ body.light{
     );
 
     padding:
-        42px
+        45px
         28px
         30px;
+
+    background:
+        rgba(8,8,8,.94);
 
     border:
         1px solid
         rgba(255,255,255,.1);
 
     border-radius:25px;
-
-    background:
-        rgba(8,8,8,.92);
 
     backdrop-filter:
         blur(20px);
@@ -197,48 +168,28 @@ body.light{
 
     animation:
         profileIn
-        .7s
+        .6s
         ease
         both;
 }
 
-
-body.light .profile{
-
-    background:
-        rgba(255,255,255,.8);
-
-    border-color:
-        rgba(0,0,0,.1);
-
-    box-shadow:
-        0 30px 80px
-        rgba(0,0,0,.15);
-}
-
-
 @keyframes profileIn{
 
     from{
-
         opacity:0;
 
         transform:
             translateY(25px)
             scale(.97);
-
     }
 
     to{
-
         opacity:1;
 
         transform:
             translateY(0)
             scale(1);
-
     }
-
 }
 
 
@@ -246,9 +197,8 @@ body.light .profile{
 
 .avatar{
 
-    width:105px;
-
-    height:105px;
+    width:110px;
+    height:110px;
 
     margin:auto;
 
@@ -259,53 +209,56 @@ body.light .profile{
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     background:
         linear-gradient(
             145deg,
             #292929,
-            #090909
+            #080808
         );
 
     border:
         1px solid
         #3b3b3b;
 
-    font-size:36px;
+    font-size:38px;
 
     font-weight:950;
 
     box-shadow:
-        0 20px 60px
-        rgba(0,0,0,.55);
-}
 
+        0 20px 60px
+        rgba(0,0,0,.6),
+
+        0 0 50px
+        rgba(255,255,255,.035);
+}
 
 .avatar img{
 
     width:100%;
-
     height:100%;
 
     object-fit:cover;
 }
 
 
-/* NAME */
+/* USERNAME */
 
 .username{
 
     margin-top:22px;
 
-    font-size:29px;
+    font-size:30px;
 
     font-weight:950;
 
     letter-spacing:-1px;
 }
 
+
+/* HANDLE */
 
 .handle{
 
@@ -317,22 +270,16 @@ body.light .profile{
 }
 
 
-body.light .handle{
-
-    color:#777;
-}
-
-
 /* BIO */
 
 .bio{
+
+    max-width:430px;
 
     margin:
         20px
         auto
         0;
-
-    max-width:430px;
 
     color:#777;
 
@@ -348,11 +295,10 @@ body.light .handle{
 
     display:grid;
 
-    gap:9px;
+    gap:10px;
 
-    margin-top:27px;
+    margin-top:28px;
 }
-
 
 .link{
 
@@ -377,9 +323,9 @@ body.light .handle{
 
     font-weight:800;
 
-    transition:.25s;
+    transition:
+        .25s ease;
 }
-
 
 .link:hover{
 
@@ -394,26 +340,37 @@ body.light .handle{
 
     box-shadow:
         0 15px 40px
-        rgba(0,0,0,.4);
+        rgba(0,0,0,.45);
 }
 
 
-body.light .link{
+/* LOADING */
 
-    color:#444;
+.loading{
 
-    border-color:#ddd;
+    color:#555;
 
-    background:#fff;
+    font-size:10px;
+
+    font-weight:800;
+
+    letter-spacing:3px;
+
+    animation:
+        pulse
+        1.5s
+        infinite;
 }
 
+@keyframes pulse{
 
-body.light .link:hover{
+    0%,100%{
+        opacity:.35;
+    }
 
-    color:#111;
-
-    border-color:#aaa;
-
+    50%{
+        opacity:1;
+    }
 }
 
 
@@ -434,46 +391,32 @@ body.light .link:hover{
 @media(max-width:600px){
 
     body{
-
         padding:20px;
-
     }
 
     .logo{
-
         top:20px;
-
         left:20px;
-
         font-size:21px;
-
     }
 
     .profile{
-
         padding:
             35px
             20px
             28px;
 
         border-radius:20px;
-
     }
 
     .avatar{
-
         width:90px;
-
         height:90px;
-
         font-size:30px;
-
     }
 
     .username{
-
         font-size:25px;
-
     }
 
 }
@@ -486,7 +429,7 @@ body.light .link:hover{
 <body>
 
 
-<div class="bg">
+<div class="background">
 
     <div class="glow one"></div>
 
@@ -508,10 +451,8 @@ body.light .link:hover{
     class="profile"
 >
 
-    <div>
-
+    <div class="loading">
         LOADING PROFILE...
-
     </div>
 
 </main>
@@ -541,6 +482,10 @@ const app =
 document.getElementById("app");
 
 
+/* =========================
+   USERNAME
+========================= */
+
 const params =
 new URLSearchParams(
     window.location.search
@@ -567,7 +512,7 @@ if(!username){
 
 
 /* =========================
-   LOAD
+   LOAD PROFILE
 ========================= */
 
 async function loadProfile(
@@ -671,6 +616,14 @@ function renderProfile(
                     profile.avatar_url
                 )}"
                 alt="Avatar"
+                onerror="
+                    this.style.display='none';
+                    this.parentElement.textContent='${escapeHTML(
+                        username
+                        .charAt(0)
+                        .toUpperCase()
+                    )}';
+                "
             >
 
         `;
@@ -687,25 +640,22 @@ function renderProfile(
     }
 
 
-    let links = "";
+    let linksHTML = "";
 
 
     /* DISCORD */
 
     if(profile.discord_username){
 
-        links += createLink(
-            getDiscordURL(
-                profile.discord_username
-            ),
+        linksHTML += createLink(
+            profile.discord_username,
             "Discord ↗"
         );
 
     }
-
     else if(profile.discord){
 
-        links += createLink(
+        linksHTML += createLink(
             profile.discord,
             "Discord ↗"
         );
@@ -717,7 +667,7 @@ function renderProfile(
 
     if(profile.github){
 
-        links += createLink(
+        linksHTML += createLink(
             profile.github,
             "GitHub ↗"
         );
@@ -729,7 +679,7 @@ function renderProfile(
 
     if(profile.youtube){
 
-        links += createLink(
+        linksHTML += createLink(
             profile.youtube,
             "YouTube ↗"
         );
@@ -744,9 +694,11 @@ function renderProfile(
         "light"
     ){
 
-        document.body
-        .classList
-        .add("light");
+        document.body.style.background =
+        "#eeeeee";
+
+        document.body.style.color =
+        "#111";
 
     }
 
@@ -792,12 +744,12 @@ function renderProfile(
 
 
         ${
-            links
+            linksHTML
             ?
             `
             <div class="links">
 
-                ${links}
+                ${linksHTML}
 
             </div>
             `
@@ -811,44 +763,7 @@ function renderProfile(
 
 
 /* =========================
-   DISCORD
-========================= */
-
-function getDiscordURL(
-    value
-){
-
-    const clean =
-    String(value)
-    .trim();
-
-
-    if(
-        clean.startsWith(
-            "http://"
-        ) ||
-        clean.startsWith(
-            "https://"
-        )
-    ){
-
-        return clean;
-
-    }
-
-
-    return (
-        "https://discord.com/users/" +
-        encodeURIComponent(
-            clean
-        )
-    );
-
-}
-
-
-/* =========================
-   LINK
+   CREATE LINK
 ========================= */
 
 function createLink(
@@ -902,7 +817,7 @@ function createLink(
 ========================= */
 
 function showError(
-    message
+    text
 ){
 
     app.innerHTML = `
@@ -910,7 +825,7 @@ function showError(
         <div class="error">
 
             ❌ ${escapeHTML(
-                message
+                text
             )}
 
         </div>
