@@ -26,9 +26,9 @@ body{
 
     display:flex;
 
-    align-items:center;
-
     justify-content:center;
+
+    align-items:center;
 
     padding:20px;
 
@@ -222,6 +222,7 @@ button:disabled{
             Email
         </label>
 
+
         <input
             id="email"
             type="email"
@@ -234,6 +235,7 @@ button:disabled{
         <label for="password">
             Contraseña
         </label>
+
 
         <input
             id="password"
@@ -275,32 +277,54 @@ button:disabled{
 </div>
 
 
-<!-- SUPABASE -->
+<!-- =================================
+     SUPABASE
+================================= -->
 
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
 /* =================================
-   SUPABASE
+   CONFIGURACIÓN
+   PRIMERO DECLARAMOS LAS VARIABLES
 ================================= */
 
 const SUPABASE_URL =
-"https://asgowauvzfnsszstvzqi.supabase.co";
+    "https://asgowauvzfnsszstvzqi.supabase.co";
 
 
 const SUPABASE_KEY =
-"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
+
+/* =================================
+   CREAR CLIENTE
+   DESPUÉS DE LAS VARIABLES
+================================= */
+
+if(
+    typeof window.supabase ===
+    "undefined"
+){
+
+    document.getElementById(
+        "message"
+    ).textContent =
+        "❌ No se pudo cargar Supabase.";
+
+    throw new Error(
+        "Supabase JS no está disponible."
+    );
+}
 
 
 const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 /* =================================
@@ -308,33 +332,33 @@ window.supabase.createClient(
 ================================= */
 
 const form =
-document.getElementById(
-    "loginForm"
-);
+    document.getElementById(
+        "loginForm"
+    );
 
 
 const emailInput =
-document.getElementById(
-    "email"
-);
+    document.getElementById(
+        "email"
+    );
 
 
 const passwordInput =
-document.getElementById(
-    "password"
-);
+    document.getElementById(
+        "password"
+    );
 
 
 const loginButton =
-document.getElementById(
-    "loginButton"
-);
+    document.getElementById(
+        "loginButton"
+    );
 
 
 const message =
-document.getElementById(
-    "message"
-);
+    document.getElementById(
+        "message"
+    );
 
 
 /* =================================
@@ -364,11 +388,12 @@ form.addEventListener(
             message.className =
                 "message error";
 
+
             message.textContent =
                 "❌ Completa todos los campos.";
 
-            return;
 
+            return;
         }
 
 
@@ -390,26 +415,23 @@ form.addEventListener(
 
         try{
 
+            const result =
+                await supabase.auth
+                    .signInWithPassword({
 
-            const {
-                data,
-                error
-            } =
-            await supabase.auth.signInWithPassword({
+                        email:
+                            email,
 
-                email:
-                    email,
+                        password:
+                            password
 
-                password:
-                    password
-
-            });
+                    });
 
 
-            if(error){
+            if(result.error){
 
                 console.error(
-                    error
+                    result.error
                 );
 
 
@@ -419,7 +441,7 @@ form.addEventListener(
 
                 message.textContent =
                     "❌ " +
-                    error.message;
+                    result.error.message;
 
 
                 loginButton.disabled =
@@ -435,12 +457,12 @@ form.addEventListener(
 
 
             if(
-                !data ||
-                !data.user
+                !result.data ||
+                !result.data.user
             ){
 
                 throw new Error(
-                    "No se pudo iniciar sesión."
+                    "Supabase no devolvió el usuario."
                 );
 
             }
@@ -451,14 +473,9 @@ form.addEventListener(
 
 
             message.textContent =
-                "✓ Sesión iniciada.\n" +
-                "Entrando a tu perfil...";
+                "✓ Inicio de sesión correcto.\n\n" +
+                "Entrando al editor...";
 
-
-            /*
-               CAMBIA editor.html si tu
-               archivo tiene otro nombre.
-            */
 
             setTimeout(
                 function(){
@@ -483,7 +500,7 @@ form.addEventListener(
 
 
             message.textContent =
-                "❌ " +
+                "❌ ERROR GENERAL\n\n" +
                 (
                     error.message ||
                     "Error desconocido."
