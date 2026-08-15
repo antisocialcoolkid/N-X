@@ -8,7 +8,6 @@
 <title>NØX — Create Profile</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -17,117 +16,72 @@
 
 body{
     min-height:100vh;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #242424 0%,
-            #080808 45%,
-            #020202 100%
-        );
-
-    color:white;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
     display:flex;
     align-items:center;
     justify-content:center;
+
+    background:
+        radial-gradient(circle at 50% 0%,#292929 0%,#090909 45%,#020202 100%);
+
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 .card{
-
     width:92%;
     max-width:430px;
-
     padding:32px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #141414,
-            #070707
-        );
+    background:linear-gradient(145deg,#151515,#070707);
 
-    border:
-        1px solid
-        #292929;
-
+    border:1px solid #292929;
     border-radius:20px;
 
-    box-shadow:
-        0 30px 100px
-        rgba(0,0,0,.7);
+    box-shadow:0 30px 100px rgba(0,0,0,.7);
 }
 
 .logo{
-
     margin-bottom:25px;
-
     font-size:30px;
-
     font-weight:900;
-
-    letter-spacing:-1px;
 }
 
 h1{
-
     font-size:28px;
 }
 
 .subtitle{
-
     margin-top:8px;
-
     color:#666;
-
     font-size:12px;
-
     line-height:1.6;
 }
 
 .field{
-
     margin-top:18px;
 }
 
 label{
-
     display:block;
-
     margin-bottom:8px;
 
     color:#777;
-
     font-size:10px;
-
     font-weight:bold;
-
     text-transform:uppercase;
-
     letter-spacing:1px;
 }
 
 input{
-
     width:100%;
-
     height:52px;
 
     padding:0 15px;
 
     background:#050505;
+    color:#fff;
 
-    color:white;
-
-    border:
-        1px solid
-        #292929;
-
+    border:1px solid #292929;
     border-radius:9px;
 
     outline:none;
@@ -136,25 +90,20 @@ input{
 }
 
 input:focus{
-
     border-color:#777;
 }
 
 button{
-
     width:100%;
-
     height:52px;
 
     margin-top:23px;
 
     border:0;
-
     border-radius:9px;
 
-    background:white;
-
-    color:black;
+    background:#fff;
+    color:#000;
 
     font-weight:900;
 
@@ -162,26 +111,19 @@ button{
 }
 
 button:disabled{
-
     opacity:.5;
-
     cursor:not-allowed;
 }
 
 #message{
-
     min-height:40px;
-
     margin-top:18px;
 
     text-align:center;
 
     color:#aaa;
-
     font-size:12px;
-
     line-height:1.5;
-
     word-break:break-word;
 }
 
@@ -194,43 +136,44 @@ button:disabled{
 }
 
 .back{
-
     display:block;
-
     margin-top:20px;
 
     color:#666;
-
     text-align:center;
-
     text-decoration:none;
-
     font-size:11px;
 }
 
 .back:hover{
-    color:white;
+    color:#fff;
 }
 
+@media(max-width:500px){
+
+    .card{
+        padding:24px;
+    }
+
+    h1{
+        font-size:25px;
+    }
+}
 </style>
 </head>
 
 
 <body>
 
-
 <div class="card">
-
 
 <div class="logo">
 NØX
 </div>
 
-
 <h1>
 Create your profile
 </h1>
-
 
 <p class="subtitle">
 Choose your unique NØX username.
@@ -238,7 +181,6 @@ Choose your unique NØX username.
 
 
 <form id="noxForm">
-
 
 <div class="field">
 
@@ -251,6 +193,7 @@ Username
     type="text"
     placeholder="maxiii"
     maxlength="24"
+    autocomplete="username"
     required>
 
 </div>
@@ -266,6 +209,7 @@ Email
     id="email"
     type="email"
     placeholder="you@email.com"
+    autocomplete="email"
     required>
 
 </div>
@@ -282,6 +226,7 @@ Password
     type="password"
     placeholder="••••••••"
     minlength="6"
+    autocomplete="new-password"
     required>
 
 </div>
@@ -294,7 +239,6 @@ Password
 Create account
 
 </button>
-
 
 </form>
 
@@ -310,15 +254,8 @@ Create account
 
 </a>
 
-
 </div>
 
-
-<!--
-====================================================
-SUPABASE
-====================================================
--->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -326,357 +263,269 @@ SUPABASE
 <script>
 
 document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+"DOMContentLoaded",
+function(){
 
-        /*
-        ==============================================
-        SUPABASE
-        ==============================================
-        */
+    const SUPABASE_URL =
+    "https://asgowauvzfnsszstvzqi.supabase.co";
 
-        const SUPABASE_URL =
-        "https://asgowauvzfnsszstvzqi.supabase.co";
+    const SUPABASE_KEY =
+    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
-        const SUPABASE_KEY =
-        "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
+    const client =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
-        const supabase =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
 
+    const form =
+    document.getElementById("noxForm");
 
-        /*
-        ==============================================
-        ELEMENTOS
-        ==============================================
-        */
+    const message =
+    document.getElementById("message");
 
-        const form =
-        document.getElementById(
-            "noxForm"
-        );
+    const button =
+    document.getElementById("submitButton");
 
-        const message =
-        document.getElementById(
-            "message"
-        );
 
-        const button =
-        document.getElementById(
-            "submitButton"
-        );
+    form.addEventListener(
+    "submit",
+    async function(event){
 
+        /* NO RECARGAR */
 
-        /*
-        ==============================================
-        SUBMIT
-        ==============================================
-        */
+        event.preventDefault();
+        event.stopPropagation();
 
-        form.addEventListener(
-            "submit",
-            async function(event){
 
-                /*
-                ESTO IMPIDE
-                QUE LA PÁGINA SE RECARGUE.
-                */
+        const username =
+        document
+        .getElementById("username")
+        .value
+        .trim()
+        .toLowerCase();
 
-                event.preventDefault();
 
-                event.stopPropagation();
+        const email =
+        document
+        .getElementById("email")
+        .value
+        .trim();
 
 
-                /*
-                DATOS
-                */
+        const password =
+        document
+        .getElementById("password")
+        .value;
 
-                const username =
-                document
-                .getElementById("username")
-                .value
-                .trim()
-                .toLowerCase();
 
+        /* VALIDACIÓN */
 
-                const email =
-                document
-                .getElementById("email")
-                .value
-                .trim();
+        if(username.length < 3){
 
+            message.className="error";
 
-                const password =
-                document
-                .getElementById("password")
-                .value;
+            message.textContent =
+            "❌ El username necesita mínimo 3 caracteres.";
 
+            return;
+        }
 
-                /*
-                VALIDACIÓN
-                */
 
-                if(username.length < 3){
+        if(!/^[a-z0-9_]+$/.test(username)){
 
-                    message.className =
-                        "error";
+            message.className="error";
 
-                    message.textContent =
-                        "❌ Username mínimo: 3 caracteres.";
+            message.textContent =
+            "❌ Usa solamente letras, números y _.";
 
-                    return;
-                }
+            return;
+        }
 
 
-                if(
-                    !/^[a-z0-9_]+$/
-                    .test(username)
-                ){
+        if(password.length < 6){
 
-                    message.className =
-                        "error";
+            message.className="error";
 
-                    message.textContent =
-                        "❌ Usa solamente letras, números y _.";
+            message.textContent =
+            "❌ La contraseña necesita mínimo 6 caracteres.";
 
-                    return;
-                }
+            return;
+        }
 
 
-                if(password.length < 6){
+        button.disabled=true;
 
-                    message.className =
-                        "error";
+        button.textContent="Creating...";
 
-                    message.textContent =
-                        "❌ La contraseña necesita mínimo 6 caracteres.";
+        message.className="";
 
-                    return;
-                }
+        message.textContent=
+        "Conectando con NØX...";
 
 
-                /*
-                LOADING
-                */
+        try{
 
-                button.disabled =
-                    true;
+            /* =========================
+               CHECK USERNAME
+            ========================= */
 
-                button.textContent =
-                    "Creating...";
+            message.textContent=
+            "Comprobando username...";
 
 
-                message.className = "";
+            const {
+                data:existing,
+                error:checkError
+            } =
+            await client
+            .from("profiles")
+            .select("username")
+            .eq("username",username)
+            .maybeSingle();
 
-                message.textContent =
-                    "Conectando con NØX...";
 
+            if(checkError){
 
-                try{
-
-
-                    /*
-                    ==================================
-                    1. COMPROBAR USERNAME
-                    ==================================
-                    */
-
-                    message.textContent =
-                        "Comprobando username...";
-
-
-                    const {
-                        data:existing,
-                        error:checkError
-                    } =
-                    await supabase
-                    .from("profiles")
-                    .select("username")
-                    .eq(
-                        "username",
-                        username
-                    )
-                    .maybeSingle();
-
-
-                    if(checkError){
-
-                        throw new Error(
-                            "Error comprobando username: " +
-                            checkError.message
-                        );
-                    }
-
-
-                    if(existing){
-
-                        throw new Error(
-                            "Ese username ya está ocupado."
-                        );
-                    }
-
-
-                    /*
-                    ==================================
-                    2. CREAR USUARIO
-                    ==================================
-                    */
-
-                    message.textContent =
-                        "Creando cuenta...";
-
-
-                    const {
-                        data,
-                        error
-                    } =
-                    await supabase
-                    .auth
-                    .signUp({
-
-                        email:email,
-
-                        password:password,
-
-                        options:{
-                            data:{
-                                username:username
-                            }
-                        }
-
-                    });
-
-
-                    if(error){
-
-                        throw new Error(
-                            "Error creando cuenta: " +
-                            error.message
-                        );
-                    }
-
-
-                    /*
-                    ==================================
-                    3. VERIFICAR USUARIO
-                    ==================================
-                    */
-
-                    if(!data.user){
-
-                        throw new Error(
-                            "Supabase no devolvió el usuario."
-                        );
-                    }
-
-
-                    /*
-                    ==================================
-                    4. CREAR PERFIL
-                    ==================================
-                    */
-
-                    message.textContent =
-                        "Guardando perfil...";
-
-
-                    const {
-                        error:profileError
-                    } =
-                    await supabase
-                    .from("profiles")
-                    .insert({
-
-                        id:data.user.id,
-
-                        username:username
-
-                    });
-
-
-                    if(profileError){
-
-                        throw new Error(
-                            "Error creando perfil: " +
-                            profileError.message
-                        );
-                    }
-
-
-                    /*
-                    ==================================
-                    5. TODO CORRECTO
-                    ==================================
-                    */
-
-                    message.className =
-                        "success";
-
-                    message.textContent =
-                        "✓ ¡NØX profile creado correctamente!";
-
-
-                    button.textContent =
-                        "Created ✓";
-
-
-                    /*
-                    REDIRECCIÓN
-                    SOLO DESPUÉS
-                    DE CREAR TODO
-                    */
-
-                    setTimeout(
-                        function(){
-
-                            window.location.href =
-                                "profile.html";
-
-                        },
-                        1200
-                    );
-
-
-                }
-                catch(error){
-
-                    /*
-                    ==================================
-                    ERROR
-                    ==================================
-                    */
-
-                    console.error(
-                        "NØX:",
-                        error
-                    );
-
-
-                    message.className =
-                        "error";
-
-                    message.textContent =
-                        "❌ " +
-                        error.message;
-
-
-                    button.disabled =
-                        false;
-
-                    button.textContent =
-                        "Create account";
-
-                }
-
+                throw new Error(
+                    checkError.message
+                );
             }
-        );
 
-    }
-);
+
+            if(existing){
+
+                throw new Error(
+                    "Ese username ya está ocupado."
+                );
+            }
+
+
+            /* =========================
+               CREATE ACCOUNT
+            ========================= */
+
+            message.textContent=
+            "Creando cuenta...";
+
+
+            const {
+                data,
+                error
+            } =
+            await client.auth.signUp({
+
+                email:email,
+
+                password:password,
+
+                options:{
+                    data:{
+                        username:username
+                    }
+                }
+
+            });
+
+
+            if(error){
+
+                throw new Error(
+                    error.message
+                );
+            }
+
+
+            if(!data.user){
+
+                throw new Error(
+                    "No se pudo crear el usuario."
+                );
+            }
+
+
+            /* =========================
+               CREATE PROFILE
+            ========================= */
+
+            message.textContent=
+            "Guardando perfil...";
+
+
+            const {
+                error:profileError
+            } =
+            await client
+            .from("profiles")
+            .insert({
+
+                id:data.user.id,
+
+                username:username
+
+            });
+
+
+            if(profileError){
+
+                throw new Error(
+                    profileError.message
+                );
+            }
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+            message.className="success";
+
+            message.textContent=
+            "✓ ¡NØX profile creado correctamente!";
+
+
+            button.textContent=
+            "Created ✓";
+
+
+            setTimeout(
+            function(){
+
+                window.location.href=
+                "profile.html";
+
+            },
+            1200
+            );
+
+
+        }
+        catch(error){
+
+            console.error(
+                "NØX ERROR:",
+                error
+            );
+
+
+            message.className="error";
+
+            message.textContent=
+            "❌ " + error.message;
+
+
+            button.disabled=false;
+
+            button.textContent=
+            "Create account";
+
+        }
+
+    });
+
+});
 
 </script>
 
