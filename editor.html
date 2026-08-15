@@ -6,9 +6,7 @@
 <title>NØX — Editor</title>
 
 <style>
-*{
- box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 html,body{
  margin:0;
@@ -18,20 +16,12 @@ html,body{
 body{
  font-family:Arial,Helvetica,sans-serif;
  background:#050505;
- color:white;
+ color:#fff;
  overflow-x:hidden;
 }
 
-button,
-input,
-textarea,
-select{
- font:inherit;
-}
-
-button{
- cursor:pointer;
-}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
 
 .app{
  min-height:100vh;
@@ -93,7 +83,6 @@ button{
  padding:13px;
  border:0;
  border-radius:12px;
- color:white;
  background:#fff;
  color:#000;
  font-weight:800;
@@ -151,6 +140,17 @@ button{
  background-size:cover;
  background-position:center;
  z-index:0;
+ transition:.3s;
+}
+
+.previewVideo{
+ position:absolute;
+ inset:0;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ z-index:0;
+ display:none;
 }
 
 .previewOverlay{
@@ -172,7 +172,7 @@ button{
  backdrop-filter:blur(18px);
  box-shadow:0 25px 80px rgba(0,0,0,.5);
  text-align:center;
- transition:.2s;
+ transition:transform .15s ease;
 }
 
 .avatar{
@@ -213,6 +213,7 @@ button{
  color:#bbb;
  line-height:1.5;
  font-size:14px;
+ min-height:21px;
 }
 
 .badges{
@@ -265,6 +266,10 @@ button{
  border:1px solid #292929;
  border-radius:13px;
  background:#111;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ gap:10px;
 }
 
 .music button{
@@ -272,8 +277,8 @@ button{
  height:38px;
  border-radius:50%;
  border:0;
- background:white;
- color:black;
+ background:#fff;
+ color:#000;
  font-weight:900;
 }
 
@@ -328,7 +333,13 @@ button{
  outline:none;
  border-radius:10px;
  background:#111;
- color:white;
+ color:#fff;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+ border-color:#555;
 }
 
 .field textarea{
@@ -360,6 +371,14 @@ button{
  border:1px dashed #333;
  border-radius:12px;
  background:#0d0d0d;
+ margin-bottom:15px;
+}
+
+.file label{
+ display:block;
+ margin-bottom:8px;
+ color:#aaa;
+ font-size:12px;
 }
 
 .small{
@@ -373,11 +392,21 @@ button{
  margin-top:20px;
  padding:13px;
  border-radius:11px;
- background:white;
- color:black;
+ background:#fff;
+ color:#000;
  text-align:center;
  text-decoration:none;
  font-weight:900;
+ transition:.2s;
+}
+
+.generate:hover{
+ transform:translateY(-2px);
+ box-shadow:0 10px 30px rgba(255,255,255,.15);
+}
+
+.error{
+ color:#ff6b6b;
 }
 
 @media(max-width:1000px){
@@ -431,6 +460,11 @@ button{
   padding:25px 18px;
  }
 
+ .top{
+  align-items:flex-start;
+  flex-direction:column;
+ }
+
 }
 </style>
 </head>
@@ -446,33 +480,13 @@ button{
 
  <div class="nav">
 
-  <button class="active" data-tab="general">
-   ✦ General
-  </button>
-
-  <button data-tab="appearance">
-   🎨 Appearance
-  </button>
-
-  <button data-tab="background">
-   🖼️ Background
-  </button>
-
-  <button data-tab="music">
-   ♪ Music
-  </button>
-
-  <button data-tab="links">
-   🔗 Links
-  </button>
-
-  <button data-tab="effects">
-   ✨ Effects
-  </button>
-
-  <button data-tab="badges">
-   🏅 Badges
-  </button>
+  <button class="active" data-tab="general">✦ General</button>
+  <button data-tab="appearance">🎨 Appearance</button>
+  <button data-tab="background">🖼️ Background</button>
+  <button data-tab="music">♪ Music</button>
+  <button data-tab="links">🔗 Links</button>
+  <button data-tab="effects">✨ Effects</button>
+  <button data-tab="badges">🏅 Badges</button>
 
  </div>
 
@@ -485,292 +499,347 @@ button{
 
 <main class="main">
 
- <div class="top">
-  <div class="title">Personaliza tu perfil</div>
-  <div class="status" id="status">Preparando...</div>
- </div>
+<div class="top">
+ <div class="title">Personaliza tu perfil</div>
+ <div class="status" id="status">Cargando...</div>
+</div>
 
 
- <div class="previewWrap">
+<div class="previewWrap">
 
-  <div class="preview">
+ <div id="preview" class="preview">
 
-   <div id="previewBg" class="previewBg"></div>
-   <div class="previewOverlay"></div>
+  <div id="previewBg" class="previewBg"></div>
 
-   <div id="previewCard" class="card">
+  <video
+   id="previewVideo"
+   class="previewVideo"
+   muted
+   loop
+   playsinline
+  ></video>
 
-    <div id="avatar" class="avatar">
-     N
-    </div>
+  <div id="previewOverlay" class="previewOverlay"></div>
 
-    <div id="pname" class="pname">
-     NØX User
-    </div>
+  <div id="previewCard" class="card">
 
-    <div id="puser" class="puser">
-     @username
-    </div>
+   <div id="avatar" class="avatar">N</div>
 
-    <div id="pbio" class="pbio">
-     Welcome to my NØX profile.
-    </div>
+   <div id="pname" class="pname">
+    NØX User
+   </div>
 
-    <div id="badges" class="badges"></div>
+   <div id="puser" class="puser">
+    @username
+   </div>
 
-    <div id="pviews" class="pviews">
-     👁️ 0 vistas
-    </div>
+   <div id="pbio" class="pbio">
+    Welcome to my NØX profile.
+   </div>
 
-    <div id="plinks" class="plinks"></div>
+   <div id="badges" class="badges"></div>
 
-    <div id="pmusic" class="music">
-     <button id="play">▶</button>
-     <span id="songName">Sin música</span>
-    </div>
+   <div id="pviews" class="pviews">
+    👁️ 0 vistas
+   </div>
 
+   <div id="plinks" class="plinks"></div>
+
+   <div id="pmusic" class="music">
+    <button id="play">▶</button>
+    <span id="songName">Sin música</span>
    </div>
 
   </div>
 
  </div>
 
+</div>
 
- <section id="general" class="control active">
 
-  <h3>General</h3>
+<section id="general" class="control active">
+
+ <h3>General</h3>
+
+ <div class="field">
+  <label>Username</label>
+  <input id="username" disabled>
+  <div class="small">
+   El username no se puede cambiar.
+  </div>
+ </div>
+
+ <div class="field">
+  <label>Apodo / nombre visible</label>
+  <input id="displayName" placeholder="Tu apodo">
+ </div>
+
+ <div class="field">
+  <label>Biografía</label>
+  <textarea id="bio" placeholder="Escribe algo sobre ti..."></textarea>
+ </div>
+
+ <div class="field">
+  <label>URL del avatar</label>
+  <input id="avatarUrl" placeholder="https://...">
+ </div>
+
+ <div class="file">
+  <label>O subir avatar desde archivos</label>
+  <input id="avatarFile" type="file" accept="image/*">
+ </div>
+
+</section>
+
+
+<section id="appearance" class="control">
+
+ <h3>Apariencia</h3>
+
+ <div class="row">
 
   <div class="field">
-   <label>Username</label>
-   <input id="username" disabled>
-   <div class="small">
-    El username no se puede cambiar.
-   </div>
-  </div>
-
-  <div class="field">
-   <label>Apodo / nombre visible</label>
-   <input id="displayName" placeholder="Tu apodo">
-  </div>
-
-  <div class="field">
-   <label>Biografía</label>
-   <textarea id="bio" placeholder="Escribe algo sobre ti..."></textarea>
-  </div>
-
-  <div class="field">
-   <label>Avatar</label>
-   <input id="avatarUrl" placeholder="URL de imagen">
-  </div>
-
-  <div class="file">
-   <label>O subir avatar desde archivos</label>
-   <input id="avatarFile" type="file" accept="image/*">
-  </div>
-
- </section>
-
-
- <section id="appearance" class="control">
-
-  <h3>Apariencia</h3>
-
-  <div class="row">
-
-   <div class="field">
-    <label>Color principal</label>
-    <input id="accentColor" type="color" value="#ffffff">
-   </div>
-
-   <div class="field">
-    <label>Color de fondo</label>
-    <input id="backgroundColor" type="color" value="#050505">
-   </div>
-
-  </div>
-
-  <div class="row">
-
-   <div class="field">
-    <label>Color texto</label>
-    <input id="textColor" type="color" value="#ffffff">
-   </div>
-
-   <div class="field">
-    <label>Color bordes</label>
-    <input id="borderColor" type="color" value="#292929">
-   </div>
-
+   <label>Color principal</label>
+   <input id="accentColor" type="color" value="#ffffff">
   </div>
 
   <div class="field">
-   <label>Opacidad del cristal</label>
-   <input id="glassOpacity" type="range" min="0.2" max="0.95" step="0.05" value="0.72">
+   <label>Color de fondo</label>
+   <input id="backgroundColor" type="color" value="#050505">
+  </div>
+
+ </div>
+
+ <div class="row">
+
+  <div class="field">
+   <label>Color texto</label>
+   <input id="textColor" type="color" value="#ffffff">
   </div>
 
   <div class="field">
-   <label>Fuente</label>
-   <select id="fontFamily">
-    <option value="Arial">Arial</option>
-    <option value="Verdana">Verdana</option>
-    <option value="Trebuchet MS">Trebuchet MS</option>
-    <option value="Georgia">Georgia</option>
-    <option value="monospace">Monospace</option>
-   </select>
+   <label>Color bordes</label>
+   <input id="borderColor" type="color" value="#292929">
   </div>
 
- </section>
+ </div>
+
+ <div class="field">
+  <label>Opacidad del cristal</label>
+  <input
+   id="glassOpacity"
+   type="range"
+   min="0.2"
+   max="0.95"
+   step="0.05"
+   value="0.72"
+  >
+ </div>
+
+ <div class="field">
+  <label>Fuente</label>
+
+  <select id="fontFamily">
+   <option value="Arial">Arial</option>
+   <option value="Verdana">Verdana</option>
+   <option value="Trebuchet MS">Trebuchet MS</option>
+   <option value="Georgia">Georgia</option>
+   <option value="monospace">Monospace</option>
+  </select>
+
+ </div>
+
+</section>
 
 
- <section id="background" class="control">
+<section id="background" class="control">
 
-  <h3>Fondo</h3>
+ <h3>Fondo</h3>
 
-  <div class="field">
-   <label>URL del fondo</label>
-   <input id="backgroundUrl" placeholder="https://...">
-  </div>
+ <div class="field">
+  <label>URL del fondo</label>
+  <input id="backgroundUrl" placeholder="https://...">
+ </div>
 
-  <div class="field">
-   <label>Tipo</label>
-   <select id="backgroundType">
-    <option value="image">Imagen / GIF</option>
-    <option value="video">Video MP4</option>
-   </select>
-  </div>
+ <div class="field">
 
-  <div class="file">
-   <label>Subir fondo</label>
-   <input id="backgroundFile" type="file" accept="image/*,video/mp4">
-  </div>
+  <label>Tipo</label>
 
-  <div class="field">
-   <label>Oscurecimiento</label>
-   <input id="overlayOpacity" type="range" min="0" max="0.9" step="0.05" value="0.4">
-  </div>
+  <select id="backgroundType">
 
- </section>
+   <option value="image">
+    Imagen / GIF
+   </option>
 
+   <option value="video">
+    Video MP4
+   </option>
 
- <section id="music" class="control">
+  </select>
 
-  <h3>Música</h3>
+ </div>
 
-  <div class="field">
-   <label>Nombre de canción</label>
-   <input id="musicName" placeholder="Mi canción">
-  </div>
+ <div class="file">
 
-  <div class="field">
-   <label>URL de audio</label>
-   <input id="musicUrl" placeholder="https://...mp3">
-  </div>
+  <label>Subir fondo</label>
 
-  <div class="file">
-   <label>Subir audio</label>
-   <input id="musicFile" type="file" accept="audio/*">
-  </div>
+  <input
+   id="backgroundFile"
+   type="file"
+   accept="image/*,video/mp4"
+  >
 
- </section>
+ </div>
 
+ <div class="field">
 
- <section id="links" class="control">
+  <label>Oscurecimiento</label>
 
-  <h3>Redes y enlaces</h3>
+  <input
+   id="overlayOpacity"
+   type="range"
+   min="0"
+   max="0.9"
+   step="0.05"
+   value="0.4"
+  >
 
-  <div class="field">
-   <label>Discord</label>
-   <input id="discord">
-  </div>
+ </div>
 
-  <div class="field">
-   <label>Instagram</label>
-   <input id="instagram">
-  </div>
-
-  <div class="field">
-   <label>TikTok</label>
-   <input id="tiktok">
-  </div>
-
-  <div class="field">
-   <label>Spotify</label>
-   <input id="spotify">
-  </div>
-
-  <div class="field">
-   <label>YouTube</label>
-   <input id="youtube">
-  </div>
-
-  <div class="field">
-   <label>GitHub</label>
-   <input id="github">
-  </div>
-
- </section>
+</section>
 
 
- <section id="effects" class="control">
+<section id="music" class="control">
 
-  <h3>Efectos</h3>
+ <h3>Música</h3>
 
-  <label class="check">
-   <input id="typingEnabled" type="checkbox">
-   Máquina de escribir
+ <div class="field">
+  <label>Nombre de canción</label>
+  <input id="musicName" placeholder="Mi canción">
+ </div>
+
+ <div class="field">
+  <label>URL de audio</label>
+  <input id="musicUrl" placeholder="https://...mp3">
+ </div>
+
+ <div class="file">
+
+  <label>Subir audio</label>
+
+  <input
+   id="musicFile"
+   type="file"
+   accept="audio/*"
+  >
+
+ </div>
+
+</section>
+
+
+<section id="links" class="control">
+
+ <h3>Redes y enlaces</h3>
+
+ <div class="field">
+  <label>Discord</label>
+  <input id="discord">
+ </div>
+
+ <div class="field">
+  <label>Instagram</label>
+  <input id="instagram">
+ </div>
+
+ <div class="field">
+  <label>TikTok</label>
+  <input id="tiktok">
+ </div>
+
+ <div class="field">
+  <label>Spotify</label>
+  <input id="spotify">
+ </div>
+
+ <div class="field">
+  <label>YouTube</label>
+  <input id="youtube">
+ </div>
+
+ <div class="field">
+  <label>GitHub</label>
+  <input id="github">
+ </div>
+
+</section>
+
+
+<section id="effects" class="control">
+
+ <h3>Efectos</h3>
+
+ <label class="check">
+  <input id="typingEnabled" type="checkbox">
+  Máquina de escribir
+ </label>
+
+ <label class="check">
+  <input id="glitchEnabled" type="checkbox">
+  Glitch en username
+ </label>
+
+ <label class="check">
+  <input id="threeDEnabled" type="checkbox" checked>
+  Tarjeta 3D con el mouse
+ </label>
+
+ <label class="check">
+  <input id="rainEnabled" type="checkbox">
+  Lluvia / partículas
+ </label>
+
+ <label class="check">
+  <input id="snowEnabled" type="checkbox">
+  Nieve
+ </label>
+
+ <label class="check">
+  <input id="cursorEnabled" type="checkbox">
+  Cursor personalizado
+ </label>
+
+</section>
+
+
+<section id="badges" class="control">
+
+ <h3>Badges</h3>
+
+ <div class="field">
+
+  <label>
+   Badges separados por coma
   </label>
 
-  <label class="check">
-   <input id="glitchEnabled" type="checkbox">
-   Glitch en username
-  </label>
+  <input
+   id="badgeInput"
+   placeholder="OG, Verified, Developer"
+  >
 
-  <label class="check">
-   <input id="threeDEnabled" type="checkbox" checked>
-   Tarjeta 3D con el mouse
-  </label>
+ </div>
 
-  <label class="check">
-   <input id="rainEnabled" type="checkbox">
-   Lluvia / partículas
-  </label>
-
-  <label class="check">
-   <input id="snowEnabled" type="checkbox">
-   Nieve
-  </label>
-
-  <label class="check">
-   <input id="cursorEnabled" type="checkbox">
-   Cursor personalizado
-  </label>
-
- </section>
+</section>
 
 
- <section id="badges" class="control">
-
-  <h3>Badges</h3>
-
-  <div class="field">
-   <label>Badges separados por coma</label>
-   <input
-    id="badgeInput"
-    placeholder="OG, Verified, Developer"
-   >
-  </div>
-
- </section>
-
-
- <a
-  id="profileLink"
-  class="generate"
-  href="#"
-  target="_blank"
- >
-  🚀 Generar / abrir mi perfil
- </a>
+<a
+ id="profileLink"
+ class="generate"
+ href="#"
+ target="_blank"
+>
+ 🚀 Generar / abrir mi perfil
+</a>
 
 </main>
 
@@ -781,35 +850,39 @@ button{
 
 <script>
 
+"use strict";
+
+
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
-"https://asgowauvzfnsszstvzqi.supabase.co";
+ "https://asgowauvzfnsszstvzqi.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+ "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 const supabase =
-window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
+ window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
 /* =========================
-   ELEMENTOS
+   HELPERS
 ========================= */
 
 const $ = id =>
  document.getElementById(id);
 
 
-/* =========================
-   DATOS
-========================= */
-
 let currentUser = null;
 let profile = null;
 let saveTimer = null;
 let audio = null;
+let typingTimer = null;
 
 
 /* =========================
@@ -817,101 +890,141 @@ let audio = null;
 ========================= */
 
 document
-.querySelectorAll(".nav button")
-.forEach(button => {
+ .querySelectorAll(".nav button")
+ .forEach(button => {
 
- button.addEventListener(
-  "click",
-  () => {
+  button.addEventListener(
+   "click",
+   () => {
 
-   document
-   .querySelectorAll(".nav button")
-   .forEach(x =>
-    x.classList.remove("active")
-   );
+    document
+     .querySelectorAll(".nav button")
+     .forEach(x =>
+      x.classList.remove("active")
+     );
 
-   button.classList.add("active");
+    button.classList.add("active");
 
-   document
-   .querySelectorAll(".control")
-   .forEach(x =>
-    x.classList.remove("active")
-   );
+    document
+     .querySelectorAll(".control")
+     .forEach(x =>
+      x.classList.remove("active")
+     );
 
-   $(button.dataset.tab)
-   .classList.add("active");
+    const section =
+     $(button.dataset.tab);
 
-  }
- );
+    if(section){
+     section.classList.add("active");
+    }
 
-});
+   }
+  );
+
+ });
 
 
 /* =========================
-   AUTH
+   CARGAR USUARIO
 ========================= */
 
 async function load(){
 
- const result =
-  await supabase.auth.getUser();
-
- if(result.error || !result.data.user){
-
-  location.href =
-   "login.html";
-
-  return;
-
- }
-
- currentUser =
-  result.data.user;
-
-
- const resultProfile =
-  await supabase
-  .from("profiles")
-  .select("*")
-  .eq(
-   "id",
-   currentUser.id
-  )
-  .maybeSingle();
-
-
- if(resultProfile.error){
-
-  console.error(
-   resultProfile.error
-  );
+ try{
 
   $("status").textContent =
-   resultProfile.error.message;
-
-  return;
-
- }
+   "Comprobando sesión...";
 
 
- if(!resultProfile.data){
+  const result =
+   await supabase.auth.getUser();
+
+
+  if(
+   result.error ||
+   !result.data ||
+   !result.data.user
+  ){
+
+   $("status").textContent =
+    "Sesión no encontrada.";
+
+   setTimeout(
+    () => {
+     location.href =
+      "login.html";
+    },
+    1000
+   );
+
+   return;
+  }
+
+
+  currentUser =
+   result.data.user;
+
 
   $("status").textContent =
-   "No existe tu perfil.";
+   "Cargando perfil...";
 
-  return;
+
+  const resultProfile =
+   await supabase
+    .from("profiles")
+    .select("*")
+    .eq(
+     "id",
+     currentUser.id
+    )
+    .maybeSingle();
+
+
+  if(resultProfile.error){
+
+   console.error(
+    resultProfile.error
+   );
+
+   $("status").textContent =
+    "❌ " +
+    resultProfile.error.message;
+
+   return;
+  }
+
+
+  if(!resultProfile.data){
+
+   $("status").textContent =
+    "❌ No existe tu perfil.";
+
+   return;
+  }
+
+
+  profile =
+   resultProfile.data;
+
+
+  fill(profile);
+
+
+  updateProfileLink();
+
+
+  $("status").textContent =
+   "Editor listo ✓";
+
+
+ }catch(error){
+
+  console.error(error);
+
+  $("status").textContent =
+   "❌ Error inesperado.";
 
  }
-
-
- profile =
-  resultProfile.data;
-
-
- fill(profile);
-
- $("status").textContent =
-  "Editor listo ✓";
 
 }
 
@@ -977,10 +1090,10 @@ function fill(p){
   p.border_color || "#292929";
 
  $("glassOpacity").value =
-  p.glass_opacity || .72;
+  p.glass_opacity ?? .72;
 
  $("overlayOpacity").value =
-  p.overlay_opacity || .4;
+  p.overlay_opacity ?? .4;
 
  $("fontFamily").value =
   p.font_family || "Arial";
@@ -1005,6 +1118,7 @@ function fill(p){
 
  $("badgeInput").value =
   p.badges || "";
+
 
  updatePreview();
 
@@ -1055,34 +1169,33 @@ function updatePreview(){
   " vistas";
 
 
- /* COLORS */
+ /* COLORES */
 
  document.body.style.color =
   $("textColor").value;
 
- document.querySelector(
-  ".card"
- ).style.background =
-  `rgba(10,10,10,${$("glassOpacity").value})`;
 
- document.querySelector(
-  ".card"
- ).style.borderColor =
-  $("borderColor").value;
-
- document.querySelector(
-  ".preview"
- ).style.background =
+ $("preview").style.background =
   $("backgroundColor").value;
 
- document.querySelector(
-  ".previewOverlay"
- ).style.background =
-  `rgba(0,0,0,${$("overlayOpacity").value})`;
 
- document.querySelector(
-  ".preview"
- ).style.fontFamily =
+ $("previewCard").style.background =
+  `rgba(10,10,10,${
+   $("glassOpacity").value
+  })`;
+
+
+ $("previewCard").style.borderColor =
+  $("borderColor").value;
+
+
+ $("previewOverlay").style.background =
+  `rgba(0,0,0,${
+   $("overlayOpacity").value
+  })`;
+
+
+ $("preview").style.fontFamily =
   $("fontFamily").value;
 
 
@@ -1093,6 +1206,7 @@ function updatePreview(){
  const avatarUrl =
   $("avatarUrl").value.trim();
 
+
  if(avatarUrl){
 
   const img =
@@ -1101,16 +1215,28 @@ function updatePreview(){
   img.src =
    avatarUrl;
 
+  img.alt =
+   "Avatar";
+
+
   img.onerror =
    () => {
+
+    $("avatar").innerHTML =
+     "";
+
     $("avatar").textContent =
      getLetter(
       displayName ||
       username
      );
+
    };
 
-  $("avatar").appendChild(img);
+
+  $("avatar").appendChild(
+   img
+  );
 
  }else{
 
@@ -1125,35 +1251,52 @@ function updatePreview(){
 
  /* BADGES */
 
- $("badges").innerHTML = "";
+ $("badges").innerHTML =
+  "";
+
 
  const badges =
   $("badgeInput")
-  .value
-  .split(",")
-  .map(x => x.trim())
-  .filter(Boolean);
+   .value
+   .split(",")
+   .map(
+    x => x.trim()
+   )
+   .filter(Boolean);
 
- badges.forEach(text => {
 
-  const badge =
-   document.createElement("div");
+ badges.forEach(
+  text => {
 
-  badge.className =
-   "badge";
+   const badge =
+    document.createElement(
+     "div"
+    );
 
-  badge.textContent =
-   text;
+   badge.className =
+    "badge";
 
-  $("badges")
-   .appendChild(badge);
+   badge.textContent =
+    text;
 
- });
+   badge.style.borderColor =
+    $("borderColor").value;
+
+   badge.style.color =
+    $("textColor").value;
+
+   $("badges")
+    .appendChild(badge);
+
+  }
+ );
 
 
  /* LINKS */
 
- $("plinks").innerHTML = "";
+ $("plinks").innerHTML =
+  "";
+
 
  addPreviewLink(
   $("discord").value,
@@ -1188,17 +1331,7 @@ function updatePreview(){
 
  /* BACKGROUND */
 
- const bg =
-  $("backgroundUrl")
-  .value
-  .trim();
-
- if(bg){
-
-  $("previewBg").style.backgroundImage =
-   `url("${bg}")`;
-
- }
+ updateBackground();
 
 
  /* MUSIC */
@@ -1206,6 +1339,23 @@ function updatePreview(){
  $("songName").textContent =
   $("musicName").value ||
   "Sin música";
+
+
+ /* GLITCH */
+
+ if(
+  $("glitchEnabled").checked
+ ){
+
+  $("puser").style.textShadow =
+   "2px 0 #f00,-2px 0 #0ff";
+
+ }else{
+
+  $("puser").style.textShadow =
+   "none";
+
+ }
 
 
  /* 3D */
@@ -1233,26 +1383,76 @@ function updatePreview(){
  }
 
 
- /* GLITCH */
+ /* TYPING */
 
- if(
-  $("glitchEnabled").checked
- ){
+ startTyping();
 
-  $("puser").style.textShadow =
-   "2px 0 #f00,-2px 0 #0ff";
 
- }else{
+ /* LINK */
 
-  $("puser").style.textShadow =
-   "none";
+ updateProfileLink();
+
+
+ scheduleSave();
+
+}
+
+
+/* =========================
+   FONDO
+========================= */
+
+function updateBackground(){
+
+ const bg =
+  $("backgroundUrl")
+   .value
+   .trim();
+
+ const type =
+  $("backgroundType")
+   .value;
+
+
+ $("previewVideo").pause();
+
+ $("previewVideo").style.display =
+  "none";
+
+
+ if(!bg){
+
+  $("previewBg").style.backgroundImage =
+   "";
+
+  return;
 
  }
 
 
- /* AUTOSAVE */
+ if(type === "video"){
 
- scheduleSave();
+  $("previewBg").style.backgroundImage =
+   "none";
+
+  $("previewVideo").src =
+   bg;
+
+  $("previewVideo").style.display =
+   "block";
+
+  $("previewVideo")
+   .play()
+   .catch(
+    () => {}
+   );
+
+ }else{
+
+  $("previewBg").style.backgroundImage =
+   `url("${bg}")`;
+
+ }
 
 }
 
@@ -1266,152 +1466,5 @@ function addPreviewLink(
  text
 ){
 
- if(!url.trim())
-  return;
-
- const a =
-  document.createElement("a");
-
- a.className =
-  "plink";
-
- a.textContent =
-  text +
-  " ↗";
-
- a.href =
-  normalizeUrl(
-   url.trim()
-  );
-
- a.target =
-  "_blank";
-
- a.rel =
-  "noopener noreferrer";
-
- $("plinks")
-  .appendChild(a);
-
-}
-
-
-/* =========================
-   3D
-========================= */
-
-function tilt(event){
-
- const rect =
-  $("preview").getBoundingClientRect();
-
- const x =
-  event.clientX -
-  rect.left;
-
- const y =
-  event.clientY -
-  rect.top;
-
- const rotateY =
-  ((x / rect.width) - .5) * 10;
-
- const rotateX =
-  ((y / rect.height) - .5) * -10;
-
- $("previewCard").style.transform =
-  `perspective(900px)
-   rotateX(${rotateX}deg)
-   rotateY(${rotateY}deg)
-   translateY(-2px)`;
-
-}
-
-function resetTilt(){
-
- $("previewCard").style.transform =
-  "";
-
-}
-
-
-/* =========================
-   AUTOSAVE
-========================= */
-
-function scheduleSave(){
-
- clearTimeout(
-  saveTimer
- );
-
- saveTimer =
-  setTimeout(
-   save,
-   900
-  );
-
- $("status").textContent =
-  "Guardando...";
-
-}
-
-
-/* =========================
-   GUARDAR SUPABASE
-========================= */
-
-async function save(){
-
- if(!currentUser)
-  return;
-
- const values = {
-
-  display_name:
-   $("displayName").value.trim(),
-
-  bio:
-   $("bio").value.trim(),
-
-  avatar_url:
-   $("avatarUrl").value.trim(),
-
-  discord:
-   $("discord").value.trim(),
-
-  instagram:
-   $("instagram").value.trim(),
-
-  tiktok:
-   $("tiktok").value.trim(),
-
-  spotify:
-   $("spotify").value.trim(),
-
-  youtube:
-   $("youtube").value.trim(),
-
-  github:
-   $("github").value.trim(),
-
-  background_url:
-   $("backgroundUrl").value.trim(),
-
-  background_type:
-   $("backgroundType").value,
-
-  music_url:
-   $("musicUrl").value.trim(),
-
-  music_name:
-   $("musicName").value.trim(),
-
-  accent_color:
-   $("accentColor").value,
-
-  background_color:
-   $("backgroundColor").value,
-
-  text_color:
-   $("textColor").value,
+ url =
+  url.t
