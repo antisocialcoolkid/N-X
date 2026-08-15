@@ -1,156 +1,104 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NØX Profile</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>NØX — Login</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
 
-html,body{
-    margin:0;
-    min-height:100%;
-}
-
 body{
+
+    margin:0;
+
     min-height:100vh;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     padding:20px;
+
     background:#050505;
+
     color:white;
+
     font-family:Arial,sans-serif;
+
 }
 
-.background{
-    position:fixed;
-    inset:0;
-    z-index:-2;
-    background:
-        radial-gradient(
-            circle at top,
-            #292929 0%,
-            #050505 65%
-        );
-    background-size:cover;
-    background-position:center;
-}
+.card{
 
-.overlay{
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    background:rgba(0,0,0,.35);
-}
-
-.loading{
-    color:#888;
-    font-size:14px;
-}
-
-.profile{
     width:100%;
-    max-width:460px;
-    padding:35px 25px;
-    text-align:center;
 
-    background:rgba(10,10,10,.85);
+    max-width:400px;
+
+    padding:30px;
+
+    background:#101010;
 
     border:1px solid #292929;
-    border-radius:22px;
 
-    backdrop-filter:blur(18px);
+    border-radius:20px;
 
     box-shadow:
-        0 30px 100px
-        rgba(0,0,0,.55);
-
-    animation:appear .4s ease;
-}
-
-@keyframes appear{
-
-    from{
-        opacity:0;
-        transform:translateY(15px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+        0 20px 70px
+        rgba(0,0,0,.5);
 
 }
 
-.avatar{
-    width:105px;
-    height:105px;
+.logo{
 
-    margin:auto;
+    text-align:center;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    font-size:32px;
 
-    border-radius:50%;
-
-    background:#171717;
-
-    border:3px solid #fff;
-
-    overflow:hidden;
-
-    font-size:35px;
     font-weight:900;
+
+    letter-spacing:3px;
+
 }
 
-.avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.subtitle{
+
+    margin-top:8px;
+
+    text-align:center;
+
+    color:#777;
+
 }
 
-.name{
-    margin-top:18px;
-    font-size:28px;
-    font-weight:900;
-}
+label{
 
-.username{
-    margin-top:5px;
-    color:#888;
-    font-size:13px;
-}
-
-.bio{
-    margin-top:18px;
-    color:#bbb;
-    font-size:14px;
-    line-height:1.5;
-}
-
-.views{
-    margin-top:15px;
-    color:#888;
-    font-size:13px;
-}
-
-.links{
-    margin-top:22px;
-
-    display:flex;
-    flex-direction:column;
-
-    gap:9px;
-}
-
-.link{
     display:block;
+
+    margin-top:20px;
+
+    margin-bottom:7px;
+
+    color:#aaa;
+
+    font-size:13px;
+
+}
+
+input{
+
+    width:100%;
 
     padding:13px;
 
@@ -158,112 +106,191 @@ body{
 
     border:1px solid #292929;
 
-    background:#111;
+    outline:none;
+
+    background:#080808;
+
+    color:white;
+
+}
+
+input:focus{
+
+    border-color:#666;
+
+}
+
+button{
+
+    width:100%;
+
+    margin-top:22px;
+
+    padding:14px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:white;
+
+    color:black;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+button:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+}
+
+.message{
+
+    margin-top:15px;
+
+    text-align:center;
+
+    white-space:pre-wrap;
+
+    font-size:14px;
+
+}
+
+.error{
+
+    color:#ff7070;
+
+}
+
+.success{
+
+    color:#70ff9b;
+
+}
+
+.register{
+
+    margin-top:20px;
+
+    text-align:center;
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+.register a{
 
     color:white;
 
     text-decoration:none;
 
-    transition:.2s;
 }
 
-.link:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 0 20px
-        rgba(255,255,255,.12);
-}
-
-.error{
-    color:#ff6b6b;
-}
 </style>
+
 </head>
+
 
 <body>
 
-<div class="background"></div>
 
-<div class="overlay"></div>
+<div class="card">
 
-<div
-    id="loading"
-    class="loading"
->
-    Cargando perfil...
+
+    <div class="logo">
+        NØX
+    </div>
+
+
+    <div class="subtitle">
+        Inicia sesión
+    </div>
+
+
+    <form id="loginForm">
+
+
+        <label for="email">
+            Email
+        </label>
+
+        <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="tu@email.com"
+            required
+        >
+
+
+        <label for="password">
+            Contraseña
+        </label>
+
+        <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="••••••••"
+            required
+        >
+
+
+        <button
+            id="loginButton"
+            type="submit"
+        >
+            Iniciar sesión
+        </button>
+
+
+    </form>
+
+
+    <div
+        id="message"
+        class="message"
+    ></div>
+
+
+    <div class="register">
+
+        ¿No tienes cuenta?
+
+        <a href="register.html">
+            Crear cuenta
+        </a>
+
+    </div>
+
+
 </div>
 
 
-<main
-    id="profile"
-    class="profile"
-    style="display:none;"
->
+<!-- SUPABASE -->
 
-    <div
-        id="avatar"
-        class="avatar"
-    >
-        N
-    </div>
-
-
-    <div
-        id="name"
-        class="name"
-    >
-        NØX User
-    </div>
-
-
-    <div
-        id="username"
-        class="username"
-    >
-        @username
-    </div>
-
-
-    <div
-        id="bio"
-        class="bio"
-    >
-        Welcome to my NØX profile.
-    </div>
-
-
-    <div
-        id="views"
-        class="views"
-    >
-        👁️ 0 vistas
-    </div>
-
-
-    <div
-        id="links"
-        class="links"
-    ></div>
-
-</main>
-
-
-<!-- ======================================
-     SUPABASE JS
-====================================== -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
 
 
 <script>
 
-/* ======================================
+/* =================================
    SUPABASE
-====================================== */
+================================= */
 
 const SUPABASE_URL =
 "https://asgowauvzfnsszstvzqi.supabase.co";
+
 
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
@@ -276,562 +303,207 @@ window.supabase.createClient(
 );
 
 
-/* ======================================
+/* =================================
    ELEMENTOS
-====================================== */
+================================= */
 
-const loading =
+const form =
 document.getElementById(
-    "loading"
+    "loginForm"
 );
 
-const profile =
+
+const emailInput =
 document.getElementById(
-    "profile"
+    "email"
 );
 
-const avatar =
+
+const passwordInput =
 document.getElementById(
-    "avatar"
+    "password"
 );
 
-const nameElement =
+
+const loginButton =
 document.getElementById(
-    "name"
+    "loginButton"
 );
 
-const usernameElement =
+
+const message =
 document.getElementById(
-    "username"
-);
-
-const bioElement =
-document.getElementById(
-    "bio"
-);
-
-const viewsElement =
-document.getElementById(
-    "views"
-);
-
-const linksElement =
-document.getElementById(
-    "links"
+    "message"
 );
 
 
-/* ======================================
-   USERNAME
-====================================== */
+/* =================================
+   LOGIN
+================================= */
 
-const params =
-new URLSearchParams(
-    window.location.search
-);
+form.addEventListener(
+    "submit",
+    async function(event){
 
-
-const username =
-params
-.get("username");
+        event.preventDefault();
 
 
-/* ======================================
-   CARGAR PERFIL
-====================================== */
+        const email =
+            emailInput.value.trim();
 
-async function loadProfile(){
 
-    try{
+        const password =
+            passwordInput.value;
 
-        if(!username){
 
-            showError(
-                "No se especificó un username."
-            );
+        if(
+            !email ||
+            !password
+        ){
+
+            message.className =
+                "message error";
+
+            message.textContent =
+                "❌ Completa todos los campos.";
 
             return;
 
         }
 
 
-        const cleanUsername =
-        username
-        .trim()
-        .toLowerCase();
+        loginButton.disabled =
+            true;
 
 
-        /*
-        BUSCAR PERFIL
-        */
-
-        const {
-            data,
-            error
-        } =
-        await supabase
-        .from("profiles")
-        .select("*")
-        .eq(
-            "username",
-            cleanUsername
-        )
-        .maybeSingle();
+        loginButton.textContent =
+            "Iniciando sesión...";
 
 
-        if(error){
+        message.className =
+            "message";
+
+
+        message.textContent =
+            "Conectando con NØX...";
+
+
+        try{
+
+
+            const {
+                data,
+                error
+            } =
+            await supabase.auth.signInWithPassword({
+
+                email:
+                    email,
+
+                password:
+                    password
+
+            });
+
+
+            if(error){
+
+                console.error(
+                    error
+                );
+
+
+                message.className =
+                    "message error";
+
+
+                message.textContent =
+                    "❌ " +
+                    error.message;
+
+
+                loginButton.disabled =
+                    false;
+
+
+                loginButton.textContent =
+                    "Iniciar sesión";
+
+
+                return;
+            }
+
+
+            if(
+                !data ||
+                !data.user
+            ){
+
+                throw new Error(
+                    "No se pudo iniciar sesión."
+                );
+
+            }
+
+
+            message.className =
+                "message success";
+
+
+            message.textContent =
+                "✓ Sesión iniciada.\n" +
+                "Entrando a tu perfil...";
+
+
+            /*
+               CAMBIA editor.html si tu
+               archivo tiene otro nombre.
+            */
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        "editor.html";
+
+                },
+                700
+            );
+
+
+        }catch(error){
 
             console.error(
-                "Supabase:",
                 error
             );
 
-            showError(
-                error.message
-            );
 
-            return;
-
-        }
+            message.className =
+                "message error";
 
 
-        if(!data){
-
-            showError(
-                "Perfil no encontrado."
-            );
-
-            return;
-
-        }
+            message.textContent =
+                "❌ " +
+                (
+                    error.message ||
+                    "Error desconocido."
+                );
 
 
-        console.log(
-            "PERFIL:",
-            data
-        );
+            loginButton.disabled =
+                false;
 
 
-        /*
-        MOSTRAR PERFIL
-        */
-
-        renderProfile(
-            data
-        );
-
-
-        /*
-        SUMAR VISTA
-        */
-
-        const {
-            error:viewError
-        } =
-        await supabase.rpc(
-            "increment_profile_views",
-            {
-                profile_uuid:
-                data.id
-            }
-        );
-
-
-        if(viewError){
-
-            console.error(
-                "ERROR VISTAS:",
-                viewError
-            );
-
-            /*
-            Si RPC falla,
-            mantenemos el número
-            que tenía la tabla.
-            */
-
-            setViews(
-                data.profile_views
-            );
-
-            return;
+            loginButton.textContent =
+                "Iniciar sesión";
 
         }
 
-
-        /*
-        RPC FUNCIONÓ.
-
-        Sumamos +1 visualmente.
-        */
-
-        const newViews =
-        Number(
-            data.profile_views || 0
-        ) + 1;
-
-
-        setViews(
-            newViews
-        );
-
-
-    }catch(error){
-
-        console.error(
-            error
-        );
-
-        showError(
-            "Error inesperado."
-        );
-
     }
-
-}
-
-
-/* ======================================
-   MOSTRAR PERFIL
-====================================== */
-
-function renderProfile(
-    data
-){
-
-    /*
-    APODO
-    */
-
-    nameElement.textContent =
-    data.display_name ||
-    data.username ||
-    "NØX User";
-
-
-    /*
-    USERNAME
-    */
-
-    usernameElement.textContent =
-    "@" +
-    data.username;
-
-
-    /*
-    BIO
-    */
-
-    bioElement.textContent =
-    data.bio ||
-    "Welcome to my NØX profile.";
-
-
-    /*
-    VISTAS
-    */
-
-    setViews(
-        data.profile_views
-    );
-
-
-    /*
-    AVATAR
-    */
-
-    avatar.innerHTML = "";
-
-
-    if(
-        data.avatar_url
-    ){
-
-        const img =
-        document.createElement(
-            "img"
-        );
-
-
-        img.src =
-        data.avatar_url;
-
-
-        img.alt =
-        "Avatar";
-
-
-        img.onerror =
-        function(){
-
-            avatar.textContent =
-            getFirstLetter(
-                data.display_name ||
-                data.username
-            );
-
-        };
-
-
-        avatar.appendChild(
-            img
-        );
-
-    }else{
-
-        avatar.textContent =
-        getFirstLetter(
-            data.display_name ||
-            data.username
-        );
-
-    }
-
-
-    /*
-    LINKS
-    */
-
-    linksElement.innerHTML =
-    "";
-
-
-    addLink(
-        data.discord,
-        "Discord"
-    );
-
-    addLink(
-        data.instagram,
-        "Instagram"
-    );
-
-    addLink(
-        data.tiktok,
-        "TikTok"
-    );
-
-    addLink(
-        data.youtube,
-        "YouTube"
-    );
-
-    addLink(
-        data.github,
-        "GitHub"
-    );
-
-    addLink(
-        data.spotify,
-        "Spotify"
-    );
-
-
-    /*
-    MOSTRAR
-    */
-
-    loading.style.display =
-    "none";
-
-    profile.style.display =
-    "block";
-
-}
-
-
-/* ======================================
-   VISTAS
-====================================== */
-
-function setViews(
-    number
-){
-
-    const views =
-    Number(number) || 0;
-
-
-    viewsElement.textContent =
-    "👁️ " +
-    views +
-    (
-        views === 1
-        ? " vista"
-        : " vistas"
-    );
-
-}
-
-
-/* ======================================
-   LINKS
-====================================== */
-
-function addLink(
-    url,
-    text
-){
-
-    if(!url)
-        return;
-
-
-    const link =
-    document.createElement(
-        "a"
-    );
-
-
-    link.className =
-    "link";
-
-
-    link.textContent =
-    text +
-    " ↗";
-
-
-    link.href =
-    normalizeUrl(
-        url
-    );
-
-
-    link.target =
-    "_blank";
-
-
-    link.rel =
-    "noopener noreferrer";
-
-
-    linksElement.appendChild(
-        link
-    );
-
-}
-
-
-/* ======================================
-   URL
-====================================== */
-
-function normalizeUrl(
-    url
-){
-
-    if(
-        url.startsWith(
-            "http://"
-        ) ||
-        url.startsWith(
-            "https://"
-        )
-    ){
-
-        return url;
-
-    }
-
-
-    return (
-        "https://" +
-        url
-    );
-
-}
-
-
-/* ======================================
-   LETRA
-====================================== */
-
-function getFirstLetter(
-    text
-){
-
-    return (
-        text ||
-        "N"
-    )
-    .charAt(0)
-    .toUpperCase();
-
-}
-
-
-/* ======================================
-   ERROR
-====================================== */
-
-function showError(
-    text
-){
-
-    loading.style.display =
-    "none";
-
-
-    profile.style.display =
-    "block";
-
-
-    profile.innerHTML =
-    `
-        <div class="error">
-            ${escapeHtml(text)}
-        </div>
-    `;
-
-}
-
-
-/* ======================================
-   ESCAPAR HTML
-====================================== */
-
-function escapeHtml(
-    text
-){
-
-    return String(text)
-
-    .replaceAll(
-        "&",
-        "&amp;"
-    )
-
-    .replaceAll(
-        "<",
-        "&lt;"
-    )
-
-    .replaceAll(
-        ">",
-        "&gt;"
-    )
-
-    .replaceAll(
-        '"',
-        "&quot;"
-    )
-
-    .replaceAll(
-        "'",
-        "&#039;"
-    );
-
-}
-
-
-/* ======================================
-   INICIAR
-====================================== */
-
-loadProfile();
+);
 
 </script>
 
 </body>
-    </html>
+
+</html>
