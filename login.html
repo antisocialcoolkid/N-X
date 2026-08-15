@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NØX — Login</title>
+<title>NØX — Editor</title>
 
 <style>
 
@@ -16,152 +16,465 @@
 body{
     margin:0;
     min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
     background:#050505;
     color:#fff;
     font-family:Arial,sans-serif;
 }
 
-.login{
-    width:92%;
-    max-width:400px;
-    padding:30px;
-    background:#0d0d0d;
-    border:1px solid #292929;
-    border-radius:18px;
-    box-shadow:0 25px 80px rgba(0,0,0,.5);
+header{
+    padding:20px;
+    border-bottom:1px solid #222;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .logo{
-    text-align:center;
-    font-size:32px;
+    font-size:24px;
     font-weight:900;
-    margin-bottom:5px;
 }
 
-.subtitle{
-    text-align:center;
-    color:#777;
-    font-size:13px;
-    margin-bottom:25px;
+.logout{
+    border:1px solid #333;
+    background:#111;
+    color:#fff;
+    padding:9px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.container{
+    width:94%;
+    max-width:1100px;
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.card{
+    background:#0d0d0d;
+    border:1px solid #252525;
+    border-radius:18px;
+    padding:25px;
+}
+
+h2{
+    margin-top:0;
 }
 
 label{
     display:block;
-    margin:15px 0 7px;
+    margin-top:16px;
+    margin-bottom:7px;
     color:#aaa;
-    font-size:12px;
+    font-size:13px;
 }
 
-input{
+input,
+textarea,
+select{
     width:100%;
-    padding:13px;
+    padding:12px;
     border-radius:9px;
     border:1px solid #292929;
     background:#151515;
-    color:white;
+    color:#fff;
     outline:none;
 }
 
-input:focus{
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
     border-color:#666;
 }
 
 button{
-    width:100%;
-    margin-top:20px;
-    padding:14px;
     border:0;
     border-radius:9px;
-    background:white;
-    color:black;
-    font-weight:900;
+    padding:12px 16px;
     cursor:pointer;
+    font-weight:bold;
 }
 
-button:disabled{
+.save{
+    width:100%;
+    margin-top:22px;
+    background:#fff;
+    color:#000;
+}
+
+.save:disabled{
     opacity:.5;
-    cursor:not-allowed;
 }
 
-#message{
-    margin-top:15px;
+.generate{
+    width:100%;
+    margin-top:10px;
+    background:#1b1b1b;
+    color:#fff;
+    border:1px solid #333;
+}
+
+.preview{
+    min-height:450px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.preview-box{
+    width:100%;
+    max-width:400px;
+    padding:30px 20px;
     text-align:center;
+    border-radius:22px;
+    background:#111;
+    border:1px solid #292929;
+}
+
+.avatar{
+    width:100px;
+    height:100px;
+    margin:auto;
+    border-radius:50%;
+    overflow:hidden;
+    background:#222;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+    font-weight:bold;
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.name{
+    margin-top:18px;
+    font-size:27px;
+    font-weight:900;
+}
+
+.username{
+    margin-top:5px;
+    color:#777;
     font-size:13px;
+}
+
+.bio{
+    margin-top:18px;
+    color:#aaa;
     line-height:1.5;
 }
 
-.error{
-    color:#ff6565;
+.links{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:20px;
+}
+
+.preview-link{
+    padding:10px;
+    background:#181818;
+    border:1px solid #292929;
+    border-radius:9px;
+    color:#fff;
+    text-decoration:none;
+}
+
+.message{
+    margin-top:15px;
+    text-align:center;
+    font-size:13px;
 }
 
 .success{
-    color:#5cff8d;
+    color:#55ff88;
+}
+
+.error{
+    color:#ff6666;
+}
+
+.url-box{
+    margin-top:15px;
+    padding:12px;
+    background:#080808;
+    border:1px solid #222;
+    border-radius:8px;
+    word-break:break-all;
+    color:#aaa;
+    font-size:12px;
+}
+
+@media(max-width:800px){
+
+    .container{
+        grid-template-columns:1fr;
+    }
+
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="login">
+<header>
 
     <div class="logo">
         NØX
     </div>
 
-    <div class="subtitle">
-        Inicia sesión en tu cuenta
-    </div>
+    <button
+        id="logout"
+        class="logout">
+        Cerrar sesión
+    </button>
+
+</header>
 
 
-    <form id="loginForm">
+<div class="container">
 
-        <label for="email">
-            Correo electrónico
-        </label>
+    <!-- EDITOR -->
 
-        <input
-            id="email"
-            type="email"
-            autocomplete="email"
-            placeholder="tu@email.com"
-            required
-        >
+    <section class="card">
+
+        <h2>
+            Personalizar perfil
+        </h2>
 
 
-        <label for="password">
-            Contraseña
-        </label>
+        <form id="profileForm">
 
-        <input
-            id="password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="••••••••"
-            required
-        >
+            <label>
+                Username
+            </label>
+
+            <!-- NO SE PUEDE CAMBIAR -->
+
+            <input
+                id="username"
+                type="text"
+                disabled
+            >
+
+
+            <label>
+                Apodo
+            </label>
+
+            <input
+                id="displayName"
+                type="text"
+                placeholder="Tu apodo"
+            >
+
+
+            <label>
+                Biografía
+            </label>
+
+            <textarea
+                id="bio"
+                placeholder="Escribe tu bio..."
+            ></textarea>
+
+
+            <label>
+                URL del avatar
+            </label>
+
+            <input
+                id="avatarUrl"
+                type="url"
+                placeholder="https://..."
+            >
+
+
+            <label>
+                Discord
+            </label>
+
+            <input
+                id="discord"
+                type="text"
+                placeholder="discord.gg/..."
+            >
+
+
+            <label>
+                YouTube
+            </label>
+
+            <input
+                id="youtube"
+                type="text"
+                placeholder="youtube.com/..."
+            >
+
+
+            <label>
+                GitHub
+            </label>
+
+            <input
+                id="github"
+                type="text"
+                placeholder="github.com/..."
+            >
+
+
+            <label>
+                Instagram
+            </label>
+
+            <input
+                id="instagram"
+                type="text"
+                placeholder="instagram.com/..."
+            >
+
+
+            <label>
+                TikTok
+            </label>
+
+            <input
+                id="tiktok"
+                type="text"
+                placeholder="tiktok.com/@..."
+            >
+
+
+            <label>
+                Spotify
+            </label>
+
+            <input
+                id="spotify"
+                type="text"
+                placeholder="open.spotify.com/..."
+            >
+
+
+            <label>
+                Color principal
+            </label>
+
+            <input
+                id="accentColor"
+                type="color"
+                value="#ffffff"
+            >
+
+
+            <button
+                id="saveButton"
+                class="save"
+                type="submit">
+
+                Guardar cambios
+
+            </button>
+
+        </form>
 
 
         <button
-            id="loginButton"
-            type="submit"
-        >
-            Iniciar sesión
+            id="generateButton"
+            class="generate">
+
+            Generar link del perfil
+
         </button>
 
-    </form>
+
+        <div
+            id="profileUrl"
+            class="url-box">
+
+            Guarda tu perfil para generar el link.
+
+        </div>
 
 
-    <div id="message"></div>
+        <div
+            id="message"
+            class="message">
+        </div>
+
+    </section>
+
+
+    <!-- PREVIEW -->
+
+    <section class="card preview">
+
+        <div
+            id="previewBox"
+            class="preview-box">
+
+            <div
+                id="previewAvatar"
+                class="avatar">
+
+                N
+
+            </div>
+
+
+            <div
+                id="previewName"
+                class="name">
+
+                NØX User
+
+            </div>
+
+
+            <div
+                id="previewUsername"
+                class="username">
+
+                @username
+
+            </div>
+
+
+            <div
+                id="previewBio"
+                class="bio">
+
+                Welcome to my NØX profile.
+
+            </div>
+
+
+            <div
+                id="previewLinks"
+                class="links">
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 
 
-<!-- SUPABASE DEBE CARGARSE ANTES DEL CÓDIGO DEL LOGIN -->
+<!-- SUPABASE PRIMERO -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -192,22 +505,77 @@ window.supabase.createClient(
 
 const form =
 document.getElementById(
-    "loginForm"
+    "profileForm"
 );
 
-const emailInput =
+const usernameInput =
 document.getElementById(
-    "email"
+    "username"
 );
 
-const passwordInput =
+const displayNameInput =
 document.getElementById(
-    "password"
+    "displayName"
 );
 
-const loginButton =
+const bioInput =
 document.getElementById(
-    "loginButton"
+    "bio"
+);
+
+const avatarInput =
+document.getElementById(
+    "avatarUrl"
+);
+
+const discordInput =
+document.getElementById(
+    "discord"
+);
+
+const youtubeInput =
+document.getElementById(
+    "youtube"
+);
+
+const githubInput =
+document.getElementById(
+    "github"
+);
+
+const instagramInput =
+document.getElementById(
+    "instagram"
+);
+
+const tiktokInput =
+document.getElementById(
+    "tiktok"
+);
+
+const spotifyInput =
+document.getElementById(
+    "spotify"
+);
+
+const accentColorInput =
+document.getElementById(
+    "accentColor"
+);
+
+const saveButton =
+document.getElementById(
+    "saveButton"
+);
+
+const generateButton =
+document.getElementById(
+    "generateButton"
+);
+
+const profileUrl =
+document.getElementById(
+    "profileUrl"
 );
 
 const message =
@@ -215,54 +583,495 @@ document.getElementById(
     "message"
 );
 
+const logout =
+document.getElementById(
+    "logout"
+);
+
+
+/* PREVIEW */
+
+const previewBox =
+document.getElementById(
+    "previewBox"
+);
+
+const previewAvatar =
+document.getElementById(
+    "previewAvatar"
+);
+
+const previewName =
+document.getElementById(
+    "previewName"
+);
+
+const previewUsername =
+document.getElementById(
+    "previewUsername"
+);
+
+const previewBio =
+document.getElementById(
+    "previewBio"
+);
+
+const previewLinks =
+document.getElementById(
+    "previewLinks"
+);
+
+
+let currentUser = null;
+
 
 /* =================================
-   MENSAJE
+   CARGAR USUARIO
 ================================= */
 
-function showMessage(
-    text,
-    type
-){
-
-    message.className =
-    type || "";
+async function loadProfile(){
 
     message.textContent =
-    text;
+    "Cargando editor...";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabase.auth.getUser();
+
+
+    if(error){
+
+        console.error(error);
+
+        showError(
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    if(!data.user){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    currentUser =
+    data.user;
+
+
+    console.log(
+        "USUARIO:",
+        currentUser.id
+    );
+
+
+    /*
+       IMPORTANTE:
+
+       Aquí NO usamos:
+
+       ?username=
+
+       El usuario se identifica
+       mediante su sesión.
+    */
+
+
+    const {
+        data:profile,
+        error:profileError
+    } =
+    await supabase
+    .from("profiles")
+    .select("*")
+    .eq(
+        "id",
+        currentUser.id
+    )
+    .maybeSingle();
+
+
+    if(profileError){
+
+        console.error(
+            profileError
+        );
+
+        showError(
+            profileError.message
+        );
+
+        return;
+
+    }
+
+
+    if(!profile){
+
+        showError(
+            "❌ No se encontró tu perfil en Supabase."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       USERNAME NO EDITABLE
+    */
+
+    usernameInput.value =
+    profile.username ||
+    "";
+
+
+    displayNameInput.value =
+    profile.display_name ||
+    "";
+
+
+    bioInput.value =
+    profile.bio ||
+    "";
+
+
+    avatarInput.value =
+    profile.avatar_url ||
+    "";
+
+
+    discordInput.value =
+    profile.discord ||
+    "";
+
+
+    youtubeInput.value =
+    profile.youtube ||
+    "";
+
+
+    githubInput.value =
+    profile.github ||
+    "";
+
+
+    instagramInput.value =
+    profile.instagram ||
+    "";
+
+
+    tiktokInput.value =
+    profile.tiktok ||
+    "";
+
+
+    spotifyInput.value =
+    profile.spotify ||
+    "";
+
+
+    if(profile.accent_color){
+
+        accentColorInput.value =
+        profile.accent_color;
+
+    }
+
+
+    updatePreview();
+
+
+    message.className =
+    "message success";
+
+    message.textContent =
+    "✓ Editor listo";
 
 }
 
 
 /* =================================
-   LOGIN
+   PREVIEW
+================================= */
+
+function updatePreview(){
+
+    const username =
+    usernameInput.value.trim();
+
+    const displayName =
+    displayNameInput.value.trim();
+
+    const bio =
+    bioInput.value.trim();
+
+    const avatar =
+    avatarInput.value.trim();
+
+
+    previewName.textContent =
+    displayName ||
+    username ||
+    "NØX User";
+
+
+    /*
+       USERNAME SIEMPRE SE MUESTRA
+       Y NO SE PUEDE EDITAR
+    */
+
+    previewUsername.textContent =
+    "@" +
+    (
+        username ||
+        "username"
+    );
+
+
+    previewBio.textContent =
+    bio ||
+    "Welcome to my NØX profile.";
+
+
+    /*
+       AVATAR
+    */
+
+    previewAvatar.innerHTML =
+    "";
+
+
+    if(avatar){
+
+        const img =
+        document.createElement(
+            "img"
+        );
+
+
+        img.src =
+        avatar;
+
+
+        img.onerror =
+        function(){
+
+            previewAvatar.textContent =
+            getLetter(
+                displayName ||
+                username
+            );
+
+        };
+
+
+        previewAvatar.appendChild(
+            img
+        );
+
+    }else{
+
+        previewAvatar.textContent =
+        getLetter(
+            displayName ||
+            username
+        );
+
+    }
+
+
+    /*
+       LINKS
+    */
+
+    previewLinks.innerHTML =
+    "";
+
+
+    addPreviewLink(
+        discordInput.value.trim(),
+        "Discord"
+    );
+
+    addPreviewLink(
+        youtubeInput.value.trim(),
+        "YouTube"
+    );
+
+    addPreviewLink(
+        githubInput.value.trim(),
+        "GitHub"
+    );
+
+    addPreviewLink(
+        instagramInput.value.trim(),
+        "Instagram"
+    );
+
+    addPreviewLink(
+        tiktokInput.value.trim(),
+        "TikTok"
+    );
+
+    addPreviewLink(
+        spotifyInput.value.trim(),
+        "Spotify"
+    );
+
+
+    /*
+       COLOR
+    */
+
+    previewBox.style.borderColor =
+    accentColorInput.value;
+
+}
+
+
+/* =================================
+   LINKS
+================================= */
+
+function addPreviewLink(
+    url,
+    text
+){
+
+    if(!url)
+        return;
+
+
+    const a =
+    document.createElement(
+        "a"
+    );
+
+
+    a.className =
+    "preview-link";
+
+
+    a.textContent =
+    text +
+    " ↗";
+
+
+    a.href =
+    normalizeUrl(url);
+
+
+    a.target =
+    "_blank";
+
+
+    a.rel =
+    "noopener noreferrer";
+
+
+    previewLinks.appendChild(
+        a
+    );
+
+}
+
+
+function normalizeUrl(
+    url
+){
+
+    if(
+        url.startsWith(
+            "http://"
+        ) ||
+        url.startsWith(
+            "https://"
+        )
+    ){
+
+        return url;
+
+    }
+
+
+    return "https://" +
+    url;
+
+}
+
+
+/* =================================
+   LETRA
+================================= */
+
+function getLetter(
+    text
+){
+
+    return (
+        text ||
+        "N"
+    )
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* =================================
+   LIVE PREVIEW
+================================= */
+
+[
+    displayNameInput,
+    bioInput,
+    avatarInput,
+    discordInput,
+    youtubeInput,
+    githubInput,
+    instagramInput,
+    tiktokInput,
+    spotifyInput,
+    accentColorInput
+]
+.forEach(
+    function(input){
+
+        input.addEventListener(
+            "input",
+            updatePreview
+        );
+
+    }
+);
+
+
+/* =================================
+   GUARDAR
 ================================= */
 
 form.addEventListener(
     "submit",
     async function(event){
 
-        /*
-           EVITA QUE EL FORMULARIO
-           RECARGUE LA PÁGINA
-        */
-
         event.preventDefault();
 
 
-        const email =
-        emailInput.value.trim();
+        if(!currentUser){
 
-
-        const password =
-        passwordInput.value;
-
-
-        if(!email){
-
-            showMessage(
-                "❌ Escribe tu correo.",
-                "error"
+            showError(
+                "❌ No hay sesión iniciada."
             );
 
             return;
@@ -270,11 +1079,16 @@ form.addEventListener(
         }
 
 
-        if(!password){
+        const username =
+        usernameInput.value
+        .trim()
+        .toLowerCase();
 
-            showMessage(
-                "❌ Escribe tu contraseña.",
-                "error"
+
+        if(!username){
+
+            showError(
+                "❌ Tu perfil no tiene username."
             );
 
             return;
@@ -282,129 +1096,251 @@ form.addEventListener(
         }
 
 
-        loginButton.disabled =
+        saveButton.disabled =
         true;
 
-        loginButton.textContent =
-        "Iniciando sesión...";
+        saveButton.textContent =
+        "Guardando...";
 
 
-        showMessage(
-            "Comprobando cuenta..."
+        message.className =
+        "message";
+
+        message.textContent =
+        "Guardando cambios...";
+
+
+        const updateData = {
+
+            display_name:
+            displayNameInput.value.trim(),
+
+            bio:
+            bioInput.value.trim(),
+
+            avatar_url:
+            avatarInput.value.trim(),
+
+            discord:
+            discordInput.value.trim(),
+
+            youtube:
+            youtubeInput.value.trim(),
+
+            github:
+            githubInput.value.trim(),
+
+            instagram:
+            instagramInput.value.trim(),
+
+            tiktok:
+            tiktokInput.value.trim(),
+
+            spotify:
+            spotifyInput.value.trim(),
+
+            accent_color:
+            accentColorInput.value
+
+        };
+
+
+        const {
+            error
+        } =
+        await supabase
+        .from("profiles")
+        .update(
+            updateData
+        )
+        .eq(
+            "id",
+            currentUser.id
         );
+
+
+        if(error){
+
+            console.error(
+                error
+            );
+
+            showError(
+                error.message
+            );
+
+            saveButton.disabled =
+            false;
+
+            saveButton.textContent =
+            "Guardar cambios";
+
+            return;
+
+        }
+
+
+        message.className =
+        "message success";
+
+        message.textContent =
+        "✓ Cambios guardados";
+
+
+        saveButton.textContent =
+        "Guardado ✓";
+
+
+        setTimeout(
+            function(){
+
+                saveButton.disabled =
+                false;
+
+                saveButton.textContent =
+                "Guardar cambios";
+
+            },
+            1200
+        );
+
+    }
+);
+
+
+/* =================================
+   GENERAR LINK
+================================= */
+
+generateButton.addEventListener(
+    "click",
+    async function(){
+
+        if(!currentUser){
+
+            showError(
+                "❌ Inicia sesión primero."
+            );
+
+            return;
+
+        }
+
+
+        const username =
+        usernameInput.value.trim();
+
+
+        if(!username){
+
+            showError(
+                "❌ No tienes username."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Guarda antes de generar
+           el link.
+        */
+
+        const {
+            error
+        } =
+        await supabase
+        .from("profiles")
+        .update({
+
+            display_name:
+            displayNameInput.value.trim(),
+
+            bio:
+            bioInput.value.trim(),
+
+            avatar_url:
+            avatarInput.value.trim(),
+
+            discord:
+            discordInput.value.trim(),
+
+            youtube:
+            youtubeInput.value.trim(),
+
+            github:
+            githubInput.value.trim(),
+
+            instagram:
+            instagramInput.value.trim(),
+
+            tiktok:
+            tiktokInput.value.trim(),
+
+            spotify:
+            spotifyInput.value.trim(),
+
+            accent_color:
+            accentColorInput.value
+
+        })
+        .eq(
+            "id",
+            currentUser.id
+        );
+
+
+        if(error){
+
+            showError(
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        const url =
+        window.location.origin +
+        "/N-X/u.html?username=" +
+        encodeURIComponent(
+            username
+        );
+
+
+        profileUrl.textContent =
+        url;
 
 
         try{
 
-            const {
-                data,
-                error
-            } =
-            await supabase.auth.signInWithPassword({
-
-                email:email,
-
-                password:password
-
-            });
-
-
-            if(error){
-
-                console.error(
-                    "LOGIN ERROR:",
-                    error
-                );
-
-
-                showMessage(
-                    "❌ " +
-                    getLoginError(
-                        error
-                    ),
-                    "error"
-                );
-
-
-                loginButton.disabled =
-                false;
-
-                loginButton.textContent =
-                "Iniciar sesión";
-
-                return;
-
-            }
-
-
-            if(
-                !data ||
-                !data.user
-            ){
-
-                showMessage(
-                    "❌ No se pudo iniciar sesión.",
-                    "error"
-                );
-
-
-                loginButton.disabled =
-                false;
-
-                loginButton.textContent =
-                "Iniciar sesión";
-
-                return;
-
-            }
-
-
-            showMessage(
-                "✓ Sesión iniciada. Entrando a NØX...",
-                "success"
+            await navigator.clipboard.writeText(
+                url
             );
 
 
-            /*
-               IMPORTANTE:
-               NO usamos ?username=
-               aquí.
+            generateButton.textContent =
+            "Link copiado ✓";
 
-               El username se obtiene
-               posteriormente desde Supabase.
-            */
 
             setTimeout(
                 function(){
 
-                    window.location.href =
-                    "profile.html";
+                    generateButton.textContent =
+                    "Generar link del perfil";
 
                 },
-                500
+                1500
             );
 
         }
 
         catch(error){
 
-            console.error(
-                error
-            );
-
-
-            showMessage(
-                "❌ Error inesperado: " +
-                error.message,
-                "error"
-            );
-
-
-            loginButton.disabled =
-            false;
-
-            loginButton.textContent =
-            "Iniciar sesión";
+            generateButton.textContent =
+            "Link generado ✓";
 
         }
 
@@ -413,105 +1349,45 @@ form.addEventListener(
 
 
 /* =================================
-   ERRORES MÁS CLAROS
+   LOGOUT
 ================================= */
 
-function getLoginError(
-    error
+logout.addEventListener(
+    "click",
+    async function(){
+
+        await supabase.auth.signOut();
+
+        window.location.href =
+        "login.html";
+
+    }
+);
+
+
+/* =================================
+   ERROR
+================================= */
+
+function showError(
+    text
 ){
 
-    const message =
-    String(
-        error.message ||
-        ""
-    ).toLowerCase();
+    message.className =
+    "message error";
 
-
-    if(
-        message.includes(
-            "invalid login credentials"
-        )
-    ){
-
-        return "Correo o contraseña incorrectos.";
-
-    }
-
-
-    if(
-        message.includes(
-            "email not confirmed"
-        )
-    ){
-
-        return "Tu correo todavía no está confirmado.";
-
-    }
-
-
-    if(
-        message.includes(
-            "rate limit"
-        )
-    ){
-
-        return "Demasiados intentos. Espera un momento.";
-
-    }
-
-
-    return (
-        error.message ||
-        "No se pudo iniciar sesión."
-    );
+    message.textContent =
+    "❌ " +
+    text;
 
 }
 
 
 /* =================================
-   COMPROBAR SESIÓN AL ABRIR
+   INICIO
 ================================= */
 
-async function checkExistingSession(){
-
-    try{
-
-        const {
-            data
-        } =
-        await supabase.auth.getSession();
-
-
-        if(
-            data &&
-            data.session
-        ){
-
-            /*
-               Ya está conectado.
-               Lo mandamos directamente
-               al editor.
-            */
-
-            window.location.href =
-            "profile.html";
-
-        }
-
-    }
-
-    catch(error){
-
-        console.error(
-            error
-        );
-
-    }
-
-}
-
-
-checkExistingSession();
+loadProfile();
 
 </script>
 
