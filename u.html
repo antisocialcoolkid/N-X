@@ -188,4 +188,1278 @@ select{
   outline:none;
 }
 
-textarea
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#666;
+}
+
+input[type=color]{
+  height:42px;
+  padding:3px;
+}
+
+input[type=range]{
+  padding:0;
+}
+
+input[type=file]{
+  padding:8px;
+}
+
+.check{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  padding:9px;
+  border:1px solid #222;
+  border-radius:8px;
+  margin-top:8px;
+}
+
+.check input{
+  width:auto;
+}
+
+.check label{
+  margin:0;
+}
+
+.save{
+  width:100%;
+  margin-top:15px;
+  padding:13px;
+  border:0;
+  border-radius:9px;
+  background:white;
+  color:#000;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.reset{
+  width:100%;
+  margin-top:7px;
+  padding:11px;
+  border:1px solid #292929;
+  border-radius:9px;
+  background:#111;
+  color:#aaa;
+  cursor:pointer;
+}
+
+/* PREVIEW */
+
+.preview-area{
+  margin-left:330px;
+  min-height:100vh;
+  padding:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.preview{
+  width:min(470px,100%);
+  min-height:600px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:25px;
+  background:var(--card);
+  backdrop-filter:blur(18px);
+  box-shadow:0 35px 100px var(--shadow);
+  transform-style:preserve-3d;
+  transition:transform .12s ease;
+  animation:appear .6s ease;
+}
+
+@keyframes appear{
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.preview-inner{
+  padding:65px 25px 30px;
+  text-align:center;
+  position:relative;
+  z-index:3;
+}
+
+.avatar{
+  width:105px;
+  height:105px;
+  margin:auto;
+  border-radius:50%;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#171717;
+  border:4px solid white;
+  box-shadow:0 0 30px rgba(255,255,255,.12);
+  font-size:35px;
+  font-weight:900;
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.name{
+  margin-top:17px;
+  font-size:30px;
+  font-weight:900;
+}
+
+.username{
+  margin-top:4px;
+  color:#888;
+  font-size:13px;
+}
+
+.bio{
+  margin:17px auto 0;
+  max-width:390px;
+  color:#bbb;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.views{
+  margin-top:12px;
+  color:#777;
+  font-size:11px;
+}
+
+.links{
+  margin-top:22px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.social{
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(10,10,10,.6);
+  color:white;
+  text-decoration:none;
+  transition:.2s;
+}
+
+.social:hover{
+  transform:translateY(-3px);
+  border-color:var(--accent);
+  box-shadow:0 0 20px rgba(255,255,255,.1);
+}
+
+.badges{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:17px;
+}
+
+.badge{
+  padding:6px 9px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:#111;
+  font-size:10px;
+}
+
+.music{
+  width:100%;
+  margin-top:20px;
+}
+
+.music-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:15px;
+  text-align:left;
+}
+
+.music-cover{
+  width:45px;
+  height:45px;
+  border-radius:8px;
+  object-fit:cover;
+  background:#171717;
+}
+
+.music-title{
+  font-size:12px;
+  font-weight:bold;
+}
+
+.music-artist{
+  color:#777;
+  font-size:10px;
+  margin-top:3px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* GLITCH */
+
+.glitch{
+  animation:glitch .3s infinite;
+}
+
+@keyframes glitch{
+  0%{text-shadow:2px 0 red,-2px 0 cyan}
+  25%{text-shadow:-2px 0 red,2px 0 cyan}
+  50%{text-shadow:2px 0 cyan,-2px 0 red}
+  75%{text-shadow:-2px 0 cyan,2px 0 red}
+  100%{text-shadow:none}
+}
+
+/* TYPEWRITER */
+
+.cursor{
+  border-right:2px solid var(--accent);
+  animation:blink .7s infinite;
+}
+
+@keyframes blink{
+  50%{border-color:transparent}
+}
+
+/* STATUS */
+
+.status{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  padding:9px 13px;
+  border:1px solid #292929;
+  border-radius:9px;
+  background:#111;
+  color:#777;
+  font-size:11px;
+  z-index:100;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .app{
+    display:block;
+  }
+
+  .editor{
+    position:relative;
+    width:100%;
+    max-height:none;
+    border-right:0;
+    border-bottom:1px solid #222;
+  }
+
+  .preview-area{
+    margin-left:0;
+    padding:20px;
+  }
+
+}
+
+@media(max-width:500px){
+
+  .preview{
+    min-height:550px;
+  }
+
+  .preview-inner{
+    padding-top:45px;
+  }
+
+  .tabs{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="bg"></div>
+
+<video id="bgVideo" autoplay muted loop playsinline></video>
+
+<div id="darkOverlay"></div>
+
+<div id="particles"></div>
+
+
+<div class="app">
+
+<!-- ================= EDITOR ================= -->
+
+<aside class="editor">
+
+<div class="logo">NØX</div>
+<div class="subtitle">PROFILE CUSTOMIZER</div>
+
+<div class="tabs">
+
+<button class="tab active" data-section="profile">
+👤 Perfil
+</button>
+
+<button class="tab" data-section="background">
+🌆 Fondo
+</button>
+
+<button class="tab" data-section="music">
+🎵 Música
+</button>
+
+<button class="tab" data-section="social">
+🔗 Redes
+</button>
+
+<button class="tab" data-section="effects">
+✨ Efectos
+</button>
+
+<button class="tab" data-section="colors">
+🎨 Colores
+</button>
+
+</div>
+
+
+<!-- PERFIL -->
+
+<section id="profile" class="section active">
+
+<div class="card">
+
+<h2>👤 Perfil</h2>
+<p>Personaliza la información visible.</p>
+
+<label>Apodo</label>
+
+<input
+ id="displayName"
+ placeholder="Tu apodo"
+>
+
+<label>Biografía</label>
+
+<textarea
+ id="bio"
+ placeholder="Escribe tu biografía..."
+></textarea>
+
+<label>Avatar</label>
+
+<input
+ id="avatar"
+ type="file"
+ accept="image/*"
+>
+
+<div class="check">
+
+<input
+ id="showAvatar"
+ type="checkbox"
+ checked
+>
+
+<label for="showAvatar">
+Mostrar avatar
+</label>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>🏅 Badges</h2>
+
+<input
+ id="badgeInput"
+ placeholder="Ej: VERIFIED"
+>
+
+<button
+ id="addBadge"
+ class="save"
+>
++ Añadir badge
+</button>
+
+</div>
+
+</section>
+
+
+<!-- FONDO -->
+
+<section id="background" class="section">
+
+<div class="card">
+
+<h2>🌆 Fondo</h2>
+<p>Imagen, GIF o vídeo.</p>
+
+<label>Imagen / GIF</label>
+
+<input
+ id="backgroundFile"
+ type="file"
+ accept="image/*"
+>
+
+<label>Vídeo</label>
+
+<input
+ id="videoFile"
+ type="file"
+ accept="video/mp4,video/webm"
+>
+
+<label>Oscurecimiento</label>
+
+<input
+ id="overlay"
+ type="range"
+ min="0"
+ max="90"
+ value="35"
+>
+
+</div>
+
+</section>
+
+
+<!-- MÚSICA -->
+
+<section id="music" class="section">
+
+<div class="card">
+
+<h2>🎵 Música</h2>
+<p>El visitante podrá reproducirla al interactuar con la página.</p>
+
+<label>Canción</label>
+
+<input
+ id="musicFile"
+ type="file"
+ accept="audio/*"
+>
+
+<label>Título</label>
+
+<input
+ id="musicTitle"
+ placeholder="Mi canción"
+>
+
+<label>Artista</label>
+
+<input
+ id="musicArtist"
+ placeholder="Artista"
+>
+
+<label>Portada</label>
+
+<input
+ id="musicCover"
+ type="file"
+ accept="image/*"
+>
+
+<div class="check">
+
+<input
+ id="showMusic"
+ type="checkbox"
+ checked
+>
+
+<label for="showMusic">
+Mostrar reproductor
+</label>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- REDES -->
+
+<section id="social" class="section">
+
+<div class="card">
+
+<h2>🔗 Redes sociales</h2>
+
+<label>Discord</label>
+<input id="discord" placeholder="discord.gg/...">
+
+<label>Instagram</label>
+<input id="instagram" placeholder="https://instagram.com/...">
+
+<label>TikTok</label>
+<input id="tiktok" placeholder="https://tiktok.com/@...">
+
+<label>YouTube</label>
+<input id="youtube" placeholder="https://youtube.com/...">
+
+<label>GitHub</label>
+<input id="github" placeholder="https://github.com/...">
+
+<label>Spotify</label>
+<input id="spotify" placeholder="https://open.spotify.com/...">
+
+</div>
+
+
+<div class="card">
+
+<h2>➕ Enlace personalizado</h2>
+
+<label>Nombre</label>
+
+<input
+ id="customName"
+ placeholder="Mi página"
+>
+
+<label>URL</label>
+
+<input
+ id="customUrl"
+ placeholder="https://..."
+>
+
+<button
+ id="addLink"
+ class="save"
+>
++ Añadir enlace
+</button>
+
+</div>
+
+</section>
+
+
+<!-- EFECTOS -->
+
+<section id="effects" class="section">
+
+<div class="card">
+
+<h2>✨ Efectos</h2>
+
+<div class="check">
+<input id="particlesToggle" type="checkbox">
+<label for="particlesToggle">Partículas</label>
+</div>
+
+<div class="check">
+<input id="snowToggle" type="checkbox">
+<label for="snowToggle">Nieve</label>
+</div>
+
+<div class="check">
+<input id="threeD" type="checkbox">
+<label for="threeD">Tarjeta 3D</label>
+</div>
+
+<div class="check">
+<input id="glitch" type="checkbox">
+<label for="glitch">Glitch</label>
+</div>
+
+<div class="check">
+<input id="blur" type="checkbox" checked>
+<label for="blur">Glass blur</label>
+</div>
+
+<div class="check">
+<input id="customCursor" type="checkbox">
+<label for="customCursor">Cursor personalizado</label>
+</div>
+
+<label>Cursor</label>
+
+<input
+ id="cursorFile"
+ type="file"
+ accept="image/png,image/webp,image/gif"
+>
+
+</div>
+
+
+<div class="card">
+
+<h2>⌨️ Máquina de escribir</h2>
+
+<div class="check">
+
+<input
+ id="typing"
+ type="checkbox"
+>
+
+<label for="typing">
+Activar
+</label>
+
+</div>
+
+<label>Velocidad</label>
+
+<input
+ id="typingSpeed"
+ type="range"
+ min="20"
+ max="180"
+ value="60"
+>
+
+</div>
+
+</section>
+
+
+<!-- COLORES -->
+
+<section id="colors" class="section">
+
+<div class="card">
+
+<h2>🎨 Colores</h2>
+
+<label>Color principal</label>
+<input id="accent" type="color" value="#ffffff">
+
+<label>Texto</label>
+<input id="textColor" type="color" value="#ffffff">
+
+<label>Bordes</label>
+<input id="borderColor" type="color" value="#292929">
+
+<label>Sombra</label>
+<input id="shadowColor" type="color" value="#000000">
+
+<label>Fondo</label>
+<input id="pageColor" type="color" value="#050505">
+
+</div>
+
+
+<div class="card">
+
+<h2>🔤 Tipografía</h2>
+
+<select id="font">
+
+<option>Arial</option>
+<option>Verdana</option>
+<option>Trebuchet MS</option>
+<option>Georgia</option>
+<option>Courier New</option>
+<option>Impact</option>
+
+</select>
+
+</div>
+
+</section>
+
+
+<button id="save" class="save">
+Guardar ahora
+</button>
+
+<button id="reset" class="reset">
+Restablecer
+</button>
+
+</aside>
+
+
+<!-- ================= PREVIEW ================= -->
+
+<main class="preview-area">
+
+<div id="preview" class="preview">
+
+<div class="preview-inner">
+
+<div id="previewAvatar" class="avatar">
+N
+</div>
+
+<div id="previewName" class="name">
+NØX User
+</div>
+
+<div id="previewUsername" class="username">
+@username
+</div>
+
+<div id="previewBio" class="bio">
+Welcome to my NØX profile.
+</div>
+
+<div id="previewViews" class="views">
+👁️ 0 vistas
+</div>
+
+<div id="previewBadges" class="badges"></div>
+
+<div id="previewLinks" class="links"></div>
+
+<div id="musicInfo" class="music-info hidden">
+
+<img id="musicCoverPreview" class="music-cover">
+
+<div>
+
+<div id="musicTitlePreview" class="music-title">
+Mi canción
+</div>
+
+<div id="musicArtistPreview" class="music-artist">
+Artista
+</div>
+
+</div>
+
+</div>
+
+<audio
+ id="audio"
+ class="music hidden"
+ controls
+></audio>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+
+<div id="status" class="status">
+Autoguardado ✓
+</div>
+
+
+<script>
+
+/* =========================================
+   ESTADO
+========================================= */
+
+const state = {
+
+ displayName:"",
+ bio:"",
+
+ avatar:"",
+
+ background:"",
+ backgroundType:"image",
+ overlay:35,
+
+ music:"",
+ musicTitle:"Mi canción",
+ musicArtist:"Artista",
+ musicCover:"",
+
+ discord:"",
+ instagram:"",
+ tiktok:"",
+ youtube:"",
+ github:"",
+ spotify:"",
+
+ customLinks:[],
+
+ badges:[],
+
+ showAvatar:true,
+ showMusic:true,
+
+ particles:false,
+ snow:false,
+ threeD:false,
+ glitch:false,
+ blur:true,
+ customCursor:false,
+
+ cursor:"",
+
+ typing:false,
+ typingSpeed:60,
+
+ accent:"#ffffff",
+ textColor:"#ffffff",
+ borderColor:"#292929",
+ shadowColor:"#000000",
+ pageColor:"#050505",
+
+ font:"Arial",
+
+ views:0
+};
+
+
+/* =========================================
+   ELEMENTOS
+========================================= */
+
+const $ = id =>
+ document.getElementById(id);
+
+
+/* =========================================
+   FILE READER
+========================================= */
+
+function readFile(file){
+
+ return new Promise((resolve,reject)=>{
+
+   const reader =
+   new FileReader();
+
+   reader.onload =
+   () => resolve(reader.result);
+
+   reader.onerror =
+   reject;
+
+   reader.readAsDataURL(file);
+
+ });
+}
+
+
+/* =========================================
+   TABS
+========================================= */
+
+document
+.querySelectorAll(".tab")
+.forEach(button=>{
+
+ button.addEventListener("click",()=>{
+
+   document
+   .querySelectorAll(".tab")
+   .forEach(x =>
+     x.classList.remove("active")
+   );
+
+   document
+   .querySelectorAll(".section")
+   .forEach(x =>
+     x.classList.remove("active")
+   );
+
+   button.classList.add("active");
+
+   $(button.dataset.section)
+   .classList.add("active");
+
+ });
+
+});
+
+
+/* =========================================
+   TEXT INPUTS
+========================================= */
+
+function bindText(id,key){
+
+ $(id).addEventListener("input",()=>{
+
+   state[key] =
+   $(id).value;
+
+   update();
+
+ });
+
+}
+
+
+bindText("displayName","displayName");
+bindText("bio","bio");
+
+bindText("discord","discord");
+bindText("instagram","instagram");
+bindText("tiktok","tiktok");
+bindText("youtube","youtube");
+bindText("github","github");
+bindText("spotify","spotify");
+
+bindText("musicTitle","musicTitle");
+bindText("musicArtist","musicArtist");
+
+
+/* =========================================
+   CHECKBOXES
+========================================= */
+
+function bindCheck(id,key){
+
+ $(id).addEventListener("change",()=>{
+
+   state[key] =
+   $(id).checked;
+
+   update();
+
+ });
+
+}
+
+
+bindCheck("showAvatar","showAvatar");
+bindCheck("showMusic","showMusic");
+bindCheck("particlesToggle","particles");
+bindCheck("snowToggle","snow");
+bindCheck("threeD","threeD");
+bindCheck("glitch","glitch");
+bindCheck("blur","blur");
+bindCheck("customCursor","customCursor");
+bindCheck("typing","typing");
+
+
+/* =========================================
+   COLORS
+========================================= */
+
+function bindValue(id,key){
+
+ $(id).addEventListener("input",()=>{
+
+   state[key] =
+   $(id).value;
+
+   update();
+
+ });
+
+}
+
+
+bindValue("accent","accent");
+bindValue("textColor","textColor");
+bindValue("borderColor","borderColor");
+bindValue("shadowColor","shadowColor");
+bindValue("pageColor","pageColor");
+
+$("font").addEventListener("change",()=>{
+
+ state.font =
+ $("font").value;
+
+ update();
+
+});
+
+
+$("overlay").addEventListener("input",()=>{
+
+ state.overlay =
+ Number(
+   $("overlay").value
+ );
+
+ update();
+
+});
+
+
+$("typingSpeed").addEventListener("input",()=>{
+
+ state.typingSpeed =
+ Number(
+   $("typingSpeed").value
+ );
+
+});
+
+
+/* =========================================
+   AVATAR
+========================================= */
+
+$("avatar")
+.addEventListener("change",async()=>{
+
+ const file =
+ $("avatar").files[0];
+
+ if(!file)return;
+
+ state.avatar =
+ await readFile(file);
+
+ update();
+
+});
+
+
+/* =========================================
+   BACKGROUND IMAGE
+========================================= */
+
+$("backgroundFile")
+.addEventListener("change",async()=>{
+
+ const file =
+ $("backgroundFile").files[0];
+
+ if(!file)return;
+
+ state.background =
+ await readFile(file);
+
+ state.backgroundType =
+ "image";
+
+ update();
+
+});
+
+
+/* =========================================
+   VIDEO
+========================================= */
+
+$("videoFile")
+.addEventListener("change",async()=>{
+
+ const file =
+ $("videoFile").files[0];
+
+ if(!file)return;
+
+ state.background =
+ await readFile(file);
+
+ state.backgroundType =
+ "video";
+
+ update();
+
+});
+
+
+/* =========================================
+   MUSIC
+========================================= */
+
+$("musicFile")
+.addEventListener("change",async()=>{
+
+ const file =
+ $("musicFile").files[0];
+
+ if(!file)return;
+
+ state.music =
+ await readFile(file);
+
+ update();
+
+});
+
+
+/* =========================================
+   MUSIC COVER
+========================================= */
+
+$("musicCover")
+.addEventListener("change",async()=>{
+
+ const file =
+ $("musicCover").files[0];
+
+ if(!file)return;
+
+ state.musicCover =
+ await readFile(file);
+
+ update();
+
+});
+
+
+/* =========================================
+   CURSOR
+========================================= */
+
+$("cursorFile")
+.addEventListener("change",async()=>{
+
+ const file =
+ $("cursorFile").files[0];
+
+ if(!file)return;
+
+ state.cursor =
+ await readFile(file);
+
+ update();
+
+});
+
+
+/* =========================================
+   BADGES
+========================================= */
+
+$("addBadge")
+.addEventListener("click",()=>{
+
+ const value =
+ $("badgeInput")
+ .value
+ .trim();
+
+ if(!value)return;
+
+ state.badges.push(value);
+
+ $("badgeInput").value="";
+
+ update();
+
+});
+
+
+/* =========================================
+   CUSTOM LINK
+========================================= */
+
+$("addLink")
+.addEventListener("click",()=>{
+
+ const name =
+ $("customName")
+ .value
+ .trim();
+
+ const url =
+ $("customUrl")
+ .value
+ .trim();
+
+ if(!name || !url)return;
+
+ state.customLinks.push({
+   name,
+   url
+ });
+
+ $("customName").value="";
+ $("customUrl").value="";
+
+ update();
+
+});
+
+
+/* =========================================
+   PREVIEW
+========================================= */
+
+let typingTimer;
+let typingToken=0;
+
+function update(){
+
+ document.documentElement
+ .style
+ .setProperty(
+   "--accent",
+   state.accent
+ );
+
+ document.documentElement
+ .style
+ .setProperty(
+   "--text",
+   state.textColor
+ );
+
+ document.documentElement
+ .style
+ .setProperty(
+   "--border",
+   state.borderColor
+ );
+
+ document.documentElement
+ .style
+ .setProperty(
+   "--shadow",
+   state.shadowColor
+ );
+
+ document.body.style.background =
+ state.pageColor;
+
+ document.body.style.fontFamily =
+ state.font;
+
+
+ /* OVERLAY */
+
+ $("darkOverlay")
+ .style.background =
+ `rgba(0,0,0,${state.overlay/100})`;
+
+
+ /* NAME */
+
+ $("previewName")
+ .textContent =
+ state.displayName ||
+ "NØX User";
+
+ $("preview
