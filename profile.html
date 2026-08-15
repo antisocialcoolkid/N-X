@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>NØX — Profile</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -21,689 +13,311 @@
 }
 
 body{
-
     min-height:100vh;
-
     background:
-        radial-gradient(
-            circle at 50% -10%,
-            #292929 0%,
-            #0b0b0b 35%,
-            #020202 75%
-        );
-
+        radial-gradient(circle at 50% -10%,#303030,#090909 45%,#020202);
     color:#fff;
-
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    opacity:.22;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        );
-
-    background-size:45px 45px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent
-        );
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 .container{
-
-    width:min(1200px,92%);
-
+    width:min(1150px,92%);
     margin:auto;
 }
 
 nav{
-
-    height:82px;
-
+    height:80px;
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
+    border-bottom:1px solid #222;
 }
 
 .logo{
-
     color:#fff;
-
     text-decoration:none;
-
     font-size:25px;
-
-    font-weight:950;
-
-    letter-spacing:-1px;
+    font-weight:900;
 }
 
-.nav-right{
-
-    display:flex;
-
-    gap:9px;
-}
-
-.nav-button{
-
-    padding:10px 15px;
-
-    border:
-        1px solid
-        #292929;
-
+.logout{
+    padding:10px 16px;
+    border:1px solid #292929;
     border-radius:9px;
-
-    background:#0c0c0c;
-
+    background:#0d0d0d;
     color:#aaa;
-
     cursor:pointer;
-
-    font-size:11px;
-
-    font-weight:800;
-
-    transition:.2s;
 }
 
-.nav-button:hover{
-
-    color:#000;
-
+.logout:hover{
     background:#fff;
-
-    border-color:#fff;
+    color:#000;
 }
-
-
-/* =========================
-   LAYOUT
-========================= */
 
 .dashboard{
-
     display:grid;
-
-    grid-template-columns:
-        1fr
-        420px;
-
-    gap:18px;
-
-    padding:45px 0 70px;
+    grid-template-columns:1fr 400px;
+    gap:20px;
+    padding:40px 0 70px;
 }
 
-
-/* =========================
-   EDITOR
-========================= */
+.panel,
+.preview{
+    border:1px solid #242424;
+    border-radius:20px;
+    background:linear-gradient(145deg,#151515,#070707);
+    box-shadow:0 30px 90px rgba(0,0,0,.5);
+}
 
 .panel{
-
     padding:30px;
-
-    border:
-        1px solid
-        #202020;
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(20,20,20,.95),
-            rgba(7,7,7,.95)
-        );
-
-    box-shadow:
-        0 30px 100px
-        rgba(0,0,0,.45);
 }
 
-.eyebrow{
-
+.small{
     color:#555;
-
     font-size:9px;
-
-    font-weight:900;
-
+    font-weight:bold;
     letter-spacing:3px;
-
-    text-transform:uppercase;
 }
 
 h1{
-
-    margin-top:8px;
-
+    margin-top:10px;
     font-size:32px;
-
-    letter-spacing:-1.5px;
 }
 
-.description{
-
+.desc{
     margin-top:8px;
-
     color:#666;
-
     font-size:12px;
-
-    line-height:1.6;
 }
 
 .section{
-
-    margin-top:30px;
-
-    padding-top:25px;
-
-    border-top:
-        1px solid
-        #181818;
+    margin-top:28px;
+    padding-top:22px;
+    border-top:1px solid #1d1d1d;
 }
 
 .section-title{
-
     margin-bottom:15px;
-
     color:#777;
-
     font-size:10px;
-
-    font-weight:900;
-
+    font-weight:bold;
     letter-spacing:2px;
-
-    text-transform:uppercase;
 }
 
 .field{
-
     margin-top:14px;
 }
 
 label{
-
     display:block;
-
     margin-bottom:7px;
-
     color:#666;
-
     font-size:9px;
-
-    font-weight:900;
-
+    font-weight:bold;
     letter-spacing:1px;
-
     text-transform:uppercase;
 }
 
 input,
 textarea,
 select{
-
     width:100%;
-
-    border:
-        1px solid
-        #282828;
-
+    border:1px solid #292929;
     border-radius:9px;
-
-    outline:none;
-
     background:#050505;
-
     color:#fff;
-
-    font-family:inherit;
-
-    font-size:12px;
-
-    transition:.2s;
+    outline:none;
+    font-family:Arial;
 }
 
 input,
 select{
-
     height:48px;
-
     padding:0 13px;
 }
 
 textarea{
-
-    min-height:95px;
-
+    min-height:90px;
     padding:13px;
-
     resize:vertical;
 }
 
 input:focus,
 textarea:focus,
 select:focus{
-
-    border-color:#555;
-
-    background:#080808;
+    border-color:#666;
 }
-
-input::placeholder,
-textarea::placeholder{
-
-    color:#3e3e3e;
-}
-
-
-/* SAVE */
 
 .save{
-
     width:100%;
-
     height:50px;
-
     margin-top:25px;
-
     border:0;
-
     border-radius:9px;
-
     background:#fff;
-
     color:#000;
-
+    font-weight:900;
     cursor:pointer;
-
-    font-size:11px;
-
-    font-weight:950;
-
-    transition:.2s;
-}
-
-.save:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 15px 35px
-        rgba(255,255,255,.1);
 }
 
 .save:disabled{
-
     opacity:.5;
-
-    cursor:not-allowed;
-
-    transform:none;
 }
 
 #message{
-
-    min-height:18px;
-
-    margin-top:12px;
-
+    min-height:20px;
+    margin-top:13px;
     text-align:center;
-
     color:#777;
-
-    font-size:10px;
+    font-size:11px;
 }
 
 .success{
-
-    color:#6dffab !important;
+    color:#65ff9d!important;
 }
 
 .error{
-
-    color:#ff6f6f !important;
+    color:#ff7070!important;
 }
 
-
-/* =========================
-   PREVIEW
-========================= */
-
-.preview-wrap{
-
+.preview-box{
     position:sticky;
-
-    top:25px;
-
-    height:max-content;
+    top:20px;
 }
 
 .preview-label{
-
     margin-bottom:12px;
-
     color:#555;
-
     font-size:9px;
-
-    font-weight:900;
-
+    font-weight:bold;
     letter-spacing:3px;
 }
 
 .preview{
-
-    min-height:520px;
-
-    padding:30px;
-
+    min-height:550px;
+    padding:35px 25px;
     display:flex;
-
     flex-direction:column;
-
     align-items:center;
-
     justify-content:center;
-
     text-align:center;
-
-    border:
-        1px solid
-        #292929;
-
-    border-radius:22px;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #252525,
-            #0c0c0c 45%,
-            #050505
-        );
-
-    box-shadow:
-        0 30px 100px
-        rgba(0,0,0,.6);
 }
 
 .avatar{
-
-    width:92px;
-
-    height:92px;
-
+    width:95px;
+    height:95px;
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     overflow:hidden;
-
-    border:
-        1px solid
-        #444;
-
+    border:1px solid #444;
     border-radius:50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #333,
-            #111
-        );
-
-    color:#fff;
-
+    background:linear-gradient(145deg,#333,#111);
     font-size:30px;
-
-    font-weight:950;
-
-    box-shadow:
-        0 15px 50px
-        rgba(0,0,0,.5);
+    font-weight:900;
 }
 
 .avatar img{
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
 }
 
-.preview-name{
-
+.name{
     margin-top:20px;
-
-    font-size:25px;
-
-    font-weight:950;
-
-    letter-spacing:-1px;
+    font-size:26px;
+    font-weight:900;
 }
 
-.preview-handle{
-
+.handle{
     margin-top:5px;
-
     color:#555;
-
     font-size:11px;
 }
 
-.preview-bio{
-
+.bio{
     max-width:310px;
-
     margin-top:18px;
-
     color:#777;
-
     font-size:12px;
-
     line-height:1.7;
 }
 
 .links{
-
     width:100%;
-
     display:grid;
-
     gap:8px;
-
     margin-top:25px;
 }
 
 .link{
-
     display:block;
-
     padding:13px;
-
-    border:
-        1px solid
-        #242424;
-
+    border:1px solid #252525;
     border-radius:9px;
-
-    background:
-        rgba(255,255,255,.025);
-
+    background:#0d0d0d;
     color:#aaa;
-
     text-decoration:none;
-
     font-size:11px;
-
-    transition:.2s;
 }
 
 .link:hover{
-
     color:#fff;
-
-    border-color:#444;
-
-    transform:translateY(-2px);
+    border-color:#555;
 }
 
 .empty{
-
     color:#444;
-
     font-size:10px;
 }
 
-
-/* =========================
-   MOBILE
-========================= */
-
 @media(max-width:850px){
-
     .dashboard{
-
         grid-template-columns:1fr;
-
     }
 
-    .preview-wrap{
-
+    .preview-box{
         position:static;
-
         order:-1;
-    }
-
-    .preview{
-
-        min-height:430px;
     }
 }
 
 @media(max-width:500px){
-
-    .container{
-
-        width:90%;
-    }
-
-    nav{
-
-        height:70px;
-    }
-
     .panel{
-
         padding:22px;
     }
 
     h1{
-
         font-size:27px;
     }
-
-    .preview{
-
-        padding:25px;
-    }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="container">
-
 
 <nav>
 
-<a
-    href="index.html"
-    class="logo">
+<a href="index.html" class="logo">NØX</a>
 
-    NØX
-
-</a>
-
-
-<div class="nav-right">
-
-<button
-    class="nav-button"
-    id="viewProfile">
-
-    View profile
-
+<button id="logout" class="logout">
+Logout
 </button>
-
-
-<button
-    class="nav-button"
-    id="logout">
-
-    Logout
-
-</button>
-
-</div>
 
 </nav>
-
 
 
 <div class="dashboard">
 
 
-<!-- =========================
-     EDITOR
-========================= -->
+<!-- EDITOR -->
 
 <section class="panel">
 
-<div class="eyebrow">
+<div class="small">
 NØX PROFILE
 </div>
 
@@ -711,16 +325,15 @@ NØX PROFILE
 Customize your profile
 </h1>
 
-<p class="description">
-Control your identity, bio and social links.
-Your changes appear instantly in the preview.
+<p class="desc">
+Edit tu identidad y mira los cambios en tiempo real.
 </p>
 
 
 <div class="section">
 
 <div class="section-title">
-Identity
+IDENTITY
 </div>
 
 
@@ -731,10 +344,10 @@ Username
 </label>
 
 <input
-    id="username"
-    type="text"
-    maxlength="24"
-    placeholder="username">
+id="username"
+type="text"
+maxlength="24"
+placeholder="username">
 
 </div>
 
@@ -746,9 +359,9 @@ Avatar URL
 </label>
 
 <input
-    id="avatar"
-    type="url"
-    placeholder="https://...">
+id="avatar"
+type="url"
+placeholder="https://...">
 
 </div>
 
@@ -760,20 +373,19 @@ Bio
 </label>
 
 <textarea
-    id="bio"
-    maxlength="180"
-    placeholder="Tell people about yourself..."></textarea>
+id="bio"
+maxlength="180"
+placeholder="Escribe tu bio..."></textarea>
 
 </div>
 
 </div>
-
 
 
 <div class="section">
 
 <div class="section-title">
-Social links
+SOCIAL LINKS
 </div>
 
 
@@ -784,9 +396,9 @@ Discord
 </label>
 
 <input
-    id="discord"
-    type="text"
-    placeholder="discord.gg/...">
+id="discord"
+type="text"
+placeholder="discord.gg/...">
 
 </div>
 
@@ -798,9 +410,9 @@ GitHub
 </label>
 
 <input
-    id="github"
-    type="url"
-    placeholder="https://github.com/...">
+id="github"
+type="url"
+placeholder="https://github.com/...">
 
 </div>
 
@@ -812,22 +424,20 @@ YouTube
 </label>
 
 <input
-    id="youtube"
-    type="url"
-    placeholder="https://youtube.com/@...">
+id="youtube"
+type="url"
+placeholder="https://youtube.com/@...">
 
 </div>
 
 </div>
-
 
 
 <div class="section">
 
 <div class="section-title">
-Appearance
+APPEARANCE
 </div>
-
 
 <div class="field">
 
@@ -856,81 +466,68 @@ Silver
 </div>
 
 
-
 <button
-    class="save"
-    id="save">
+id="save"
+class="save">
 
-    Save changes
+Save changes
 
 </button>
-
 
 <div id="message"></div>
 
 </section>
 
 
+<!-- PREVIEW -->
 
-<!-- =========================
-     PREVIEW
-========================= -->
-
-<section class="preview-wrap">
+<section class="preview-box">
 
 <div class="preview-label">
 LIVE PREVIEW
 </div>
 
+<div class="preview">
 
 <div
-    class="preview"
-    id="preview">
+id="previewAvatar"
+class="avatar">
 
-
-<div
-    class="avatar"
-    id="previewAvatar">
-
-    N
+N
 
 </div>
 
-
 <div
-    class="preview-name"
-    id="previewName">
+id="previewName"
+class="name">
 
-    Username
+Username
 
 </div>
 
-
 <div
-    class="preview-handle"
-    id="previewHandle">
+id="previewHandle"
+class="handle">
 
-    @username
+@username
 
 </div>
 
-
 <div
-    class="preview-bio"
-    id="previewBio">
+id="previewBio"
+class="bio">
 
-    Welcome to my NØX profile.
+Welcome to my NØX profile.
 
 </div>
 
-
 <div
-    class="links"
-    id="previewLinks">
+id="previewLinks"
+class="links">
 
-    <div class="empty">
-    Your links will appear here
-    </div>
+<div class="empty">
+Your links will appear here
+</div>
 
 </div>
 
@@ -938,16 +535,12 @@ LIVE PREVIEW
 
 </section>
 
-
 </div>
 
-
 </div>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
@@ -961,17 +554,14 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
-
-const client =
+const supabase =
 window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-/* =========================
-   ELEMENTS
-========================= */
+/* ELEMENTS */
 
 const username =
 document.getElementById("username");
@@ -1000,6 +590,9 @@ document.getElementById("save");
 const message =
 document.getElementById("message");
 
+const previewAvatar =
+document.getElementById("previewAvatar");
+
 const previewName =
 document.getElementById("previewName");
 
@@ -1009,420 +602,322 @@ document.getElementById("previewHandle");
 const previewBio =
 document.getElementById("previewBio");
 
-const previewAvatar =
-document.getElementById("previewAvatar");
-
 const previewLinks =
 document.getElementById("previewLinks");
 
-const preview =
-document.getElementById("preview");
 
-
-/* =========================
-   USER
-========================= */
+/* USER */
 
 const {
-    data:{
-        user
-    },
-    error:userError
+data:{
+user
+}
 } =
-await client.auth.getUser();
+await supabase.auth.getUser();
 
 
-if(userError || !user){
+if(!user){
 
-    window.location.href =
-    "login.html";
+window.location.href="login.html";
 
-    return;
+return;
+
 }
 
 
-/* =========================
-   LOAD PROFILE
-========================= */
+/* LOAD PROFILE */
 
 const {
-    data:profile,
-    error:profileError
+data:profile,
+error
 } =
-await client
+await supabase
 .from("profiles")
 .select("*")
 .eq("id",user.id)
-.single();
+.maybeSingle();
 
 
-if(profileError){
+if(error){
 
-    message.className="error";
+message.className="error";
 
-    message.textContent =
-    "❌ " +
-    profileError.message;
+message.textContent=
+"❌ "+error.message;
 
-    return;
+return;
+
 }
 
 
-/* =========================
-   FILL FORM
-========================= */
+/* PUT DATA */
 
-username.value =
+if(profile){
+
+username.value=
 profile.username || "";
 
-avatar.value =
+avatar.value=
 profile.avatar_url || "";
 
-bio.value =
+bio.value=
 profile.bio ||
 "Welcome to my NØX profile.";
 
-discord.value =
+discord.value=
 profile.discord || "";
 
-github.value =
+github.value=
 profile.github || "";
 
-youtube.value =
+youtube.value=
 profile.youtube || "";
 
-theme.value =
+theme.value=
 profile.theme || "dark";
 
-
-/* =========================
-   PREVIEW
-========================= */
-
-function updatePreview(){
-
-    const name =
-    username.value.trim()
-    || "Username";
-
-    previewName.textContent =
-    name;
-
-    previewHandle.textContent =
-    "@" + name;
-
-    previewBio.textContent =
-    bio.value.trim()
-    || "Welcome to my NØX profile.";
-
-
-    /* AVATAR */
-
-    const avatarURL =
-    avatar.value.trim();
-
-
-    if(avatarURL){
-
-        previewAvatar.innerHTML =
-        "";
-
-        const image =
-        document.createElement("img");
-
-        image.src =
-        avatarURL;
-
-        image.alt =
-        "Avatar";
-
-        image.onerror =
-        function(){
-
-            previewAvatar.innerHTML =
-            name.charAt(0).toUpperCase();
-
-        };
-
-        previewAvatar.appendChild(
-            image
-        );
-
-    }else{
-
-        previewAvatar.textContent =
-        name.charAt(0).toUpperCase();
-
-    }
-
-
-    /* LINKS */
-
-    previewLinks.innerHTML =
-    "";
-
-
-    let count = 0;
-
-
-    if(discord.value.trim()){
-
-        const a =
-        document.createElement("a");
-
-        a.className="link";
-
-        a.textContent =
-        "Discord ↗";
-
-        a.href =
-        discord.value.trim();
-
-        if(
-            !discord.value
-            .startsWith("http")
-        ){
-
-            a.href =
-            "https://" +
-            discord.value.trim();
-        }
-
-        a.target="_blank";
-
-        previewLinks.appendChild(a);
-
-        count++;
-
-    }
-
-
-    if(github.value.trim()){
-
-        const a =
-        document.createElement("a");
-
-        a.className="link";
-
-        a.textContent =
-        "GitHub ↗";
-
-        a.href =
-        github.value.trim();
-
-        a.target="_blank";
-
-        previewLinks.appendChild(a);
-
-        count++;
-
-    }
-
-
-    if(youtube.value.trim()){
-
-        const a =
-        document.createElement("a");
-
-        a.className="link";
-
-        a.textContent =
-        "YouTube ↗";
-
-        a.href =
-        youtube.value.trim();
-
-        a.target="_blank";
-
-        previewLinks.appendChild(a);
-
-        count++;
-
-    }
-
-
-    if(count === 0){
-
-        const empty =
-        document.createElement("div");
-
-        empty.className="empty";
-
-        empty.textContent =
-        "Your links will appear here";
-
-        previewLinks.appendChild(
-            empty
-        );
-
-    }
-
-
-    /* THEME */
-
-    if(theme.value === "black"){
-
-        preview.style.background =
-        "#000";
-
-    }
-    else if(theme.value === "silver"){
-
-        preview.style.background =
-        "radial-gradient(circle at 50% 0%,#414141,#151515 50%,#090909)";
-
-    }
-    else{
-
-        preview.style.background =
-        "radial-gradient(circle at 50% 0%,#252525,#0c0c0c 45%,#050505)";
-
-    }
-
 }
-
-
-/* LIVE UPDATE */
-
-[
-    username,
-    avatar,
-    bio,
-    discord,
-    github,
-    youtube,
-    theme
-].forEach(
-function(element){
-
-    element.addEventListener(
-        "input",
-        updatePreview
-    );
-
-    element.addEventListener(
-        "change",
-        updatePreview
-    );
-
-});
-
 
 updatePreview();
 
 
-/* =========================
-   SAVE
-========================= */
+/* PREVIEW */
+
+function updatePreview(){
+
+const name =
+username.value.trim()
+|| "Username";
+
+
+previewName.textContent=
+name;
+
+previewHandle.textContent=
+"@"+name;
+
+previewBio.textContent=
+bio.value.trim()
+|| "Welcome to my NØX profile.";
+
+
+/* AVATAR */
+
+const url =
+avatar.value.trim();
+
+
+if(url){
+
+previewAvatar.innerHTML="";
+
+const img =
+document.createElement("img");
+
+img.src=url;
+
+img.onerror=function(){
+
+previewAvatar.textContent=
+name.charAt(0).toUpperCase();
+
+};
+
+previewAvatar.appendChild(img);
+
+}else{
+
+previewAvatar.textContent=
+name.charAt(0).toUpperCase();
+
+}
+
+
+/* LINKS */
+
+previewLinks.innerHTML="";
+
+let links=0;
+
+
+function addLink(
+value,
+title
+){
+
+if(!value.trim()) return;
+
+const a =
+document.createElement("a");
+
+a.className="link";
+
+a.textContent=
+title+" ↗";
+
+a.href=
+value.startsWith("http")
+? value
+: "https://"+value;
+
+a.target="_blank";
+
+previewLinks.appendChild(a);
+
+links++;
+
+}
+
+
+addLink(
+discord.value,
+"Discord"
+);
+
+addLink(
+github.value,
+"GitHub"
+);
+
+addLink(
+youtube.value,
+"YouTube"
+);
+
+
+if(!links){
+
+previewLinks.innerHTML=
+'<div class="empty">Your links will appear here</div>';
+
+}
+
+}
+
+
+/* LIVE */
+
+[
+username,
+avatar,
+bio,
+discord,
+github,
+youtube,
+theme
+].forEach(
+function(el){
+
+el.addEventListener(
+"input",
+updatePreview
+);
+
+el.addEventListener(
+"change",
+updatePreview
+);
+
+});
+
+
+/* SAVE */
 
 save.addEventListener(
 "click",
 async function(){
 
-    save.disabled=true;
+save.disabled=true;
 
-    save.textContent =
-    "Saving...";
+save.textContent=
+"Saving...";
 
-    message.className="";
+message.className="";
 
-    message.textContent =
-    "Guardando cambios...";
-
-
-    try{
-
-        const {
-            error
-        } =
-        await client
-        .from("profiles")
-        .update({
-
-            username:
-            username.value
-            .trim()
-            .toLowerCase(),
-
-            bio:
-            bio.value.trim(),
-
-            avatar_url:
-            avatar.value.trim(),
-
-            discord:
-            discord.value.trim(),
-
-            github:
-            github.value.trim(),
-
-            youtube:
-            youtube.value.trim(),
-
-            theme:
-            theme.value
-
-        })
-        .eq(
-            "id",
-            user.id
-        );
+message.textContent=
+"Guardando perfil...";
 
 
-        if(error){
+const {
+error
+} =
+await supabase
+.from("profiles")
+.update({
 
-            throw error;
+username:
+username.value
+.trim()
+.toLowerCase(),
 
-        }
+avatar_url:
+avatar.value.trim(),
 
+bio:
+bio.value.trim(),
 
-        message.className =
-        "success";
+discord:
+discord.value.trim(),
 
-        message.textContent =
-        "✓ Perfil guardado correctamente.";
+github:
+github.value.trim(),
 
-        save.textContent =
-        "Saved ✓";
+youtube:
+youtube.value.trim(),
 
+theme:
+theme.value
 
-        setTimeout(
-        function(){
-
-            save.textContent =
-            "Save changes";
-
-        },
-        2000
-        );
-
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        message.className =
-        "error";
-
-        message.textContent =
-        "❌ " +
-        error.message;
-
-        save.textContent =
-        "Save changes";
-
-    }
+})
+.eq(
+"id",
+user.id
+);
 
 
-    save.disabled=false;
+if(error){
+
+message.className="error";
+
+message.textContent=
+"❌ "+error.message;
+
+save.disabled=false;
+
+save.textContent=
+"Save changes";
+
+return;
+
+}
+
+
+message.className=
+"success";
+
+message.textContent=
+"✓ Perfil guardado.";
+
+save.textContent=
+"Saved ✓";
+
+
+setTimeout(
+function(){
+
+save.textContent=
+"Save changes";
+
+},
+1800
+);
+
+save.disabled=false;
 
 });
 
 
-/* =========================
-   LOGOUT
-========================= */
+/* LOGOUT */
 
 document
 .getElementById("logout")
@@ -1430,27 +925,10 @@ document
 "click",
 async function(){
 
-    await client.auth.signOut();
+await supabase.auth.signOut();
 
-    window.location.href =
-    "index.html";
-
-});
-
-
-/* =========================
-   VIEW PROFILE
-========================= */
-
-document
-.getElementById("viewProfile")
-.addEventListener(
-"click",
-function(){
-
-    alert(
-        "La página pública de perfil la podemos crear en el siguiente paso."
-    );
+window.location.href=
+"index.html";
 
 });
 
@@ -1459,4 +937,4 @@ function(){
 </script>
 
 </body>
-    </html>
+</html>
