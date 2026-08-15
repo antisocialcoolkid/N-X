@@ -10,7 +10,8 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>NØX — Login</title>
+<title>NØX — Perfil</title>
+
 
 <style>
 
@@ -18,9 +19,18 @@
     box-sizing:border-box;
 }
 
+
+html,
 body{
 
     margin:0;
+
+    min-height:100%;
+
+}
+
+
+body{
 
     min-height:100vh;
 
@@ -40,65 +50,165 @@ body{
 
 }
 
-.card{
+
+#app{
 
     width:100%;
 
-    max-width:400px;
+    max-width:480px;
 
     padding:30px;
 
-    background:#101010;
-
     border:1px solid #292929;
 
-    border-radius:20px;
+    border-radius:22px;
+
+    background:#101010;
 
     box-shadow:
-        0 20px 70px
-        rgba(0,0,0,.5);
+        0 20px 80px
+        rgba(0,0,0,.6);
 
 }
 
-.logo{
+
+#status{
 
     text-align:center;
 
-    font-size:32px;
+    color:#aaa;
 
-    font-weight:900;
+    white-space:pre-wrap;
 
-    letter-spacing:3px;
+    line-height:1.6;
 
 }
 
-.subtitle{
 
-    margin-top:8px;
+#error{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    background:#190909;
+
+    color:#ff7070;
+
+    white-space:pre-wrap;
+
+}
+
+
+#profile{
+
+    display:none;
 
     text-align:center;
+
+}
+
+
+#avatar{
+
+    width:110px;
+
+    height:110px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    border-radius:50%;
+
+    border:3px solid white;
+
+    background:#222;
+
+    font-size:38px;
+
+    font-weight:bold;
+
+}
+
+
+#avatar img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+#name{
+
+    margin-top:18px;
+
+    font-size:28px;
+
+    font-weight:800;
+
+}
+
+
+#username{
+
+    margin-top:5px;
+
+    color:#888;
+
+}
+
+
+#bio{
+
+    margin-top:18px;
+
+    color:#aaa;
+
+    line-height:1.5;
+
+}
+
+
+#views{
+
+    margin-top:15px;
 
     color:#777;
 
 }
 
-label{
 
-    display:block;
+#links{
 
-    margin-top:20px;
+    display:flex;
 
-    margin-bottom:7px;
+    flex-direction:column;
 
-    color:#aaa;
+    gap:10px;
 
-    font-size:13px;
+    margin-top:22px;
 
 }
 
-input{
 
-    width:100%;
+.link{
+
+    display:block;
 
     padding:13px;
 
@@ -106,93 +216,21 @@ input{
 
     border:1px solid #292929;
 
-    outline:none;
-
-    background:#080808;
-
-    color:white;
-
-}
-
-input:focus{
-
-    border-color:#666;
-
-}
-
-button{
-
-    width:100%;
-
-    margin-top:22px;
-
-    padding:14px;
-
-    border:0;
-
-    border-radius:10px;
-
-    background:white;
-
-    color:black;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-}
-
-button:disabled{
-
-    opacity:.5;
-
-    cursor:not-allowed;
-
-}
-
-.message{
-
-    margin-top:15px;
-
-    text-align:center;
-
-    white-space:pre-wrap;
-
-    font-size:14px;
-
-}
-
-.error{
-
-    color:#ff7070;
-
-}
-
-.success{
-
-    color:#70ff9b;
-
-}
-
-.register{
-
-    margin-top:20px;
-
-    text-align:center;
-
-    color:#777;
-
-    font-size:14px;
-
-}
-
-.register a{
+    background:#151515;
 
     color:white;
 
     text-decoration:none;
 
 }
+
+
+.link:hover{
+
+    background:#202020;
+
+}
+
 
 </style>
 
@@ -202,74 +240,43 @@ button:disabled{
 <body>
 
 
-<div class="card">
+<div id="app">
 
 
-    <div class="logo">
-        NØX
+    <div id="status">
+
+        NØX — iniciando...
+
     </div>
 
 
-    <div class="subtitle">
-        Inicia sesión
-    </div>
+    <div id="error"></div>
 
 
-    <form id="loginForm">
+    <div id="profile">
 
 
-        <label for="email">
-            Email
-        </label>
+        <div id="avatar">
+
+            N
+
+        </div>
 
 
-        <input
-            id="email"
-            type="email"
-            autocomplete="email"
-            placeholder="tu@email.com"
-            required
-        >
+        <div id="name"></div>
 
 
-        <label for="password">
-            Contraseña
-        </label>
+        <div id="username"></div>
 
 
-        <input
-            id="password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="••••••••"
-            required
-        >
+        <div id="bio"></div>
 
 
-        <button
-            id="loginButton"
-            type="submit"
-        >
-            Iniciar sesión
-        </button>
+        <div id="views"></div>
 
 
-    </form>
+        <div id="links"></div>
 
-
-    <div
-        id="message"
-        class="message"
-    ></div>
-
-
-    <div class="register">
-
-        ¿No tienes cuenta?
-
-        <a href="register.html">
-            Crear cuenta
-        </a>
 
     </div>
 
@@ -277,19 +284,20 @@ button:disabled{
 </div>
 
 
-<!-- =================================
+<!-- =====================================
      SUPABASE
-================================= -->
+===================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-/* =================================
-   CONFIGURACIÓN
-   PRIMERO DECLARAMOS LAS VARIABLES
-================================= */
+/* =================================================
+   IMPORTANTE:
+   LAS CONSTANTES VAN PRIMERO
+================================================= */
+
 
 const SUPABASE_URL =
     "https://asgowauvzfnsszstvzqi.supabase.co";
@@ -299,227 +307,528 @@ const SUPABASE_KEY =
     "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-/* =================================
-   CREAR CLIENTE
-   DESPUÉS DE LAS VARIABLES
-================================= */
+/* =================================================
+   ELEMENTOS
+================================================= */
 
-if(
-    typeof window.supabase ===
-    "undefined"
-){
 
+const statusElement =
     document.getElementById(
-        "message"
-    ).textContent =
-        "❌ No se pudo cargar Supabase.";
-
-    throw new Error(
-        "Supabase JS no está disponible."
+        "status"
     );
+
+
+const errorElement =
+    document.getElementById(
+        "error"
+    );
+
+
+const profileElement =
+    document.getElementById(
+        "profile"
+    );
+
+
+const avatarElement =
+    document.getElementById(
+        "avatar"
+    );
+
+
+const nameElement =
+    document.getElementById(
+        "name"
+    );
+
+
+const usernameElement =
+    document.getElementById(
+        "username"
+    );
+
+
+const bioElement =
+    document.getElementById(
+        "bio"
+    );
+
+
+const viewsElement =
+    document.getElementById(
+        "views"
+    );
+
+
+const linksElement =
+    document.getElementById(
+        "links"
+    );
+
+
+/* =================================================
+   ERROR
+================================================= */
+
+
+function showError(message){
+
+    statusElement.style.display =
+        "none";
+
+
+    profileElement.style.display =
+        "none";
+
+
+    errorElement.style.display =
+        "block";
+
+
+    errorElement.textContent =
+        message;
+
 }
 
 
-const supabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+/* =================================================
+   INICIAR SUPABASE
+================================================= */
 
 
-/* =================================
-   ELEMENTOS
-================================= */
+async function start(){
 
-const form =
-    document.getElementById(
-        "loginForm"
-    );
+    try{
 
 
-const emailInput =
-    document.getElementById(
-        "email"
-    );
-
-
-const passwordInput =
-    document.getElementById(
-        "password"
-    );
-
-
-const loginButton =
-    document.getElementById(
-        "loginButton"
-    );
-
-
-const message =
-    document.getElementById(
-        "message"
-    );
-
-
-/* =================================
-   LOGIN
-================================= */
-
-form.addEventListener(
-    "submit",
-    async function(event){
-
-        event.preventDefault();
-
-
-        const email =
-            emailInput.value.trim();
-
-
-        const password =
-            passwordInput.value;
+        statusElement.textContent =
+            "NØX — conectando con Supabase...";
 
 
         if(
-            !email ||
-            !password
+            typeof window.supabase ===
+            "undefined"
         ){
 
-            message.className =
-                "message error";
-
-
-            message.textContent =
-                "❌ Completa todos los campos.";
-
+            showError(
+                "❌ Supabase JS no cargó."
+            );
 
             return;
+
         }
 
 
-        loginButton.disabled =
-            true;
+        const client =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
 
-        loginButton.textContent =
-            "Iniciando sesión...";
+        statusElement.textContent =
+            "NØX — leyendo perfil...";
 
 
-        message.className =
-            "message";
+        /* =================================================
+           USERNAME DE LA URL
+        ================================================= */
 
 
-        message.textContent =
-            "Conectando con NØX...";
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
 
 
-        try{
-
-            const result =
-                await supabase.auth
-                    .signInWithPassword({
-
-                        email:
-                            email,
-
-                        password:
-                            password
-
-                    });
+        const username =
+            params
+                .get("username");
 
 
-            if(result.error){
+        if(!username){
 
-                console.error(
-                    result.error
+            showError(
+                "❌ La URL no tiene ?username=...\n\n" +
+
+                "Ejemplo:\n" +
+
+                "u.html?username=pan"
+            );
+
+            return;
+
+        }
+
+
+        const cleanUsername =
+            username
+                .trim()
+                .toLowerCase();
+
+
+        statusElement.textContent =
+            "NØX — buscando @" +
+            cleanUsername +
+            "...";
+
+
+        /* =================================================
+           BUSCAR PERFIL
+        ================================================= */
+
+
+        const result =
+            await client
+                .from("profiles")
+                .select("*")
+                .eq(
+                    "username",
+                    cleanUsername
+                )
+                .maybeSingle();
+
+
+        if(result.error){
+
+            showError(
+                "❌ ERROR SUPABASE\n\n" +
+                result.error.message
+            );
+
+            return;
+
+        }
+
+
+        if(!result.data){
+
+            showError(
+                "❌ PERFIL NO ENCONTRADO\n\n" +
+                "@" +
+                cleanUsername
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            result.data;
+
+
+        /* =================================================
+           NOMBRE
+        ================================================= */
+
+
+        nameElement.textContent =
+            data.display_name ||
+            data.username ||
+            "NØX User";
+
+
+        /* =================================================
+           USERNAME
+        ================================================= */
+
+
+        usernameElement.textContent =
+            "@" +
+            data.username;
+
+
+        /* =================================================
+           BIO
+        ================================================= */
+
+
+        bioElement.textContent =
+            data.bio ||
+            "Welcome to my NØX profile.";
+
+
+        /* =================================================
+           VISTAS
+        ================================================= */
+
+
+        const oldViews =
+            Number(
+                data.profile_views || 0
+            );
+
+
+        viewsElement.textContent =
+            "👁️ " +
+            oldViews +
+            (
+                oldViews === 1
+                ? " vista"
+                : " vistas"
+            );
+
+
+        /* =================================================
+           AVATAR
+        ================================================= */
+
+
+        if(data.avatar_url){
+
+            const img =
+                document.createElement(
+                    "img"
                 );
 
 
-                message.className =
-                    "message error";
+            img.src =
+                data.avatar_url;
 
 
-                message.textContent =
-                    "❌ " +
-                    result.error.message;
+            img.alt =
+                "Avatar";
 
 
-                loginButton.disabled =
-                    false;
-
-
-                loginButton.textContent =
-                    "Iniciar sesión";
-
-
-                return;
-            }
-
-
-            if(
-                !result.data ||
-                !result.data.user
-            ){
-
-                throw new Error(
-                    "Supabase no devolvió el usuario."
-                );
-
-            }
-
-
-            message.className =
-                "message success";
-
-
-            message.textContent =
-                "✓ Inicio de sesión correcto.\n\n" +
-                "Entrando al editor...";
-
-
-            setTimeout(
+            img.onerror =
                 function(){
 
-                    window.location.href =
-                        "editor.html";
+                    avatarElement.textContent =
+                        getFirstLetter(
+                            data.username
+                        );
 
-                },
-                700
+                };
+
+
+            avatarElement.innerHTML =
+                "";
+
+
+            avatarElement.appendChild(
+                img
             );
 
+        }else{
 
-        }catch(error){
-
-            console.error(
-                error
-            );
-
-
-            message.className =
-                "message error";
-
-
-            message.textContent =
-                "❌ ERROR GENERAL\n\n" +
-                (
-                    error.message ||
-                    "Error desconocido."
+            avatarElement.textContent =
+                getFirstLetter(
+                    data.username
                 );
-
-
-            loginButton.disabled =
-                false;
-
-
-            loginButton.textContent =
-                "Iniciar sesión";
 
         }
 
+
+        /* =================================================
+           REDES
+        ================================================= */
+
+
+        linksElement.innerHTML =
+            "";
+
+
+        addLink(
+            data.discord,
+            "Discord"
+        );
+
+
+        addLink(
+            data.youtube,
+            "YouTube"
+        );
+
+
+        addLink(
+            data.github,
+            "GitHub"
+        );
+
+
+        addLink(
+            data.instagram,
+            "Instagram"
+        );
+
+
+        addLink(
+            data.tiktok,
+            "TikTok"
+        );
+
+
+        addLink(
+            data.spotify,
+            "Spotify"
+        );
+
+
+        /* =================================================
+           MOSTRAR PERFIL
+        ================================================= */
+
+
+        statusElement.style.display =
+            "none";
+
+
+        profileElement.style.display =
+            "block";
+
+
+        /* =================================================
+           SUMAR VISTA
+        ================================================= */
+
+
+        const viewResult =
+            await client.rpc(
+                "increment_profile_views",
+                {
+                    profile_uuid:
+                        data.id
+                }
+            );
+
+
+        if(
+            !viewResult.error
+        ){
+
+            const newViews =
+                oldViews + 1;
+
+
+            viewsElement.textContent =
+                "👁️ " +
+                newViews +
+                (
+                    newViews === 1
+                    ? " vista"
+                    : " vistas"
+                );
+
+        }else{
+
+            console.warn(
+                "No se pudo sumar la vista:",
+                viewResult.error
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            error
+        );
+
+
+        showError(
+            "❌ ERROR GENERAL\n\n" +
+            error.message
+        );
+
     }
-);
+
+}
+
+
+/* =================================================
+   PRIMERA LETRA
+================================================= */
+
+
+function getFirstLetter(
+    text
+){
+
+    return (
+        text ||
+        "N"
+    )
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* =================================================
+   LINKS
+================================================= */
+
+
+function addLink(
+    url,
+    name
+){
+
+    if(!url){
+
+        return;
+
+    }
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.className =
+        "link";
+
+
+    link.textContent =
+        name +
+        " ↗";
+
+
+    if(
+        url.startsWith("http://") ||
+        url.startsWith("https://")
+    ){
+
+        link.href =
+            url;
+
+    }else{
+
+        link.href =
+            "https://" +
+            url;
+
+    }
+
+
+    link.target =
+        "_blank";
+
+
+    link.rel =
+        "noopener noreferrer";
+
+
+    linksElement.appendChild(
+        link
+    );
+
+}
+
+
+/* =================================================
+   INICIAR
+================================================= */
+
+
+start();
 
 </script>
+
 
 </body>
 
