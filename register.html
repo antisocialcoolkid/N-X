@@ -1,4 +1,437 @@
-<script
-    type="module"
-    src="auth.js">
-</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NØX — Create Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    #202020 0%,
+                    #090909 40%,
+                    #020202 100%
+                );
+
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        nav {
+            width: 92%;
+            max-width: 1100px;
+            height: 75px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid #222;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .back {
+            color: #777;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        main {
+            width: 92%;
+            max-width: 1100px;
+            min-height: calc(100vh - 75px);
+
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 1fr 420px;
+
+            gap: 70px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 8vw, 100px);
+            line-height: .85;
+            letter-spacing: -7px;
+        }
+
+        .hero h1 span {
+            color: #444;
+        }
+
+        .hero p {
+            max-width: 500px;
+            margin-top: 30px;
+
+            color: #777;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .card {
+            padding: 32px;
+
+            background: #0b0b0b;
+
+            border: 1px solid #292929;
+            border-radius: 18px;
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.6);
+        }
+
+        .card h2 {
+            font-size: 27px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        form {
+            margin-top: 28px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #777;
+
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+        input {
+            width: 100%;
+            height: 52px;
+
+            padding: 0 15px;
+
+            background: #050505;
+            color: white;
+
+            border: 1px solid #292929;
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 13px;
+        }
+
+        input:focus {
+            border-color: #666;
+        }
+
+        input::placeholder {
+            color: #444;
+        }
+
+        #createButton {
+            width: 100%;
+            height: 52px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: white;
+            color: black;
+
+            font-weight: 900;
+
+            cursor: pointer;
+        }
+
+        #createButton:disabled {
+            opacity: .5;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin: 22px 0;
+
+            color: #444;
+            font-size: 10px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: #222;
+        }
+
+        #discordRegister {
+            width: 100%;
+            height: 50px;
+
+            border: 1px solid #292929;
+            border-radius: 9px;
+
+            background: #111;
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .login {
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #555;
+            font-size: 11px;
+        }
+
+        .login a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #message {
+            min-height: 20px;
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            color: #aaa;
+
+            font-size: 11px;
+        }
+
+        @media (max-width: 800px) {
+
+            main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+
+                padding: 70px 0;
+            }
+
+            .hero {
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 480px;
+
+                margin: auto;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                height: 65px;
+            }
+
+            main {
+                padding: 55px 0;
+            }
+
+            .hero h1 {
+                font-size: 18vw;
+                letter-spacing: -5px;
+            }
+
+            .card {
+                padding: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+
+        <a
+            class="logo"
+            href="index.html">
+            NØX
+        </a>
+
+        <a
+            class="back"
+            href="index.html">
+            ← Back
+        </a>
+
+    </nav>
+
+
+    <main>
+
+        <section class="hero">
+
+            <h1>
+                Claim<br>
+                <span>your identity.</span>
+            </h1>
+
+            <p>
+                Create your own NØX profile.
+                Choose your username and build
+                your identity in one place.
+            </p>
+
+        </section>
+
+
+        <section>
+
+            <div class="card">
+
+                <h2>
+                    Create your profile
+                </h2>
+
+                <p class="subtitle">
+                    Choose your unique NØX username.
+                </p>
+
+
+                <form id="registerForm">
+
+                    <div class="field">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input
+                            id="username"
+                            type="text"
+                            placeholder="maxiii"
+                            autocomplete="username"
+                            required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="you@email.com"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="••••••••"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required>
+
+                    </div>
+
+
+                    <button
+                        id="createButton"
+                        type="submit">
+
+                        Create account
+
+                    </button>
+
+                </form>
+
+
+                <div class="divider">
+                    OR
+                </div>
+
+
+                <button
+                    id="discordRegister"
+                    type="button">
+
+                    Continue with Discord
+
+                </button>
+
+
+                <div class="login">
+
+                    Already have an account?
+
+                    <a href="login.html">
+                        Sign in
+                    </a>
+
+                </div>
+
+
+                <div id="message"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- AUTH -->
+
+    <script
+        type="module"
+        src="./auth.js">
+    </script>
+
+</body>
+</html>
