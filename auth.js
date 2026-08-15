@@ -1,142 +1,203 @@
-<!DOCTYPE html>
-<html lang="es">
+const SUPABASE_URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>NØX — Login</title>
-
-<link
-    rel="stylesheet"
-    href="style.css"
->
-
-</head>
+const SUPABASE_KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
-<body>
+const db =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-<main class="auth">
+const form =
+document.getElementById(
+    "loginForm"
+);
 
-    <a
-        href="index.html"
-        class="logo"
-    >
-        NØX
-    </a>
+const email =
+document.getElementById(
+    "email"
+);
 
+const password =
+document.getElementById(
+    "password"
+);
 
-    <div class="auth-box">
+const button =
+document.getElementById(
+    "loginButton"
+);
 
-        <h1>
-            Welcome back.
-        </h1>
-
-
-        <p>
-            Sign in to your NØX profile.
-        </p>
-
-
-        <form
-            id="loginForm"
-            novalidate
-        >
-
-            <label for="email">
-                Email
-            </label>
+const message =
+document.getElementById(
+    "message"
+);
 
 
-            <input
-                id="email"
-                type="email"
-                placeholder="you@email.com"
-                autocomplete="email"
-                required
-            >
+/* =========================
+   LOGIN
+========================= */
+
+form.addEventListener(
+"submit",
+async function(event){
+
+    event.preventDefault();
+
+    event.stopPropagation();
 
 
-            <label for="password">
-                Password
-            </label>
+    const emailValue =
+    email.value.trim();
+
+    const passwordValue =
+    password.value;
 
 
-            <input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                autocomplete="current-password"
-                required
-            >
+    if(!emailValue){
+
+        message.textContent =
+        "❌ Escribe tu email.";
+
+        return;
+
+    }
 
 
-            <button
-                id="loginButton"
-                type="submit"
-            >
-                Sign in
-            </button>
+    if(!passwordValue){
 
-        </form>
+        message.textContent =
+        "❌ Escribe tu contraseña.";
 
+        return;
 
-        <div class="divider">
-
-            <span>
-                OR
-            </span>
-
-        </div>
+    }
 
 
-        <button
-            id="discordLogin"
-            class="discord"
-            type="button"
-        >
-            Continue with Discord
-        </button>
+    button.disabled =
+    true;
+
+    button.textContent =
+    "Signing in...";
 
 
-        <p class="register">
-
-            Don't have an account?
-
-            <a href="register.html">
-                Create one
-            </a>
-
-        </p>
+    message.textContent =
+    "Iniciando sesión...";
 
 
-        <p
-            id="message"
-            aria-live="polite"
-        ></p>
+    try{
 
-    </div>
-
-</main>
+        console.log(
+            "Intentando login..."
+        );
 
 
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
+        const {
+            data,
+            error
+        } =
+        await db.auth.signInWithPassword({
+
+            email:
+            emailValue,
+
+            password:
+            passwordValue
+
+        });
 
 
-<script
-    src="auth.js?v=10"
-></script>
+        console.log(
+            "Supabase:",
+            data,
+            error
+        );
 
 
-</body>
+        if(error){
 
-</html>
+            message.textContent =
+            "❌ " +
+            error.message;
+
+            button.disabled =
+            false;
+
+            button.textContent =
+            "Sign in";
+
+            return;
+
+        }
+
+
+        if(!data.session){
+
+            message.textContent =
+            "❌ No se creó la sesión.";
+
+            button.disabled =
+            false;
+
+            button.textContent =
+            "Sign in";
+
+            return;
+
+        }
+
+
+        message.textContent =
+        "✓ Login correcto.";
+
+
+        /*
+           Pequeña espera para que
+           Supabase guarde la sesión.
+        */
+
+        await new Promise(
+            resolve =>
+            setTimeout(
+                resolve,
+                700
+            )
+        );
+
+
+        /*
+           IMPORTANTE:
+           no usamos submit ni reload.
+        */
+
+        window.location.replace(
+            "profile.html"
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        message.textContent =
+        "❌ " +
+        error.message;
+
+
+        button.disabled =
+        false;
+
+        button.textContent =
+        "Sign in";
+
+    }
+
+});
