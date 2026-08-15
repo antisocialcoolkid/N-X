@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NØX Profiles</title>
+
+<title>NØX — Profiles</title>
 
 <style>
 *{
@@ -12,152 +13,553 @@
     padding:0;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-    background:#050505;
+    min-height:100vh;
+    overflow-x:hidden;
+    background:#030303;
     color:#fff;
     font-family:Arial,Helvetica,sans-serif;
 }
 
+/* BACKGROUND */
+
+.bg{
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    overflow:hidden;
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #171717 0%,
+            #070707 35%,
+            #030303 75%
+        );
+}
+
+.glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:.18;
+    background:#fff;
+    animation:float 10s ease-in-out infinite;
+}
+
+.glow.one{
+    top:-250px;
+    left:-150px;
+}
+
+.glow.two{
+    right:-250px;
+    bottom:-200px;
+    animation-delay:-5s;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translate(0,0) scale(1);
+    }
+
+    50%{
+        transform:translate(60px,40px) scale(1.15);
+    }
+}
+
+/* PARTICLES */
+
+.particles{
+    position:absolute;
+    inset:0;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:#fff;
+    border-radius:50%;
+    opacity:.25;
+    animation:rise linear infinite;
+}
+
+@keyframes rise{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
+    }
+
+    20%{
+        opacity:.3;
+    }
+
+    80%{
+        opacity:.3;
+    }
+
+    to{
+        transform:translateY(-20vh);
+        opacity:0;
+    }
+}
+
+/* CONTAINER */
+
 .container{
-    width:min(1100px,92%);
+    width:min(1150px,92%);
     margin:auto;
 }
 
+/* NAV */
+
 nav{
-    height:80px;
+    height:82px;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
-    border-bottom:1px solid #1c1c1c;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+    animation:navIn .8s ease both;
+}
+
+@keyframes navIn{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 .logo{
     color:#fff;
-    font-size:24px;
+    text-decoration:none;
+
+    font-size:23px;
     font-weight:900;
     letter-spacing:-1px;
 }
 
 .login{
-    padding:10px 18px;
-    background:#fff;
-    color:#000;
-    text-decoration:none;
+    padding:10px 17px;
+
+    border:1px solid #292929;
     border-radius:8px;
+
+    color:#aaa;
+    background:#0b0b0b;
+
+    text-decoration:none;
+
     font-size:12px;
     font-weight:bold;
+
+    transition:.25s;
 }
 
+.login:hover{
+    color:#000;
+    background:#fff;
+    border-color:#fff;
+    transform:translateY(-2px);
+}
+
+/* HERO */
+
 .hero{
-    min-height:600px;
+    min-height:690px;
+
     display:flex;
     flex-direction:column;
     justify-content:center;
+
+    position:relative;
+}
+
+.hero-content{
+    max-width:850px;
+
+    animation:heroIn 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes heroIn{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 .badge{
-    width:max-content;
-    padding:8px 12px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 13px;
+
     border:1px solid #292929;
-    border-radius:50px;
+    border-radius:100px;
+
+    background:rgba(255,255,255,.025);
+
     color:#888;
-    font-size:10px;
+
+    font-size:9px;
+    font-weight:bold;
+
     letter-spacing:2px;
+
+    box-shadow:0 0 30px rgba(255,255,255,.03);
+}
+
+.dot{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    box-shadow:0 0 12px #fff;
 }
 
 h1{
-    margin-top:25px;
-    font-size:clamp(55px,9vw,110px);
-    line-height:.88;
-    letter-spacing:-6px;
+    margin-top:28px;
+
+    font-size:clamp(
+        65px,
+        11vw,
+        135px
+    );
+
+    line-height:.82;
+
+    letter-spacing:-9px;
+
+    font-weight:900;
 }
 
 h1 span{
-    color:#444;
+    color:#3f3f3f;
 }
 
 .description{
-    max-width:500px;
-    margin-top:30px;
+    max-width:520px;
+
+    margin-top:35px;
+
     color:#777;
-    line-height:1.7;
+
     font-size:15px;
+
+    line-height:1.7;
 }
 
 .buttons{
     display:flex;
+
     gap:10px;
-    margin-top:30px;
+
+    margin-top:32px;
 }
 
 .button{
-    padding:14px 20px;
-    border-radius:8px;
+    position:relative;
+
+    padding:14px 21px;
+
+    border-radius:9px;
+
     text-decoration:none;
+
     font-size:12px;
+
     font-weight:bold;
+
+    transition:.25s;
+
+    overflow:hidden;
 }
 
 .primary{
     background:#fff;
     color:#000;
+
+    box-shadow:
+        0 0 35px rgba(255,255,255,.08);
+}
+
+.primary:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+        0 10px 40px rgba(255,255,255,.15);
 }
 
 .secondary{
-    background:#101010;
+    color:#aaa;
+
+    background:#0b0b0b;
+
+    border:1px solid #252525;
+}
+
+.secondary:hover{
     color:#fff;
-    border:1px solid #292929;
+
+    border-color:#444;
+
+    transform:translateY(-4px);
+}
+
+/* FLOATING CARD */
+
+.preview{
+    position:absolute;
+
+    right:0;
+    bottom:70px;
+
+    width:260px;
+
+    padding:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.9),
+            rgba(8,8,8,.9)
+        );
+
+    border:1px solid #252525;
+
+    border-radius:16px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.5);
+
+    transform:rotate(3deg);
+
+    animation:
+        cardFloat 5s ease-in-out infinite;
+
+    backdrop-filter:blur(15px);
+}
+
+@keyframes cardFloat{
+    0%,100%{
+        transform:translateY(0) rotate(3deg);
+    }
+
+    50%{
+        transform:translateY(-15px) rotate(1deg);
+    }
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#181818;
+
+    border:1px solid #333;
+
+    font-weight:900;
+}
+
+.preview-name{
+    margin-top:15px;
+
+    font-size:17px;
+    font-weight:bold;
+}
+
+.preview-user{
+    margin-top:4px;
+
+    color:#666;
+
+    font-size:11px;
+}
+
+.preview-links{
+    display:grid;
+
+    gap:7px;
+
+    margin-top:18px;
+}
+
+.preview-link{
+    padding:9px;
+
+    border:1px solid #1f1f1f;
+
+    border-radius:7px;
+
+    color:#888;
+
+    font-size:10px;
+
+    background:#0d0d0d;
+}
+
+/* FEATURES */
+
+.features{
+    padding:90px 0 120px;
+}
+
+.section-title{
+    margin-bottom:25px;
+
+    color:#555;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    letter-spacing:3px;
 }
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:12px;
-    padding-bottom:100px;
 }
 
 .card{
-    min-height:210px;
-    padding:25px;
-    background:#0b0b0b;
-    border:1px solid #1d1d1d;
+    min-height:220px;
+
+    padding:26px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0c0c0c,
+            #070707
+        );
+
+    border:1px solid #1a1a1a;
+
     border-radius:14px;
+
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+
+    border-color:#303030;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35);
 }
 
 .number{
     color:#444;
-    font-size:11px;
-    font-weight:bold;
+
+    font-size:10px;
+
+    letter-spacing:2px;
 }
 
 .card h2{
     margin-top:45px;
-    font-size:21px;
+
+    font-size:22px;
 }
 
 .card p{
     margin-top:10px;
+
     color:#666;
+
     font-size:13px;
-    line-height:1.6;
+
+    line-height:1.7;
 }
+
+/* FOOTER */
 
 footer{
-    padding:25px 0;
-    border-top:1px solid #1c1c1c;
     display:flex;
+
     justify-content:space-between;
-    color:#444;
-    font-size:11px;
+
+    padding:28px 0;
+
+    border-top:1px solid #181818;
+
+    color:#3f3f3f;
+
+    font-size:10px;
+
+    letter-spacing:1px;
 }
 
-@media(max-width:700px){
+/* MOBILE */
+
+@media(max-width:850px){
+
+    .preview{
+        display:none;
+    }
+
+    .hero{
+        min-height:620px;
+    }
+}
+
+@media(max-width:650px){
+
+    .container{
+        width:90%;
+    }
+
+    h1{
+        font-size:65px;
+
+        letter-spacing:-5px;
+    }
+
     .cards{
         grid-template-columns:1fr;
     }
 
-    h1{
-        letter-spacing:-4px;
+    .buttons{
+        flex-direction:column;
+
+        width:100%;
+    }
+
+    .button{
+        text-align:center;
     }
 }
 </style>
@@ -165,84 +567,206 @@ footer{
 
 <body>
 
+<div class="bg">
+
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+
+    <div class="particles">
+
+        <i class="particle"
+           style="left:10%;animation-duration:12s;"></i>
+
+        <i class="particle"
+           style="left:25%;animation-duration:17s;"></i>
+
+        <i class="particle"
+           style="left:42%;animation-duration:14s;"></i>
+
+        <i class="particle"
+           style="left:58%;animation-duration:19s;"></i>
+
+        <i class="particle"
+           style="left:72%;animation-duration:13s;"></i>
+
+        <i class="particle"
+           style="left:88%;animation-duration:16s;"></i>
+
+    </div>
+
+</div>
+
+
 <div class="container">
 
 <nav>
-    <div class="logo">NØX</div>
+
+    <a href="index.html" class="logo">
+        NØX
+    </a>
 
     <a href="login.html" class="login">
         Login
     </a>
+
 </nav>
+
 
 <section class="hero">
 
-    <div class="badge">
-        ✦ NØX PROFILES
+    <div class="hero-content">
+
+        <div class="badge">
+            <span class="dot"></span>
+            NØX PROFILES
+        </div>
+
+        <h1>
+            Your identity.<br>
+            <span>Your space.</span>
+        </h1>
+
+        <p class="description">
+            Create a profile that feels like you.
+            Share your socials, links and identity
+            through one simple NØX profile.
+        </p>
+
+        <div class="buttons">
+
+            <a
+                href="register.html"
+                class="button primary"
+            >
+                Create profile
+            </a>
+
+            <a
+                href="#features"
+                class="button secondary"
+            >
+                Explore NØX
+            </a>
+
+        </div>
+
     </div>
 
-    <h1>
-        Your identity.<br>
-        <span>Your profile.</span>
-    </h1>
 
-    <p class="description">
-        Create your own NØX profile and share
-        your socials, links and identity
-        in one place.
-    </p>
+    <div class="preview">
 
-    <div class="buttons">
+        <div class="avatar">
+            N
+        </div>
 
-        <a href="register.html" class="button primary">
-            Create profile
-        </a>
+        <div class="preview-name">
+            NØX User
+        </div>
 
-        <a href="#features" class="button secondary">
-            Explore
-        </a>
+        <div class="preview-user">
+            @username
+        </div>
+
+        <div class="preview-links">
+
+            <div class="preview-link">
+                Discord
+            </div>
+
+            <div class="preview-link">
+                YouTube
+            </div>
+
+            <div class="preview-link">
+                GitHub
+            </div>
+
+        </div>
 
     </div>
 
 </section>
 
-<section class="cards" id="features">
 
-    <div class="card">
-        <div class="number">01</div>
-        <h2>Profiles</h2>
-        <p>
-            Create your own profile with a
-            unique NØX username.
-        </p>
+<section class="features" id="features">
+
+    <div class="section-title">
+        WHY NØX
     </div>
 
-    <div class="card">
-        <div class="number">02</div>
-        <h2>Socials</h2>
-        <p>
-            Put Discord, YouTube, GitHub
-            and your other links together.
-        </p>
-    </div>
+    <div class="cards">
 
-    <div class="card">
-        <div class="number">03</div>
-        <h2>Your space</h2>
-        <p>
-            One username. One profile.
-            Your NØX identity.
-        </p>
+        <div class="card">
+
+            <div class="number">
+                01
+            </div>
+
+            <h2>
+                Your Profile
+            </h2>
+
+            <p>
+                One username, one identity
+                and a profile made entirely
+                around you.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="number">
+                02
+            </div>
+
+            <h2>
+                Your Links
+            </h2>
+
+            <p>
+                Put Discord, YouTube,
+                GitHub and everything else
+                in one place.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="number">
+                03
+            </div>
+
+            <h2>
+                Your Space
+            </h2>
+
+            <p>
+                A clean personal page that
+                you can share anywhere.
+            </p>
+
+        </div>
+
     </div>
 
 </section>
+
 
 <footer>
+
     <span>NØX</span>
-    <span>Profiles V1</span>
+
+    <span>
+        Profiles V1
+    </span>
+
 </footer>
 
 </div>
 
 </body>
-</html>
+                </html>
