@@ -1,279 +1,403 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NØX — Perfil</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{
-    box-sizing:border-box;
-}
+    <title>NØX Profile</title>
 
-html,body{
-    margin:0;
-    min-height:100%;
-}
+    <!-- SUPABASE: DEBE CARGARSE ANTES DEL SCRIPT PRINCIPAL -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:25px;
-    background:#050505;
-    color:white;
-    font-family:Arial,sans-serif;
-    overflow-x:hidden;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-#background{
-    position:fixed;
-    inset:0;
-    z-index:-3;
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #292929,
-            #050505 65%
-        );
-    background-size:cover;
-    background-position:center;
-}
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            min-height: 100%;
+        }
 
-#backgroundVideo{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-2;
-    display:none;
-}
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
 
-.overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.35);
-    z-index:-1;
-}
+            background: #050505;
+            color: white;
 
-#loading{
-    position:fixed;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#050505;
-    color:#999;
-    z-index:100;
-}
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
-.hidden{
-    display:none !important;
-}
+            overflow-x: hidden;
+        }
 
-.profile{
-    width:100%;
-    max-width:470px;
-    padding:35px 25px;
-    border:1px solid #292929;
-    border-radius:22px;
-    background:rgba(10,10,10,.82);
-    backdrop-filter:blur(18px);
-    box-shadow:0 30px 100px rgba(0,0,0,.55);
-    text-align:center;
-    animation:appear .5s ease;
-}
+        #background {
+            position: fixed;
+            inset: 0;
 
-@keyframes appear{
-    from{
-        opacity:0;
-        transform:translateY(15px) scale(.98);
-    }
+            background:
+                radial-gradient(
+                    circle at top,
+                    #292929 0%,
+                    #090909 45%,
+                    #020202 100%
+                );
 
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-}
+            background-size: cover;
+            background-position: center;
 
-.avatar{
-    width:105px;
-    height:105px;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    border-radius:50%;
-    border:4px solid white;
-    background:#1b1b1b;
-    font-size:35px;
-    font-weight:900;
-}
+            z-index: -3;
+        }
 
-.avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
+        #backgroundVideo {
+            position: fixed;
+            inset: 0;
 
-.name{
-    margin-top:18px;
-    font-size:28px;
-    font-weight:900;
-}
+            width: 100%;
+            height: 100%;
 
-.username{
-    margin-top:5px;
-    color:#888;
-    font-size:13px;
-}
+            object-fit: cover;
 
-.bio{
-    margin:18px auto 0;
-    max-width:380px;
-    color:#bbb;
-    line-height:1.55;
-    font-size:14px;
-}
+            display: none;
 
-.views{
-    margin-top:15px;
-    color:#777;
-    font-size:12px;
-}
+            z-index: -2;
+        }
 
-.links{
-    display:flex;
-    flex-direction:column;
-    gap:9px;
-    margin-top:22px;
-}
+        .overlay {
+            position: fixed;
+            inset: 0;
 
-.link{
-    display:block;
-    padding:13px;
-    border:1px solid #292929;
-    border-radius:10px;
-    background:#111;
-    color:white;
-    text-decoration:none;
-    transition:.2s;
-}
+            background: rgba(0, 0, 0, .35);
 
-.link:hover{
-    transform:translateY(-2px);
-    box-shadow:0 0 20px rgba(255,255,255,.12);
-}
+            z-index: -1;
+        }
 
-#error{
-    text-align:center;
-    color:#ff7070;
-}
+        #loading {
+            position: fixed;
+            inset: 0;
 
-#music{
-    width:100%;
-    margin-top:18px;
-}
-</style>
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #050505;
+
+            color: #888;
+
+            font-size: 14px;
+
+            z-index: 100;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .profile {
+            width: 100%;
+            max-width: 470px;
+
+            padding: 32px 24px;
+
+            border: 1px solid #292929;
+            border-radius: 24px;
+
+            background: rgba(10, 10, 10, .82);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 30px 100px rgba(0, 0, 0, .65);
+
+            text-align: center;
+
+            animation: profileIn .5s ease;
+        }
+
+        @keyframes profileIn {
+            from {
+                opacity: 0;
+                transform:
+                    translateY(15px)
+                    scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            border: 3px solid white;
+
+            background: #181818;
+
+            font-size: 38px;
+            font-weight: 900;
+
+            box-shadow:
+                0 0 30px rgba(255,255,255,.08);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+        .display-name {
+            margin-top: 18px;
+
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        .username {
+            margin-top: 6px;
+
+            color: #888;
+
+            font-size: 14px;
+        }
+
+        .bio {
+            margin: 18px auto 0;
+
+            max-width: 380px;
+
+            color: #bdbdbd;
+
+            line-height: 1.5;
+
+            font-size: 14px;
+        }
+
+        .views {
+            margin-top: 14px;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .links {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .link {
+            display: block;
+
+            width: 100%;
+
+            padding: 13px 16px;
+
+            border:
+                1px solid
+                #292929;
+
+            border-radius: 12px;
+
+            background: rgba(20,20,20,.8);
+
+            color: white;
+
+            text-decoration: none;
+
+            transition:
+                transform .2s ease,
+                border-color .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .link:hover {
+            transform: translateY(-2px);
+
+            border-color: #555;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.35);
+        }
+
+        .music {
+            width: 100%;
+
+            margin-top: 20px;
+        }
+
+        .error {
+            color: #ff7070;
+
+            font-size: 15px;
+
+            line-height: 1.5;
+        }
+
+        .error small {
+            display: block;
+
+            margin-top: 10px;
+
+            color: #777;
+        }
+    </style>
 </head>
 
 <body>
 
-<div id="loading">
-    Cargando perfil...
-</div>
+    <div id="background"></div>
 
-<div id="background"></div>
+    <video
+        id="backgroundVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+    ></video>
 
-<video
-    id="backgroundVideo"
-    autoplay
-    muted
-    loop
-    playsinline
-></video>
+    <div class="overlay"></div>
 
-<div class="overlay"></div>
 
-<main id="profile" class="profile hidden">
-
-    <div id="avatar" class="avatar">
-        N
+    <div id="loading">
+        Cargando perfil...
     </div>
 
-    <div id="name" class="name">
-        NØX User
-    </div>
 
-    <div id="username" class="username">
-        @username
-    </div>
+    <main
+        id="profile"
+        class="profile hidden"
+    >
 
-    <div id="bio" class="bio">
-        Welcome to my NØX profile.
-    </div>
-
-    <div id="views" class="views">
-        👁️ 0 vistas
-    </div>
-
-    <div id="links" class="links"></div>
-
-    <audio
-        id="music"
-        controls
-        class="hidden"
-    ></audio>
-
-</main>
+        <div
+            id="avatar"
+            class="avatar"
+        >
+            N
+        </div>
 
 
-<!-- =====================================
-     SUPABASE SE CARGA PRIMERO
-====================================== -->
+        <div
+            id="displayName"
+            class="display-name"
+        >
+            NØX User
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+        <!-- EL USERNAME NO SE PUEDE CAMBIAR DESDE AQUÍ -->
+
+        <div
+            id="username"
+            class="username"
+        >
+            @username
+        </div>
 
 
-<!-- =====================================
-     CÓDIGO PRINCIPAL
-====================================== -->
+        <div
+            id="bio"
+            class="bio"
+        >
+            Welcome to my NØX profile.
+        </div>
+
+
+        <div
+            id="views"
+            class="views"
+        >
+            👁️ 0 vistas
+        </div>
+
+
+        <div
+            id="links"
+            class="links"
+        ></div>
+
+
+        <audio
+            id="music"
+            class="music hidden"
+            controls
+        ></audio>
+
+    </main>
+
 
 <script>
 
 "use strict";
 
 
-/* =====================================
+/* =========================================
    SUPABASE
-====================================== */
+========================================= */
 
 const SUPABASE_URL =
     "https://asgowauvzfnsszstvzqi.supabase.co";
+
 
 const SUPABASE_KEY =
     "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
 
 /*
-   Comprobamos que la librería
-   realmente esté cargada.
+   Comprobación para evitar el típico
+   problema de "supabase is undefined".
 */
 
-if(
+if (
     !window.supabase ||
-    typeof window.supabase.createClient !== "function"
-){
+    !window.supabase.createClient
+) {
 
-    throw new Error(
-        "Supabase JS no se pudo cargar."
+    showFatalError(
+        "No se pudo cargar Supabase."
     );
+
+} else {
+
+    start();
 
 }
 
+
+/* =========================================
+   CLIENTE SUPABASE
+========================================= */
 
 const supabase =
     window.supabase.createClient(
@@ -282,69 +406,132 @@ const supabase =
     );
 
 
-/* =====================================
+/* =========================================
    ELEMENTOS
-====================================== */
+========================================= */
 
 const loading =
-    document.getElementById("loading");
-
-const profile =
-    document.getElementById("profile");
-
-const avatar =
-    document.getElementById("avatar");
-
-const nameElement =
-    document.getElementById("name");
-
-const usernameElement =
-    document.getElementById("username");
-
-const bioElement =
-    document.getElementById("bio");
-
-const viewsElement =
-    document.getElementById("views");
-
-const linksElement =
-    document.getElementById("links");
-
-const background =
-    document.getElementById("background");
-
-const backgroundVideo =
-    document.getElementById("backgroundVideo");
-
-const music =
-    document.getElementById("music");
-
-
-/* =====================================
-   USERNAME
-====================================== */
-
-const params =
-    new URLSearchParams(
-        window.location.search
+    document.getElementById(
+        "loading"
     );
 
-const username =
-    params.get("username");
+
+const profile =
+    document.getElementById(
+        "profile"
+    );
 
 
-/* =====================================
+const avatar =
+    document.getElementById(
+        "avatar"
+    );
+
+
+const displayName =
+    document.getElementById(
+        "displayName"
+    );
+
+
+const usernameElement =
+    document.getElementById(
+        "username"
+    );
+
+
+const bio =
+    document.getElementById(
+        "bio"
+    );
+
+
+const views =
+    document.getElementById(
+        "views"
+    );
+
+
+const links =
+    document.getElementById(
+        "links"
+    );
+
+
+const background =
+    document.getElementById(
+        "background"
+    );
+
+
+const backgroundVideo =
+    document.getElementById(
+        "backgroundVideo"
+    );
+
+
+const music =
+    document.getElementById(
+        "music"
+    );
+
+
+/* =========================================
+   OBTENER USERNAME DE LA URL
+========================================= */
+
+function getUsername() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const value =
+        params.get("username");
+
+
+    if (!value) {
+        return null;
+    }
+
+
+    return value
+        .trim()
+        .toLowerCase();
+
+}
+
+
+/* =========================================
+   INICIAR
+========================================= */
+
+function start() {
+
+    loadProfile();
+
+}
+
+
+/* =========================================
    CARGAR PERFIL
-====================================== */
+========================================= */
 
-async function loadProfile(){
+async function loadProfile() {
 
-    try{
+    try {
 
-        if(!username){
+        const username =
+            getUsername();
+
+
+        if (!username) {
 
             showError(
-                "❌ No se especificó ningún username."
+                "No se especificó un username.",
+                "Ejemplo: u.html?username=pan"
             );
 
             return;
@@ -352,16 +539,22 @@ async function loadProfile(){
         }
 
 
-        const cleanUsername =
-            username
-                .trim()
-                .toLowerCase();
-
-
         console.log(
             "Buscando perfil:",
-            cleanUsername
+            username
         );
+
+
+        /*
+           IMPORTANTE:
+
+           NO usamos supabase.auth.getUser()
+           aquí.
+
+           El perfil es PÚBLICO.
+           Por eso no mandamos al visitante
+           a login.html.
+        */
 
 
         const result =
@@ -370,7 +563,7 @@ async function loadProfile(){
                 .select("*")
                 .eq(
                     "username",
-                    cleanUsername
+                    username
                 )
                 .maybeSingle();
 
@@ -378,32 +571,39 @@ async function loadProfile(){
         const data =
             result.data;
 
+
         const error =
             result.error;
 
 
-        if(error){
+        if (error) {
 
             console.error(
-                "Error Supabase:",
+                "Supabase error:",
                 error
             );
 
+
             showError(
-                "❌ " +
+                "Error cargando el perfil.",
                 error.message
             );
+
 
             return;
 
         }
 
 
-        if(!data){
+        if (!data) {
 
             showError(
-                "❌ Perfil no encontrado."
+                "Perfil no encontrado.",
+                "El usuario @" +
+                username +
+                " no existe."
             );
+
 
             return;
 
@@ -420,66 +620,33 @@ async function loadProfile(){
            MOSTRAR PERFIL
         */
 
-        renderProfile(data);
+        renderProfile(
+            data
+        );
 
 
         /*
            SUMAR VISTA
+
+           Esto usa la función RPC que
+           acabas de crear en Supabase.
         */
 
-        const viewResult =
-            await supabase.rpc(
-                "increment_profile_views",
-                {
-                    profile_uuid:data.id
-                }
-            );
+        await addView(
+            data.id
+        );
 
 
-        if(viewResult.error){
-
-            console.error(
-                "Error incrementando vistas:",
-                viewResult.error
-            );
-
-        }else{
-
-            console.log(
-                "Vista registrada ✓"
-            );
-
-
-            /*
-               +1 visualmente
-            */
-
-            const currentViews =
-                Number(
-                    data.profile_views || 0
-                ) + 1;
-
-
-            viewsElement.textContent =
-                "👁️ " +
-                currentViews +
-                (
-                    currentViews === 1
-                    ? " vista"
-                    : " vistas"
-                );
-
-        }
-
-    }catch(error){
+    } catch (error) {
 
         console.error(
-            "ERROR GENERAL:",
+            "Error:",
             error
         );
 
+
         showError(
-            "❌ ERROR GENERAL\n\n" +
+            "Error inesperado.",
             error.message
         );
 
@@ -488,17 +655,17 @@ async function loadProfile(){
 }
 
 
-/* =====================================
+/* =========================================
    MOSTRAR PERFIL
-====================================== */
+========================================= */
 
-function renderProfile(data){
+function renderProfile(data) {
 
     /*
        APODO
     */
 
-    nameElement.textContent =
+    displayName.textContent =
         data.display_name ||
         data.username ||
         "NØX User";
@@ -506,7 +673,9 @@ function renderProfile(data){
 
     /*
        USERNAME
-       NO SE PUEDE CAMBIAR DESDE AQUÍ
+
+       Este viene directamente de Supabase.
+       No existe ningún input para modificarlo.
     */
 
     usernameElement.textContent =
@@ -518,42 +687,129 @@ function renderProfile(data){
        BIO
     */
 
-    bioElement.textContent =
+    bio.textContent =
         data.bio ||
         "Welcome to my NØX profile.";
 
 
     /*
-       VISTAS
+       VISTAS ACTUALES
     */
 
-    const views =
+    const currentViews =
         Number(
             data.profile_views || 0
         );
 
 
-    viewsElement.textContent =
-        "👁️ " +
-        views +
-        (
-            views === 1
-            ? " vista"
-            : " vistas"
-        );
+    setViews(
+        currentViews
+    );
 
 
     /*
        AVATAR
     */
 
+    renderAvatar(
+        data
+    );
+
+
+    /*
+       REDES
+    */
+
+    links.innerHTML = "";
+
+
+    addLink(
+        data.discord,
+        "Discord"
+    );
+
+
+    addLink(
+        data.instagram,
+        "Instagram"
+    );
+
+
+    addLink(
+        data.tiktok,
+        "TikTok"
+    );
+
+
+    addLink(
+        data.spotify,
+        "Spotify"
+    );
+
+
+    addLink(
+        data.youtube,
+        "YouTube"
+    );
+
+
+    addLink(
+        data.github,
+        "GitHub"
+    );
+
+
+    /*
+       FONDO
+    */
+
+    renderBackground(
+        data
+    );
+
+
+    /*
+       MÚSICA
+    */
+
+    renderMusic(
+        data
+    );
+
+
+    /*
+       MOSTRAR
+    */
+
+    loading.classList.add(
+        "hidden"
+    );
+
+
+    profile.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================================
+   AVATAR
+========================================= */
+
+function renderAvatar(data) {
+
     avatar.innerHTML = "";
 
 
-    if(data.avatar_url){
+    if (
+        data.avatar_url
+    ) {
 
         const img =
-            document.createElement("img");
+            document.createElement(
+                "img"
+            );
 
 
         img.src =
@@ -565,7 +821,7 @@ function renderProfile(data){
 
 
         img.onerror =
-            function(){
+            function() {
 
                 avatar.textContent =
                     getFirstLetter(
@@ -576,9 +832,12 @@ function renderProfile(data){
             };
 
 
-        avatar.appendChild(img);
+        avatar.appendChild(
+            img
+        );
 
-    }else{
+
+    } else {
 
         avatar.textContent =
             getFirstLetter(
@@ -588,150 +847,128 @@ function renderProfile(data){
 
     }
 
+}
+
+
+/* =========================================
+   FONDO
+========================================= */
+
+function renderBackground(data) {
+
+    if (
+        !data.background_url
+    ) {
+        return;
+    }
+
+
+    const type =
+        String(
+            data.background_type || ""
+        ).toLowerCase();
+
+
+    if (
+        type === "video" ||
+        data.background_url
+            .toLowerCase()
+            .includes(".mp4")
+    ) {
+
+        backgroundVideo.src =
+            data.background_url;
+
+
+        backgroundVideo.style.display =
+            "block";
+
+
+        background.style.display =
+            "none";
+
+
+    } else {
+
+        background.style.backgroundImage =
+            `url("${escapeAttribute(
+                data.background_url
+            )}")`;
+
+    }
+
+}
+
+
+/* =========================================
+   MÚSICA
+========================================= */
+
+function renderMusic(data) {
+
+    if (
+        !data.music_url
+    ) {
+        return;
+    }
+
+
+    music.src =
+        data.music_url;
+
+
+    music.classList.remove(
+        "hidden"
+    );
+
 
     /*
-       ENLACES
+       El navegador puede bloquear
+       autoplay.
+
+       Por eso intentamos reproducir
+       solamente después de un clic.
     */
 
-    linksElement.innerHTML = "";
+    document.addEventListener(
+        "click",
+        function playMusic() {
 
+            music.play()
+                .catch(
+                    () => {}
+                );
 
-    addLink(
-        data.discord,
-        "Discord"
-    );
-
-    addLink(
-        data.instagram,
-        "Instagram"
-    );
-
-    addLink(
-        data.tiktok,
-        "TikTok"
-    );
-
-    addLink(
-        data.youtube,
-        "YouTube"
-    );
-
-    addLink(
-        data.github,
-        "GitHub"
-    );
-
-    addLink(
-        data.spotify,
-        "Spotify"
-    );
-
-
-    /*
-       FONDO
-    */
-
-    if(data.background_url){
-
-        if(
-            data.background_type ===
-            "video"
-        ){
-
-            backgroundVideo.src =
-                data.background_url;
-
-            backgroundVideo.style.display =
-                "block";
-
-            background.style.display =
-                "none";
-
-        }else{
-
-            background.style.backgroundImage =
-                'url("' +
-                data.background_url +
-                '")';
-
+        },
+        {
+            once: true
         }
-
-    }
-
-
-    /*
-       MÚSICA
-    */
-
-    if(data.music_url){
-
-        music.src =
-            data.music_url;
-
-        music.classList.remove(
-            "hidden"
-        );
-
-
-        /*
-           El navegador normalmente
-           requiere un clic del visitante.
-        */
-
-        document.addEventListener(
-            "click",
-            function(){
-
-                music.play()
-                    .catch(
-                        function(){}
-                    );
-
-            },
-            {
-                once:true
-            }
-        );
-
-    }
-
-
-    /*
-       MOSTRAR
-    */
-
-    loading.classList.add(
-        "hidden"
-    );
-
-    profile.classList.remove(
-        "hidden"
     );
 
 }
 
 
-/* =====================================
+/* =========================================
    AGREGAR LINK
-====================================== */
+========================================= */
 
 function addLink(
     url,
     label
-){
+) {
 
-    if(
+    if (
         !url ||
         !String(url).trim()
-    ){
-
+    ) {
         return;
-
     }
 
 
     const a =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
 
     a.className =
@@ -757,77 +994,255 @@ function addLink(
         "noopener noreferrer";
 
 
-    linksElement.appendChild(a);
+    links.appendChild(
+        a
+    );
 
 }
 
 
-/* =====================================
-   URL
-====================================== */
+/* =========================================
+   NORMALIZAR URL
+========================================= */
 
-function normalizeUrl(url){
+function normalizeUrl(url) {
 
-    if(
-        url.startsWith("http://") ||
-        url.startsWith("https://")
-    ){
+    if (
+        url.startsWith(
+            "http://"
+        ) ||
+        url.startsWith(
+            "https://"
+        )
+    ) {
 
         return url;
 
     }
 
-    return "https://" + url;
+
+    return (
+        "https://" +
+        url
+    );
 
 }
 
 
-/* =====================================
-   PRIMERA LETRA
-====================================== */
+/* =========================================
+   SUMAR VISTA
+========================================= */
 
-function getFirstLetter(text){
+async function addView(
+    profileId
+) {
+
+    try {
+
+        const {
+            error
+        } =
+            await supabase.rpc(
+                "increment_profile_views",
+                {
+                    profile_uuid:
+                        profileId
+                }
+            );
+
+
+        if (error) {
+
+            console.error(
+                "No se pudo sumar la vista:",
+                error
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+           La función de Supabase ya hizo
+           +1 en la base de datos.
+
+           Actualizamos visualmente el
+           contador.
+        */
+
+        const text =
+            views.textContent;
+
+
+        const match =
+            text.match(
+                /(\d+)/
+            );
+
+
+        const oldNumber =
+            match
+                ? Number(match[1])
+                : 0;
+
+
+        const newNumber =
+            oldNumber + 1;
+
+
+        setViews(
+            newNumber
+        );
+
+
+        console.log(
+            "Vista agregada ✓"
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Error RPC:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   MOSTRAR VISTAS
+========================================= */
+
+function setViews(
+    number
+) {
+
+    const safeNumber =
+        Number(number) || 0;
+
+
+    views.textContent =
+        "👁️ " +
+        safeNumber +
+        (
+            safeNumber === 1
+                ? " vista"
+                : " vistas"
+        );
+
+}
+
+
+/* =========================================
+   PRIMERA LETRA
+========================================= */
+
+function getFirstLetter(
+    text
+) {
 
     return String(
         text || "N"
     )
-    .charAt(0)
-    .toUpperCase();
+        .charAt(0)
+        .toUpperCase();
 
 }
 
 
-/* =====================================
+/* =========================================
    ERROR
-====================================== */
+========================================= */
 
-function showError(text){
+function showError(
+    title,
+    detail
+) {
 
     loading.classList.add(
         "hidden"
     );
 
+
     profile.classList.remove(
         "hidden"
     );
 
-    profile.innerHTML =
-        `
-        <div id="error">
-            ${escapeHtml(text)}
+
+    profile.innerHTML = `
+
+        <div class="error">
+
+            <strong>
+                ${escapeHtml(title)}
+            </strong>
+
+            ${
+                detail
+                ? `
+                    <small>
+                        ${escapeHtml(detail)}
+                    </small>
+                  `
+                : ""
+            }
+
         </div>
-        `;
+
+    `;
 
 }
 
 
-/* =====================================
-   ESCAPAR HTML
-====================================== */
+/* =========================================
+   ERROR FATAL
+========================================= */
 
-function escapeHtml(value){
+function showFatalError(
+    text
+) {
 
-    return String(value)
+    document.body.innerHTML = `
+
+        <div
+            style="
+                color:white;
+                background:#050505;
+                min-height:100vh;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                padding:30px;
+                text-align:center;
+                font-family:Arial;
+            "
+        >
+
+            ${escapeHtml(text)}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================
+   SEGURIDAD
+========================================= */
+
+function escapeHtml(
+    value
+) {
+
+    return String(
+        value
+    )
         .replaceAll(
             "&",
             "&amp;"
@@ -852,11 +1267,23 @@ function escapeHtml(value){
 }
 
 
-/* =====================================
-   INICIAR
-====================================== */
+function escapeAttribute(
+    value
+) {
 
-loadProfile();
+    return String(
+        value
+    )
+        .replaceAll(
+            '"',
+            "%22"
+        )
+        .replaceAll(
+            "'",
+            "%27"
+        );
+
+}
 
 </script>
 
