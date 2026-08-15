@@ -1,334 +1,350 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NØX — Perfil</title>
 
 <style>
-
 *{
     box-sizing:border-box;
 }
 
-body{
+html,body{
     margin:0;
+    min-height:100%;
+}
+
+body{
     min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    padding:20px;
+    padding:25px;
     background:#050505;
     color:white;
     font-family:Arial,sans-serif;
+    overflow-x:hidden;
 }
 
-#app{
+#background{
+    position:fixed;
+    inset:0;
+    z-index:-3;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #292929,
+            #050505 65%
+        );
+    background-size:cover;
+    background-position:center;
+}
+
+#backgroundVideo{
+    position:fixed;
+    inset:0;
     width:100%;
-    max-width:480px;
-    padding:30px;
+    height:100%;
+    object-fit:cover;
+    z-index:-2;
+    display:none;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.35);
+    z-index:-1;
+}
+
+#loading{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#050505;
+    color:#999;
+    z-index:100;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.profile{
+    width:100%;
+    max-width:470px;
+    padding:35px 25px;
     border:1px solid #292929;
     border-radius:22px;
-    background:#101010;
-    box-shadow:0 20px 80px rgba(0,0,0,.6);
-}
-
-#status{
+    background:rgba(10,10,10,.82);
+    backdrop-filter:blur(18px);
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
     text-align:center;
-    color:#aaa;
-    white-space:pre-wrap;
-    line-height:1.6;
+    animation:appear .5s ease;
 }
 
-#error{
-    display:none;
-    padding:15px;
-    border-radius:10px;
-    background:#190909;
-    color:#ff7070;
-    white-space:pre-wrap;
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.98);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
 }
 
-#profile{
-    display:none;
-    text-align:center;
-}
-
-#avatar{
-    width:110px;
-    height:110px;
+.avatar{
+    width:105px;
+    height:105px;
     margin:auto;
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
     border-radius:50%;
-    border:3px solid white;
-    background:#222;
-    font-size:38px;
-    font-weight:bold;
+    border:4px solid white;
+    background:#1b1b1b;
+    font-size:35px;
+    font-weight:900;
 }
 
-#avatar img{
+.avatar img{
     width:100%;
     height:100%;
     object-fit:cover;
 }
 
-#name{
+.name{
     margin-top:18px;
     font-size:28px;
-    font-weight:800;
+    font-weight:900;
 }
 
-#username{
+.username{
     margin-top:5px;
     color:#888;
+    font-size:13px;
 }
 
-#bio{
-    margin-top:18px;
-    color:#aaa;
-    line-height:1.5;
+.bio{
+    margin:18px auto 0;
+    max-width:380px;
+    color:#bbb;
+    line-height:1.55;
+    font-size:14px;
 }
 
-#views{
+.views{
     margin-top:15px;
     color:#777;
+    font-size:12px;
 }
 
-#links{
+.links{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:9px;
     margin-top:22px;
 }
 
 .link{
     display:block;
     padding:13px;
-    border-radius:10px;
     border:1px solid #292929;
-    background:#151515;
+    border-radius:10px;
+    background:#111;
     color:white;
     text-decoration:none;
+    transition:.2s;
 }
 
-</style>
+.link:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 20px rgba(255,255,255,.12);
+}
 
+#error{
+    text-align:center;
+    color:#ff7070;
+}
+
+#music{
+    width:100%;
+    margin-top:18px;
+}
+</style>
 </head>
 
 <body>
 
-<div id="app">
-
-    <div id="status">
-        NØX — iniciando...
-    </div>
-
-    <div id="error"></div>
-
-    <div id="profile">
-
-        <div id="avatar">N</div>
-
-        <div id="name"></div>
-
-        <div id="username"></div>
-
-        <div id="bio"></div>
-
-        <div id="views"></div>
-
-        <div id="links"></div>
-
-    </div>
-
+<div id="loading">
+    Cargando perfil...
 </div>
 
+<div id="background"></div>
+
+<video
+    id="backgroundVideo"
+    autoplay
+    muted
+    loop
+    playsinline
+></video>
+
+<div class="overlay"></div>
+
+<main id="profile" class="profile hidden">
+
+    <div id="avatar" class="avatar">
+        N
+    </div>
+
+    <div id="name" class="name">
+        NØX User
+    </div>
+
+    <div id="username" class="username">
+        @username
+    </div>
+
+    <div id="bio" class="bio">
+        Welcome to my NØX profile.
+    </div>
+
+    <div id="views" class="views">
+        👁️ 0 vistas
+    </div>
+
+    <div id="links" class="links"></div>
+
+    <audio
+        id="music"
+        controls
+        class="hidden"
+    ></audio>
+
+</main>
+
+
+<!-- =====================================
+     SUPABASE SE CARGA PRIMERO
+====================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
+<!-- =====================================
+     CÓDIGO PRINCIPAL
+====================================== -->
+
 <script>
 
+"use strict";
+
+
+/* =====================================
+   SUPABASE
+====================================== */
+
+const SUPABASE_URL =
+    "https://asgowauvzfnsszstvzqi.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
+
 /*
-==================================================
-NØX PROFILE
-NO USAMOS SUPABASE_URL NI SUPABASE_KEY
-PARA EVITAR CONFLICTOS CON OTROS SCRIPTS.
-==================================================
+   Comprobamos que la librería
+   realmente esté cargada.
 */
 
+if(
+    !window.supabase ||
+    typeof window.supabase.createClient !== "function"
+){
 
-var NX_URL =
-"https://asgowauvzfnsszstvzqi.supabase.co";
-
-
-var NX_KEY =
-"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
-
-
-var NX_STATUS =
-document.getElementById("status");
-
-
-var NX_ERROR =
-document.getElementById("error");
-
-
-var NX_PROFILE =
-document.getElementById("profile");
-
-
-var NX_AVATAR =
-document.getElementById("avatar");
-
-
-var NX_NAME =
-document.getElementById("name");
-
-
-var NX_USERNAME =
-document.getElementById("username");
-
-
-var NX_BIO =
-document.getElementById("bio");
-
-
-var NX_VIEWS =
-document.getElementById("views");
-
-
-var NX_LINKS =
-document.getElementById("links");
-
-
-function NX_error(text){
-
-    NX_STATUS.style.display =
-        "none";
-
-    NX_PROFILE.style.display =
-        "none";
-
-    NX_ERROR.style.display =
-        "block";
-
-    NX_ERROR.textContent =
-        text;
+    throw new Error(
+        "Supabase JS no se pudo cargar."
+    );
 
 }
 
 
-function NX_letter(text){
-
-    return (
-        text ||
-        "N"
-    )
-    .charAt(0)
-    .toUpperCase();
-
-}
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-function NX_link(url,name){
+/* =====================================
+   ELEMENTOS
+====================================== */
 
-    if(!url){
-        return;
-    }
+const loading =
+    document.getElementById("loading");
 
-    var a =
-    document.createElement("a");
+const profile =
+    document.getElementById("profile");
 
-    a.className =
-        "link";
+const avatar =
+    document.getElementById("avatar");
 
-    a.textContent =
-        name + " ↗";
+const nameElement =
+    document.getElementById("name");
 
-    if(
-        url.indexOf("http://") === 0 ||
-        url.indexOf("https://") === 0
-    ){
+const usernameElement =
+    document.getElementById("username");
 
-        a.href =
-            url;
+const bioElement =
+    document.getElementById("bio");
 
-    }else{
+const viewsElement =
+    document.getElementById("views");
 
-        a.href =
-            "https://" + url;
+const linksElement =
+    document.getElementById("links");
 
-    }
+const background =
+    document.getElementById("background");
 
-    a.target =
-        "_blank";
+const backgroundVideo =
+    document.getElementById("backgroundVideo");
 
-    a.rel =
-        "noopener noreferrer";
-
-    NX_LINKS.appendChild(a);
-
-}
+const music =
+    document.getElementById("music");
 
 
-async function NX_start(){
+/* =====================================
+   USERNAME
+====================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const username =
+    params.get("username");
+
+
+/* =====================================
+   CARGAR PERFIL
+====================================== */
+
+async function loadProfile(){
 
     try{
 
-        NX_STATUS.textContent =
-            "NØX — comprobando Supabase...";
-
-
-        if(
-            typeof window.supabase ===
-            "undefined"
-        ){
-
-            NX_error(
-                "❌ Supabase JS no cargó."
-            );
-
-            return;
-
-        }
-
-
-        NX_STATUS.textContent =
-            "NØX — conectando...";
-
-
-        var client =
-            window.supabase.createClient(
-                NX_URL,
-                NX_KEY
-            );
-
-
-        var params =
-            new URLSearchParams(
-                window.location.search
-            );
-
-
-        var username =
-            params.get("username");
-
-
         if(!username){
 
-            NX_error(
-                "❌ La URL no tiene ?username=...\n\n" +
-                "Ejemplo:\n" +
-                "u.html?username=pan"
+            showError(
+                "❌ No se especificó ningún username."
             );
 
             return;
@@ -336,252 +352,133 @@ async function NX_start(){
         }
 
 
-        username =
+        const cleanUsername =
             username
                 .trim()
                 .toLowerCase();
 
 
-        NX_STATUS.textContent =
-            "NØX — buscando @" +
-            username +
-            "...";
+        console.log(
+            "Buscando perfil:",
+            cleanUsername
+        );
 
 
-        var result =
-            await client
+        const result =
+            await supabase
                 .from("profiles")
                 .select("*")
                 .eq(
                     "username",
-                    username
+                    cleanUsername
                 )
                 .maybeSingle();
 
 
-        if(result.error){
-
-            NX_error(
-                "❌ ERROR SUPABASE\n\n" +
-                result.error.message
-            );
-
-            return;
-
-        }
-
-
-        if(!result.data){
-
-            NX_error(
-                "❌ PERFIL NO ENCONTRADO\n\n" +
-                "@" + username
-            );
-
-            return;
-
-        }
-
-
-        var profile =
+        const data =
             result.data;
 
-
-        /*
-        ==========================================
-        MOSTRAR PERFIL
-        ==========================================
-        */
+        const error =
+            result.error;
 
 
-        NX_NAME.textContent =
-            profile.display_name ||
-            profile.username ||
-            "NØX User";
+        if(error){
 
-
-        NX_USERNAME.textContent =
-            "@" +
-            profile.username;
-
-
-        NX_BIO.textContent =
-            profile.bio ||
-            "Welcome to my NØX profile.";
-
-
-        var oldViews =
-            Number(
-                profile.profile_views || 0
+            console.error(
+                "Error Supabase:",
+                error
             );
 
-
-        NX_VIEWS.textContent =
-            "👁️ " +
-            oldViews +
-            (
-                oldViews === 1
-                ? " vista"
-                : " vistas"
+            showError(
+                "❌ " +
+                error.message
             );
+
+            return;
+
+        }
+
+
+        if(!data){
+
+            showError(
+                "❌ Perfil no encontrado."
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Perfil encontrado:",
+            data
+        );
 
 
         /*
-        ==========================================
-        AVATAR
-        ==========================================
+           MOSTRAR PERFIL
         */
 
+        renderProfile(data);
 
-        if(profile.avatar_url){
 
-            var img =
-                document.createElement("img");
+        /*
+           SUMAR VISTA
+        */
 
-            img.src =
-                profile.avatar_url;
+        const viewResult =
+            await supabase.rpc(
+                "increment_profile_views",
+                {
+                    profile_uuid:data.id
+                }
+            );
 
-            img.alt =
-                "Avatar";
 
-            img.onerror =
-                function(){
+        if(viewResult.error){
 
-                    NX_AVATAR.textContent =
-                        NX_letter(
-                            profile.username
-                        );
-
-                };
-
-            NX_AVATAR.innerHTML =
-                "";
-
-            NX_AVATAR.appendChild(img);
+            console.error(
+                "Error incrementando vistas:",
+                viewResult.error
+            );
 
         }else{
 
-            NX_AVATAR.textContent =
-                NX_letter(
-                    profile.username
-                );
-
-        }
-
-
-        /*
-        ==========================================
-        REDES
-        ==========================================
-        */
-
-
-        NX_LINKS.innerHTML =
-            "";
-
-
-        NX_link(
-            profile.discord,
-            "Discord"
-        );
-
-
-        NX_link(
-            profile.youtube,
-            "YouTube"
-        );
-
-
-        NX_link(
-            profile.github,
-            "GitHub"
-        );
-
-
-        NX_link(
-            profile.instagram,
-            "Instagram"
-        );
-
-
-        NX_link(
-            profile.tiktok,
-            "TikTok"
-        );
-
-
-        NX_link(
-            profile.spotify,
-            "Spotify"
-        );
-
-
-        /*
-        ==========================================
-        MOSTRAR
-        ==========================================
-        */
-
-
-        NX_STATUS.style.display =
-            "none";
-
-        NX_PROFILE.style.display =
-            "block";
-
-
-        /*
-        ==========================================
-        SUMAR VISTA
-        ==========================================
-        */
-
-        try{
-
-            var view =
-                await client.rpc(
-                    "increment_profile_views",
-                    {
-                        profile_uuid:
-                            profile.id
-                    }
-                );
-
-
-            if(
-                !view.error
-            ){
-
-                NX_VIEWS.textContent =
-                    "👁️ " +
-                    (oldViews + 1) +
-                    (
-                        oldViews + 1 === 1
-                        ? " vista"
-                        : " vistas"
-                    );
-
-            }
-
-        }catch(viewError){
-
             console.log(
-                "Contador de vistas:",
-                viewError
+                "Vista registrada ✓"
             );
 
-        }
 
+            /*
+               +1 visualmente
+            */
+
+            const currentViews =
+                Number(
+                    data.profile_views || 0
+                ) + 1;
+
+
+            viewsElement.textContent =
+                "👁️ " +
+                currentViews +
+                (
+                    currentViews === 1
+                    ? " vista"
+                    : " vistas"
+                );
+
+        }
 
     }catch(error){
 
         console.error(
-            "NØX ERROR:",
+            "ERROR GENERAL:",
             error
         );
 
-
-        NX_error(
+        showError(
             "❌ ERROR GENERAL\n\n" +
             error.message
         );
@@ -591,10 +488,377 @@ async function NX_start(){
 }
 
 
-NX_start();
+/* =====================================
+   MOSTRAR PERFIL
+====================================== */
+
+function renderProfile(data){
+
+    /*
+       APODO
+    */
+
+    nameElement.textContent =
+        data.display_name ||
+        data.username ||
+        "NØX User";
+
+
+    /*
+       USERNAME
+       NO SE PUEDE CAMBIAR DESDE AQUÍ
+    */
+
+    usernameElement.textContent =
+        "@" +
+        data.username;
+
+
+    /*
+       BIO
+    */
+
+    bioElement.textContent =
+        data.bio ||
+        "Welcome to my NØX profile.";
+
+
+    /*
+       VISTAS
+    */
+
+    const views =
+        Number(
+            data.profile_views || 0
+        );
+
+
+    viewsElement.textContent =
+        "👁️ " +
+        views +
+        (
+            views === 1
+            ? " vista"
+            : " vistas"
+        );
+
+
+    /*
+       AVATAR
+    */
+
+    avatar.innerHTML = "";
+
+
+    if(data.avatar_url){
+
+        const img =
+            document.createElement("img");
+
+
+        img.src =
+            data.avatar_url;
+
+
+        img.alt =
+            "Avatar";
+
+
+        img.onerror =
+            function(){
+
+                avatar.textContent =
+                    getFirstLetter(
+                        data.display_name ||
+                        data.username
+                    );
+
+            };
+
+
+        avatar.appendChild(img);
+
+    }else{
+
+        avatar.textContent =
+            getFirstLetter(
+                data.display_name ||
+                data.username
+            );
+
+    }
+
+
+    /*
+       ENLACES
+    */
+
+    linksElement.innerHTML = "";
+
+
+    addLink(
+        data.discord,
+        "Discord"
+    );
+
+    addLink(
+        data.instagram,
+        "Instagram"
+    );
+
+    addLink(
+        data.tiktok,
+        "TikTok"
+    );
+
+    addLink(
+        data.youtube,
+        "YouTube"
+    );
+
+    addLink(
+        data.github,
+        "GitHub"
+    );
+
+    addLink(
+        data.spotify,
+        "Spotify"
+    );
+
+
+    /*
+       FONDO
+    */
+
+    if(data.background_url){
+
+        if(
+            data.background_type ===
+            "video"
+        ){
+
+            backgroundVideo.src =
+                data.background_url;
+
+            backgroundVideo.style.display =
+                "block";
+
+            background.style.display =
+                "none";
+
+        }else{
+
+            background.style.backgroundImage =
+                'url("' +
+                data.background_url +
+                '")';
+
+        }
+
+    }
+
+
+    /*
+       MÚSICA
+    */
+
+    if(data.music_url){
+
+        music.src =
+            data.music_url;
+
+        music.classList.remove(
+            "hidden"
+        );
+
+
+        /*
+           El navegador normalmente
+           requiere un clic del visitante.
+        */
+
+        document.addEventListener(
+            "click",
+            function(){
+
+                music.play()
+                    .catch(
+                        function(){}
+                    );
+
+            },
+            {
+                once:true
+            }
+        );
+
+    }
+
+
+    /*
+       MOSTRAR
+    */
+
+    loading.classList.add(
+        "hidden"
+    );
+
+    profile.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =====================================
+   AGREGAR LINK
+====================================== */
+
+function addLink(
+    url,
+    label
+){
+
+    if(
+        !url ||
+        !String(url).trim()
+    ){
+
+        return;
+
+    }
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.className =
+        "link";
+
+
+    a.textContent =
+        label +
+        " ↗";
+
+
+    a.href =
+        normalizeUrl(
+            String(url).trim()
+        );
+
+
+    a.target =
+        "_blank";
+
+
+    a.rel =
+        "noopener noreferrer";
+
+
+    linksElement.appendChild(a);
+
+}
+
+
+/* =====================================
+   URL
+====================================== */
+
+function normalizeUrl(url){
+
+    if(
+        url.startsWith("http://") ||
+        url.startsWith("https://")
+    ){
+
+        return url;
+
+    }
+
+    return "https://" + url;
+
+}
+
+
+/* =====================================
+   PRIMERA LETRA
+====================================== */
+
+function getFirstLetter(text){
+
+    return String(
+        text || "N"
+    )
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* =====================================
+   ERROR
+====================================== */
+
+function showError(text){
+
+    loading.classList.add(
+        "hidden"
+    );
+
+    profile.classList.remove(
+        "hidden"
+    );
+
+    profile.innerHTML =
+        `
+        <div id="error">
+            ${escapeHtml(text)}
+        </div>
+        `;
+
+}
+
+
+/* =====================================
+   ESCAPAR HTML
+====================================== */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================
+   INICIAR
+====================================== */
+
+loadProfile();
 
 </script>
 
 </body>
-
 </html>
