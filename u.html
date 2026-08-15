@@ -1,762 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<meta name="theme-color" content="#030303">
-
-<title>NØX — Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NØX Profile</title>
 
 <style>
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    min-height:100%;
 }
 
 body{
-
     min-height:100vh;
-
-    overflow-x:hidden;
-
     background:#030303;
-
-    color:white;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
 }
-
-
-/* =========================
-   BACKGROUND
-========================= */
 
 .background{
-
     position:fixed;
-
     inset:0;
-
-    z-index:-10;
-
-    overflow:hidden;
-
+    z-index:-1;
     background:
-
-        radial-gradient(
-            circle at 50% 0%,
-            #242424 0%,
-            #090909 35%,
-            #030303 75%
-        );
+        radial-gradient(circle at 50% 0%,#222,#080808 40%,#030303 75%);
 }
 
-.grid{
-
-    position:absolute;
-
-    inset:0;
-
-    opacity:.22;
-
-    background-image:
-
-        linear-gradient(
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        );
-
-    background-size:45px 45px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 90%
-        );
-}
-
-
-/* GLOWS */
-
-.glow{
-
-    position:absolute;
-
-    width:500px;
-    height:500px;
-
-    border-radius:50%;
-
-    background:white;
-
-    filter:blur(150px);
-
-    opacity:.065;
-
-    animation:
-        glowMove
-        12s
-        ease-in-out
-        infinite;
-}
-
-.glow.one{
-
-    top:-300px;
-
-    left:-220px;
-}
-
-.glow.two{
-
-    right:-300px;
-
-    bottom:-250px;
-
-    animation-delay:-6s;
-}
-
-@keyframes glowMove{
-
-    0%,100%{
-
-        transform:
-            translate(0,0)
-            scale(1);
-
-    }
-
-    50%{
-
-        transform:
-            translate(60px,40px)
-            scale(1.15);
-
-    }
-}
-
-
-/* =========================
-   NAV
-========================= */
-
-nav{
-
-    width:min(1100px,92%);
-
-    height:80px;
-
-    margin:auto;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
+.card{
+    width:min(520px,100%);
+    padding:40px 30px;
+    border:1px solid #222;
+    border-radius:22px;
+    background:rgba(10,10,10,.94);
+    box-shadow:0 30px 100px rgba(0,0,0,.6);
+    text-align:center;
 }
 
 .logo{
-
-    color:white;
-
-    text-decoration:none;
-
-    font-size:25px;
-
-    font-weight:950;
-
-    letter-spacing:-1px;
-
-    transition:.2s;
-}
-
-.logo:hover{
-
-    opacity:.65;
-
-    transform:
-        translateY(-2px);
-}
-
-.nav-button{
-
-    padding:
-        10px
-        15px;
-
-    border:
-        1px solid
-        #292929;
-
-    border-radius:9px;
-
-    background:#0b0b0b;
-
-    color:#aaa;
-
-    text-decoration:none;
-
-    font-size:10px;
-
-    font-weight:800;
-
-    transition:.2s;
-}
-
-.nav-button:hover{
-
+    position:fixed;
+    top:25px;
+    left:30px;
     color:#fff;
-
-    border-color:#444;
-
-    transform:
-        translateY(-2px);
+    text-decoration:none;
+    font-size:24px;
+    font-weight:900;
 }
-
-
-/* =========================
-   PROFILE
-========================= */
-
-.profile-container{
-
-    width:min(600px,92%);
-
-    margin:
-        75px
-        auto
-        100px;
-
-    animation:
-        profileIn
-        .8s
-        cubic-bezier(.2,.8,.2,1)
-        both;
-}
-
-@keyframes profileIn{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(30px)
-            scale(.98);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
-    }
-}
-
-
-/* CARD */
-
-.profile-card{
-
-    position:relative;
-
-    padding:
-        45px
-        35px
-        35px;
-
-    text-align:center;
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius:24px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            rgba(22,22,22,.95),
-            rgba(5,5,5,.98)
-        );
-
-    backdrop-filter:
-        blur(25px);
-
-    box-shadow:
-
-        0 40px 120px
-        rgba(0,0,0,.65);
-}
-
-
-/* TOP GLOW */
-
-.profile-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-
-    left:15%;
-
-    width:70%;
-
-    height:1px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.35),
-            transparent
-        );
-}
-
-
-/* AVATAR */
 
 .avatar{
-
-    width:105px;
-
-    height:105px;
-
+    width:100px;
+    height:100px;
     margin:auto;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
-
-    border:
-        1px solid
-        #383838;
-
     border-radius:50%;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #292929,
-            #090909
-        );
-
-    color:white;
-
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#151515;
+    border:1px solid #333;
     font-size:35px;
-
-    font-weight:950;
-
-    box-shadow:
-
-        0 20px 60px
-        rgba(0,0,0,.55),
-
-        0 0 40px
-        rgba(255,255,255,.035);
+    font-weight:900;
 }
 
 .avatar img{
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
 }
 
-
-/* NAME */
-
-.display-name{
-
-    margin-top:23px;
-
-    font-size:30px;
-
-    font-weight:950;
-
-    letter-spacing:-1.5px;
+.name{
+    margin-top:20px;
+    font-size:28px;
+    font-weight:900;
 }
-
-
-/* USERNAME */
 
 .username{
-
-    margin-top:7px;
-
+    margin-top:6px;
     color:#555;
-
     font-size:12px;
-
-    font-weight:600;
 }
-
-
-/* BIO */
 
 .bio{
-
-    max-width:450px;
-
-    margin:
-        20px
-        auto
-        0;
-
+    margin:18px auto 0;
+    max-width:420px;
     color:#777;
-
     font-size:12px;
-
-    line-height:1.8;
+    line-height:1.7;
 }
-
-
-/* LINKS */
 
 .links{
-
     display:grid;
-
-    gap:9px;
-
-    margin-top:27px;
+    gap:10px;
+    margin-top:25px;
 }
 
-.profile-link{
-
-    position:relative;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    min-height:52px;
-
-    padding:
-        12px
-        18px;
-
-    border:
-        1px solid
-        #222;
-
+.link{
+    display:block;
+    padding:15px;
+    border:1px solid #242424;
     border-radius:10px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #101010,
-            #080808
-        );
-
+    background:#0b0b0b;
     color:#aaa;
-
     text-decoration:none;
-
     font-size:11px;
-
     font-weight:800;
-
-    transition:.25s;
+    transition:.2s;
 }
 
-.profile-link:hover{
-
+.link:hover{
     color:#fff;
-
-    border-color:#444;
-
-    background:#111;
-
-    transform:
-        translateY(-3px);
-
-    box-shadow:
-        0 12px 35px
-        rgba(0,0,0,.4);
+    border-color:#555;
+    transform:translateY(-2px);
 }
 
-
-/* USER NOT FOUND */
-
-.not-found{
-
-    text-align:center;
-
-    padding:
-        70px
-        25px;
-}
-
-.not-found h1{
-
-    font-size:35px;
-
-    letter-spacing:-1px;
-}
-
-.not-found p{
-
-    margin-top:12px;
-
+.loading{
     color:#666;
+    font-size:11px;
+    letter-spacing:2px;
+}
 
+.error{
+    color:#ff7070;
     font-size:12px;
+    line-height:1.7;
 }
 
 .back{
-
     display:inline-block;
-
-    margin-top:25px;
-
-    padding:
-        12px
-        18px;
-
-    border:
-        1px solid
-        #292929;
-
-    border-radius:9px;
-
-    background:#0b0b0b;
-
+    margin-top:20px;
+    padding:11px 16px;
+    border:1px solid #292929;
+    border-radius:8px;
     color:#aaa;
-
     text-decoration:none;
-
     font-size:10px;
-
-    font-weight:800;
 }
-
-.back:hover{
-
-    color:white;
-
-    border-color:#444;
-}
-
-
-/* LOADING */
-
-.loading{
-
-    text-align:center;
-
-    color:#555;
-
-    font-size:11px;
-
-    letter-spacing:2px;
-
-    animation:
-        loadingPulse
-        1.5s
-        infinite;
-}
-
-@keyframes loadingPulse{
-
-    0%,100%{
-        opacity:.35;
-    }
-
-    50%{
-        opacity:1;
-    }
-}
-
-
-/* FOOTER */
-
-footer{
-
-    width:min(600px,92%);
-
-    margin:
-        0
-        auto
-        30px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    color:#333;
-
-    font-size:9px;
-
-    letter-spacing:1px;
-}
-
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    nav{
-
-        height:70px;
-    }
-
-    .profile-container{
-
-        margin-top:40px;
-    }
-
-    .profile-card{
-
-        padding:
-            35px
-            20px
-            25px;
-
-        border-radius:19px;
-    }
-
-    .avatar{
-
-        width:90px;
-
-        height:90px;
-
-        font-size:30px;
-    }
-
-    .display-name{
-
-        font-size:25px;
-    }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
+<div class="background"></div>
 
-<!-- BACKGROUND -->
+<a href="index.html" class="logo">NØX</a>
 
-<div class="background">
+<main class="card" id="app">
 
-    <div class="grid"></div>
-
-    <div class="glow one"></div>
-
-    <div class="glow two"></div>
-
-</div>
-
-
-<!-- NAV -->
-
-<nav>
-
-    <a
-        href="index.html"
-        class="logo">
-
-        NØX
-
-    </a>
-
-
-    <a
-        href="login.html"
-        class="nav-button">
-
-        Create profile
-
-    </a>
-
-</nav>
-
-
-<!-- PROFILE -->
-
-<main
-    id="app"
-    class="profile-container">
-
-    <div class="profile-card">
-
-        <div class="loading">
-
-            LOADING PROFILE...
-
-        </div>
-
+    <div class="loading">
+        LOADING PROFILE...
     </div>
 
 </main>
 
 
-<footer>
-
-    <span>
-        NØX
-    </span>
-
-    <span>
-        Profiles
-    </span>
-
-</footer>
-
-
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
@@ -766,105 +167,177 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
-
 const supabase =
 window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
-
 const app =
 document.getElementById("app");
 
 
-/* =========================
-   GET USERNAME
-========================= */
-
-const params =
-new URLSearchParams(
-    window.location.search
-);
-
-
-const username =
-params.get("username");
-
-
-/* =========================
-   LOAD PROFILE
-========================= */
-
 async function loadProfile(){
 
-    if(!username){
+    try{
 
-        showNotFound();
+        const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-        return;
-
-    }
-
-
-    const cleanUsername =
-    username
-    .trim()
-    .toLowerCase();
+        const username =
+        params.get("username");
 
 
-    const {
-        data,
-        error
-    } =
-    await supabase
+        if(!username){
 
-    .from("profiles")
+            showError(
+                "No se encontró ningún username en la URL."
+            );
 
-    .select(
-        "username,display_name,bio,avatar_url,discord,youtube,github"
-    )
-
-    .eq(
-        "username",
-        cleanUsername
-    )
-
-    .maybeSingle();
+            return;
+        }
 
 
-    if(error){
+        const cleanUsername =
+        username
+        .trim()
+        .toLowerCase();
+
+
+        console.log(
+            "Buscando:",
+            cleanUsername
+        );
+
+
+        const result =
+        await supabase
+        .from("profiles")
+        .select("*")
+        .eq(
+            "username",
+            cleanUsername
+        )
+        .maybeSingle();
+
+
+        console.log(
+            "Resultado Supabase:",
+            result
+        );
+
+
+        if(result.error){
+
+            showError(
+                "Supabase: " +
+                result.error.message
+            );
+
+            return;
+        }
+
+
+        if(!result.data){
+
+            showError(
+                "No existe un perfil con el username @" +
+                cleanUsername
+            );
+
+            return;
+        }
+
+
+        renderProfile(
+            result.data
+        );
+
+    }catch(error){
 
         console.error(error);
 
         showError(
+            "Error: " +
             error.message
         );
 
-        return;
-
     }
-
-
-    if(!data){
-
-        showNotFound();
-
-        return;
-
-    }
-
-
-    renderProfile(data);
 
 }
 
 
-/* =========================
-   RENDER PROFILE
-========================= */
-
 function renderProfile(data){
+
+    const avatar =
+    data.avatar_url
+    ? `
+        <img
+            src="${escapeAttr(data.avatar_url)}"
+            onerror="this.style.display='none'"
+        >
+      `
+    : escapeHtml(
+        (
+            data.display_name ||
+            data.username ||
+            "N"
+        ).charAt(0).toUpperCase()
+      );
+
+
+    let links = "";
+
+
+    if(data.discord){
+
+        links += `
+            <a
+                class="link"
+                href="${safeUrl(data.discord)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Discord ↗
+            </a>
+        `;
+
+    }
+
+
+    if(data.youtube){
+
+        links += `
+            <a
+                class="link"
+                href="${safeUrl(data.youtube)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                YouTube ↗
+            </a>
+        `;
+
+    }
+
+
+    if(data.github){
+
+        links += `
+            <a
+                class="link"
+                href="${safeUrl(data.github)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub ↗
+            </a>
+        `;
+
+    }
+
 
     document.title =
     "@" +
@@ -872,312 +345,114 @@ function renderProfile(data){
     " — NØX";
 
 
-    app.innerHTML = "";
+    app.innerHTML = `
 
+        <div class="avatar">
+            ${avatar}
+        </div>
 
-    const card =
-    document.createElement("section");
+        <h1 class="name">
+            ${escapeHtml(
+                data.display_name ||
+                data.username
+            )}
+        </h1>
 
-    card.className =
-    "profile-card";
+        <div class="username">
+            @${escapeHtml(data.username)}
+        </div>
 
+        ${
+            data.bio
+            ?
+            `
+            <p class="bio">
+                ${escapeHtml(data.bio)}
+            </p>
+            `
+            :
+            ""
+        }
 
-    /* AVATAR */
+        <div class="links">
+            ${links}
+        </div>
 
-    const avatar =
-    document.createElement("div");
-
-    avatar.className =
-    "avatar";
-
-
-    if(data.avatar_url){
-
-        const img =
-        document.createElement("img");
-
-        img.src =
-        data.avatar_url;
-
-        img.alt =
-        "Avatar";
-
-        img.onerror =
-        function(){
-
-            avatar.innerHTML =
-            getInitial(data);
-
-        };
-
-        avatar.appendChild(img);
-
-    }else{
-
-        avatar.textContent =
-        getInitial(data);
-
-    }
-
-
-    card.appendChild(avatar);
-
-
-    /* DISPLAY NAME */
-
-    const name =
-    document.createElement("h1");
-
-    name.className =
-    "display-name";
-
-    name.textContent =
-
-        data.display_name ||
-
-        data.username;
-
-    card.appendChild(name);
-
-
-    /* USERNAME */
-
-    const user =
-    document.createElement("div");
-
-    user.className =
-    "username";
-
-    user.textContent =
-    "@" +
-    data.username;
-
-    card.appendChild(user);
-
-
-    /* BIO */
-
-    if(data.bio){
-
-        const bio =
-        document.createElement("p");
-
-        bio.className =
-        "bio";
-
-        bio.textContent =
-        data.bio;
-
-        card.appendChild(bio);
-
-    }
-
-
-    /* LINKS */
-
-    const links =
-    document.createElement("div");
-
-    links.className =
-    "links";
-
-
-    addLink(
-        links,
-        data.discord,
-        "Discord ↗"
-    );
-
-    addLink(
-        links,
-        data.youtube,
-        "YouTube ↗"
-    );
-
-    addLink(
-        links,
-        data.github,
-        "GitHub ↗"
-    );
-
-
-    card.appendChild(links);
-
-
-    app.appendChild(card);
+    `;
 
 }
 
 
-/* =========================
-   ADD LINK
-========================= */
+function showError(text){
 
-function addLink(
-    container,
-    url,
-    text
-){
+    app.innerHTML = `
 
-    if(!url){
-        return;
-    }
+        <h1>
+            ❌ Error
+        </h1>
 
+        <p class="error">
+            ${escapeHtml(text)}
+        </p>
 
-    const link =
-    document.createElement("a");
+        <a
+            href="index.html"
+            class="back"
+        >
+            ← Volver a NØX
+        </a>
 
-    link.className =
-    "profile-link";
-
-    link.href =
-    normalizeUrl(url);
-
-    link.target =
-    "_blank";
-
-    link.rel =
-    "noopener noreferrer";
-
-    link.textContent =
-    text;
-
-
-    container.appendChild(link);
+    `;
 
 }
 
 
-/* =========================
-   URL
-========================= */
+function safeUrl(url){
 
-function normalizeUrl(url){
+    const value =
+    String(url).trim();
+
 
     if(
-        url.startsWith("http://") ||
-        url.startsWith("https://")
+        value.startsWith("https://") ||
+        value.startsWith("http://")
     ){
 
-        return url;
+        return escapeAttr(value);
 
     }
 
-    return "https://" + url;
+
+    return escapeAttr(
+        "https://" + value
+    );
 
 }
 
 
-/* =========================
-   INITIAL
-========================= */
-
-function getInitial(data){
-
-    return (
-
-        data.display_name ||
-
-        data.username ||
-
-        "N"
-
-    )
-    .charAt(0)
-    .toUpperCase();
-
-}
-
-
-/* =========================
-   NOT FOUND
-========================= */
-
-function showNotFound(){
-
-    app.innerHTML = `
-
-        <section class="profile-card not-found">
-
-            <h1>
-                Profile not found
-            </h1>
-
-            <p>
-                This NØX username doesn't exist.
-            </p>
-
-            <a
-                href="index.html"
-                class="back">
-
-                ← Back to NØX
-
-            </a>
-
-        </section>
-
-    `;
-
-}
-
-
-/* =========================
-   ERROR
-========================= */
-
-function showError(error){
-
-    app.innerHTML = `
-
-        <section class="profile-card not-found">
-
-            <h1>
-                Something went wrong
-            </h1>
-
-            <p>
-                ${escapeHtml(error)}
-            </p>
-
-            <a
-                href="index.html"
-                class="back">
-
-                ← Back to NØX
-
-            </a>
-
-        </section>
-
-    `;
-
-}
-
-
-/* =========================
-   ESCAPE
-========================= */
-
-function escapeHtml(text){
+function escapeHtml(value){
 
     const div =
     document.createElement("div");
 
     div.textContent =
-    text;
+    value ?? "";
 
     return div.innerHTML;
 
 }
 
 
-/* START */
+function escapeAttr(value){
+
+    return escapeHtml(value);
+
+}
+
 
 loadProfile();
 
 </script>
 
 </body>
-
 </html>
