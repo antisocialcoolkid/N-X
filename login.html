@@ -5,879 +5,138 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color" content="#020202">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>NØX — Login</title>
 
-<style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    min-height:100vh;
-    overflow:hidden;
-    background:#020202;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-/* BACKGROUND */
-
-.background{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            #292929 0%,
-            #090909 38%,
-            #020202 75%
-        );
-}
-
-.grid{
-    position:absolute;
-    inset:0;
-    opacity:.22;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        );
-
-    background-size:45px 45px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 90%
-        );
-}
-
-.glow{
-    position:absolute;
-    width:450px;
-    height:450px;
-    border-radius:50%;
-    background:#fff;
-    filter:blur(150px);
-    opacity:.07;
-
-    animation:
-        glowMove
-        10s
-        ease-in-out
-        infinite;
-}
-
-.glow.one{
-    top:-250px;
-    left:-180px;
-}
-
-.glow.two{
-    right:-250px;
-    bottom:-250px;
-    animation-delay:-5s;
-}
-
-@keyframes glowMove{
-
-    0%,100%{
-        transform:translate(0,0) scale(1);
-    }
-
-    50%{
-        transform:translate(50px,35px) scale(1.15);
-    }
-}
-
-/* PARTICLES */
-
-.particle{
-    position:absolute;
-    width:2px;
-    height:2px;
-    border-radius:50%;
-    background:#fff;
-    opacity:.3;
-
-    animation:
-        particleMove
-        linear
-        infinite;
-}
-
-.p1{
-    left:8%;
-    animation-duration:14s;
-}
-
-.p2{
-    left:20%;
-    animation-duration:18s;
-}
-
-.p3{
-    left:35%;
-    animation-duration:13s;
-}
-
-.p4{
-    left:50%;
-    animation-duration:20s;
-}
-
-.p5{
-    left:65%;
-    animation-duration:16s;
-}
-
-.p6{
-    left:80%;
-    animation-duration:19s;
-}
-
-.p7{
-    left:93%;
-    animation-duration:12s;
-}
-
-@keyframes particleMove{
-
-    from{
-        transform:translateY(110vh);
-    }
-
-    to{
-        transform:translateY(-20vh);
-        opacity:0;
-    }
-}
-
-/* MAIN */
-
-.auth{
-    position:relative;
-    z-index:2;
-
-    min-height:100vh;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:30px;
-}
-
-/* LOGO */
-
-.logo{
-    position:absolute;
-    top:30px;
-    left:40px;
-
-    color:#fff;
-    text-decoration:none;
-
-    font-size:26px;
-    font-weight:950;
-    letter-spacing:-1px;
-
-    transition:.2s;
-}
-
-.logo:hover{
-    opacity:.65;
-    transform:translateY(-2px);
-}
-
-/* CARD */
-
-.auth-box{
-    width:min(420px,100%);
-
-    padding:38px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius:22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25,25,25,.96),
-            rgba(5,5,5,.98)
-        );
-
-    backdrop-filter:blur(25px);
-
-    box-shadow:
-        0 40px 120px rgba(0,0,0,.7);
-
-    animation:
-        cardIn
-        .7s
-        ease
-        both;
-}
-
-@keyframes cardIn{
-
-    from{
-        opacity:0;
-        transform:
-            translateY(30px)
-            scale(.97);
-    }
-
-    to{
-        opacity:1;
-        transform:
-            translateY(0)
-            scale(1);
-    }
-}
-
-/* BADGE */
-
-.badge{
-
-    width:max-content;
-
-    display:flex;
-    align-items:center;
-
-    gap:8px;
-
-    padding:7px 11px;
-
-    border:
-        1px solid
-        #292929;
-
-    border-radius:100px;
-
-    color:#777;
-
-    font-size:8px;
-    font-weight:900;
-    letter-spacing:2px;
-}
-
-.badge-dot{
-
-    width:5px;
-    height:5px;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    box-shadow:
-        0 0 10px
-        rgba(255,255,255,.8);
-
-    animation:
-        pulse
-        2s
-        infinite;
-}
-
-@keyframes pulse{
-
-    0%,100%{
-        opacity:.4;
-        transform:scale(.8);
-    }
-
-    50%{
-        opacity:1;
-        transform:scale(1.2);
-    }
-}
-
-/* TEXT */
-
-h1{
-    margin-top:22px;
-
-    font-size:34px;
-
-    letter-spacing:-1.7px;
-}
-
-.subtitle{
-    margin-top:10px;
-
-    color:#666;
-
-    font-size:12px;
-
-    line-height:1.6;
-}
-
-/* FORM */
-
-form{
-    margin-top:28px;
-}
-
-.field{
-    margin-top:16px;
-}
-
-label{
-    display:block;
-
-    margin-bottom:8px;
-
-    color:#777;
-
-    font-size:9px;
-
-    font-weight:900;
-
-    letter-spacing:1.5px;
-
-    text-transform:uppercase;
-}
-
-input{
-
-    width:100%;
-
-    height:53px;
-
-    padding:0 15px;
-
-    border:
-        1px solid
-        #292929;
-
-    border-radius:10px;
-
-    outline:none;
-
-    background:#050505;
-
-    color:#fff;
-
-    font-size:13px;
-
-    transition:.2s;
-}
-
-input::placeholder{
-    color:#3e3e3e;
-}
-
-input:hover{
-    border-color:#3b3b3b;
-}
-
-input:focus{
-
-    border-color:#777;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255,255,255,.025);
-}
-
-/* BUTTON */
-
-.signin{
-
-    width:100%;
-
-    height:53px;
-
-    margin-top:22px;
-
-    border:0;
-
-    border-radius:10px;
-
-    background:#fff;
-
-    color:#000;
-
-    cursor:pointer;
-
-    font-size:11px;
-
-    font-weight:950;
-
-    transition:.2s;
-}
-
-.signin:hover{
-
-    transform:translateY(-3px);
-
-    box-shadow:
-        0 15px 45px
-        rgba(255,255,255,.12);
-}
-
-.signin:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-    transform:none;
-}
-
-/* DIVIDER */
-
-.divider{
-
-    display:flex;
-    align-items:center;
-
-    gap:12px;
-
-    margin:24px 0;
-
-    color:#3e3e3e;
-
-    font-size:9px;
-    font-weight:bold;
-    letter-spacing:2px;
-}
-
-.divider::before,
-.divider::after{
-
-    content:"";
-
-    height:1px;
-
-    flex:1;
-
-    background:#1d1d1d;
-}
-
-/* DISCORD */
-
-.discord{
-
-    width:100%;
-
-    height:50px;
-
-    border:
-        1px solid
-        #292929;
-
-    border-radius:10px;
-
-    background:#0c0c0c;
-
-    color:#aaa;
-
-    cursor:pointer;
-
-    font-size:11px;
-
-    font-weight:800;
-
-    transition:.2s;
-}
-
-.discord:hover{
-
-    color:#fff;
-
-    border-color:#444;
-
-    background:#111;
-
-    transform:translateY(-2px);
-}
-
-/* REGISTER */
-
-.register{
-
-    margin-top:24px;
-
-    text-align:center;
-
-    color:#555;
-
-    font-size:10px;
-}
-
-.register a{
-
-    color:#fff;
-
-    text-decoration:none;
-
-    font-weight:bold;
-}
-
-.register a:hover{
-    text-decoration:underline;
-}
-
-/* MESSAGE */
-
-#message{
-
-    min-height:18px;
-
-    margin-top:16px;
-
-    text-align:center;
-
-    color:#888;
-
-    font-size:10px;
-}
-
-.success{
-    color:#6dffab !important;
-}
-
-.error{
-    color:#ff7070 !important;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-    .logo{
-        top:22px;
-        left:22px;
-        font-size:23px;
-    }
-
-    .auth{
-        padding:80px 18px 30px;
-    }
-
-    .auth-box{
-        padding:27px 22px;
-        border-radius:18px;
-    }
-
-    h1{
-        font-size:29px;
-    }
-}
-
-</style>
+<link
+    rel="stylesheet"
+    href="style.css"
+>
 
 </head>
+
 
 <body>
 
 
-<div class="background">
-
-    <div class="grid"></div>
-
-    <div class="glow one"></div>
-    <div class="glow two"></div>
-
-    <span class="particle p1"></span>
-    <span class="particle p2"></span>
-    <span class="particle p3"></span>
-    <span class="particle p4"></span>
-    <span class="particle p5"></span>
-    <span class="particle p6"></span>
-    <span class="particle p7"></span>
-
-</div>
-
-
 <main class="auth">
 
-
-<a
-    href="index.html"
-    class="logo">
-
-    NØX
-
-</a>
+    <a
+        href="index.html"
+        class="logo"
+    >
+        NØX
+    </a>
 
 
-<section class="auth-box">
+    <div class="auth-box">
+
+        <h1>
+            Welcome back.
+        </h1>
 
 
-<div class="badge">
-
-    <span class="badge-dot"></span>
-
-    NØX PROFILES
-
-</div>
+        <p>
+            Sign in to your NØX profile.
+        </p>
 
 
-<h1>
-Welcome back.
-</h1>
+        <form
+            id="loginForm"
+            novalidate
+        >
+
+            <label for="email">
+                Email
+            </label>
 
 
-<p class="subtitle">
-Sign in to your NØX profile.
-</p>
+            <input
+                id="email"
+                type="email"
+                placeholder="you@email.com"
+                autocomplete="email"
+                required
+            >
 
 
-<form id="loginForm">
+            <label for="password">
+                Password
+            </label>
 
 
-<div class="field">
-
-<label for="email">
-Email
-</label>
-
-<input
-    id="email"
-    type="email"
-    placeholder="you@email.com"
-    autocomplete="email"
-    required>
-
-</div>
+            <input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+            >
 
 
-<div class="field">
+            <button
+                id="loginButton"
+                type="submit"
+            >
+                Sign in
+            </button>
 
-<label for="password">
-Password
-</label>
-
-<input
-    id="password"
-    type="password"
-    placeholder="••••••••"
-    autocomplete="current-password"
-    required>
-
-</div>
+        </form>
 
 
-<button
-    id="loginButton"
-    class="signin"
-    type="submit">
+        <div class="divider">
 
-Sign in
+            <span>
+                OR
+            </span>
 
-</button>
-
-</form>
+        </div>
 
 
-<div class="divider">
-OR
-</div>
+        <button
+            id="discordLogin"
+            class="discord"
+            type="button"
+        >
+            Continue with Discord
+        </button>
 
 
-<button
-    id="discordLogin"
-    class="discord"
-    type="button">
+        <p class="register">
 
-Continue with Discord
+            Don't have an account?
 
-</button>
+            <a href="register.html">
+                Create one
+            </a>
 
-
-<p class="register">
-
-Don't have an account?
-
-<a href="register.html">
-Create one
-</a>
-
-</p>
+        </p>
 
 
-<p id="message"></p>
+        <p
+            id="message"
+            aria-live="polite"
+        ></p>
 
-
-</section>
+    </div>
 
 </main>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-<script>
-
-const SUPABASE_URL =
-"https://asgowauvzfnsszstvzqi.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
-
-const supabase =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
-const form =
-document.getElementById("loginForm");
-
-const email =
-document.getElementById("email");
-
-const password =
-document.getElementById("password");
-
-const button =
-document.getElementById("loginButton");
-
-const message =
-document.getElementById("message");
-
-const discord =
-document.getElementById("discordLogin");
-
-
-/* LOGIN */
-
-form.addEventListener(
-"submit",
-async function(event){
-
-    event.preventDefault();
-
-    button.disabled=true;
-
-    button.textContent=
-    "Signing in...";
-
-    message.className="";
-
-    message.textContent=
-    "Connecting to NØX...";
-
-
-    const result =
-    await supabase.auth.signInWithPassword({
-
-        email:
-        email.value.trim(),
-
-        password:
-        password.value
-
-    });
-
-
-    if(result.error){
-
-        message.className=
-        "error";
-
-        message.textContent=
-        "❌ " +
-        result.error.message;
-
-        button.disabled=false;
-
-        button.textContent=
-        "Sign in";
-
-        return;
-    }
-
-
-    message.className=
-    "success";
-
-    message.textContent=
-    "✓ Welcome back.";
-
-    button.textContent=
-    "Success ✓";
-
-
-    setTimeout(
-    function(){
-
-        window.location.href=
-        "profile.html";
-
-    },
-    700
-    );
-
-});
-
-
-/* DISCORD */
-
-discord.addEventListener(
-"click",
-async function(){
-
-    discord.disabled=true;
-
-    discord.textContent=
-    "Connecting...";
-
-
-    const result =
-    await supabase.auth.signInWithOAuth({
-
-        provider:"discord",
-
-        options:{
-            redirectTo:
-            window.location.origin +
-            "/profile.html"
-        }
-
-    });
-
-
-    if(result.error){
-
-        message.className=
-        "error";
-
-        message.textContent=
-        "❌ " +
-        result.error.message;
-
-        discord.disabled=false;
-
-        discord.textContent=
-        "Continue with Discord";
-
-    }
-
-});
-
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
 
+
+<script
+    src="auth.js?v=10"
+></script>
+
+
 </body>
+
 </html>
