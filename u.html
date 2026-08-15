@@ -2,1464 +2,1332 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NØX — Profile Editor</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>NØX — Profile</title>
 
 <style>
-*{box-sizing:border-box}
-
-:root{
-  --accent:#fff;
-  --text:#fff;
-  --muted:#aaa;
-  --border:rgba(255,255,255,.12);
-  --card:rgba(10,10,10,.62);
-  --shadow:rgba(0,0,0,.5);
+*{
+    box-sizing:border-box;
 }
 
 html,body{
-  margin:0;
-  min-height:100%;
-  background:#050505;
-  color:var(--text);
-  font-family:Arial,sans-serif;
+    margin:0;
+    min-height:100%;
 }
 
 body{
-  overflow-x:hidden;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:#050505;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
 }
 
 /* BACKGROUND */
 
-#bg,
-#bgVideo{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:-5;
+#background{
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    background:#050505;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
 }
 
-#bg{
-  background:
-    radial-gradient(circle at 50% 0%,#292929,#050505 65%);
-  background-size:cover;
-  background-position:center;
+#backgroundVideo{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:none;
+    z-index:-4;
 }
 
-#bgVideo{
-  display:none;
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.4);
+    z-index:-3;
 }
 
-#darkOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.35);
-  z-index:-4;
-  pointer-events:none;
+/* LOADING */
+
+#loading{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#050505;
+    color:#888;
+    font-size:14px;
+    z-index:100;
 }
 
-/* PARTICLES */
-
-#particles{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:-2;
+#loading.hidden{
+    display:none;
 }
 
-.particle{
-  position:absolute;
-  width:3px;
-  height:3px;
-  border-radius:50%;
-  background:white;
-  opacity:.5;
-  animation:fall linear infinite;
-}
+/* PROFILE */
 
-@keyframes fall{
-  from{transform:translateY(-20px)}
-  to{transform:translateY(110vh)}
-}
-
-/* LAYOUT */
-
-.app{
-  min-height:100vh;
-  display:grid;
-  grid-template-columns:330px 1fr;
-}
-
-.editor{
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  width:330px;
-  padding:22px;
-  overflow-y:auto;
-  background:rgba(7,7,7,.96);
-  border-right:1px solid var(--border);
-  z-index:20;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:-1px;
-}
-
-.subtitle{
-  color:#666;
-  font-size:11px;
-  margin-top:3px;
-  margin-bottom:22px;
-}
-
-.tabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:7px;
-}
-
-.tab{
-  padding:11px 8px;
-  border:1px solid transparent;
-  border-radius:9px;
-  background:#101010;
-  color:#888;
-  cursor:pointer;
-}
-
-.tab:hover,
-.tab.active{
-  color:white;
-  border-color:#292929;
-  background:#171717;
-}
-
-.section{
-  display:none;
-  margin-top:18px;
-}
-
-.section.active{
-  display:block;
-}
-
-.card{
-  padding:16px;
-  margin-bottom:12px;
-  border:1px solid #242424;
-  border-radius:14px;
-  background:#0d0d0d;
-}
-
-.card h2{
-  font-size:15px;
-  margin:0 0 5px;
-}
-
-.card p{
-  margin:0 0 13px;
-  color:#777;
-  font-size:11px;
-}
-
-label{
-  display:block;
-  color:#aaa;
-  font-size:11px;
-  margin:12px 0 6px;
-}
-
-input,
-textarea,
-select{
-  width:100%;
-  padding:11px;
-  border:1px solid #292929;
-  border-radius:8px;
-  background:#141414;
-  color:#fff;
-  outline:none;
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-  border-color:#666;
-}
-
-input[type=color]{
-  height:42px;
-  padding:3px;
-}
-
-input[type=range]{
-  padding:0;
-}
-
-input[type=file]{
-  padding:8px;
-}
-
-.check{
-  display:flex;
-  gap:8px;
-  align-items:center;
-  padding:9px;
-  border:1px solid #222;
-  border-radius:8px;
-  margin-top:8px;
-}
-
-.check input{
-  width:auto;
-}
-
-.check label{
-  margin:0;
-}
-
-.save{
-  width:100%;
-  margin-top:15px;
-  padding:13px;
-  border:0;
-  border-radius:9px;
-  background:white;
-  color:#000;
-  font-weight:900;
-  cursor:pointer;
-}
-
-.reset{
-  width:100%;
-  margin-top:7px;
-  padding:11px;
-  border:1px solid #292929;
-  border-radius:9px;
-  background:#111;
-  color:#aaa;
-  cursor:pointer;
-}
-
-/* PREVIEW */
-
-.preview-area{
-  margin-left:330px;
-  min-height:100vh;
-  padding:30px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.preview{
-  width:min(470px,100%);
-  min-height:600px;
-  position:relative;
-  overflow:hidden;
-  border:1px solid var(--border);
-  border-radius:25px;
-  background:var(--card);
-  backdrop-filter:blur(18px);
-  box-shadow:0 35px 100px var(--shadow);
-  transform-style:preserve-3d;
-  transition:transform .12s ease;
-  animation:appear .6s ease;
+.profile{
+    width:100%;
+    max-width:460px;
+    padding:30px 24px;
+    border:1px solid #292929;
+    border-radius:24px;
+    background:rgba(10,10,10,.72);
+    backdrop-filter:blur(18px);
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
+    text-align:center;
+    animation:appear .5s ease;
 }
 
 @keyframes appear{
-  from{
-    opacity:0;
-    transform:translateY(20px) scale(.97);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:none;
+    }
 }
 
-.preview-inner{
-  padding:65px 25px 30px;
-  text-align:center;
-  position:relative;
-  z-index:3;
-}
+/* AVATAR */
 
 .avatar{
-  width:105px;
-  height:105px;
-  margin:auto;
-  border-radius:50%;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#171717;
-  border:4px solid white;
-  box-shadow:0 0 30px rgba(255,255,255,.12);
-  font-size:35px;
-  font-weight:900;
+    width:105px;
+    height:105px;
+    margin:auto;
+    border-radius:50%;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#181818;
+    border:3px solid #fff;
+    font-size:36px;
+    font-weight:900;
 }
 
 .avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
+/* TEXT */
+
 .name{
-  margin-top:17px;
-  font-size:30px;
-  font-weight:900;
+    margin-top:18px;
+    font-size:28px;
+    font-weight:900;
 }
 
 .username{
-  margin-top:4px;
-  color:#888;
-  font-size:13px;
+    margin-top:5px;
+    color:#888;
+    font-size:13px;
 }
 
 .bio{
-  margin:17px auto 0;
-  max-width:390px;
-  color:#bbb;
-  line-height:1.5;
-  font-size:14px;
+    margin:17px auto 0;
+    max-width:390px;
+    color:#bbb;
+    line-height:1.55;
+    font-size:14px;
 }
 
-.views{
-  margin-top:12px;
-  color:#777;
-  font-size:11px;
-}
-
-.links{
-  margin-top:22px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.social{
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  background:rgba(10,10,10,.6);
-  color:white;
-  text-decoration:none;
-  transition:.2s;
-}
-
-.social:hover{
-  transform:translateY(-3px);
-  border-color:var(--accent);
-  box-shadow:0 0 20px rgba(255,255,255,.1);
-}
+/* BADGES */
 
 .badges{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-top:17px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
 }
 
 .badge{
-  padding:6px 9px;
-  border-radius:20px;
-  border:1px solid var(--border);
-  background:#111;
-  font-size:10px;
+    padding:6px 10px;
+    border:1px solid #333;
+    border-radius:999px;
+    background:#111;
+    color:#ddd;
+    font-size:11px;
 }
+
+/* VIEWS */
+
+.views{
+    margin-top:14px;
+    color:#777;
+    font-size:12px;
+}
+
+/* LINKS */
+
+.links{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:20px;
+}
+
+.link{
+    display:block;
+    padding:12px;
+    border:1px solid #292929;
+    border-radius:11px;
+    background:#111;
+    color:#fff;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.link:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px rgba(255,255,255,.15);
+}
+
+/* MUSIC */
 
 .music{
-  width:100%;
-  margin-top:20px;
+    width:100%;
+    margin-top:18px;
 }
 
-.music-info{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-top:15px;
-  text-align:left;
-}
-
-.music-cover{
-  width:45px;
-  height:45px;
-  border-radius:8px;
-  object-fit:cover;
-  background:#171717;
-}
-
-.music-title{
-  font-size:12px;
-  font-weight:bold;
-}
-
-.music-artist{
-  color:#777;
-  font-size:10px;
-  margin-top:3px;
+.music audio{
+    width:100%;
 }
 
 .hidden{
-  display:none!important;
+    display:none!important;
 }
 
-/* GLITCH */
+/* RAIN */
 
-.glitch{
-  animation:glitch .3s infinite;
+.rain{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:5;
 }
 
-@keyframes glitch{
-  0%{text-shadow:2px 0 red,-2px 0 cyan}
-  25%{text-shadow:-2px 0 red,2px 0 cyan}
-  50%{text-shadow:2px 0 cyan,-2px 0 red}
-  75%{text-shadow:-2px 0 cyan,2px 0 red}
-  100%{text-shadow:none}
+.drop{
+    position:absolute;
+    top:-20px;
+    width:1px;
+    height:18px;
+    background:rgba(255,255,255,.35);
+    animation:fall linear infinite;
 }
 
-/* TYPEWRITER */
-
-.cursor{
-  border-right:2px solid var(--accent);
-  animation:blink .7s infinite;
+@keyframes fall{
+    to{
+        transform:translateY(110vh);
+    }
 }
 
-@keyframes blink{
-  50%{border-color:transparent}
-}
+/* ERROR */
 
-/* STATUS */
-
-.status{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  padding:9px 13px;
-  border:1px solid #292929;
-  border-radius:9px;
-  background:#111;
-  color:#777;
-  font-size:11px;
-  z-index:100;
+.error{
+    color:#ff7777;
+    text-align:center;
+    line-height:1.6;
 }
 
 /* MOBILE */
 
-@media(max-width:900px){
+@media(max-width:600px){
 
-  .app{
-    display:block;
-  }
+    body{
+        padding:12px;
+    }
 
-  .editor{
-    position:relative;
-    width:100%;
-    max-height:none;
-    border-right:0;
-    border-bottom:1px solid #222;
-  }
+    .profile{
+        padding:26px 17px;
+    }
 
-  .preview-area{
-    margin-left:0;
-    padding:20px;
-  }
+    .name{
+        font-size:25px;
+    }
 
-}
-
-@media(max-width:500px){
-
-  .preview{
-    min-height:550px;
-  }
-
-  .preview-inner{
-    padding-top:45px;
-  }
-
-  .tabs{
-    grid-template-columns:1fr 1fr 1fr;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="bg"></div>
-
-<video id="bgVideo" autoplay muted loop playsinline></video>
-
-<div id="darkOverlay"></div>
-
-<div id="particles"></div>
-
-
-<div class="app">
-
-<!-- ================= EDITOR ================= -->
-
-<aside class="editor">
-
-<div class="logo">NØX</div>
-<div class="subtitle">PROFILE CUSTOMIZER</div>
-
-<div class="tabs">
-
-<button class="tab active" data-section="profile">
-👤 Perfil
-</button>
-
-<button class="tab" data-section="background">
-🌆 Fondo
-</button>
-
-<button class="tab" data-section="music">
-🎵 Música
-</button>
-
-<button class="tab" data-section="social">
-🔗 Redes
-</button>
-
-<button class="tab" data-section="effects">
-✨ Efectos
-</button>
-
-<button class="tab" data-section="colors">
-🎨 Colores
-</button>
-
+<div id="loading">
+    Cargando perfil...
 </div>
 
+<div id="background"></div>
 
-<!-- PERFIL -->
+<video
+    id="backgroundVideo"
+    muted
+    loop
+    playsinline
+></video>
 
-<section id="profile" class="section active">
+<div id="overlay"></div>
 
-<div class="card">
+<div
+    id="rain"
+    class="rain hidden"
+></div>
 
-<h2>👤 Perfil</h2>
-<p>Personaliza la información visible.</p>
-
-<label>Apodo</label>
-
-<input
- id="displayName"
- placeholder="Tu apodo"
+<main
+    id="profile"
+    class="profile hidden"
 >
 
-<label>Biografía</label>
-
-<textarea
- id="bio"
- placeholder="Escribe tu biografía..."
-></textarea>
-
-<label>Avatar</label>
-
-<input
- id="avatar"
- type="file"
- accept="image/*"
->
-
-<div class="check">
-
-<input
- id="showAvatar"
- type="checkbox"
- checked
->
-
-<label for="showAvatar">
-Mostrar avatar
-</label>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>🏅 Badges</h2>
-
-<input
- id="badgeInput"
- placeholder="Ej: VERIFIED"
->
-
-<button
- id="addBadge"
- class="save"
->
-+ Añadir badge
-</button>
-
-</div>
-
-</section>
-
-
-<!-- FONDO -->
-
-<section id="background" class="section">
-
-<div class="card">
-
-<h2>🌆 Fondo</h2>
-<p>Imagen, GIF o vídeo.</p>
-
-<label>Imagen / GIF</label>
-
-<input
- id="backgroundFile"
- type="file"
- accept="image/*"
->
-
-<label>Vídeo</label>
-
-<input
- id="videoFile"
- type="file"
- accept="video/mp4,video/webm"
->
-
-<label>Oscurecimiento</label>
-
-<input
- id="overlay"
- type="range"
- min="0"
- max="90"
- value="35"
->
-
-</div>
-
-</section>
-
-
-<!-- MÚSICA -->
-
-<section id="music" class="section">
-
-<div class="card">
-
-<h2>🎵 Música</h2>
-<p>El visitante podrá reproducirla al interactuar con la página.</p>
-
-<label>Canción</label>
-
-<input
- id="musicFile"
- type="file"
- accept="audio/*"
->
-
-<label>Título</label>
-
-<input
- id="musicTitle"
- placeholder="Mi canción"
->
-
-<label>Artista</label>
-
-<input
- id="musicArtist"
- placeholder="Artista"
->
-
-<label>Portada</label>
-
-<input
- id="musicCover"
- type="file"
- accept="image/*"
->
-
-<div class="check">
-
-<input
- id="showMusic"
- type="checkbox"
- checked
->
-
-<label for="showMusic">
-Mostrar reproductor
-</label>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- REDES -->
-
-<section id="social" class="section">
-
-<div class="card">
-
-<h2>🔗 Redes sociales</h2>
-
-<label>Discord</label>
-<input id="discord" placeholder="discord.gg/...">
-
-<label>Instagram</label>
-<input id="instagram" placeholder="https://instagram.com/...">
-
-<label>TikTok</label>
-<input id="tiktok" placeholder="https://tiktok.com/@...">
-
-<label>YouTube</label>
-<input id="youtube" placeholder="https://youtube.com/...">
-
-<label>GitHub</label>
-<input id="github" placeholder="https://github.com/...">
-
-<label>Spotify</label>
-<input id="spotify" placeholder="https://open.spotify.com/...">
-
-</div>
-
-
-<div class="card">
-
-<h2>➕ Enlace personalizado</h2>
-
-<label>Nombre</label>
-
-<input
- id="customName"
- placeholder="Mi página"
->
-
-<label>URL</label>
-
-<input
- id="customUrl"
- placeholder="https://..."
->
-
-<button
- id="addLink"
- class="save"
->
-+ Añadir enlace
-</button>
-
-</div>
-
-</section>
-
-
-<!-- EFECTOS -->
-
-<section id="effects" class="section">
-
-<div class="card">
-
-<h2>✨ Efectos</h2>
-
-<div class="check">
-<input id="particlesToggle" type="checkbox">
-<label for="particlesToggle">Partículas</label>
-</div>
-
-<div class="check">
-<input id="snowToggle" type="checkbox">
-<label for="snowToggle">Nieve</label>
-</div>
-
-<div class="check">
-<input id="threeD" type="checkbox">
-<label for="threeD">Tarjeta 3D</label>
-</div>
-
-<div class="check">
-<input id="glitch" type="checkbox">
-<label for="glitch">Glitch</label>
-</div>
-
-<div class="check">
-<input id="blur" type="checkbox" checked>
-<label for="blur">Glass blur</label>
-</div>
-
-<div class="check">
-<input id="customCursor" type="checkbox">
-<label for="customCursor">Cursor personalizado</label>
-</div>
-
-<label>Cursor</label>
-
-<input
- id="cursorFile"
- type="file"
- accept="image/png,image/webp,image/gif"
->
-
-</div>
-
-
-<div class="card">
-
-<h2>⌨️ Máquina de escribir</h2>
-
-<div class="check">
-
-<input
- id="typing"
- type="checkbox"
->
-
-<label for="typing">
-Activar
-</label>
-
-</div>
-
-<label>Velocidad</label>
-
-<input
- id="typingSpeed"
- type="range"
- min="20"
- max="180"
- value="60"
->
-
-</div>
-
-</section>
-
-
-<!-- COLORES -->
-
-<section id="colors" class="section">
-
-<div class="card">
-
-<h2>🎨 Colores</h2>
-
-<label>Color principal</label>
-<input id="accent" type="color" value="#ffffff">
-
-<label>Texto</label>
-<input id="textColor" type="color" value="#ffffff">
-
-<label>Bordes</label>
-<input id="borderColor" type="color" value="#292929">
-
-<label>Sombra</label>
-<input id="shadowColor" type="color" value="#000000">
-
-<label>Fondo</label>
-<input id="pageColor" type="color" value="#050505">
-
-</div>
-
-
-<div class="card">
-
-<h2>🔤 Tipografía</h2>
-
-<select id="font">
-
-<option>Arial</option>
-<option>Verdana</option>
-<option>Trebuchet MS</option>
-<option>Georgia</option>
-<option>Courier New</option>
-<option>Impact</option>
-
-</select>
-
-</div>
-
-</section>
-
-
-<button id="save" class="save">
-Guardar ahora
-</button>
-
-<button id="reset" class="reset">
-Restablecer
-</button>
-
-</aside>
-
-
-<!-- ================= PREVIEW ================= -->
-
-<main class="preview-area">
-
-<div id="preview" class="preview">
-
-<div class="preview-inner">
-
-<div id="previewAvatar" class="avatar">
-N
-</div>
-
-<div id="previewName" class="name">
-NØX User
-</div>
-
-<div id="previewUsername" class="username">
-@username
-</div>
-
-<div id="previewBio" class="bio">
-Welcome to my NØX profile.
-</div>
-
-<div id="previewViews" class="views">
-👁️ 0 vistas
-</div>
-
-<div id="previewBadges" class="badges"></div>
-
-<div id="previewLinks" class="links"></div>
-
-<div id="musicInfo" class="music-info hidden">
-
-<img id="musicCoverPreview" class="music-cover">
-
-<div>
-
-<div id="musicTitlePreview" class="music-title">
-Mi canción
-</div>
-
-<div id="musicArtistPreview" class="music-artist">
-Artista
-</div>
-
-</div>
-
-</div>
-
-<audio
- id="audio"
- class="music hidden"
- controls
-></audio>
-
-</div>
-
-</div>
+    <div
+        id="avatar"
+        class="avatar"
+    >
+        N
+    </div>
+
+    <div
+        id="name"
+        class="name"
+    >
+        NØX User
+    </div>
+
+    <div
+        id="username"
+        class="username"
+    >
+        @username
+    </div>
+
+    <div
+        id="bio"
+        class="bio"
+    >
+        Welcome to my NØX profile.
+    </div>
+
+    <div
+        id="badges"
+        class="badges"
+    ></div>
+
+    <div
+        id="views"
+        class="views"
+    >
+        👁️ 0 vistas
+    </div>
+
+    <div
+        id="links"
+        class="links"
+    ></div>
+
+    <div
+        id="musicBox"
+        class="music hidden"
+    >
+        <audio
+            id="music"
+            controls
+        ></audio>
+    </div>
 
 </main>
 
-</div>
 
+<!-- SUPABASE DEBE CARGARSE ANTES DEL SCRIPT PRINCIPAL -->
 
-<div id="status" class="status">
-Autoguardado ✓
-</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-/* =========================================
-   ESTADO
-========================================= */
+/* ==========================================
+   SUPABASE
+========================================== */
 
-const state = {
+const SUPABASE_URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
 
- displayName:"",
- bio:"",
+const SUPABASE_KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
- avatar:"",
-
- background:"",
- backgroundType:"image",
- overlay:35,
-
- music:"",
- musicTitle:"Mi canción",
- musicArtist:"Artista",
- musicCover:"",
-
- discord:"",
- instagram:"",
- tiktok:"",
- youtube:"",
- github:"",
- spotify:"",
-
- customLinks:[],
-
- badges:[],
-
- showAvatar:true,
- showMusic:true,
-
- particles:false,
- snow:false,
- threeD:false,
- glitch:false,
- blur:true,
- customCursor:false,
-
- cursor:"",
-
- typing:false,
- typingSpeed:60,
-
- accent:"#ffffff",
- textColor:"#ffffff",
- borderColor:"#292929",
- shadowColor:"#000000",
- pageColor:"#050505",
-
- font:"Arial",
-
- views:0
-};
+const supabase =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
-/* =========================================
+/* ==========================================
    ELEMENTOS
-========================================= */
+========================================== */
 
-const $ = id =>
- document.getElementById(id);
+const loading =
+document.getElementById("loading");
+
+const profileElement =
+document.getElementById("profile");
+
+const avatarElement =
+document.getElementById("avatar");
+
+const nameElement =
+document.getElementById("name");
+
+const usernameElement =
+document.getElementById("username");
+
+const bioElement =
+document.getElementById("bio");
+
+const badgesElement =
+document.getElementById("badges");
+
+const viewsElement =
+document.getElementById("views");
+
+const linksElement =
+document.getElementById("links");
+
+const backgroundElement =
+document.getElementById("background");
+
+const backgroundVideo =
+document.getElementById("backgroundVideo");
+
+const overlay =
+document.getElementById("overlay");
+
+const musicBox =
+document.getElementById("musicBox");
+
+const music =
+document.getElementById("music");
+
+const rain =
+document.getElementById("rain");
 
 
-/* =========================================
-   FILE READER
-========================================= */
+/* ==========================================
+   USERNAME DE LA URL
+========================================== */
 
-function readFile(file){
+const params =
+new URLSearchParams(
+    window.location.search
+);
 
- return new Promise((resolve,reject)=>{
+const requestedUsername =
+params.get("username");
 
-   const reader =
-   new FileReader();
 
-   reader.onload =
-   () => resolve(reader.result);
+/* ==========================================
+   CARGAR PERFIL
+========================================== */
 
-   reader.onerror =
-   reject;
+async function loadProfile(){
 
-   reader.readAsDataURL(file);
+    try{
 
- });
+        if(!requestedUsername){
+
+            showError(
+                "No se especificó un username."
+            );
+
+            return;
+        }
+
+
+        const cleanUsername =
+        requestedUsername
+        .trim()
+        .toLowerCase();
+
+
+        /*
+           BUSCAR PERFIL
+        */
+
+        const {
+            data,
+            error
+        } =
+        await supabase
+        .from("profiles")
+        .select("*")
+        .eq(
+            "username",
+            cleanUsername
+        )
+        .maybeSingle();
+
+
+        if(error){
+
+            console.error(
+                "Supabase:",
+                error
+            );
+
+            showError(
+                "Error cargando el perfil."
+            );
+
+            return;
+        }
+
+
+        if(!data){
+
+            showError(
+                "Este perfil no existe."
+            );
+
+            return;
+        }
+
+
+        /*
+           MOSTRAR PERFIL
+        */
+
+        renderProfile(data);
+
+
+        /*
+           SUMAR VISTA
+        */
+
+        const {
+            error:viewError
+        } =
+        await supabase.rpc(
+            "increment_profile_views",
+            {
+                profile_uuid:data.id
+            }
+        );
+
+
+        if(viewError){
+
+            console.error(
+                "Error al sumar vista:",
+                viewError
+            );
+
+        }else{
+
+            /*
+               Como la RPC incrementó la
+               base de datos, mostramos
+               inmediatamente +1.
+            */
+
+            const newViews =
+            Number(
+                data.profile_views || 0
+            ) + 1;
+
+
+            viewsElement.textContent =
+            "👁️ " +
+            newViews +
+            (
+                newViews === 1
+                ? " vista"
+                : " vistas"
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showError(
+            "Error inesperado."
+        );
+
+    }
+
 }
 
 
-/* =========================================
-   TABS
-========================================= */
+/* ==========================================
+   MOSTRAR PERFIL
+========================================== */
 
-document
-.querySelectorAll(".tab")
-.forEach(button=>{
+function renderProfile(data){
 
- button.addEventListener("click",()=>{
+    /*
+       APODO
+    */
 
-   document
-   .querySelectorAll(".tab")
-   .forEach(x =>
-     x.classList.remove("active")
-   );
-
-   document
-   .querySelectorAll(".section")
-   .forEach(x =>
-     x.classList.remove("active")
-   );
-
-   button.classList.add("active");
-
-   $(button.dataset.section)
-   .classList.add("active");
-
- });
-
-});
+    nameElement.textContent =
+    data.display_name ||
+    data.username ||
+    "NØX User";
 
 
-/* =========================================
-   TEXT INPUTS
-========================================= */
+    /*
+       USERNAME
+       SOLO SE MUESTRA
+       NO SE MODIFICA
+    */
 
-function bindText(id,key){
+    usernameElement.textContent =
+    "@" +
+    data.username;
 
- $(id).addEventListener("input",()=>{
 
-   state[key] =
-   $(id).value;
+    /*
+       BIO
+    */
 
-   update();
+    bioElement.textContent =
+    data.bio ||
+    "Welcome to my NØX profile.";
 
- });
+
+    /*
+       VISTAS
+    */
+
+    const views =
+    Number(
+        data.profile_views || 0
+    );
+
+
+    viewsElement.textContent =
+    "👁️ " +
+    views +
+    (
+        views === 1
+        ? " vista"
+        : " vistas"
+    );
+
+
+    /*
+       AVATAR
+    */
+
+    avatarElement.innerHTML =
+    "";
+
+
+    if(data.avatar_url){
+
+        const img =
+        document.createElement("img");
+
+        img.src =
+        data.avatar_url;
+
+        img.alt =
+        "Avatar";
+
+
+        img.onerror =
+        function(){
+
+            avatarElement.textContent =
+            getFirstLetter(
+                data.display_name ||
+                data.username
+            );
+
+        };
+
+
+        avatarElement.appendChild(
+            img
+        );
+
+    }else{
+
+        avatarElement.textContent =
+        getFirstLetter(
+            data.display_name ||
+            data.username
+        );
+
+    }
+
+
+    /*
+       BADGES
+    */
+
+    loadBadges(
+        data.badges
+    );
+
+
+    /*
+       REDES
+    */
+
+    addLink(
+        data.discord,
+        "Discord"
+    );
+
+    addLink(
+        data.instagram,
+        "Instagram"
+    );
+
+    addLink(
+        data.tiktok,
+        "TikTok"
+    );
+
+    addLink(
+        data.spotify,
+        "Spotify"
+    );
+
+    addLink(
+        data.youtube,
+        "YouTube"
+    );
+
+    addLink(
+        data.github,
+        "GitHub"
+    );
+
+
+    /*
+       FONDO
+    */
+
+    loadBackground(
+        data
+    );
+
+
+    /*
+       MÚSICA
+    */
+
+    loadMusic(
+        data
+    );
+
+
+    /*
+       COLORES
+    */
+
+    applyColors(
+        data
+    );
+
+
+    /*
+       EFECTOS
+    */
+
+    applyEffects(
+        data
+    );
+
+
+    /*
+       MOSTRAR
+    */
+
+    loading.classList.add(
+        "hidden"
+    );
+
+    profileElement.classList.remove(
+        "hidden"
+    );
 
 }
 
 
-bindText("displayName","displayName");
-bindText("bio","bio");
-
-bindText("discord","discord");
-bindText("instagram","instagram");
-bindText("tiktok","tiktok");
-bindText("youtube","youtube");
-bindText("github","github");
-bindText("spotify","spotify");
-
-bindText("musicTitle","musicTitle");
-bindText("musicArtist","musicArtist");
-
-
-/* =========================================
-   CHECKBOXES
-========================================= */
-
-function bindCheck(id,key){
-
- $(id).addEventListener("change",()=>{
-
-   state[key] =
-   $(id).checked;
-
-   update();
-
- });
-
-}
-
-
-bindCheck("showAvatar","showAvatar");
-bindCheck("showMusic","showMusic");
-bindCheck("particlesToggle","particles");
-bindCheck("snowToggle","snow");
-bindCheck("threeD","threeD");
-bindCheck("glitch","glitch");
-bindCheck("blur","blur");
-bindCheck("customCursor","customCursor");
-bindCheck("typing","typing");
-
-
-/* =========================================
-   COLORS
-========================================= */
-
-function bindValue(id,key){
-
- $(id).addEventListener("input",()=>{
-
-   state[key] =
-   $(id).value;
-
-   update();
-
- });
-
-}
-
-
-bindValue("accent","accent");
-bindValue("textColor","textColor");
-bindValue("borderColor","borderColor");
-bindValue("shadowColor","shadowColor");
-bindValue("pageColor","pageColor");
-
-$("font").addEventListener("change",()=>{
-
- state.font =
- $("font").value;
-
- update();
-
-});
-
-
-$("overlay").addEventListener("input",()=>{
-
- state.overlay =
- Number(
-   $("overlay").value
- );
-
- update();
-
-});
-
-
-$("typingSpeed").addEventListener("input",()=>{
-
- state.typingSpeed =
- Number(
-   $("typingSpeed").value
- );
-
-});
-
-
-/* =========================================
-   AVATAR
-========================================= */
-
-$("avatar")
-.addEventListener("change",async()=>{
-
- const file =
- $("avatar").files[0];
-
- if(!file)return;
-
- state.avatar =
- await readFile(file);
-
- update();
-
-});
-
-
-/* =========================================
-   BACKGROUND IMAGE
-========================================= */
-
-$("backgroundFile")
-.addEventListener("change",async()=>{
-
- const file =
- $("backgroundFile").files[0];
-
- if(!file)return;
-
- state.background =
- await readFile(file);
-
- state.backgroundType =
- "image";
-
- update();
-
-});
-
-
-/* =========================================
-   VIDEO
-========================================= */
-
-$("videoFile")
-.addEventListener("change",async()=>{
-
- const file =
- $("videoFile").files[0];
-
- if(!file)return;
-
- state.background =
- await readFile(file);
-
- state.backgroundType =
- "video";
-
- update();
-
-});
-
-
-/* =========================================
-   MUSIC
-========================================= */
-
-$("musicFile")
-.addEventListener("change",async()=>{
-
- const file =
- $("musicFile").files[0];
-
- if(!file)return;
-
- state.music =
- await readFile(file);
-
- update();
-
-});
-
-
-/* =========================================
-   MUSIC COVER
-========================================= */
-
-$("musicCover")
-.addEventListener("change",async()=>{
-
- const file =
- $("musicCover").files[0];
-
- if(!file)return;
-
- state.musicCover =
- await readFile(file);
-
- update();
-
-});
-
-
-/* =========================================
-   CURSOR
-========================================= */
-
-$("cursorFile")
-.addEventListener("change",async()=>{
-
- const file =
- $("cursorFile").files[0];
-
- if(!file)return;
-
- state.cursor =
- await readFile(file);
-
- update();
-
-});
-
-
-/* =========================================
+/* ==========================================
    BADGES
-========================================= */
+========================================== */
 
-$("addBadge")
-.addEventListener("click",()=>{
+function loadBadges(
+    badges
+){
 
- const value =
- $("badgeInput")
- .value
- .trim();
-
- if(!value)return;
-
- state.badges.push(value);
-
- $("badgeInput").value="";
-
- update();
-
-});
+    badgesElement.innerHTML =
+    "";
 
 
-/* =========================================
-   CUSTOM LINK
-========================================= */
-
-$("addLink")
-.addEventListener("click",()=>{
-
- const name =
- $("customName")
- .value
- .trim();
-
- const url =
- $("customUrl")
- .value
- .trim();
-
- if(!name || !url)return;
-
- state.customLinks.push({
-   name,
-   url
- });
-
- $("customName").value="";
- $("customUrl").value="";
-
- update();
-
-});
+    if(!badges)
+        return;
 
 
-/* =========================================
-   PREVIEW
-========================================= */
-
-let typingTimer;
-let typingToken=0;
-
-function update(){
-
- document.documentElement
- .style
- .setProperty(
-   "--accent",
-   state.accent
- );
-
- document.documentElement
- .style
- .setProperty(
-   "--text",
-   state.textColor
- );
-
- document.documentElement
- .style
- .setProperty(
-   "--border",
-   state.borderColor
- );
-
- document.documentElement
- .style
- .setProperty(
-   "--shadow",
-   state.shadowColor
- );
-
- document.body.style.background =
- state.pageColor;
-
- document.body.style.fontFamily =
- state.font;
+    let list = [];
 
 
- /* OVERLAY */
+    if(Array.isArray(badges)){
 
- $("darkOverlay")
- .style.background =
- `rgba(0,0,0,${state.overlay/100})`;
+        list =
+        badges;
+
+    }else{
+
+        list =
+        String(badges)
+        .split(",");
+
+    }
 
 
- /* NAME */
+    list
+    .map(
+        x => String(x).trim()
+    )
+    .filter(Boolean)
+    .forEach(
+        badgeText => {
 
- $("previewName")
- .textContent =
- state.displayName ||
- "NØX User";
+            const badge =
+            document.createElement(
+                "div"
+            );
 
- $("preview
+            badge.className =
+            "badge";
+
+            badge.textContent =
+            badgeText;
+
+            badgesElement.appendChild(
+                badge
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   LINKS
+========================================== */
+
+function addLink(
+    url,
+    name
+){
+
+    if(!url)
+        return;
+
+
+    const a =
+    document.createElement(
+        "a"
+    );
+
+
+    a.className =
+    "link";
+
+    a.textContent =
+    name + " ↗";
+
+    a.href =
+    normalizeUrl(
+        url
+    );
+
+    a.target =
+    "_blank";
+
+    a.rel =
+    "noopener noreferrer";
+
+
+    linksElement.appendChild(
+        a
+    );
+
+}
+
+
+/* ==========================================
+   NORMALIZAR URL
+========================================== */
+
+function normalizeUrl(
+    url
+){
+
+    url =
+    String(url).trim();
+
+
+    if(
+        url.startsWith("http://") ||
+        url.startsWith("https://")
+    ){
+
+        return url;
+
+    }
+
+
+    return "https://" +
+    url;
+
+}
+
+
+/* ==========================================
+   FONDO
+========================================== */
+
+function loadBackground(
+    data
+){
+
+    const url =
+    data.background_url;
+
+
+    const type =
+    data.background_type ||
+    "image";
+
+
+    if(!url){
+
+        backgroundElement.style.background =
+        data.background_color ||
+        "#050505";
+
+        return;
+    }
+
+
+    if(type === "video"){
+
+        backgroundElement.style.display =
+        "none";
+
+        backgroundVideo.src =
+        url;
+
+        backgroundVideo.style.display =
+        "block";
+
+
+        backgroundVideo.play()
+        .catch(
+            () => {}
+        );
+
+    }else{
+
+        backgroundVideo.pause();
+
+        backgroundVideo.removeAttribute(
+            "src"
+        );
+
+        backgroundVideo.style.display =
+        "none";
+
+        backgroundElement.style.backgroundImage =
+        `url("${url}")`;
+
+    }
+
+}
+
+
+/* ==========================================
+   MÚSICA
+========================================== */
+
+function loadMusic(
+    data
+){
+
+    if(!data.music_url){
+
+        musicBox.classList.add(
+            "hidden"
+        );
+
+        return;
+    }
+
+
+    music.src =
+    data.music_url;
+
+
+    musicBox.classList.remove(
+        "hidden"
+    );
+
+
+    /*
+       Los navegadores bloquean
+       autoplay de audio en muchos casos.
+       Se intenta reproducir después
+       del primer clic.
+    */
+
+    document.addEventListener(
+        "click",
+        function playMusic(){
+
+            music.play()
+            .catch(
+                () => {}
+            );
+
+            document.removeEventListener(
+                "click",
+                playMusic
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   COLORES
+========================================== */
+
+function applyColors(
+    data
+){
+
+    if(data.background_color){
+
+        backgroundElement.style.backgroundColor =
+        data.background_color;
+
+    }
+
+
+    if(data.text_color){
+
+        document.body.style.color =
+        data.text_color;
+
+    }
+
+
+    if(data.overlay_opacity !== null &&
+       data.overlay_opacity !== undefined){
+
+        overlay.style.background =
+        `rgba(0,0,0,${
+            data.overlay_opacity
+        })`;
+
+    }
+
+}
+
+
+/* ==========================================
+   EFECTOS
+========================================== */
+
+function applyEffects(
+    data
+){
+
+    /*
+       GLITCH
+    */
+
+    if(data.glitch_enabled){
+
+        usernameElement.style.textShadow =
+        "2px 0 #ff004c,-2px 0 #00eaff";
+
+        usernameElement.style.animation =
+        "glitch .18s infinite alternate";
+
+    }
+
+
+    /*
+       3D
+    */
+
+    if(data.three_d_enabled){
+
+        enable3D();
+
+    }
+
+
+    /*
+       LLUVIA
+    */
+
+    if(data.rain_enabled){
+
+        createRain();
+
+    }
+
+
+    /*
+       CURSOR
+    */
+
+    if(data.cursor_url){
+
+        document.body.style.cursor =
+        `url("${data.cursor_url}"), auto`;
+
+    }
+
+
+    /*
+       FUENTE
+    */
+
+    if(data.font_family){
+
+        document.body.style.fontFamily =
+        data.font_family;
+
+    }
+
+}
+
+
+/* ==========================================
+   3D
+========================================== */
+
+function enable3D(){
+
+    profileElement.addEventListener(
+        "mousemove",
+        function(event){
+
+            const rect =
+            profileElement.getBoundingClientRect();
+
+
+            const x =
+            event.clientX -
+            rect.left;
+
+
+            const y =
+            event.clientY -
+            rect.top;
+
+
+            const rotateY =
+            ((x / rect.width) - .5) * 10;
+
+
+            const rotateX =
+            ((y / rect.height) - .5) * -10;
+
+
+            profileElement.style.transform =
+            `perspective(900px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)`;
+
+        }
+    );
+
+
+    profileElement.addEventListener(
+        "mouseleave",
+        function(){
+
+            profileElement.style.transform =
+            "";
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   LLUVIA
+========================================== */
+
+function createRain(){
+
+    rain.classList.remove(
+        "hidden"
+    );
+
+
+    for(
+        let i = 0;
+        i < 80;
+        i++
+    ){
+
+        const drop =
+        document.createElement(
+            "div"
+        );
+
+
+        drop.className =
+        "drop";
+
+
+        drop.style.left =
+        Math.random() * 100 +
+        "%";
+
+
+        drop.style.animationDuration =
+        (
+            0.5 +
+            Math.random() * 1.5
+        ) +
+        "s";
+
+
+        drop.style.animationDelay =
+        (
+            Math.random() * 2
+        ) +
+        "s";
+
+
+        rain.appendChild(
+            drop
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   PRIMERA LETRA
+========================================== */
+
+function getFirstLetter(
+    text
+){
+
+    return (
+        text ||
+        "N"
+    )
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* ==========================================
+   ERROR
+========================================== */
+
+function showError(
+    message
+){
+
+    loading.classList.add(
+        "hidden"
+    );
+
+
+    profileElement.classList.remove(
+        "hidden"
+    );
+
+
+    profileElement.innerHTML =
+    `
+        <div class="error">
+            ${escapeHtml(message)}
+        </div>
+    `;
+
+}
+
+
+/* ==========================================
+   ESCAPAR HTML
+========================================== */
+
+function escapeHtml(
+    value
+){
+
+    return String(value)
+    .replaceAll(
+        "&",
+        "&amp;"
+    )
+    .replaceAll(
+        "<",
+        "&lt;"
+    )
+    .replaceAll(
+        ">",
+        "&gt;"
+    )
+    .replaceAll(
+        '"',
+        "&quot;"
+    )
+    .replaceAll(
+        "'",
+        "&#039;"
+    );
+
+}
+
+
+/* ==========================================
+   INICIAR
+========================================== */
+
+loadProfile();
+
+</script>
+
+</body>
+</html>
