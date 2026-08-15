@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="NØX — Tools, projects and digital utilities."
+    >
+
+    <meta name="theme-color" content="#080808">
+
+    <title>NØX — Digital Hub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         BACKGROUND
+    ========================== -->
+
+    <div class="background">
+        <div class="glow glow-one"></div>
+        <div class="glow glow-two"></div>
+    </div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <a href="#home" class="logo">
+            NØX
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#tools">
+                Tools
+            </a>
+
+            <a href="#projects">
+                Projects
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+        </nav>
+
+        <a href="#links" class="nav-button">
+            Links
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main>
+
+
+        <!-- =====================
+             HERO
+        ====================== -->
+
+        <section id="home" class="hero">
+
+            <div class="hero-content">
+
+                <div class="status">
+                    <span class="status-dot"></span>
+                    ONLINE
+                </div>
+
+                <h1>
+                    Welcome to
+                    <span>NØX.</span>
+                </h1>
+
+                <p class="hero-description">
+                    A personal digital hub for tools,
+                    projects and useful utilities.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="#tools"
+                        class="button primary"
+                    >
+                        Explore
+                    </a>
+
+                    <a
+                        href="#projects"
+                        class="button secondary"
+                    >
+                        Projects
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="scroll-indicator">
+                SCROLL ↓
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             TOOLS
+        ====================== -->
+
+        <section id="tools" class="section">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    01 / TOOLS
+                </span>
+
+                <h2>
+                    Useful stuff.
+                </h2>
+
+                <p>
+                    Small tools made to make things easier.
+                </p>
+
+            </div>
+
+
+            <div class="cards">
+
+
+                <article class="card">
+
+                    <div class="card-number">
+                        01
+                    </div>
+
+                    <div class="card-icon">
+                        @
+                    </div>
+
+                    <h3>
+                        Username Tools
+                    </h3>
+
+                    <p>
+                        Generate and work with
+                        unique username ideas.
+                    </p>
+
+                    <button
+                        class="card-button"
+                        onclick="openTool('username')"
+                    >
+                        Open tool →
+                    </button>
+
+                </article>
+
+
+                <article class="card">
+
+                    <div class="card-number">
+                        02
+                    </div>
+
+                    <div class="card-icon">
+                        4
+                    </div>
+
+                    <h3>
+                        4 Character
+                    </h3>
+
+                    <p>
+                        Generate random four-character
+                        combinations.
+                    </p>
+
+                    <button
+                        class="card-button"
+                        onclick="openTool('four')"
+                    >
+                        Open tool →
+                    </button>
+
+                </article>
+
+
+                <article class="card">
+
+                    <div class="card-number">
+                        03
+                    </div>
+
+                    <div class="card-icon">
+                        #
+                    </div>
+
+                    <h3>
+                        Utilities
+                    </h3>
+
+                    <p>
+                        More useful utilities will
+                        be added here.
+                    </p>
+
+                    <button
+                        class="card-button"
+                        onclick="comingSoon()"
+                    >
+                        Coming soon →
+                    </button>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             PROJECTS
+        ====================== -->
+
+        <section id="projects" class="section">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    02 / PROJECTS
+                </span>
+
+                <h2>
+                    What I'm building.
+                </h2>
+
+                <p>
+                    Personal projects and experiments.
+                </p>
+
+            </div>
+
+
+            <div class="project-list">
+
+
+                <article class="project">
+
+                    <div class="project-info">
+
+                        <span class="project-tag">
+                            WEB
+                        </span>
+
+                        <h3>
+                            NØX
+                        </h3>
+
+                        <p>
+                            This website.
+                            A personal digital hub
+                            built from scratch.
+                        </p>
+
+                    </div>
+
+                    <span class="project-arrow">
+                        ↗
+                    </span>
+
+                </article>
+
+
+                <article class="project">
+
+                    <div class="project-info">
+
+                        <span class="project-tag">
+                            FUTURE
+                        </span>
+
+                        <h3>
+                            New Project
+                        </h3>
+
+                        <p>
+                            Something new is
+                            currently being planned.
+                        </p>
+
+                    </div>
+
+                    <span class="project-arrow">
+                        →
+                    </span>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             ABOUT
+        ====================== -->
+
+        <section id="about" class="section about-section">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    03 / ABOUT
+                </span>
+
+                <h2>
+                    Behind NØX.
+                </h2>
+
+            </div>
+
+
+            <div class="about-content">
+
+                <div class="about-symbol">
+                    NØX
+                </div>
+
+                <div class="about-text">
+
+                    <p>
+                        NØX is an independent digital
+                        project focused on creating
+                        simple tools, experiments
+                        and projects.
+                    </p>
+
+                    <p>
+                        Everything here is built
+                        with simplicity in mind.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================
+             LINKS
+        ====================== -->
+
+        <section id="links" class="section">
+
+            <div class="section-heading">
+
+                <span class="section-label">
+                    04 / LINKS
+                </span>
+
+                <h2>
+                    Find me.
+                </h2>
+
+            </div>
+
+
+            <div class="links-grid">
+
+                <a
+                    href="https://github.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link-card"
+                >
+
+                    <span>
+                        GitHub
+                    </span>
+
+                    <span>
+                        ↗
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="link-card"
+                    onclick="comingSoon(); return false;"
+                >
+
+                    <span>
+                        Discord
+                    </span>
+
+                    <span>
+                        ↗
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#"
+                    class="link-card"
+                    onclick="comingSoon(); return false;"
+                >
+
+                    <span>
+                        YouTube
+                    </span>
+
+                    <span>
+                        ↗
+                    </span>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            NØX
+        </div>
+
+        <p>
+            © 2026 NØX. All rights reserved.
+        </p>
+
+        <p>
+            Built from scratch.
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         MODAL
+    ========================== -->
+
+    <div
+        id="toolModal"
+        class="modal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-box">
+
+            <button
+                class="modal-close"
+                onclick="closeTool()"
+            >
+                ×
+            </button>
+
+            <div id="modalContent"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+        Coming soon
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+  </html>
