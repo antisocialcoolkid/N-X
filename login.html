@@ -3,101 +3,235 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>NØX — Test</title>
+<title>NØX — Login</title>
 
-    <style>
+<style>
 
-        *{
-            box-sizing:border-box;
-        }
+*{
+    box-sizing:border-box;
+}
 
-        body{
-            margin:0;
-            min-height:100vh;
+body{
 
-            display:flex;
-            align-items:center;
-            justify-content:center;
+    margin:0;
 
-            background:#050505;
-            color:white;
+    min-height:100vh;
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-        }
+    display:flex;
 
-        .box{
-            width:90%;
-            max-width:420px;
+    align-items:center;
 
-            padding:35px;
+    justify-content:center;
 
-            text-align:center;
+    padding:20px;
 
-            background:#101010;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            #252525,
+            #080808 45%,
+            #020202
+        );
 
-            border:1px solid #292929;
+    color:white;
 
-            border-radius:20px;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-            box-shadow:
-                0 30px 80px
-                rgba(0,0,0,.7);
-        }
+}
 
-        h1{
-            margin:0 0 10px;
+.auth{
 
-            font-size:30px;
-        }
+    width:100%;
 
-        p{
-            color:#888;
+    max-width:430px;
 
-            font-size:14px;
-        }
+}
 
-        button{
+.logo{
 
-            width:100%;
+    display:block;
 
-            margin-top:20px;
+    margin-bottom:22px;
 
-            padding:15px;
+    color:white;
 
-            border:0;
+    text-decoration:none;
 
-            border-radius:10px;
+    font-size:27px;
 
-            background:white;
+    font-weight:900;
 
-            color:black;
+}
 
-            font-weight:900;
+.card{
 
-            cursor:pointer;
-        }
+    padding:35px 30px;
 
-        #resultado{
+    background:#0d0d0d;
 
-            min-height:25px;
+    border:1px solid #252525;
 
-            margin-top:20px;
+    border-radius:22px;
 
-            color:#64ff91;
+    box-shadow:
+        0 30px 90px
+        rgba(0,0,0,.7);
 
-        }
+}
 
-    </style>
+h1{
+
+    margin:0;
+
+    font-size:31px;
+
+}
+
+.subtitle{
+
+    margin:
+        8px
+        0
+        28px;
+
+    color:#777;
+
+    font-size:13px;
+
+}
+
+label{
+
+    display:block;
+
+    margin:
+        16px
+        0
+        7px;
+
+    color:#aaa;
+
+    font-size:11px;
+
+    font-weight:800;
+
+}
+
+input{
+
+    width:100%;
+
+    height:50px;
+
+    padding:
+        0
+        14px;
+
+    background:#151515;
+
+    color:white;
+
+    border:1px solid #292929;
+
+    border-radius:9px;
+
+    outline:none;
+
+    font-size:14px;
+
+}
+
+input:focus{
+
+    border-color:#666;
+
+}
+
+button{
+
+    width:100%;
+
+    height:50px;
+
+    margin-top:22px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:white;
+
+    color:#050505;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+}
+
+button:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+}
+
+#message{
+
+    min-height:22px;
+
+    margin-top:16px;
+
+    text-align:center;
+
+    color:#777;
+
+    font-size:12px;
+
+}
+
+.success{
+
+    color:#64ff91 !important;
+
+}
+
+.error{
+
+    color:#ff6060 !important;
+
+}
+
+.register{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#666;
+
+    font-size:12px;
+
+}
+
+.register a{
+
+    color:white;
+
+}
+
+</style>
 
 </head>
 
@@ -105,67 +239,432 @@
 <body>
 
 
-<div class="box">
+<main class="auth">
 
 
-    <h1>
-        NØX
-    </h1>
+<a
+    href="index.html"
+    class="logo"
+>
+    NØX
+</a>
 
 
-    <p>
-        PRUEBA DEFINITIVA
-    </p>
+<section class="card">
 
 
-    <button
-        id="testButton"
-        type="button"
-    >
-        PROBAR
-    </button>
+<h1>
+    Welcome back.
+</h1>
 
 
-    <p id="resultado">
-        Esperando...
-    </p>
+<p class="subtitle">
+    Sign in to your NØX profile.
+</p>
 
 
-</div>
+<label for="email">
+    Email
+</label>
+
+
+<input
+    id="email"
+    type="email"
+    placeholder="you@email.com"
+    autocomplete="email"
+>
+
+
+<label for="password">
+    Password
+</label>
+
+
+<input
+    id="password"
+    type="password"
+    placeholder="••••••••"
+    autocomplete="current-password"
+>
+
+
+<button
+    id="loginButton"
+    type="button"
+>
+    Sign in
+</button>
+
+
+<p id="message">
+    Preparando NØX...
+</p>
+
+
+<p class="register">
+
+    Don't have an account?
+
+    <a href="register.html">
+        Create one
+    </a>
+
+</p>
+
+
+</section>
+
+</main>
+
+
+<!-- SUPABASE -->
+
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
 
 
 <script>
 
-console.log(
-    "NØX TEST: JavaScript cargado"
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://asgowauvzfnsszstvzqi.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
+
+const supabase =
+window.supabase.createClient(
+
+    SUPABASE_URL,
+
+    SUPABASE_KEY
+
+);
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const email =
+document.getElementById(
+    "email"
+);
+
+
+const password =
+document.getElementById(
+    "password"
 );
 
 
 const button =
 document.getElementById(
-    "testButton"
+    "loginButton"
 );
 
 
-const resultado =
+const message =
 document.getElementById(
-    "resultado"
+    "message"
 );
 
+
+/* =========================
+   READY
+========================= */
+
+message.textContent =
+"JAVASCRIPT FUNCIONA ✓";
+
+
+/* =========================
+   LOGIN
+========================= */
 
 button.addEventListener(
     "click",
-    function(){
+    login
+);
 
-        resultado.textContent =
-        "JAVASCRIPT FUNCIONA ✓";
+
+async function login(){
+
+    const emailValue =
+    email.value.trim();
+
+
+    const passwordValue =
+    password.value;
+
+
+    if(!emailValue){
+
+        showError(
+            "Escribe tu email."
+        );
+
+        return;
+
+    }
+
+
+    if(!passwordValue){
+
+        showError(
+            "Escribe tu contraseña."
+        );
+
+        return;
+
+    }
+
+
+    button.disabled =
+    true;
+
+
+    button.textContent =
+    "Signing in...";
+
+
+    message.className = "";
+
+
+    message.textContent =
+    "Iniciando sesión...";
+
+
+    try{
+
+        const result =
+        await supabase.auth
+        .signInWithPassword({
+
+            email:
+            emailValue,
+
+            password:
+            passwordValue
+
+        });
+
 
         console.log(
-            "NØX TEST: botón funcionando"
+            "LOGIN RESULT:",
+            result
+        );
+
+
+        if(result.error){
+
+            showError(
+                getErrorMessage(
+                    result.error
+                )
+            );
+
+
+            resetButton();
+
+            return;
+
+        }
+
+
+        if(
+            !result.data ||
+            !result.data.session
+        ){
+
+            showError(
+                "No se creó la sesión."
+            );
+
+
+            resetButton();
+
+            return;
+
+        }
+
+
+        message.className =
+        "success";
+
+
+        message.textContent =
+        "✓ Login correcto. Entrando...";
+
+
+        button.textContent =
+        "Success ✓";
+
+
+        setTimeout(
+        function(){
+
+            window.location.href =
+            "profile.html";
+
+        },
+        700
         );
 
     }
+
+
+    catch(error){
+
+        console.error(
+            "LOGIN ERROR:",
+            error
+        );
+
+
+        showError(
+            error.message
+        );
+
+
+        resetButton();
+
+    }
+
+}
+
+
+/* =========================
+   ENTER
+========================= */
+
+email.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            event.preventDefault();
+
+            login();
+
+        }
+
+    }
 );
+
+
+password.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            event.preventDefault();
+
+            login();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ERROR
+========================= */
+
+function getErrorMessage(
+    error
+){
+
+    const text =
+    String(
+        error.message ||
+        ""
+    ).toLowerCase();
+
+
+    if(
+        text.includes(
+            "invalid login credentials"
+        )
+    ){
+
+        return (
+            "Email o contraseña incorrectos."
+        );
+
+    }
+
+
+    if(
+        text.includes(
+            "email not confirmed"
+        )
+    ){
+
+        return (
+            "Debes confirmar tu email antes de iniciar sesión."
+        );
+
+    }
+
+
+    return (
+        error.message ||
+        "Error al iniciar sesión."
+    );
+
+}
+
+
+/* =========================
+   SHOW ERROR
+========================= */
+
+function showError(
+    text
+){
+
+    message.className =
+    "error";
+
+
+    message.textContent =
+    "❌ " +
+    text;
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetButton(){
+
+    button.disabled =
+    false;
+
+
+    button.textContent =
+    "Sign in";
+
+}
 
 </script>
 
