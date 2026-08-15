@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
     <meta charset="UTF-8">
@@ -8,7 +9,12 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>PRUEBA 123 NØX</title>
+    <meta
+        name="theme-color"
+        content="#050505">
+
+    <title>NØX — Create Profile</title>
+
 
     <style>
 
@@ -18,26 +24,115 @@
             padding: 0;
         }
 
+
         body {
+
             min-height: 100vh;
 
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    #292929,
-                    #080808 45%,
-                    #020202
-                );
+            overflow-x: hidden;
 
-            color: white;
+            color: #fff;
 
             font-family:
                 Arial,
                 Helvetica,
                 sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    #292929 0%,
+                    #090909 42%,
+                    #020202 100%
+                );
+
         }
 
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: .12;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.04) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.04) 1px,
+                    transparent 1px
+                );
+
+            background-size: 50px 50px;
+
+        }
+
+
+        .glow {
+
+            position: fixed;
+
+            width: 380px;
+            height: 380px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            filter: blur(150px);
+
+            opacity: .035;
+
+            pointer-events: none;
+
+            animation:
+                float 9s ease-in-out infinite;
+
+        }
+
+
+        .glow.one {
+            top: -220px;
+            left: -180px;
+        }
+
+
+        .glow.two {
+
+            right: -220px;
+            bottom: -220px;
+
+            animation-delay: -4s;
+
+        }
+
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translate(0,0);
+            }
+
+            50% {
+                transform: translate(45px,35px);
+            }
+
+        }
+
+
         nav {
+
+            position: relative;
+
             width: 92%;
             max-width: 1100px;
 
@@ -53,9 +148,12 @@
 
             border-bottom:
                 1px solid #222;
+
         }
 
+
         .logo {
+
             color: white;
 
             text-decoration: none;
@@ -63,19 +161,28 @@
             font-size: 25px;
 
             font-weight: 900;
+
+            letter-spacing: -1px;
+
         }
 
+
         .back {
+
             color: #777;
 
             text-decoration: none;
 
             font-size: 12px;
+
         }
 
-        main {
-            width: 92%;
 
+        main {
+
+            position: relative;
+
+            width: 92%;
             max-width: 1100px;
 
             min-height:
@@ -91,22 +198,33 @@
             gap: 70px;
 
             align-items: center;
+
+            padding: 50px 0;
+
         }
 
+
         .hero h1 {
+
             font-size:
                 clamp(55px, 8vw, 100px);
 
             line-height: .85;
 
             letter-spacing: -7px;
+
         }
+
 
         .hero h1 span {
+
             color: #444;
+
         }
 
+
         .hero p {
+
             max-width: 500px;
 
             margin-top: 30px;
@@ -116,44 +234,182 @@
             font-size: 14px;
 
             line-height: 1.8;
+
         }
 
-        .card {
-            padding: 32px;
 
-            background: #0b0b0b;
+        .preview {
+
+            width: 330px;
+
+            margin-top: 40px;
+
+            padding: 24px;
+
+            border:
+                1px solid #252525;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #151515,
+                    #060606
+                );
+
+            transform: rotate(-2deg);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,.55);
+
+        }
+
+
+        .avatar {
+
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid #333;
+
+            border-radius: 50%;
+
+            background: #0a0a0a;
+
+            font-size: 19px;
+
+            font-weight: 900;
+
+        }
+
+
+        .preview-name {
+
+            margin-top: 15px;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+        }
+
+
+        .preview-user {
+
+            margin-top: 5px;
+
+            color: #555;
+
+            font-size: 11px;
+
+        }
+
+
+        .preview-bio {
+
+            margin-top: 15px;
+
+            color: #777;
+
+            font-size: 11px;
+
+        }
+
+
+        .links {
+
+            display: grid;
+
+            gap: 7px;
+
+            margin-top: 17px;
+
+        }
+
+
+        .link {
+
+            padding: 9px;
+
+            border:
+                1px solid #202020;
+
+            border-radius: 7px;
+
+            background: #090909;
+
+            color: #666;
+
+            font-size: 10px;
+
+        }
+
+
+        .card {
+
+            padding: 32px;
 
             border:
                 1px solid #292929;
 
             border-radius: 18px;
 
+            background:
+                linear-gradient(
+                    145deg,
+                    #121212,
+                    #060606
+                );
+
             box-shadow:
-                0 30px 80px
-                rgba(0,0,0,.6);
+                0 30px 90px
+                rgba(0,0,0,.65);
+
         }
+
 
         .card h2 {
+
             font-size: 27px;
+
         }
 
+
         .subtitle {
+
             margin-top: 8px;
 
             color: #666;
 
             font-size: 12px;
+
         }
+
 
         form {
+
             margin-top: 28px;
+
         }
+
 
         .field {
+
             margin-bottom: 17px;
+
         }
 
+
         label {
+
             display: block;
 
             margin-bottom: 8px;
@@ -167,15 +423,17 @@
             text-transform: uppercase;
 
             letter-spacing: 1px;
+
         }
 
+
         input {
+
             width: 100%;
 
             height: 52px;
 
-            padding:
-                0 15px;
+            padding: 0 15px;
 
             background: #050505;
 
@@ -189,13 +447,32 @@
             outline: none;
 
             font-size: 13px;
+
+            transition: .2s;
+
         }
+
 
         input:focus {
+
             border-color: #777;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(255,255,255,.025);
+
         }
 
+
+        input::placeholder {
+
+            color: #444;
+
+        }
+
+
         button {
+
             width: 100%;
 
             height: 52px;
@@ -211,9 +488,33 @@
             font-weight: 900;
 
             cursor: pointer;
+
+            transition: .2s;
+
         }
 
+
+        button:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        button:disabled {
+
+            opacity: .5;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+
         .divider {
+
             display: flex;
 
             align-items: center;
@@ -225,10 +526,13 @@
             color: #444;
 
             font-size: 10px;
+
         }
+
 
         .divider::before,
         .divider::after {
+
             content: "";
 
             height: 1px;
@@ -236,18 +540,24 @@
             flex: 1;
 
             background: #222;
+
         }
 
+
         .discord {
+
             background: #111;
 
             color: white;
 
             border:
                 1px solid #292929;
+
         }
 
+
         .login {
+
             margin-top: 20px;
 
             text-align: center;
@@ -255,15 +565,21 @@
             color: #555;
 
             font-size: 11px;
+
         }
 
+
         .login a {
+
             color: white;
 
             text-decoration: none;
+
         }
 
+
         #message {
+
             min-height: 20px;
 
             margin-top: 15px;
@@ -273,56 +589,96 @@
             color: #aaa;
 
             font-size: 11px;
+
+            line-height: 1.5;
+
         }
+
 
         @media (max-width: 800px) {
 
             main {
+
                 grid-template-columns: 1fr;
 
                 gap: 40px;
 
-                padding: 60px 0;
+                padding:
+                    55px 0
+                    70px;
+
             }
+
 
             .hero {
+
                 text-align: center;
+
             }
 
+
             .hero p {
+
                 margin-left: auto;
 
                 margin-right: auto;
+
             }
 
+
+            .preview {
+
+                display: none;
+
+            }
+
+
             .card {
+
                 width: 100%;
 
                 max-width: 480px;
 
                 margin: auto;
+
             }
 
         }
 
+
         @media (max-width: 500px) {
 
             nav {
+
                 height: 65px;
+
             }
+
 
             main {
-                padding: 45px 0;
+
+                padding:
+                    45px 0
+                    60px;
+
             }
 
+
             .hero h1 {
+
                 font-size: 18vw;
 
                 letter-spacing: -5px;
+
             }
 
+
             .card {
+
                 padding: 23px;
+
+                border-radius: 15px;
+
             }
 
         }
@@ -333,6 +689,11 @@
 
 
 <body>
+
+
+<div class="glow one"></div>
+
+<div class="glow two"></div>
 
 
 <nav>
@@ -362,6 +723,7 @@
 
     <section class="hero">
 
+
         <h1>
 
             Claim<br>
@@ -381,6 +743,63 @@
 
         </p>
 
+
+        <div class="preview">
+
+
+            <div
+                class="avatar"
+                id="previewAvatar">
+
+                N
+
+            </div>
+
+
+            <div
+                class="preview-name"
+                id="previewName">
+
+                NØX User
+
+            </div>
+
+
+            <div
+                class="preview-user"
+                id="previewUsername">
+
+                @username
+
+            </div>
+
+
+            <div class="preview-bio">
+
+                Building my identity on NØX.
+
+            </div>
+
+
+            <div class="links">
+
+                <div class="link">
+                    Discord
+                </div>
+
+                <div class="link">
+                    YouTube
+                </div>
+
+                <div class="link">
+                    GitHub
+                </div>
+
+            </div>
+
+        </div>
+
+
     </section>
 
 
@@ -396,21 +815,16 @@
 
 
             <p class="subtitle">
-
                 Choose your unique NØX username.
-
             </p>
 
 
-            <form
-                id="registerForm"
-                onsubmit="return probarFormulario(event)"
-            >
+            <form id="registerForm">
 
 
                 <div class="field">
 
-                    <label>
+                    <label for="username">
                         Username
                     </label>
 
@@ -418,6 +832,8 @@
                         id="username"
                         type="text"
                         placeholder="maxiii"
+                        maxlength="24"
+                        autocomplete="username"
                         required>
 
                 </div>
@@ -425,7 +841,7 @@
 
                 <div class="field">
 
-                    <label>
+                    <label for="email">
                         Email
                     </label>
 
@@ -433,6 +849,7 @@
                         id="email"
                         type="email"
                         placeholder="you@email.com"
+                        autocomplete="email"
                         required>
 
                 </div>
@@ -440,7 +857,7 @@
 
                 <div class="field">
 
-                    <label>
+                    <label for="password">
                         Password
                     </label>
 
@@ -449,12 +866,15 @@
                         type="password"
                         placeholder="••••••••"
                         minlength="6"
+                        autocomplete="new-password"
                         required>
 
                 </div>
 
 
-                <button type="submit">
+                <button
+                    id="createButton"
+                    type="submit">
 
                     Create account
 
@@ -471,8 +891,8 @@
 
             <button
                 class="discord"
-                type="button"
-                onclick="alert('Discord próximamente')">
+                id="discordRegister"
+                type="button">
 
                 Continue with Discord
 
@@ -495,33 +915,391 @@
 
         </div>
 
+
     </section>
 
 
 </main>
 
 
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
 <script>
 
-function probarFormulario(event) {
+const SUPABASE_URL =
+    "https://asgowauvzfnsszstvzqi.supabase.co";
 
-    event.preventDefault();
+const SUPABASE_KEY =
+    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
 
-    alert(
-        "FUNCIONA: NØX recibió el formulario."
+
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
 
-    document
-        .getElementById("message")
-        .textContent =
-        "✓ FUNCIONA";
 
-    return false;
+const form =
+    document.getElementById(
+        "registerForm"
+    );
 
-}
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+const createButton =
+    document.getElementById(
+        "createButton"
+    );
+
+
+/* =========================
+   LIVE USERNAME PREVIEW
+========================= */
+
+const usernameInput =
+    document.getElementById(
+        "username"
+    );
+
+
+usernameInput.addEventListener(
+    "input",
+    function() {
+
+        const username =
+            usernameInput.value.trim();
+
+
+        document
+            .getElementById(
+                "previewName"
+            )
+            .textContent =
+            username ||
+            "NØX User";
+
+
+        document
+            .getElementById(
+                "previewUsername"
+            )
+            .textContent =
+            username
+            ? "@" + username
+            : "@username";
+
+
+        document
+            .getElementById(
+                "previewAvatar"
+            )
+            .textContent =
+            username
+            ? username
+                .charAt(0)
+                .toUpperCase()
+            : "N";
+
+    }
+);
+
+
+/* =========================
+   REGISTER
+========================= */
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const username =
+            document
+            .getElementById("username")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        if (username.length < 3) {
+
+            message.textContent =
+                "❌ Username demasiado corto.";
+
+            return;
+
+        }
+
+
+        if (!/^[a-z0-9_]+$/.test(username)) {
+
+            message.textContent =
+                "❌ Usa solo letras, números y _.";
+
+            return;
+
+        }
+
+
+        if (password.length < 6) {
+
+            message.textContent =
+                "❌ La contraseña necesita mínimo 6 caracteres.";
+
+            return;
+
+        }
+
+
+        createButton.disabled = true;
+
+        createButton.textContent =
+            "Creating...";
+
+        message.textContent =
+            "Conectando con NØX...";
+
+
+        try {
+
+
+            /* CHECK USERNAME */
+
+            message.textContent =
+                "Comprobando username...";
+
+
+            const {
+                data: existing,
+                error: checkError
+            } =
+                await supabase
+                .from("profiles")
+                .select("username")
+                .eq("username", username)
+                .maybeSingle();
+
+
+            if (checkError) {
+
+                throw new Error(
+                    "Error comprobando username: " +
+                    checkError.message
+                );
+
+            }
+
+
+            if (existing) {
+
+                throw new Error(
+                    "Ese username ya está ocupado."
+                );
+
+            }
+
+
+            /* CREATE ACCOUNT */
+
+            message.textContent =
+                "Creando cuenta...";
+
+
+            const {
+                data,
+                error
+            } =
+                await supabase.auth.signUp({
+
+                    email:
+                        email,
+
+                    password:
+                        password,
+
+                    options: {
+
+                        data: {
+
+                            username:
+                                username
+
+                        }
+
+                    }
+
+                });
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            if (!data.user) {
+
+                message.textContent =
+                    "Revisa tu correo para confirmar tu cuenta.";
+
+                createButton.disabled = false;
+
+                createButton.textContent =
+                    "Create account";
+
+                return;
+
+            }
+
+
+            /* CREATE PROFILE */
+
+            message.textContent =
+                "Creando perfil...";
+
+
+            const {
+                error: profileError
+            } =
+                await supabase
+                .from("profiles")
+                .insert({
+
+                    id:
+                        data.user.id,
+
+                    username:
+                        username
+
+                });
+
+
+            if (profileError) {
+
+                throw profileError;
+
+            }
+
+
+            message.textContent =
+                "✓ ¡Perfil creado correctamente!";
+
+
+            createButton.textContent =
+                "Created ✓";
+
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "profile.html";
+
+                },
+                1000
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "NØX:",
+                error
+            );
+
+
+            message.textContent =
+                "❌ " +
+                error.message;
+
+
+            createButton.disabled = false;
+
+            createButton.textContent =
+                "Create account";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   DISCORD
+========================= */
+
+document
+    .getElementById(
+        "discordRegister"
+    )
+    .addEventListener(
+        "click",
+        async function() {
+
+            message.textContent =
+                "Connecting to Discord...";
+
+
+            const {
+                error
+            } =
+                await supabase
+                .auth
+                .signInWithOAuth({
+
+                    provider:
+                        "discord",
+
+                    options: {
+
+                        redirectTo:
+                            window.location.origin +
+                            "/profile.html"
+
+                    }
+
+                });
+
+
+            if (error) {
+
+                message.textContent =
+                    "❌ " +
+                    error.message;
+
+            }
+
+        }
+    );
 
 </script>
 
 
 </body>
+
 </html>
