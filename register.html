@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#030303">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#050505">
 
 <title>NØX — Create Profile</title>
 
@@ -20,117 +20,92 @@ body{
     min-height:100vh;
     overflow-x:hidden;
     background:#020202;
-    color:white;
+    color:#fff;
     font-family:Arial,Helvetica,sans-serif;
 }
-
-/* BACKGROUND */
 
 .bg{
     position:fixed;
     inset:0;
-    z-index:-10;
+    z-index:-1;
     overflow:hidden;
-
     background:
     radial-gradient(
         circle at 50% 20%,
-        #181818 0%,
-        #080808 35%,
-        #020202 75%
+        #191919,
+        #070707 40%,
+        #020202 80%
     );
 }
 
 .grid{
     position:absolute;
     inset:0;
-    opacity:.17;
+    opacity:.18;
 
     background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    linear-gradient(
+        rgba(255,255,255,.04) 1px,
+        transparent 1px
+    ),
+    linear-gradient(
+        90deg,
+        rgba(255,255,255,.04) 1px,
+        transparent 1px
+    );
 
     background-size:50px 50px;
 }
 
 .glow{
     position:absolute;
-    width:500px;
-    height:500px;
+
+    width:450px;
+    height:450px;
+
     border-radius:50%;
-    background:white;
-    filter:blur(170px);
+
+    background:#fff;
+
+    filter:blur(150px);
+
     opacity:.08;
-    animation:move 12s ease-in-out infinite;
+
+    animation:floatGlow 10s ease-in-out infinite;
 }
 
 .glow.one{
-    left:-250px;
     top:-250px;
+    left:-200px;
 }
 
 .glow.two{
     right:-250px;
     bottom:-250px;
-    animation-delay:-6s;
+    animation-delay:-5s;
 }
 
-@keyframes move{
+@keyframes floatGlow{
     0%,100%{
         transform:translate(0,0) scale(1);
     }
 
     50%{
-        transform:translate(60px,40px) scale(1.15);
+        transform:translate(50px,40px) scale(1.15);
     }
 }
-
-/* PARTICLES */
-
-.particles span{
-    position:absolute;
-
-    width:2px;
-    height:2px;
-
-    border-radius:50%;
-    background:white;
-
-    opacity:0;
-
-    animation:rise linear infinite;
-}
-
-@keyframes rise{
-    from{
-        transform:translateY(110vh);
-        opacity:0;
-    }
-
-    20%{
-        opacity:.3;
-    }
-
-    80%{
-        opacity:.2;
-    }
-
-    to{
-        transform:translateY(-10vh);
-        opacity:0;
-    }
-}
-
-/* NAV */
 
 nav{
     position:absolute;
+
     top:0;
     left:0;
     right:0;
 
-    width:min(1150px,92%);
-    height:78px;
+    width:92%;
+    max-width:1150px;
+
+    height:75px;
 
     margin:auto;
 
@@ -142,90 +117,94 @@ nav{
 }
 
 .logo{
-    color:white;
+    color:#fff;
     text-decoration:none;
 
     font-size:24px;
-    font-weight:950;
-    letter-spacing:-1px;
+    font-weight:900;
 }
 
 .back{
     color:#666;
     text-decoration:none;
 
-    font-size:11px;
+    font-size:12px;
 
     transition:.2s;
 }
 
 .back:hover{
-    color:white;
+    color:#fff;
 }
 
-/* MAIN */
-
 main{
-    width:min(1150px,92%);
+    width:92%;
+    max-width:1150px;
+
     min-height:100vh;
 
     margin:auto;
 
-    padding:125px 0 60px;
+    padding:120px 0 60px;
 
     display:grid;
-    grid-template-columns:1fr 430px;
+
+    grid-template-columns:
+        1fr
+        430px;
 
     gap:80px;
 
     align-items:center;
 }
 
-/* HERO */
-
 .hero{
-    animation:heroIn .8s ease both;
+    animation:appear .8s ease both;
 }
 
-@keyframes heroIn{
+@keyframes appear{
     from{
         opacity:0;
-        transform:translateX(-30px);
+        transform:translateY(25px);
     }
 
     to{
         opacity:1;
-        transform:translateX(0);
+        transform:translateY(0);
     }
 }
 
 .badge{
     display:inline-flex;
+
     align-items:center;
+
     gap:8px;
 
     padding:8px 12px;
 
-    border:1px solid #282828;
-    border-radius:50px;
+    border:1px solid #292929;
 
-    background:#080808;
+    border-radius:50px;
 
     color:#777;
 
     font-size:9px;
+
     font-weight:bold;
+
     letter-spacing:2px;
 }
 
-.badge-dot{
+.dot{
     width:6px;
     height:6px;
 
     border-radius:50%;
-    background:white;
 
-    box-shadow:0 0 14px white;
+    background:#fff;
+
+    box-shadow:0 0 12px #fff;
 
     animation:pulse 2s infinite;
 }
@@ -242,69 +221,79 @@ main{
     }
 }
 
-.hero h1{
+h1{
     margin-top:28px;
 
-    font-size:clamp(60px,8vw,105px);
+    font-size:
+        clamp(
+            60px,
+            8vw,
+            105px
+        );
 
-    line-height:.82;
+    line-height:.83;
 
-    letter-spacing:-8px;
-
-    font-weight:950;
+    letter-spacing:-7px;
 }
 
-.hero h1 span{
-    color:#404040;
+h1 span{
+    color:#414141;
 }
 
-.hero p{
-    max-width:490px;
+.hero-text{
+    max-width:500px;
 
-    margin-top:30px;
+    margin-top:28px;
 
-    color:#686868;
+    color:#666;
 
     font-size:14px;
+
     line-height:1.8;
 }
 
-/* PREVIEW */
-
 .preview{
-    width:350px;
+    width:340px;
 
     margin-top:45px;
 
     padding:24px;
 
-    border:1px solid #232323;
+    border:1px solid #242424;
+
     border-radius:20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(28,28,28,.85),
-            rgba(5,5,5,.94)
+            #171717,
+            #060606
         );
 
     box-shadow:
-        0 35px 100px rgba(0,0,0,.65);
-
-    backdrop-filter:blur(20px);
+        0 30px 90px
+        rgba(0,0,0,.6);
 
     transform:rotate(-3deg);
 
-    animation:float 5s ease-in-out infinite;
+    animation:
+        cardFloat
+        5s
+        ease-in-out
+        infinite;
 }
 
-@keyframes float{
+@keyframes cardFloat{
     0%,100%{
-        transform:translateY(0) rotate(-3deg);
+        transform:
+            translateY(0)
+            rotate(-3deg);
     }
 
     50%{
-        transform:translateY(-12px) rotate(1deg);
+        transform:
+            translateY(-12px)
+            rotate(1deg);
     }
 }
 
@@ -313,17 +302,23 @@ main{
     height:58px;
 
     display:flex;
+
     align-items:center;
     justify-content:center;
 
     border-radius:50%;
 
-    border:1px solid #3a3a3a;
+    border:1px solid #3b3b3b;
 
     background:
-        linear-gradient(145deg,#292929,#080808);
+        linear-gradient(
+            145deg,
+            #292929,
+            #080808
+        );
 
     font-size:20px;
+
     font-weight:900;
 }
 
@@ -331,6 +326,7 @@ main{
     margin-top:17px;
 
     font-size:20px;
+
     font-weight:800;
 }
 
@@ -338,6 +334,7 @@ main{
     margin-top:5px;
 
     color:#555;
+
     font-size:11px;
 }
 
@@ -345,21 +342,23 @@ main{
     margin-top:15px;
 
     color:#777;
+
     font-size:11px;
-    line-height:1.6;
 }
 
-.preview-links{
+.links{
     display:grid;
+
     gap:7px;
 
     margin-top:20px;
 }
 
-.preview-link{
+.link{
     padding:10px;
 
-    border:1px solid #1d1d1d;
+    border:1px solid #1e1e1e;
+
     border-radius:8px;
 
     background:#090909;
@@ -369,46 +368,36 @@ main{
     font-size:10px;
 }
 
-/* FORM */
-
-.form-area{
-    animation:formIn .8s .1s ease both;
-}
-
-@keyframes formIn{
-    from{
-        opacity:0;
-        transform:translateX(30px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateX(0);
-    }
-}
-
 .form-card{
-    padding:34px;
+    padding:32px;
 
-    border:1px solid #222;
+    border:1px solid #242424;
+
     border-radius:20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(17,17,17,.97),
-            rgba(5,5,5,.97)
+            #121212,
+            #060606
         );
 
     box-shadow:
-        0 35px 100px rgba(0,0,0,.65);
+        0 30px 100px
+        rgba(0,0,0,.65);
 
-    backdrop-filter:blur(20px);
+    animation:
+        appear
+        .9s
+        .1s
+        ease
+        both;
 }
 
 .form-card h2{
     font-size:28px;
-    letter-spacing:-1.5px;
+
+    letter-spacing:-1px;
 }
 
 .subtitle{
@@ -418,8 +407,6 @@ main{
 
     font-size:12px;
 }
-
-/* INPUT */
 
 form{
     margin-top:27px;
@@ -437,14 +424,17 @@ label{
     color:#777;
 
     font-size:9px;
+
     font-weight:bold;
 
     letter-spacing:1.5px;
+
     text-transform:uppercase;
 }
 
 input{
     width:100%;
+
     height:50px;
 
     padding:0 14px;
@@ -452,11 +442,12 @@ input{
     outline:none;
 
     border:1px solid #252525;
+
     border-radius:9px;
 
     background:#050505;
 
-    color:white;
+    color:#fff;
 
     font-size:13px;
 
@@ -467,27 +458,29 @@ input:focus{
     border-color:#555;
 
     box-shadow:
-        0 0 0 3px rgba(255,255,255,.025),
-        0 0 30px rgba(255,255,255,.025);
+        0 0 0 3px
+        rgba(255,255,255,.025);
 }
 
 input::placeholder{
-    color:#3f3f3f;
+    color:#3d3d3d;
 }
-
-/* BUTTON */
 
 #createButton{
     width:100%;
+
     height:51px;
 
     border:0;
+
     border-radius:9px;
 
-    background:white;
-    color:black;
+    background:#fff;
+
+    color:#000;
 
     font-size:12px;
+
     font-weight:900;
 
     cursor:pointer;
@@ -499,20 +492,23 @@ input::placeholder{
     transform:translateY(-3px);
 
     box-shadow:
-        0 15px 40px rgba(255,255,255,.13);
+        0 15px 40px
+        rgba(255,255,255,.14);
 }
 
 #createButton:disabled{
-    opacity:.55;
+    opacity:.5;
+
     cursor:not-allowed;
+
     transform:none;
 }
 
-/* DIVIDER */
-
 .divider{
     display:flex;
+
     align-items:center;
+
     gap:12px;
 
     margin:22px 0;
@@ -522,45 +518,44 @@ input::placeholder{
     font-size:9px;
 }
 
-.divider::before,
-.divider::after{
+.divider:before,
+.divider:after{
     content:"";
 
     height:1px;
+
     flex:1;
 
     background:#1d1d1d;
 }
 
-/* DISCORD */
-
 #discordButton{
     width:100%;
+
     height:49px;
 
     border:1px solid #292929;
+
     border-radius:9px;
 
     background:#101010;
 
-    color:white;
+    color:#fff;
 
     font-size:12px;
+
     font-weight:800;
 
     cursor:pointer;
 
-    transition:.25s;
+    transition:.2s;
 }
 
 #discordButton:hover{
-    background:#171717;
+    background:#181818;
+
     border-color:#444;
-
-    transform:translateY(-2px);
 }
-
-/* SIGN IN */
 
 .signin{
     margin-top:20px;
@@ -573,12 +568,10 @@ input::placeholder{
 }
 
 .signin a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-}
+    color:#fff;
 
-/* MESSAGE */
+    text-decoration:none;
+}
 
 #message{
     min-height:18px;
@@ -592,40 +585,29 @@ input::placeholder{
     font-size:11px;
 }
 
-/* SUCCESS */
-
 .success{
-    padding:12px;
-
-    border:1px solid #303030;
-    border-radius:8px;
-
-    background:#0c0c0c;
-
-    color:#ddd !important;
+    color:#fff !important;
 }
 
-/* MOBILE */
+.error{
+    color:#aaa !important;
+}
 
 @media(max-width:900px){
-
-    nav{
-        height:68px;
-    }
 
     main{
         padding-top:105px;
 
         grid-template-columns:1fr;
 
-        gap:45px;
+        gap:40px;
     }
 
     .hero{
         text-align:center;
     }
 
-    .hero p{
+    .hero-text{
         margin-left:auto;
         margin-right:auto;
     }
@@ -634,9 +616,9 @@ input::placeholder{
         display:none;
     }
 
-    .form-area{
-        width:100%;
+    .form-card{
         max-width:500px;
+
         margin:auto;
     }
 }
@@ -645,20 +627,19 @@ input::placeholder{
 
     main{
         width:92%;
-        padding-top:95px;
+
+        padding-top:100px;
     }
 
-    .hero h1{
+    h1{
         font-size:17vw;
-        letter-spacing:-5px;
-    }
 
-    .hero p{
-        font-size:13px;
+        letter-spacing:-5px;
     }
 
     .form-card{
         padding:23px;
+
         border-radius:15px;
     }
 
@@ -666,10 +647,7 @@ input::placeholder{
         font-size:24px;
     }
 
-    input{
-        height:52px;
-    }
-
+    input,
     #createButton,
     #discordButton{
         height:52px;
@@ -685,34 +663,32 @@ input::placeholder{
     <div class="grid"></div>
 
     <div class="glow one"></div>
+
     <div class="glow two"></div>
-
-    <div class="particles">
-
-        <span style="left:5%;animation-duration:14s"></span>
-        <span style="left:15%;animation-duration:18s"></span>
-        <span style="left:28%;animation-duration:12s"></span>
-        <span style="left:41%;animation-duration:17s"></span>
-        <span style="left:55%;animation-duration:20s"></span>
-        <span style="left:68%;animation-duration:15s"></span>
-        <span style="left:81%;animation-duration:19s"></span>
-        <span style="left:94%;animation-duration:13s"></span>
-
-    </div>
 
 </div>
 
+
 <nav>
 
-    <a href="index.html" class="logo">
+    <a
+        href="index.html"
+        class="logo">
+
         NØX
+
     </a>
 
-    <a href="index.html" class="back">
+    <a
+        href="index.html"
+        class="back">
+
         ← Back
+
     </a>
 
 </nav>
+
 
 <main>
 
@@ -720,53 +696,78 @@ input::placeholder{
 
     <div class="badge">
 
-        <span class="badge-dot"></span>
+        <span class="dot"></span>
 
         NØX PROFILES
 
     </div>
 
+
     <h1>
+
         Claim<br>
+
         <span>your identity.</span>
+
     </h1>
 
-    <p>
-        Your username is more than a name.
-        It's your NØX identity.
-        Create your profile and make your
-        corner of the internet yours.
+
+    <p class="hero-text">
+
+        Create your own NØX identity.
+        Choose your username and build
+        a profile that represents you.
+
     </p>
+
 
     <div class="preview">
 
-        <div class="avatar" id="avatar">
+        <div
+            class="avatar"
+            id="avatar">
+
             N
+
         </div>
 
-        <div class="preview-name" id="previewName">
+
+        <div
+            class="preview-name"
+            id="previewName">
+
             NØX User
+
         </div>
 
-        <div class="preview-user" id="previewUsername">
+
+        <div
+            class="preview-user"
+            id="previewUsername">
+
             @username
+
         </div>
+
 
         <div class="preview-bio">
+
             Building my identity on NØX.
+
         </div>
 
-        <div class="preview-links">
 
-            <div class="preview-link">
+        <div class="links">
+
+            <div class="link">
                 Discord
             </div>
 
-            <div class="preview-link">
+            <div class="link">
                 YouTube
             </div>
 
-            <div class="preview-link">
+            <div class="link">
                 GitHub
             </div>
 
@@ -776,7 +777,8 @@ input::placeholder{
 
 </section>
 
-<section class="form-area">
+
+<section>
 
 <div class="form-card">
 
@@ -784,9 +786,13 @@ input::placeholder{
         Create your profile
     </h2>
 
+
     <p class="subtitle">
+
         Choose your unique NØX username.
+
     </p>
+
 
     <form id="registerForm">
 
@@ -801,10 +807,10 @@ input::placeholder{
                 type="text"
                 placeholder="maxiii"
                 maxlength="24"
-                autocomplete="username"
                 required>
 
         </div>
+
 
         <div class="field">
 
@@ -816,10 +822,10 @@ input::placeholder{
                 id="email"
                 type="email"
                 placeholder="you@email.com"
-                autocomplete="email"
                 required>
 
         </div>
+
 
         <div class="field">
 
@@ -832,10 +838,10 @@ input::placeholder{
                 type="password"
                 placeholder="••••••••"
                 minlength="6"
-                autocomplete="new-password"
                 required>
 
         </div>
+
 
         <button
             id="createButton"
@@ -847,17 +853,21 @@ input::placeholder{
 
     </form>
 
+
     <div class="divider">
+
         OR
+
     </div>
 
+
     <button
-        id="discordButton"
-        type="button">
+        id="discordButton">
 
         Continue with Discord
 
     </button>
+
 
     <div class="signin">
 
@@ -869,6 +879,7 @@ input::placeholder{
 
     </div>
 
+
     <div id="message"></div>
 
 </div>
@@ -877,6 +888,7 @@ input::placeholder{
 
 </main>
 
+
 <script>
 
 /* =========================
@@ -884,23 +896,17 @@ input::placeholder{
 ========================= */
 
 const SUPABASE_URL =
-    "https://asgowauvzfnsszstvzqi.supabase.co";
-
-/*
- IMPORTANT:
- Put your Supabase PUBLISHABLE KEY here.
- It starts with:
- sb_publishable_
-*/
+"https://asgowauvzfnsszstvzqi.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+"sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS";
+
 
 const supabaseClient =
-    window.supabase.createClient(
-            "https://asgowauvzfnsszstvzqi.supabase.co";,
-        "sb_publishable_scsteNa_ILseeQYkL1Olyg_38UMGSZS"
-    );
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
 /* =========================
@@ -908,166 +914,218 @@ const supabaseClient =
 ========================= */
 
 const form =
-    document.getElementById("registerForm");
+document.getElementById(
+    "registerForm"
+);
 
-const usernameInput =
-    document.getElementById("username");
+const username =
+document.getElementById(
+    "username"
+);
 
-const emailInput =
-    document.getElementById("email");
+const email =
+document.getElementById(
+    "email"
+);
 
-const passwordInput =
-    document.getElementById("password");
+const password =
+document.getElementById(
+    "password"
+);
 
-const createButton =
-    document.getElementById("createButton");
+const button =
+document.getElementById(
+    "createButton"
+);
 
-const discordButton =
-    document.getElementById("discordButton");
+const discord =
+document.getElementById(
+    "discordButton"
+);
 
 const message =
-    document.getElementById("message");
+document.getElementById(
+    "message"
+);
 
 const previewName =
-    document.getElementById("previewName");
+document.getElementById(
+    "previewName"
+);
 
 const previewUsername =
-    document.getElementById("previewUsername");
+document.getElementById(
+    "previewUsername"
+);
 
 const avatar =
-    document.getElementById("avatar");
+document.getElementById(
+    "avatar"
+);
 
 
 /* =========================
    LIVE PREVIEW
 ========================= */
 
-usernameInput.addEventListener(
+username.addEventListener(
     "input",
-    () => {
+    function(){
 
         const value =
-            usernameInput.value
-            .trim();
+        username.value
+        .trim();
 
-        if(value){
+        previewName.textContent =
+        value || "NØX User";
 
-            previewName.textContent =
-                value;
+        previewUsername.textContent =
+        value
+        ? "@" + value
+        : "@username";
 
-            previewUsername.textContent =
-                "@" + value;
-
-            avatar.textContent =
-                value
-                .charAt(0)
-                .toUpperCase();
-
-        }else{
-
-            previewName.textContent =
-                "NØX User";
-
-            previewUsername.textContent =
-                "@username";
-
-            avatar.textContent =
-                "N";
-
-        }
+        avatar.textContent =
+        value
+        ? value
+            .charAt(0)
+            .toUpperCase()
+        : "N";
 
     }
 );
 
 
 /* =========================
-   REGISTER
+   CREATE ACCOUNT
 ========================= */
 
 form.addEventListener(
     "submit",
-    async (event) => {
+    async function(e){
 
-        event.preventDefault();
+        e.preventDefault();
 
-        message.className = "";
-        message.textContent = "";
+        message.className="";
 
-        const username =
-            usernameInput.value
-            .trim()
-            .toLowerCase();
-
-        const email =
-            emailInput.value
-            .trim();
-
-        const password =
-            passwordInput.value;
+        message.textContent="";
 
 
-        /* VALIDATION */
+        const user =
+        username.value
+        .trim()
+        .toLowerCase();
 
-        if(username.length < 3){
+        const mail =
+        email.value
+        .trim();
 
-            message.textContent =
-                "Username must be at least 3 characters.";
+        const pass =
+        password.value;
 
-            return;
-        }
 
-        if(!/^[a-z0-9_]+$/.test(username)){
+        if(user.length < 3){
+
+            message.className =
+            "error";
 
             message.textContent =
-                "Use only letters, numbers and underscores.";
+            "Username must have at least 3 characters.";
 
             return;
-        }
 
-        if(password.length < 6){
-
-            message.textContent =
-                "Password must be at least 6 characters.";
-
-            return;
         }
 
 
-        /* BUTTON */
+        if(
+            !/^[a-z0-9_]+$/.test(user)
+        ){
 
-        createButton.disabled = true;
+            message.className =
+            "error";
 
-        createButton.textContent =
-            "Creating your NØX...";
+            message.textContent =
+            "Use only letters, numbers and _.";
+
+            return;
+
+        }
+
+
+        button.disabled=true;
+
+        button.textContent =
+        "Creating NØX identity...";
 
 
         try{
 
             /*
+             CHECK USERNAME
+            */
+
+            const existing =
+            await supabaseClient
+            .from("profiles")
+            .select("username")
+            .eq("username",user)
+            .maybeSingle();
+
+
+            if(existing.error){
+
+                throw existing.error;
+
+            }
+
+
+            if(existing.data){
+
+                throw new Error(
+                    "That username is already taken."
+                );
+
+            }
+
+
+            /*
              CREATE AUTH USER
             */
 
-            const {
-                data,
-                error
-            } =
-                await supabaseClient.auth.signUp({
+            const result =
+            await supabaseClient
+            .auth
+            .signUp({
 
-                    email: email,
+                email:mail,
 
-                    password: password,
+                password:pass,
 
-                    options:{
-                        data:{
-                            username: username
-                        }
+                options:{
+                    data:{
+                        username:user
                     }
+                }
 
-                });
+            });
 
 
-            if(error){
-                throw error;
+            if(result.error){
+
+                throw result.error;
+
+            }
+
+
+            const account =
+            result.data.user;
+
+
+            if(!account){
+
+                throw new Error(
+                    "The account could not be created."
+                );
+
             }
 
 
@@ -1075,38 +1133,24 @@ form.addEventListener(
              CREATE PROFILE
             */
 
-            if(data.user){
+            const profile =
+            await supabaseClient
+            .from("profiles")
+            .insert({
 
-                const {
-                    error:
-                    profileError
-                } =
-                    await supabaseClient
-                    .from("profiles")
-                    .insert({
+                id:account.id,
 
-                        id: data.user.id,
+                username:user
 
-                        username: username
-
-                    });
+            });
 
 
-                /*
-                 If the profile already exists,
-                 don't break the registration.
-                */
+            if(
+                profile.error &&
+                profile.error.code !== "23505"
+            ){
 
-                if(
-                    profileError &&
-                    profileError.code !== "23505"
-                ){
-
-                    console.warn(
-                        profileError
-                    );
-
-                }
+                throw profile.error;
 
             }
 
@@ -1116,25 +1160,21 @@ form.addEventListener(
             */
 
             message.className =
-                "success";
+            "success";
 
             message.textContent =
-                "✓ Your NØX identity has been created.";
+            "✓ NØX identity created.";
 
 
-            createButton.textContent =
-                "NØX identity created";
+            button.textContent =
+            "Profile created ✓";
 
-
-            /*
-             Redirect after a moment.
-            */
 
             setTimeout(
-                () => {
+                function(){
 
                     window.location.href =
-                        "profile.html";
+                    "profile.html";
 
                 },
                 1200
@@ -1145,15 +1185,17 @@ form.addEventListener(
 
             console.error(error);
 
+            message.className =
+            "error";
+
             message.textContent =
-                error.message ||
-                "Something went wrong.";
+            error.message ||
+            "Something went wrong.";
 
-            createButton.disabled =
-                false;
+            button.disabled=false;
 
-            createButton.textContent =
-                "Create account";
+            button.textContent =
+            "Create account";
 
         }
 
@@ -1165,35 +1207,34 @@ form.addEventListener(
    DISCORD
 ========================= */
 
-discordButton.addEventListener(
+discord.addEventListener(
     "click",
-    async () => {
-
-        message.className = "";
+    async function(){
 
         message.textContent =
-            "Connecting to Discord...";
+        "Connecting to Discord...";
 
-        const {
-            error
-        } =
-            await supabaseClient.auth
-            .signInWithOAuth({
 
-                provider:"discord",
+        const result =
+        await supabaseClient
+        .auth
+        .signInWithOAuth({
 
-                options:{
-                    redirectTo:
-                        window.location.origin +
-                        window.location.pathname
-                }
+            provider:"discord",
 
-            });
+            options:{
+                redirectTo:
+                window.location.origin +
+                "/N-X/profile.html"
+            }
 
-        if(error){
+        });
+
+
+        if(result.error){
 
             message.textContent =
-                error.message;
+            result.error.message;
 
         }
 
